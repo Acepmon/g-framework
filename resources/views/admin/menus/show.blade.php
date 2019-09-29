@@ -14,7 +14,7 @@
 @endsection
 
 @section('pageheader')
-    @include('admin.menus.includes.pageheader')
+    @include('admin.menus.includes.pageheader', ['breadcrumb' => 'menus_show'])
 @endsection
 
 @section('content')

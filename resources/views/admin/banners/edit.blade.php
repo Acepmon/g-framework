@@ -27,7 +27,7 @@
 @endsection
 
 @section('pageheader')
-    @include('admin.banners.includes.pageheader')
+    @include('admin.banners.includes.pageheader', , ['breadcrumb' => 'banners_edit'])
 @endsection
 
 @section('content')

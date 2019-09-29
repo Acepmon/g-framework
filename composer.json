@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.1.3",
         "chumper/zipper": "^1.0",
+        "davejamesmiller/laravel-breadcrumbs": "5.x",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "floatingpoint/stylist": "^1.0",

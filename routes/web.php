@@ -76,19 +76,11 @@ Route::middleware(['installed'])->group(function () {
                 });
 
                 Route::prefix('configs')->group(function () {
-                    // Route::post('/', 'ConfigController@store')->name('admin.configs.store');
-                    // Route::get('create', 'ConfigController@create')->name('admin.configs.create');
-                    // Route::get('{id}/edit', 'ConfigController@edit')->name('admin.configs.edit');
-                    // Route::put('{id}', 'ConfigController@update')->name('admin.configs.update');
+                    Route::get('', 'ConfigController@index')->name('admin.configs.index');
                     Route::get('maintenance', 'ConfigController@maintenance')->name('admin.configs.maintenance');
                     Route::post('maintenance', 'ConfigController@setMaintenance')->name('admin.configs.maintenance.set');
                     Route::get('base', 'ConfigController@base')->name('admin.configs.base');
                     Route::put('base', 'ConfigController@updateBase')->name('admin.configs.base.update');
-                    // Route::get('system', 'ConfigController@system')->name('admin.configs.system');
-                    // Route::get('themes', 'ConfigController@themes')->name('admin.configs.themes');
-                    // Route::get('plugins', 'ConfigController@plugins')->name('admin.configs.plugins');
-                    // Route::get('security', 'ConfigController@security')->name('admin.configs.security');
-                    // Route::get('contents', 'ConfigController@contents')->name('admin.configs.contents');
                 });
 
                 Route::prefix('logs')->group(function () {
@@ -204,15 +196,6 @@ Route::middleware(['installed'])->group(function () {
                     'update' => 'admin.contents.update',
                     'destroy' => 'admin.contents.destroy'
                 ]);
-                Route::resource('cars/specials', 'CarSpecialController')->names([
-                    'index' => 'admin.cars.specials.index',
-                    'create' => 'admin.cars.specials.create',
-                    'store' => 'admin.cars.specials.store',
-                    'show' => 'admin.cars.specials.show',
-                    'edit' => 'admin.cars.specials.edit',
-                    'update' => 'admin.cars.specials.update',
-                    'destroy' => 'admin.cars.specials.destroy'
-                ]);
                 Route::resource('cars/options', 'CarOptionController')->names([
                     'index' => 'admin.cars.options.index',
                     'create' => 'admin.cars.options.create',
@@ -252,15 +235,6 @@ Route::middleware(['installed'])->group(function () {
                 Route::get('/contents/{id}/revisions/{revision}/revert', 'ContentController@revert')->name('admin.contents.revisions.revert');
                 Route::get('/contents/{id}/revisions/{revision}', 'ContentController@viewRevision')->name('admin.contents.revisions.show');
                 Route::put('/contents/{id}/revisions', 'ContentController@updateRevision')->name('admin.contents.revisions.update');
-                Route::resource('configs', 'ConfigController')->names([
-                    'index' => 'admin.configs.index',
-                    'create' => 'admin.configs.create',
-                    'store' => 'admin.configs.store',
-                    'show' => 'admin.configs.show',
-                    'edit' => 'admin.configs.edit',
-                    'update' => 'admin.configs.update',
-                    'destroy' => 'admin.configs.destroy'
-                ]);
                 Route::resource('comments', 'CommentController')->names([
                     'index' => 'admin.comments.index',
                     'create' => 'admin.comments.create',

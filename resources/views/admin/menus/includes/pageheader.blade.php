@@ -5,9 +5,7 @@
 </div>
 
 <div class="breadcrumb-line">
-    <div class="breadcrumb">
-        <a class="breadcrumb-item" href="{{ route('admin.dashboard') }}"><i class="icon-home2 ml-2"></i> Home</a>
-        <a class="breadcrumb-item" href="{{ route('admin.menus.index') }}">Menus</a>
-        <span class="breadcrumb-item active">Detail</span>
-    </div>
+    @if (isset($breadcrumb))
+        {{ Breadcrumbs::render($breadcrumb) }}
+    @endif
 </div>

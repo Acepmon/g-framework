@@ -11,7 +11,7 @@
 @endsection
 
 @section('pageheader')
-    @include('admin.banners.includes.pageheader')
+    @include('admin.banners.includes.pageheader', ['breadcrumb' => 'banners_locations_edit'])
 @endsection
 
 @section('content')

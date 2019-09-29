@@ -7,7 +7,7 @@
 @endsection
 
 @section('pageheader')
-    @include('admin.logs.includes.pageheader')
+    @include('admin.logs.includes.pageheader', ['breadcrumb' => 'logs_index'])
 @endsection
 
 @section('content')

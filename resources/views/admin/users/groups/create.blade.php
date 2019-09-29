@@ -7,7 +7,7 @@
 @endsection
 
 @section('pageheader')
-    @include('admin.users.includes.pageheader')
+    @include('admin.users.includes.pageheader', ['breadcrumb' => 'groups_create'])
 @endsection
 
 @section('content')

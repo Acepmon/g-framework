@@ -8,7 +8,7 @@
 @endsection
 
 @section('pageheader')
-    @include('admin.configs.includes.pageheader')
+    @include('admin.configs.includes.pageheader', ['breadcrumb' => 'configs_base'])
 @endsection
 
 @section('content')

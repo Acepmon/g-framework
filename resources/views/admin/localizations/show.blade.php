@@ -11,7 +11,7 @@
 @endsection
 
 @section('pageheader')
-    @include('admin.localizations.includes.pageheader')
+    @include('admin.localizations.includes.pageheader', ['breadcrumb' => 'localizations_show'])
 @endsection
 
 @section('content')

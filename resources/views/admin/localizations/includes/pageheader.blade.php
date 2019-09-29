@@ -6,10 +6,8 @@
 
 <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
     <div class="d-flex">
-        <div class="breadcrumb">
-            <a class="breadcrumb-item" href="{{ route('admin.dashboard') }}"><i class="icon-home2 position-left"></i> Home</a>
-            <a class="breadcrumb-item" href="{{ route('admin.localizations.index') }}">Localizations</a>
-            <span class="breadcrumb-item active">Detail</span>
-        </div>
+        @if (isset($breadcrumb))
+            {{ Breadcrumbs::render($breadcrumb) }}
+        @endif
     </div>
 </div>

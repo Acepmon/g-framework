@@ -6,20 +6,13 @@
 @section('pageheader')
 <div class="page-header-content header-element-md-inline">
     <div class="page-title d-flex">
-        <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Starters</span> - 2 Columns</h4>
-    </div>
-
-    <div class="header-elements d-none">
-        <a href="#" class="btn btn-labeled btn-labeled-right bg-blue heading-btn">Button <b><i class="icon-menu7"></i></b></a>
+        <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Changelog</span></h4>
     </div>
 </div>
 
 <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
     <div class="d-flex">
-        <div class="breadcrumb">
-            <a href="{{ route('admin.dashboard') }}" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-            <span class="breadcrumb-item active">Changelog</span>
-        </div>
+        {{ Breadcrumbs::render('changelog') }}
     </div>
 </div>
 <!-- /page header -->
