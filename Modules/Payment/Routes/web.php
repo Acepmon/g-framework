@@ -10,6 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('ajax')->group(function () {
+        Route::namespace('Ajax')->group(function () {
+
+            Route::resource('transactions', 'TransactionController')->names([
+                'store' => 'ajax.modules.payment.transactions.store',
+                'update' => 'ajax.modules.payment.transactions.update',
+                'destroy' => 'ajax.modules.payment.transactions.destroy'
+            ]);
+        });
+    });
+});
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::prefix('admin/modules')->group(function () {
@@ -25,8 +37,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
                     'update' => 'admin.modules.payment.payment_methods.update',
                     'destroy' => 'admin.modules.payment.payment_methods.destroy'
                 ]);
+                Route::resource('transactions', 'TransactionController')->names([
+                    'index' => 'admin.modules.payment.transactions.index',
+                    'create' => 'admin.modules.payment.transactions.create',
+                    'store' => 'admin.modules.payment.transactions.store',
+                    'show' => 'admin.modules.payment.transactions.show',
+                    'edit' => 'admin.modules.payment.transactions.edit',
+                    'update' => 'admin.modules.payment.transactions.update',
+                    'destroy' => 'admin.modules.payment.transactions.destroy'
+                ]);
             });
-
         });
     });
 });

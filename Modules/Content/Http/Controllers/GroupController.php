@@ -2,14 +2,14 @@
 
 namespace Modules\Content\Http\Controllers;
 
-use Auth;
-use App\Content;
+use App\Group;
+use App\GroupMeta;
+use App\Entities\MediaManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
 
-class ContentController extends Controller
+class GroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -78,5 +78,23 @@ class ContentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public static function register($group, $data)
+    {
+        $company = Group::create([
+            'parent_id' => $group->id,
+            'title' => array_key_exists('companyName', $data) ? $data['companyName'] : 'Dealer',
+            'description' => array_key_exists('description', $data) ? $data['description'] : '',
+            'type' => 'dealer'
+        ]);
+        if (request()->hasFile('retailImage')) {
+            $filename = MediaManager::storeFile(request()->file('retailImage'), 'avatars/retail');
+            GroupMeta::create(['group_id' => $company->id, 'key' => 'retailImage', 'value' => array_key_exists('retailImage', $data) ? $filename : '']);
+        }
+        GroupMeta::create(['group_id' => $company->id, 'key' => 'website', 'value' => array_key_exists('website', $data) ? $data['website'] : '']);
+        GroupMeta::create(['group_id' => $company->id, 'key' => 'schedule', 'value' => array_key_exists('schedule', $data) ? $data['schedule'] : '']);
+        GroupMeta::create(['group_id' => $company->id, 'key' => 'address', 'value' => array_key_exists('address', $data) ? $data['address'] : '']);
+        return $company;
     }
 }

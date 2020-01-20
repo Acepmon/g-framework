@@ -74,7 +74,11 @@
                     <label class="btn btn-primary">
                         Сонгох<input id="{{$index}}" name="{{$index}}" type="file" class="uploadFile img" style="width: 0px;height: 0px;overflow: hidden;" accept="image/x-png,image/gif,image/jpeg">
                     </label>
-                    <i class="fa fa-times del mt-4" onclick="removeImg('{{$index}}', $car->metaValue->($index))"></i>
+                    @if($car->metaValue($index)!=null)
+                    <i class="fa fa-times del mt-4" onclick="removeImg('{{$index}}', {{$car->metas->where('key', $index)->first()->id}})"></i>
+                    @else
+                    <i class="fa fa-times del mt-4" onclick="removeImg('{{$index}}', 0)"></i>
+                    @endif
                 </div>
             @endforeach
         </div>
@@ -201,10 +205,13 @@
     var fileList = [];
     var mb = 1000000;
 
-    function removeImg(id) {
+    function removeImg(id,metaId) {
         console.log(id);
         $('#'+id+'preview').css("background-image", "url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg)")
-        rmvImgs.push(url);
+        if(metaId===0){}
+        else{
+            rmvImgs.push(metaId);
+        }
     }
     function removeImg1(target, url) {
         rmvImgs.push(url);
@@ -322,14 +329,8 @@
     function step2Submit(__callback) {
         event.preventDefault();
         formData = new FormData();
-        //formData.deleteAll();
         var totalSize = 0;
-        // for (var i=0; i<fileList.length; i++) {
-        //     formData.append(file, fileList[i]);
-        //     totalSize += fileList[i].size;
-        // }
         for (let [key, value] of Object.entries(fileList)) {
-        //console.log('${key}: ${value}');
             formData.append(key, value);
         }
         if (totalSize > 80 * mb) {
@@ -337,23 +338,24 @@
             __callback(0);
         } else {
             $("#demo-spinner").css({'display': 'block'});
+
             $.ajax({
                 type: 'POST',
-                url: '/ajax/contents/' + carId+ '/medias',
-                data: formData,
-                contentType: false,
-                processData: false,
+                url: '/ajax/contents/' + carId+ '/medias/delete',
+                data: {
+                    "medias": rmvImgs
+                }
             }).done(function(data) {
-                console.log("DONE Media!");
-
+                console.log("DONE Deleting!");
                 $.ajax({
                     type: 'POST',
-                    url: '/ajax/contents/' + carId+ '/medias/delete',
-                    data: {
-                        "medias": rmvImgs
-                    }
+                    url: '/ajax/contents/' + carId+ '/medias',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                 }).done(function(data) {
-                    console.log("DONE Deleting!");
+                    console.log("DONE Media!");
+
                     if($('#link').val()!=null && $('#link').val()!=undefined){
                         $.ajax({
                             type: 'PUT',

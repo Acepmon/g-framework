@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Group;
+use App\GroupMeta;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 // use App\Http\Controllers\Controller;
+use Modules\Content\Http\Controllers\GroupController;
 use Validator;
 
 class UserController extends Controller
@@ -62,6 +65,19 @@ class UserController extends Controller
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->accessToken;
         $success['name'] = $user->name;
+
+        if ($input['groupId']) {
+            $group = Group::findOrFail($input['groupId']);
+            // If make row per dealer 
+            if ($group->title == 'Auto Dealer') {
+                $company = GroupController::register($group, $request->input());
+                $user->groups()->attach(config('system.register.defaultGroup'));
+                $user->groups()->attach($company);
+            } else {
+                $user->groups()->attach($group);
+            }
+        }
+
         return response()->json(['success' => $success], $this->successStatus);
     }
 

@@ -1,0 +1,127 @@
+@extends('themes.car-web.layouts.mypage')
+
+@php
+
+//Filter
+$page = request('page', "1");
+$itemsPerPage = request('itemsPerPage', "10");
+
+@endphp
+
+@section('title')
+
+@endsection
+
+@section('load')
+
+
+@endsection
+
+@section('content')
+<div class="row">
+    <div class="bg-white shadow-soft-blue page-top-navbar pt-5">
+        <div class="col-md-6 float-left"><h3 class="pl-3">Mileage</h3></div>
+        <div class="col-md-6 float-left text-right font-weight-bold"><p class="d-inline pr-3">My mileage: &nbsp; &nbsp;<span class="pt-2 pr-4 pb-2 pl-4 btn-round bg-primary text-white">5000</span></p></div>
+        <div class="col-md-12 pt-4 float-left">
+            <p><h5 class="pl-3">Mileage history</h5></p>
+        </div>
+        <div class="pl-4 pr-4">
+            <table class="table text-center table-striped">
+                <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Used mileage</th>
+                    <th>Status</th>
+                    <th>Total mileage</th>
+                </tr>
+                </thead>
+                <tbody>
+                @myMileage( limit=10, user_id=\Auth::user()->id, page=request()->input('page') as $ma | paginate)
+                @foreach($ma as $cash)
+                <tr>
+                    <td>{{$cash->created_at}}</td>
+                    <td>{{$cash->transaction_amount}}</td>
+                    <td>{{$cash->status}}</td>
+                    <td>{{$cash->current_amount}}</td>
+                </tr>
+                @endforeach
+                </tbody>
+            </table>
+            <!-- Pagination -->
+            <nav aria-label="Page navigation">
+                <form action="my-mileage" id="mainForm">
+                <input type="hidden" value="{{ $page }}" name="page" id="page" />
+                <ul class="pagination d-flex justify-content-end mt-2">
+                    <li class="page-item {{ ($page <= 1)?'disabled':'' }}">
+                        <button class="page-link" onclick="formSubmit('page', {{$page-1}})" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </button>
+                    </li>
+                    @for($i = 1; $i <= $ma->lastPage(); $i++)
+                    <li class="page-item {{ ($i == $page)?'active':'' }}"><button class="page-link" onclick="formSubmit('page', {{$i}})">{{ $i }}</button></li>
+                    @endfor
+                    <li class="page-item {{ ($page >= $ma->lastPage())?'disabled':'' }}">
+                        <button class="page-link" onclick="formSubmit('page', {{$page+1}})" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </button>
+                    </li>
+                </ul>
+                </form>
+            </nav>
+            <!-- Pagination end -->
+        </div>
+
+    </div>
+</div>
+@endsection
+
+@section('script')
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        function formSubmit(id, value, sortDir, sortDirValue) {
+            console.log(id)
+            if (value != 'no-value') {
+                document.getElementById(id).value = value;
+            }
+            // if (sortDir != 'no-value'){
+            //     document.getElementById(sortDir).value = sortDirValue;
+            // }
+             $('#mainForm').submit();
+        }
+
+        $(document).ready(function () {
+            $(".addToInterest").click(function (event) {
+                event.preventDefault();
+                var id = $(this).attr('data-target');
+                var elm = $(this);
+                $.ajax({
+                    url: '/ajax/user/interested_cars',
+                    dataType: 'json',
+                    method: 'PUT',
+                    data: {
+                        'content_id': id
+                    },
+                    success: function (data) {
+                        if (data.status == 'added') {
+                            elm.html('<span class="text-danger"><i class="fas fa-heart"></i> Жаглаастанд нэмэгдсэн</span>');
+                        } else if (data.status == 'removed') {
+                            elm.html('<span class=""><i class="far fa-heart"></i> Жаглаастанд нэмэх</span>');
+                        }
+                    },
+                    error: function (error) {
+                        console.log("failed")
+                        console.log(error.status)
+                        if (error.status == 401  ){//|| error.status == 404) {
+                            window.location.href = "/login";
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+@endsection

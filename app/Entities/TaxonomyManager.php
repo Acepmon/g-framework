@@ -18,14 +18,18 @@ class TaxonomyManager extends Manager
      * @parameter $parent_id = (integer) (Optional) Taxonomy parent taxonomy key.
      * @parameter $args = (array|string) (Optional) Array or query string of arguments for registering a taxonomy.
      */
-    public static function register($term, $taxonomy, $parent_id = null, $args = array())
+    public static function register($term, $taxonomy, $parent_id = null, $args = array(), $other_columns = array())
     {
         $termTaxonomy = TermTaxonomy::where('taxonomy', $taxonomy)->whereHas('term', function ($query) use ($term) {
             $query->where('name', $term);
         })->first();
 
         if ($termTaxonomy == null) {
-            $term = self::createTerm($term, $parent_id);
+            $normal = array_key_exists('normal', $other_columns)?$other_columns['normal']:False;
+            $bus = array_key_exists('bus', $other_columns)?$other_columns['bus']:False;
+            $truck = array_key_exists('truck', $other_columns)?$other_columns['truck']:False;
+            $special = array_key_exists('special', $other_columns)?$other_columns['special']:False;
+            $term = self::createTerm($term, $parent_id, null, $normal, $bus, $truck, $special);
             self::saveTermMetas($term->id, $args);
             $termTaxonomy = self::createTaxonomy($term->id, $taxonomy, $parent_id);
         }
@@ -39,12 +43,15 @@ class TaxonomyManager extends Manager
         return $taxonomies;
     }
 
-    public static function createTerm($name, $group_id = null)
+    public static function createTerm($name, $group_id = null, $normal = False, $bus = False, $truck = False, $special = False)
     {
         $term = new Term();
         $term->name = $name;
         $term->slug = \Str::slug($name);
         $term->group_id = $group_id;
+        $term->bus = $bus;
+        $term->truck = $truck;
+        $term->special = $special;
         $term->save();
 
         return $term;
@@ -158,4 +165,15 @@ class TaxonomyManager extends Manager
         return $id;
     }
 
+
+    /*
+    * returns top 5 manufacturer with most content on top
+    */
+    public static function getManufacturers($limit = 5) {
+        $manufacturers = TermTaxonomy::where('taxonomy', 'car-manufacturer');
+        $most = clone $manufacturers;
+        $most = $most->orderBy('count', 'desc')->limit($limit);
+        $most = $most->get()->merge($manufacturers->get());
+        return $most;
+    }
 }

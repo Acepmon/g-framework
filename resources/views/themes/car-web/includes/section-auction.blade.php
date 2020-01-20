@@ -8,7 +8,7 @@
           </span>
             </div>
         </div>
-            <div class="card-list mx-n2">
+            <div class="card-list auction mx-n2">
                 <div class="row">
 
                     @content(type=car, publishType=best_premium, publishVerified=1, isAuction=1,  limit=12 as $auctionPrmCars | paginate)
@@ -34,6 +34,9 @@
                             <!-- card start -->
                             <div class="card cd-box auction-car">
                                 <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt=""></div>
+                                @if(getMetasValue($auctionPrmCars->metas, 'doctorVerified')==1)
+                                <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt="">DV</div>
+                                @endif
                                 <div class="card-img">
                                     <img src="{{(getMetasValue($auctionPrmCars->metas, 'thumbnail'))}}" class="img-fluid" alt="alt">
                                     <div class="card-caption">

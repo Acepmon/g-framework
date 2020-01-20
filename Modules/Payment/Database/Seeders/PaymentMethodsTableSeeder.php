@@ -23,36 +23,45 @@ class PaymentMethodsTableSeeder extends Seeder
             'code' => 'transaction',
             'name' => 'Bank Transaction',
             'data' => json_encode([
-                [
                     'bankName' => 'Хаан Банк',
                     'accountNo' => '00000000',
                     'accountName' => 'Example',
                     'accountCurrency' => 'MNT'
-                ],
-                [
+            ]),
+            'enabled' => true
+        ]);
+        PaymentMethod::create([
+            'code' => 'transaction',
+            'name' => 'Bank Transaction',
+            'data' => json_encode([
                     'bankName' => 'Хас Банк',
                     'accountNo' => '00000000',
                     'accountName' => 'Example',
                     'accountCurrency' => 'MNT'
-                ],
-                [
-                    'bankName' => 'Голомт Банк',
-                    'accountNo' => '00000000',
-                    'accountName' => 'Example',
-                    'accountCurrency' => 'MNT'
-                ],
-                [
+            ]),
+            'enabled' => true
+        ]);
+
+        PaymentMethod::create([
+            'code' => 'transaction',
+            'name' => 'Bank Transaction',
+            'data' => json_encode([
                     'bankName' => 'Худалдаа Хөгжлийн Банк',
                     'accountNo' => '00000000',
                     'accountName' => 'Example',
                     'accountCurrency' => 'MNT'
-                ],
-                [
+            ]),
+            'enabled' => true
+        ]);
+
+        PaymentMethod::create([
+            'code' => 'transaction',
+            'name' => 'Bank Transaction',
+            'data' => json_encode([
                     'bankName' => 'Төрийн Банк',
                     'accountNo' => '00000000',
                     'accountName' => 'Example',
                     'accountCurrency' => 'MNT'
-                ]
             ]),
             'enabled' => true
         ]);

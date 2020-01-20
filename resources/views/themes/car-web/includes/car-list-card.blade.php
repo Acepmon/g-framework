@@ -5,6 +5,9 @@
             @if(isPremium($car))
             <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/corona.svg') }}" alt=""></div>
             @endif
+            @if(getMetasValue($car->metas, 'doctorVerified')==1)
+            <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt="">DV</div>
+            @endif
             @if(isset($type) && $type == 'auction' && $car->metaValue('isAuction'))
             <div class="maz-auction-time">
                 <div id="countdown" class="countdown" data-countdown="{{ $car->metaValue('endsAt') }}"></div>
@@ -40,6 +43,9 @@
                 @if($car->metaValue('capacityAmount')!=null)
                 <span class="info-icon">
                     <img src="{{ asset('car-web/img/icons/engine.svg') }}" alt="">
+                    @if((getMetasValue($car->metas, 'doctorVerified'))===1)
+                                DV
+                    @endIf
                     <p>{{ ucfirst($car->metaValue('capacityAmount')) . ' ' . strtoupper($car->metaValue('capacityUnit')) }}</p>
                 </span>
                 @endif

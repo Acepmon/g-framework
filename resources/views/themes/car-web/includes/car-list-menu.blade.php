@@ -36,7 +36,7 @@ $categoryName = [
         <div id="{{ $category }}" class="collapse {{ request($category, False)?'show':'' }}" aria-labelledby="{{ $category }}">
         <div id="manufacturerBody" class="card-body bg-light">
             <div class="manufacturer">
-                @foreach(App\TermTaxonomy::where('taxonomy', $category)->get() as $taxonomy)
+                @foreach(App\Entities\TaxonomyManager::getManufacturers() as $taxonomy)
                 <div class="custom-control custom-radio">
                     <!-- <a href="/car-list?{{ $category . '=' . $taxonomy->term->name }}" class="text-body text-decoration-none"> -->
                     <input type="radio" id="{{$taxonomy->term->name}}" name="{{ $category }}" class="custom-control-input car-manufacturer" value="{{ $taxonomy->term->name }}" {{ ($taxonomy->term->name == request($category, Null))?'checked':'' }}>
@@ -45,6 +45,18 @@ $categoryName = [
                 </div>
                 @endforeach
             </div>
+            @if(request('car-model', Null))
+            <div class="models" name="{{ request('car-manufacturer', 'no-id') }}" style="display: none">
+                <div class="models-back" style="cursor:pointer"><i class="fab fa fa-angle-left"></i> буцах</div> 
+                @foreach(App\TermTaxonomy::where('taxonomy', 'car-' . \Str::kebab(request('car-manufacturer', 'no-id')))->get() as $taxonomy)
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="{{$taxonomy->term->name}}" name="car-model" class="custom-control-input" value="{{ $taxonomy->term->name }}" {{ ($taxonomy->term->name == request('car-model', Null))?'checked':'' }}>
+                    <label class="custom-control-label  d-flex justify-content-between" for="{{$taxonomy->term->name}}">{{ $taxonomy->term->name }}
+                    </label>
+                </div>
+                @endforeach
+            </div>
+            @endif
         </div>
         </div>
         @elseif($category == 'car-year')
@@ -163,48 +175,56 @@ function submitMenu(event) {
 
 var waiting = 0;
 
+$(document).ready(function() {
+    @if(request('car-model', Null))
+    $("#{{ request('car-manufacturer', 'no-id') }}").trigger('click');
+    @endif
+    console.log("Yadf");
+});
+
 $("input.car-manufacturer").on("click", function () {
     if (waiting == 0) {
-    let val = $(this).val();
-    console.log(val);
-    let subList = $(".car-filter .models[name=\"" + val + "\"");
+        let val = $(this).val();
+        console.log(val);
+        let subList = $(".car-filter .models[name=\"" + val + "\"");
 
-    if (subList.length) {
-        switchToModel(val);
-    } else {
-        waiting = 1;
-        load();
-        $.ajax({
-            type: 'Get',
-            url: '/api/v1/taxonomies/car-' + toKebabCase(val),
-        }).done(function(data) {
-            $("#demo-spinner").css({'display': 'none'});
-            var modelList=data;
-            console.log(modelList);
-            var html = '<div class="models" name="'+val+'"> \
-            <div class="models-back" style="cursor:pointer"><i class="fab fa fa-angle-left"></i> буцах</div> ';
-
-            for (var i = 0; i < modelList.data.length; i++) {
-                let termname = modelList.data[i].term.name;
-                let checked = (termname == '{{ $request['modelName'] }}')?'checked':'';
-                html = html + '<div class="custom-control custom-radio"> '+ 
-                    '<input type="radio" id="' + termname + '" name="car-model" value="' + termname + '" class="custom-control-input" '+checked+'> '+
-                    '<label class="custom-control-label d-flex justify-content-between" for="' + termname + '">' + termname + '</label></div>';
-            }
-
-            html += '</div>';
-            $('#manufacturerBody').append(html);
+        if (subList.length) {
+            console.log("got it");
             switchToModel(val);
-            $("input[type=radio][name=\"car-model\"]").click(submitMenu);
-            $("input[type=radio][name=\"car-model\"]").click(load);
-            waiting = 0;
-        }).fail(function(err) {
-            $("#demo-spinner").css({'display': 'none'});
-            console.error("FAIL!");
-            console.error(err);
-            waiting = 0;
-        });
-    }
+        } else {
+            waiting = 1;
+            load();
+            $.ajax({
+                type: 'Get',
+                url: '/api/v1/taxonomies/car-' + toKebabCase(val),
+            }).done(function(data) {
+                $("#demo-spinner").css({'display': 'none'});
+                var modelList=data;
+                console.log(modelList);
+                var html = '<div class="models" name="'+val+'"> \
+                <div class="models-back" style="cursor:pointer"><i class="fab fa fa-angle-left"></i> буцах</div> ';
+
+                for (var i = 0; i < modelList.data.length; i++) {
+                    let termname = modelList.data[i].term.name;
+                    let checked = (termname == '{{ $request['modelName'] }}')?'checked':'';
+                    html = html + '<div class="custom-control custom-radio"> '+ 
+                        '<input type="radio" id="' + termname + '" name="car-model" value="' + termname + '" class="custom-control-input" '+checked+'> '+
+                        '<label class="custom-control-label d-flex justify-content-between" for="' + termname + '">' + termname + '</label></div>';
+                }
+
+                html += '</div>';
+                $('#manufacturerBody').append(html);
+                switchToModel(val);
+                $("input[type=radio][name=\"car-model\"]").click(submitMenu);
+                $("input[type=radio][name=\"car-model\"]").click(load);
+                waiting = 0;
+            }).fail(function(err) {
+                $("#demo-spinner").css({'display': 'none'});
+                console.error("FAIL!");
+                console.error(err);
+                waiting = 0;
+            });
+        }
     }
 });
 

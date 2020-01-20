@@ -1,8 +1,8 @@
 <form id="step-4-publish" class="maz-form">
     <div class="row">
 
-        <label for="bestPremium" class="col-md-12">
-            <div class="col-md-6 float-left">
+        <label for="bestPremium" class="col-md-6">
+            <div class="col-md-12 float-left">
                 <div class="d-flex">
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="bestPremium" name="publishType" value="best_premium" class="custom-control-input">
@@ -13,10 +13,10 @@
 
                 <select class="custom-select my-1 mr-sm-2" name="publishPriceAmountBest">
                     @getTaxonomys({"filter":[{"field":"taxonomy", "key":"best_premium"}], "returnValue":"bestPremium"})
-                    <option selected  value="0">Сонгох...</option>
                     @foreach($bestPremium as $data)
                         {{--<option>{{getMetasValue($data->term->name, 'amount')}}</option>--}}
-                        <option value="{{$data->term->meta->amount}}, {{$data->term->meta->unit}}, {{$data->term->meta->duration}}">{{$data->term->name}}</option>
+                        {{--<option value="{{$data->term->meta->amount}}, {{$data->term->meta->unit}}, {{$data->term->meta->duration}}">{{$data->term->name}}</option>--}}
+                        <option value="{{$data->term->id}}">{{$data->term->name}}</option>
                     @endforeach
                 </select>
                 {{--@php--}}
@@ -30,14 +30,14 @@
                     Зөвхөн 12 ширхэг зар байрлах учраас олонд хүрэх хүртээмж нь их.
                 </p>
             </div>
+            </label>
             <div class="col-md-6 float-left">
                 <div id="best-zar"></div>
             </div>
-        </label>
 
 
-        <label for="premium" class="col-md-12">
-            <div class="col-md-6 float-left">
+        <label for="premium" class="col-md-6">
+            <div class="col-md-12 float-left">
                 <div class="d-flex">
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="premium" name="publishType" value="premium" class="custom-control-input">
@@ -48,10 +48,10 @@
 
                 <select class="custom-select my-1 mr-sm-2" name="publishPriceAmountPremium">
                     @getTaxonomys({"filter":[{"field":"taxonomy", "key":"premium"}], "returnValue":"premium"})
-                    <option selected  value="0">Сонгох...</option>
                     @foreach($premium as $data)
                         {{--<option>{{getMetasValue($data->term->name, 'amount')}}</option>--}}
-                        <option value="{{$data->term->meta->amount}}, {{$data->term->meta->unit}}, {{$data->term->meta->duration}}">{{$data->term->name}}</option>
+                        {{--<option value="{{$data->term->meta->amount}}, {{$data->term->meta->unit}}, {{$data->term->meta->duration}}">{{$data->term->name}}</option>--}}
+                        <option value="{{$data->term->id}}">{{$data->term->name}}</option>
                     @endforeach
                 </select>
                 <p>
@@ -59,20 +59,19 @@
                     </br>
                     Машин хайх хэсгийн хамгийн дээр байрлана.
                     </br>
-                    Random аргаар харуулана.
+                    Random аргаар харуулна.
                 </p>
             </div>
+            </label>
             <div class="col-md-6 float-left">
                 <div id="special-zar"></div>
             </div>
 
-        </label>
-
-        <label for="free" class="col-md-12">
-            <div class="col-md-6 float-left">
+        <label for="free" class="col-md-6">
+            <div class="col-md-12 float-left">
                 <div class="d-flex">
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="free" name="publishType" value="free" class="custom-control-input">
+                        <input type="radio" id="free" name="publishType" value="free" class="custom-control-input" checked>
                         <label class="custom-control-label" for="free"></label>
                     </div>
                     <h6 class="font-weight-bold mb-0">Regular</h6>
@@ -83,11 +82,10 @@
                     Үнэгүй зар нь  Нүүр хуудас, бусад хуудас–ийн үнэтэй зарын доор байрлана.
                 </p>
             </div>
+            </label>
             <div class="col-md-6 float-left">
                 <img src="{{asset('car-web/img/normal-zar.png')}}" class="img-fluid" alt="">
             </div>
-
-        </label>
 
     <!-- NEXT PREV BUTTON START -->
     <div style="float:right;" class="mt-5">
@@ -108,7 +106,7 @@
             <div class="modal-body text-center">
             <div class="maz-modal-title" style="font-size:1.5rem">Sell advertise!</div>
             <div id="sent-ad" style="width: 300px; display:inline-block"></div>
-                <h5 class="text-danger mb-5">Car successfully registered!</h5>
+                <h5 id="responseText" class="mb-5">Амжилттай бүртгэгдлээ!</h5>
             </div>
         </div>
     </div>
@@ -171,52 +169,39 @@ $("input").click(function(){
         $.each($('#step-4-publish').serializeArray(), function(_, kv) {
             paramObjs[kv.name] = kv.value;
         });
-        console.log(paramObjs.publishAmount)
+        var publishPricing;
         if(paramObjs.publishType==="best_premium"){
-            paramObjs.publishAmount=paramObjs.publishPriceAmountBest;
+            publishPricing = paramObjs.publishPriceAmountBest;
         }
         else if(paramObjs.publishType==="premium"){
-            paramObjs.publishAmount=paramObjs.publishPriceAmountPremium;
+            publishPricing = paramObjs.publishPriceAmountPremium;
         }
         else{
-            paramObjs.publishAmount=0;
+            publishPricing = 0;
         }
         paramObjs['publishedAt'] = new Date();
-
         delete paramObjs.publishPriceAmountBest;
         delete paramObjs.publishPriceAmountPremium;
-        //paramObjs.publishVerified=1;
-        if(paramObjs.publishAmount!==0){
-            var arr = paramObjs.publishAmount.split(",");
-            //arr.forEach(        )
-            arr.forEach(splitAmount);
-            function splitAmount(item, index){
-                if(index===0){
-                    paramObjs.publishAmount=item;
-                }
-                if(index===1){
-                    paramObjs.publishUnit=item;
-                }
-                if(index===2){
-                    paramObjs.publishDuration=item;
-                }
-            }
-            paramObjs.publishTotalPriceAmount=parseInt(paramObjs.publishAmount) * paramObjs.publishDuration;
-        }
+
         $.ajax({
             type: 'PUT',
             url: '/ajax/contents/' + carId + '/metas/sync',
             data: paramObjs
         }).done(function(data) {
             $.ajax({
-                type: 'PUT',
-                url: '/ajax/contents/' + carId,
-                data: {"status":'{{ \App\Content::STATUS_PUBLISHED}}', "visibility":'{{ \App\Content::VISIBILITY_PUBLIC }}'}
+                type: 'POST',
+                url: '/ajax/contents/' + carId + '/publish',
+                data: {"status":'{{ \App\Content::STATUS_PUBLISHED}}', "visibility":'{{ \App\Content::VISIBILITY_PUBLIC }}', "publishPricing": publishPricing}
             }).done(function(data) {
                 $("#demo-spinner").css({'display': 'none'});
                 nextPrev(1);
                 console.log("DONE!");
                 console.log(data);
+                if (paramObjs.publishType === "free") {
+                    $("#responseText").html("Амжилттай бүртгэгдлээ. Үнэтэй зараар өөрчлөхийг хүсвэл, Cash буюу үйлчилгээний төлбөрөө шилжүүлсний дараагаар Миний хуудас дахь үнэтэй зар болгох хэсэгт хүсэлтэй илгээнэ үү.");
+                } else {
+                    $("#responseText").html("Амжилттай бүртгэгдлээ. Үйлчилгээний төлбөрийг таны үлдэгдэл Cash-аас тооцсон болно.");
+                }
                 $('#carRegSuccess').modal('show');
                 setTimeout(function(){
                     anim3.play();
@@ -226,7 +211,24 @@ $("input").click(function(){
                     window.location.href = "/posts/"+carId;
                 }, 3000);
 
-            }).fail(fail);
+            }).fail(function(err) {
+                console.log(err);
+                if (err.responseJSON.hasOwnProperty('message')) {
+                    if (err.responseJSON['message'] == 'Insufficient cash') {
+                        $("#responseText").html("Таны үлдэгдэл хүрэлцэхгүй байгаа тул Cash-aa цэнэглэнэ үү.");
+                        $('#carRegSuccess').modal('show');
+                        setTimeout(function(){
+                            anim3.play();
+                        }, 700);
+
+                        setTimeout(function(){
+                            window.location.href = "/charge-cash?id=" + carId;
+                        }, 3000);
+                    
+                    }
+                }
+                fail(err);
+            });
         }).fail(fail);
     }
 </script>

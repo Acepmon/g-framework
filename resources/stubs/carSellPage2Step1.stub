@@ -80,9 +80,10 @@
             <label for="capacityAmount">Моторын хэмжээ:</label>
             <div class="input-group">
                 <input type="number" min="0" class="form-control" id="capacityAmount" name="capacityAmount" placeholder="Моторын хэмжээ" value="{{ $car->metaValue('capacityAmount') }}">
-                <input type="hidden" class="form-control" id="capacityUnit" name="capacityUnit" value="cc">
+<!--                <input type="text" min="0" name="capacityAmount" class="form-control text-left" id="capacityAmount" value="{{ $car->metaValue('capacityAmount') }}" placeholder="Моторын хэмжээ" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 0, 'digitsOptional': false">-->
+                <input type="hidden" class="form-control" id="capacityUnit" name="capacityUnit" value="Л">
                 <div class="input-group-prepend">
-                    <div class="input-group-text-right">CC</div>
+                    <div class="input-group-text-right">Л</div>
                 </div>
             </div>
         </div>
@@ -152,9 +153,10 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="millage">Явсан КМ:</label>
+            <label for="mileage">Явсан КМ:</label>
             <div class="input-group">
-                <input type="number" min="0" class="form-control" id="millage" name="mileageAmount" placeholder="Гүйлт" value="{{ $car->metaValue('mileageAmount') }}">
+<!--                <input type="number" min="0" class="form-control" id="mileage" name="mileageAmount" placeholder="Гүйлт" value="{{ $car->metaValue('mileageAmount') }}">-->
+                <input type="text" min="0" name="mileage" class="form-control text-left" value="{{ $car->metaValue('mileageAmount') }} id="mileage" placeholder="Гүйлт" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 0, 'digitsOptional': false">
                 <input type="hidden" name="mileageUnit" value="km">
                 <div class="input-group-prepend">
                     <div class="input-group-text-right">KM</div>
@@ -211,8 +213,8 @@
         </div>
         <div class="col-md-9">
             <div class="custom-file">
-                <input name="doc" type="file" class="custom-file-input" id="docFile" disabled>
-                <label class="custom-file-label" for="docFile">Файл сонгох</label>
+                <input name="doc" type="file" class="custom-file-input" id="docFile" disabled onChange="changeFileLabel(this, 'docFileLbl')">
+                <label class="custom-file-label" for="docFile" id="docFileLbl">Файл сонгох</label>
             </div>
         </div>
     </div>
@@ -281,6 +283,13 @@
 @push('scripts')
 <script src="{{ asset('car-web/vendor/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
 <script>
+    function changeFileLabel(input, id) {
+        var filePath = $(input)[0].value;
+        filePath = filePath.split('\\');
+        filePath = filePath[filePath.length - 1];
+        $("#"+id).text(filePath);
+    }
+
     var modelData = {
         '': [''],
         @foreach(App\ TermTaxonomy::where('taxonomy', 'car-manufacturer')->get() as $taxonomy)
@@ -386,7 +395,9 @@
                     }
                 }
             });
-
+            console.log(paramObjs);
+            // paramObjs.mileage = parseInt(parseFloat($('#monthlyPrice').val().replace(/[^0-9 | ^.]/g, '')));
+            paramObjs.mileage = parseInt(parseFloat(paramObjs.mileage.replace(/[^0-9 | ^.]/g, '')));
             $.ajax({
                 type: 'PUT',
                 url: '/ajax/contents/' + carId + '/metas/sync',

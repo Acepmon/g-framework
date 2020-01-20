@@ -18,6 +18,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('contents/', 'ContentController@index');
             Route::put('contents/{contentId}', 'ContentController@update');
             Route::delete('contents/{contentId}', 'ContentController@destroy');
+            Route::post('contents/{contentId}/publish', 'ContentController@publish');
             Route::post('contents/{contentId}/metas', 'ContentMetaController@createMeta');
             Route::put('contents/{contentId}/metas', 'ContentMetaController@updateMeta');
             Route::put('contents/{contentId}/metas/sync', 'ContentMetaController@syncMetas');

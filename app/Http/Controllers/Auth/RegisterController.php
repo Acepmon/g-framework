@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Modules\Content\Http\Controllers\GroupController;
 
 use Socialite;
 
@@ -106,9 +107,20 @@ class RegisterController extends Controller
             $user->save();
         }
 
-        $groupId = array_key_exists('group', $data) ? $data['group'] : config('system.register.defaultGroup');
+        $except = self::EXCEPT;
+        $groupId = array_key_exists('groupId', $data) ? $data['groupId'] : config('system.register.defaultGroup');
         if (!empty($groupId)) {
-            $user->groups()->attach($groupId);
+            $except = array_merge($except, ['groupId']);
+            $group = Group::findOrFail($data['groupId']);
+            // If make row per dealer 
+            if ($group->title == 'Auto Dealer') {
+                $except = array_merge($except, ['companyName', 'description', 'schedule', 'address']);
+                $company = GroupController::register($group, $data);
+                $user->groups()->attach(config('system.register.defaultGroup'));
+                $user->groups()->attach($company);
+            } else {
+                $user->groups()->attach($group);
+            }
         }
 
         if (array_key_exists('social_id', $data) && array_key_exists('social_provider', $data) && array_key_exists('social_token', $data)) {
@@ -118,7 +130,6 @@ class RegisterController extends Controller
             $user->save();
         }
 
-        $except = self::EXCEPT;
         $except = array_filter($data, function ($key) use ($except) {
             return !in_array($key, $except);
         }, ARRAY_FILTER_USE_KEY);

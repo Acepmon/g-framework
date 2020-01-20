@@ -19,5 +19,7 @@ class PermissionsTableSeeder extends Seeder
         Model::unguard();
 
         PermissionManager::newPermissionCrud('admin_modules_payment_payment_methods');
+        PermissionManager::newPermissionCrud('admin_modules_payment_transactions');
+        PermissionManager::newPermissionCrud('ajax_modules_payment_transactions');
     }
 }

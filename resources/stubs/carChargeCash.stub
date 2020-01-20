@@ -1,0 +1,135 @@
+@extends('themes.car-web.layouts.default')
+
+@section('title')
+Charge Cash
+@endsection
+
+@section('load')
+<link href="{{ asset('car-web/vendor/simple-line-icons/css/simple-line-icons.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('car-web/vendor/bootstrap-slider/css/bootstrap-slider.min.css') }}" rel="stylesheet">
+@endsection
+
+@section('content')
+
+<div class="bg-page-header"></div>
+
+@auth
+<section class="bg p-5 position-relative">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6">
+                <h3>Данс цэнэглэх</h3>
+                <p>1. Та дараах дансны аль нэг рүү гүйлгээ хийнэ үү.</p>
+                <ul>
+                @foreach(\Modules\Payment\Entities\PaymentMethod::where('code', 'transaction')->get() as $bank)
+                @php
+                $bank = json_decode($bank->data);
+                @endphp
+                    <li>
+                        <div>
+                            {{ $bank->bankName }} - {{ $bank->accountNo}} - {{ $bank->accountName }}
+                        </div>
+                    </li>
+                @endforeach
+                </ul>
+
+                <p>2. Гүйлгээний утга дээр ______________ оруулна уу.</p>
+                
+                <p>3. Таны захиалсан үйлчилгээ (онцгой зар, зар шинэчлэх зэх мэт) админ шалгасны дараа идэвхжинэ. </p>
+            </div>
+            <div class="col-md-6">
+                <form id="charge-cash" action="{{ route('admin.modules.payment.transactions.create') }}">
+                    @csrf
+                    <div class="modal-body px-5">
+                        <div class="maz-modal-title">Данс цэнэглэх хүсэлт</div>
+                        <div class="maz-modal-desc">Энэ формыг бөглөнө үү.</div>
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Хэрэглэгчийн нэр:</label>
+                                <input type="text" class="form-control" value="{{ \Auth::user()->name }}" disabled required>
+                            </div>
+
+                            <input type="hidden" name="payment_method" value="1">
+                            <input type="hidden" name="transaction_type" value="income">
+                            <input type="hidden" name="transaction_usage" value="{{ \App\Content::find(request('id', 0))?\App\Content::find(request('id', 0))->metaValue('publishType'):'charge' }}">
+                            <input type="hidden" name="status" value="{{ \Modules\Payment\Entities\Transaction::STATUS_PENDING }}">
+                            <input type="hidden" name="user_id" value="{{ \Auth::user()->id }}">
+                            <input type="hidden" name="content_id" value="{{ \App\Content::find(request('id', 0))?request('id'):'' }}">
+
+                            <div class="form-group">
+                                <label for="phone" class="col-form-label">Хаашаа шилжүүлгэ хийсэн данс:</label>
+                                <select name="payment_method" class="form-control">
+                                @foreach(\Modules\Payment\Entities\PaymentMethod::where('code', 'transaction')->get() as $bank)
+                                    <option value="{{ $bank->id }}">{{ json_decode($bank->data)->bankName }} - {{ json_decode($bank->data)->accountNo}}</option>
+                                @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Дансны дугаар:</label>
+                                <input type="text" class="form-control" id="name" name="info" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" class="col-form-label">Утасны дугаар:</label>
+                                <input type="text" class="form-control" id="phone" name="phone" value="{{ \Auth::user()->metaValue('phone') }}" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer pb-5">
+                            <button type="button" id="btnSendLoanCheck" class="btn btn-danger btn-round px-5 py-2 shadow-red" onclick="submitChargeCash()">Илгээх</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+@endauth
+<div class="modal fade" id="chargeCashSuccess">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body text-center">
+            <div class="maz-modal-title" style="font-size:1.5rem">Charge cash</div>
+            <div id="sent-ad" style="width: 300px; display:inline-block"></div>
+                <h5 id="responseText" class="mb-5">Амжилттай бүртгэгдлээ. Хэсэг хугацааны дараа таны хүсэлт баталгаажсан байх болно.</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@section('script')
+<script>
+
+function submitChargeCash() {
+        $("#demo-spinner").css({'display': 'block'});
+        var paramObjs = {};
+        $.each($('#charge-cash').serializeArray(), function(_, kv) {
+            paramObjs[kv.name] = kv.value;
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ route("ajax.modules.payment.transactions.store") }}',
+            data: paramObjs
+        }).done(function(data) {
+            $("#demo-spinner").css({'display': 'none'});
+            $('#chargeCashSuccess').modal('show');
+            setTimeout(function(){
+                anim3.play();
+            }, 700);
+
+            setTimeout(function(){
+                window.location.href = "/";//{{--"{{ route('mileage') }}";--}}
+            }, 3000);
+
+        }).fail();
+    }
+</script>
+@endsection

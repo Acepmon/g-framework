@@ -33,6 +33,10 @@
                             <!-- card start -->
                             <a href="{{$othCars->slug}}" target="_blank" class="card">
                                 <div class="card-body">
+
+                                    @if(getMetasValue($othCars->metas, 'doctorVerified')==1)
+                                    DV<div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt=""></div>
+                                    @endif
                                     <div class="card-img">
                                         <img src="{{(getMetasValue($othCars->metas,'thumbnail'))}}" class="img-fluid" alt="alt">
                                     </div>
@@ -40,7 +44,7 @@
                                         <div class="card-caption">
                                             <div class="card-title">{{$othCars->title}}</div>
                                             <div class="meta">{{(getMetasValue($othCars->metas,'buildYear'))}} / {{(getMetasValue($othCars->metas,'importDate'))}} | {{(getMetasValue($othCars->metas,'mileageAmount'))}} {{(getMetasValue($othCars->metas,'mileageUnit'))}}</div>
-                                            <div class="price">{{numerizePrice((getMetasValue($othCars->metas,'priceAmount')))}} {{(getMetasValue($othCars->metas, 'priceUnit'))}}</div>
+                                            <div class="price">{{numerizePrice((getMetasValue($othCars->metas,'priceAmount')))}} {{(getMetasValue($othCars->metas, 'priceUnit'))}} {{(getMetasValue($othCars->metas,'doctorVerified'))}}</div>
                                             @if(Auth::user()!=null && $othCars->author_id==Auth::user()->id)
                                                 <div class="favorite">
                                                     <span class=""><i class="fas fa-car"></i> This is your car</span>

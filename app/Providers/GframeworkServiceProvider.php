@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Content;
 use App\Banner;
 use App\TermTaxonomy;
+use App\PaymentTransaction;
 use App\ContentMeta;
 use DB;
 use Modules\Content\Transformers\TaxonomyCollection;
@@ -68,6 +69,7 @@ class GframeworkServiceProvider extends ServiceProvider
 
         Blade::directive('contentInline', function ($expression) {
             // Parsing of passed expression
+
             $parsed = $this->parseExpression($expression);
             $variable = $parsed->variable;
             $returnArg = "";
@@ -144,6 +146,43 @@ class GframeworkServiceProvider extends ServiceProvider
             return "<?php {$daaataaa} = json_decode('$carData'); ?>";
         });
 
+
+
+        Blade::directive('contentInline', function ($expression) {
+            // Parsing of passed expression
+            $parsed = $this->parseExpression($expression);
+
+            $variable = $parsed->variable;
+            $returnArg = "";
+
+            $contents = $this->parseContent($parsed, $returnArg);
+//            dd($contents);
+            return "<?php \$tmp = $contents; {$variable} = \$tmp ?>";
+        });
+
+
+
+
+
+
+        Blade::directive('myMileage', function ($expression) {
+            $parsed = $this->parseExpression($expression);
+//            dd($expression);
+//            dd($parsed);
+//            if($parsed->filters[0]['value']=="request()->input('page')"){
+//                $pagenum=1;
+//            }
+//            else{
+//                $pagenum=$parsed->filters[0]['value'];
+//            }
+//            dd($pagenum);
+            $cash = "\Modules\Payment\Entities\Transaction::where('user_id', " . $parsed->filters[1]['value'] . ")->paginate(10)";
+
+            return "<?php \$ma = $cash ?>";
+        });
+        Blade::directive('endmyMileage', function () {
+            return "<?php } ?>";
+        });
 
         Blade::directive('banners', function ($expression) {
             $someObject = json_decode($expression);

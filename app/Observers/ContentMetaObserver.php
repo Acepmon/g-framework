@@ -18,12 +18,15 @@ class ContentMetaObserver
     {
         $contentMeta->value = $this->validate($contentMeta->key, $contentMeta->value);
         $content = $contentMeta->content;
-        // if ($content->status == Content::STATUS_PUBLISHED && $content->visibility == Content::VISIBILITY_PUBLIC) {
-        //     TaxonomyManager::incrementCount($contentMeta->key, $contentMeta->value);
-        // }
+        if ($content->status == Content::STATUS_PUBLISHED && $content->visibility == Content::VISIBILITY_PUBLIC) {
+            TaxonomyManager::incrementCount($contentMeta->key, $contentMeta->value);
+        }
 
         if ($contentMeta->key == 'publishType') {
             $content->updateMeta('publishedAt', Carbon::now());
+            if ($contentMeta->value == 'best_premium' || $contentMeta->value == 'premium') {
+                
+            }
         }
 
         $this->calculateDays($contentMeta, 'startsAt', 'endsAt', 'publishDuration');
@@ -34,10 +37,10 @@ class ContentMetaObserver
     {
         $contentMeta->value = $this->validate($contentMeta->key, $contentMeta->value);
         $content = $contentMeta->content;
-        // if ($content->status == Content::STATUS_PUBLISHED && $content->visibility == Content::VISIBILITY_PUBLIC) {
-        //     TaxonomyManager::decrementCount($contentMeta->key, $contentMeta->getOriginal('value'));
-        //     TaxonomyManager::incrementCount($contentMeta->key, $contentMeta->value);
-        // }
+        if ($content->status == Content::STATUS_PUBLISHED && $content->visibility == Content::VISIBILITY_PUBLIC) {
+            TaxonomyManager::decrementCount($contentMeta->key, $contentMeta->getOriginal('value'));
+            TaxonomyManager::incrementCount($contentMeta->key, $contentMeta->value);
+        }
 
         $this->calculateDays($contentMeta, 'startsAt', 'endsAt', 'publishDuration');
         $this->calculateDays($contentMeta, 'publishVerifiedAt', 'publishVerifiedEnd', 'publishDuration');
@@ -46,9 +49,9 @@ class ContentMetaObserver
     public function deleting(ContentMeta $contentMeta)
     {
         $content = $contentMeta->content;
-        // if ($content->status == Content::STATUS_PUBLISHED && $content->visibility == Content::VISIBILITY_PUBLIC) {
-        //     TaxonomyManager::decrementCount($contentMeta->key, $contentMeta->value);
-        // }
+        if ($content->status == Content::STATUS_PUBLISHED && $content->visibility == Content::VISIBILITY_PUBLIC) {
+            TaxonomyManager::decrementCount($contentMeta->key, $contentMeta->value);
+        }
     }
 
     public function calculateDays($contentMeta, $startsAt, $endsAt, $duration) {

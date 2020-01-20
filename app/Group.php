@@ -16,6 +16,10 @@ class Group extends Model
         self::TYPE_DYNAMIC
     ];
 
+    protected $fillable = [
+        'parent_id', 'title', 'description', 'type'
+    ];
+
     public $timestamps = false;
 
     public function metas()

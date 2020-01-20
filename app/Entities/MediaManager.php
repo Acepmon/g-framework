@@ -77,6 +77,13 @@ class MediaManager extends Manager
         return $filename;
     }
 
+    public static function deleteFile($filepath) {
+        if (Str::startsWith($filepath, '/storage/')) {
+            $filepath = Str::replaceFirst('/storage/', '', $filepath);
+        }
+        Storage::disk('ftp')->delete($filepath);
+    }
+
     static function getMimeType($r, $t='file') {
         //Returns the Mime Type of a file or a string content - from: https://coursesweb.net/
         // $r = the resource: Path to the file; Or the String content

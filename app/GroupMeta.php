@@ -12,6 +12,7 @@ class GroupMeta extends Model
      * @var string
      */
     protected $table = 'group_metas';
+    protected $fillable = ['group_id', 'key', 'value'];
 
     public $timestamps = false;
 

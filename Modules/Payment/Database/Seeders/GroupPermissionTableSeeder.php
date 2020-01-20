@@ -21,5 +21,7 @@ class GroupPermissionTableSeeder extends Seeder
 
         // Admin Group Permissions
         PermissionManager::attachGroupPermissions(1, Permission::where('title', 'LIKE', 'admin_modules_payment%')->get());
+        PermissionManager::attachGroupPermissions(1, Permission::where('title', 'LIKE', 'ajax_modules_payment_transactions%')->get());
+        PermissionManager::attachGroupPermissions(3, Permission::where('title', 'LIKE', 'ajax_modules_payment_transactions%')->get());
     }
 }

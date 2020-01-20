@@ -11,7 +11,7 @@
 
             <div class="card-list mx-n2">
                 <div class="row">
-                    @content(type=car, publishType=best_premium, publishVerified=1, isAuction=0, limit=12 as $bpCars | paginate)
+                    @content(type=car, publishType=best_premium, publishVerified=1, isSold=0, isAuction=0, limit=12 as $bpCars | paginate)
                     @if(count($interestedCars) > 0)
                         @foreach($interestedCars as $intCars)
                             @if($intCars==$bpCars->id)
@@ -36,6 +36,9 @@
                             <!-- card start -->
                             <a href="{{$bpCars->slug}}" target="_blank" class="card cd-box">
                                 <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt=""></div>
+                                @if(getMetasValue($bpCars->metas, 'doctorVerified')==1)
+                                <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt="">DV</div>
+                                @endif
                                 <div class="card-img">
                                     <img src="{{(getMetasValue($bpCars->metas, 'thumbnail'))}}" class="img-fluid" alt="alt">
 

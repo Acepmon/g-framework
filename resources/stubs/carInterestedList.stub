@@ -33,6 +33,12 @@
     @foreach($cars as $car)
     <div class="card">
         <div class="card-body">
+            @if(getMetasValue($car->metas, 'publishType')=='best_premium' || getMetasValue($carDataMonthly->metas, 'publishType')=='premium')
+            <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt=""></div>
+            @endif
+            @if(getMetasValue($car->metas, 'doctorVerified')==1)
+            <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt="">DV</div>
+            @endif
             <div class="card-img">
                 <img src="{{$car->metaValue("thumbnail")}}" class="img-fluid" alt="alt" />
             </div>

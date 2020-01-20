@@ -21,7 +21,7 @@
                             <div class='progress_inner_step'>
                                 <a class="nav-link" for='step-2' data-toggle="tab" href="#step-2" id="tab-step-2" role="tab" style="pointer-events: none;">Нэвтрэх нэр & Нууц үг</a>
                             </div>
-                            <div class='progress_inner_step'>
+                            <div class='progress_inner_step' id="step-3id">
                                 <a class="nav-link" for='step-3' data-toggle="tab" href="#step-3" id="tab-step-3" role="tab" style="pointer-events: none;">Нэмэлт мэдээлэл</a>
                             </div>
                         </div>
@@ -67,10 +67,20 @@
                                 <div class="row">
                                     <div class="col-md-7">
                                         <div class="form-group">
+                                            <div class="custom-control custom-checkbox-cd col-5 display-inline-block mr-0 float-left">
+                                                <input type="radio" name="groupId" value="{{ \App\Group::where('title', 'Member')->first()->id }}" class="custom-control-input" id="userType1" checked onclick="userType(1)" >
+                                                <label class="custom-control-label" for="userType1">Хувь хүн</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox-cd col-5 display-inline-block mr-0 float-left">
+                                                <input type="radio" name="groupId" value="{{ \App\Group::where('title', 'Auto Dealer')->first()->id }}" class="custom-control-input" onclick="userType(2)" id="userType2" >
+                                                <label class="custom-control-label" for="userType2">Дилер</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="email">И-мэйл:</label>
                                             <input type="text" name="email" id="email" maxlength="191" required class="form-control @error('email') is-invalid @enderror" placeholder="example@mail.com" value="{{ old('email') }}">
                                             @error('email')
-                                                <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback" role="alert">
                                                     {{ $message }}
                                                 </span>
                                             @enderror
@@ -79,23 +89,30 @@
                                             <label for="name">Нэр:</label>
                                             <input type="text" name="name" id="name" maxlength="191" required class="form-control @error('name') is-invalid @enderror" placeholder="Dorj Pagam" value="{{ old('name') }}">
                                             @error('name')
-                                                <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback" role="alert">
                                                     {{ $message }}
                                                 </span>
                                             @enderror
                                         </div>
                                         <div class="form-group">
+                                            <label for="phone">Утасны дугаар</label>
+                                            <div class="input-group">
+                                                <input type="text" name="cellPhone" id="cellPhone" hidden>
+                                                <input type="number" class="form-control" id="phoneNumber" placeholder="Утасны дугаар" style="width: 200px;">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="password">Нууц үг:</label>
-                                            <input type="password" name="password" id="password" required class="form-control @error('password') is-invalid @enderror" placeholder="Type your password">
+                                            <input type="password" name="password" id="password" required class="form-control @error('password') is-invalid @enderror" placeholder="Нууц үг">
                                             @error('password')
-                                                <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback" role="alert">
                                                     {{ $message }}
                                                 </span>
                                             @enderror
                                         </div>
                                         <div class="form-group">
                                             <label for="password_confirmation">Нууц үг давт:</label>
-                                            <input type="password" name="password_confirmation" id="password_confirmation" required class="form-control" placeholder="Confirm your password">
+                                            <input type="password" name="password_confirmation" id="password_confirmation" required class="form-control" placeholder="Нууц үг давт">
                                         </div>
                                     </div>
 
@@ -113,42 +130,78 @@
                                 <!-- NEXT PREV BUTTON START -->
                                 <div style="float:right;">
                                     <button class="btn btn-light btn-round px-5 py-2 mr-3" type="button" id="step2Prev">Өмнөх</button>
-                                    <button class="btn btn-danger btn-round shadow-red px-5 py-2" type="button" id="step2Next">Дараах</button>
+                                    <button class="btn btn-danger btn-round shadow-red px-5 py-2" type="button" hidden id="step2Next">Дараах</button>
+                                    <button id="userTypes2" class="btn btn-danger btn-round shadow-red px-5 py-2" type="submit">Бүртгүүлэх</button>
                                 </div>
                             </div>
                             <div id="step-3" class="tab-pane">
                                 <div class="row justify-content-center">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
+                                    <div class="col-md-8">
+                                        <div class="form-group col-md-5 d-inline-block align-top">
                                             <div class="profile-upload">
                                                 <div class="circle">
                                                     <img class="profile-pic" src="">
                                                 </div>
                                                 <div class="upload-image">
-                                                    <div class="btn btn-sm btn-primary upload-button">Зураг</div>
+                                                    <div class="btn btn-sm btn-primary upload-button" id="image">Зураг</div>
                                                     <input class="btn btn-primary file-upload" type="file" name="avatar" id="avatar" accept="image/*"/>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="address">Хаяг</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" name="address" id="meta_address" placeholder="Машины зогсоолын хаяг">
+                                        <div class="form-group col-md-5 d-inline-block align-top">
+                                            <div class="profile-upload">
+                                                <div class="circle">
+                                                    <img class="profile-pic-d" src="">
+                                                </div>
+                                                <div class="upload-image">
+                                                    <div class="btn btn-sm btn-primary upload-button" id="dealerImage">Дилер зураг</div>
+                                                    <input class="btn btn-primary file-upload" type="file" name="retailImage" id="dealerAvatar" accept="image/*"/>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="phone">Утасны дугаар</label>
+                                            <label for="companyName">Байгууллагын нэр</label>
                                             <div class="input-group">
-                                                <input type="text" name="phone" id="phone" hidden>
-                                                <input type="number" class="form-control" id="phoneNumber" placeholder="Утасны дугаар" style="width: 200px;">
+                                                <input type="text" class="form-control" name="companyName" id="companyName" placeholder="Байгууллагын нэр">
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="address">Байгууллагын хаяг</label>
+                                            <div class="input-group">
+                                                <textarea type="text" class="form-control" name="address" id="address" placeholder="Байгууллагын хаяг"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="website">Веб хуудас</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="website" id="website" placeholder="Веб хуудас">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="schedule">Цагын хуваарь</label>
+                                            <div class="input-group">
+                                                <textarea type="text" class="form-control" name="schedule" id="schedule" placeholder="Цагын хуваарь"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Танилцуулга</label>
+                                            <div class="input-group">
+                                                <textarea type="text" class="form-control" name="description" id="description" placeholder="Танилцуулга"></textarea>
+                                            </div>
+                                        </div>
+<!--                                        <div class="form-group">-->
+<!--                                            <label for="phone">Утасны дугаар</label>-->
+<!--                                            <div class="input-group">-->
+<!--                                                <input type="text" name="phone" id="phone" hidden>-->
+<!--                                                <input type="number" class="form-control" id="phoneNumber" placeholder="Утасны дугаар" style="width: 200px;">-->
+<!--                                            </div>-->
+<!--                                        </div>-->
                                     </div>
                                 </div>
 
                                 <!-- NEXT PREV BUTTON START -->
                                 <div style="float:right;">
-                                    <button class="btn btn-light btn-round px-5 py-2 mr-3" type="button" id="step3Prev">Өмнөх</a>
+                                    <button class="btn btn-light btn-round px-5 py-2 mr-3" type="button" id="step3Prev">Өмнөх</button>
                                     <button class="btn btn-danger btn-round shadow-red px-5 py-2" type="submit">Бүртгүүлэх</button>
                                 </div>
                             </div>
@@ -193,6 +246,20 @@
             $("#tab-step-2").trigger('click');
         });
     });
+
+    function userType(type) {
+        console.log(type)
+        if(type===1){
+            $( "#step-3id" ).attr( "hidden","true" );
+            $( "#step2Next" ).attr( "hidden","true" );
+            $( "#userTypes2" ).removeAttr( "hidden" );
+        }
+        else if(type===2){
+            $( "#step-3id" ).removeAttr( "hidden" );
+            $( "#userTypes2" ).attr( "hidden","true" );
+            $( "#step2Next" ).removeAttr( "hidden" );
+        }
+    }
 </script>
 
 {{-- Step 1 Validation --}}
@@ -321,7 +388,7 @@
 
         $("#step-2").find("input").each(function() {
             $(this).keydown(function(event) {
-                    console.log("CLICKED ENTER");
+                console.log("CLICKED ENTER");
                 if(event.keyCode == 13) {
                     console.log("CLICKED ENTER");
                     event.stopPropagation();
@@ -336,37 +403,45 @@
 
 {{-- Step 3 Validation --}}
 <script>
-    var readURL = function(input) {
+    var readURL = function(input,no) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $('.profile-pic').attr('src', e.target.result);
+                if(no==1){$('.profile-pic').attr('src', e.target.result);}
+                else if(no==2){$('.profile-pic-d').attr('src', e.target.result);}
+
             }
 
             reader.readAsDataURL(input.files[0]);
         }
     }
 
-    $(".file-upload").on('change', function(){
-        readURL(this);
+    $("#avatar").on('change', function(){
+        readURL(this,1);
     });
 
-    $(".upload-button").on('click', function() {
-        $(".file-upload").click();
+    $("#dealerAvatar").on('change', function(){
+        readURL(this,2);
     });
 
-    $(document).ready(function () {
-        var phoneNumber = $("#phoneNumber");
-        var phone = $("#phone");
-
-        var onPhoneChange = function () {
-            phone.val(phoneNumber.val());
-        }
-
-        phoneNumber.change(onPhoneChange);
-
-        onPhoneChange();
+    $("#image").on('click', function() {
+        $("#avatar").click();
     });
+    $("#dealerImage").on('click', function() {
+        $("#dealerAvatar").click();
+    });
+    // $(document).ready(function () {
+    //     var phoneNumber = $("#phoneNumber");
+    //     var phone = $("#phone");
+    //
+    //     var onPhoneChange = function () {
+    //         phone.val(phoneNumber.val());
+    //     }
+    //
+    //     phoneNumber.change(onPhoneChange);
+    //
+    //     onPhoneChange();
+    // });
 </script>
 @endsection

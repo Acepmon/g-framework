@@ -17,6 +17,7 @@ class PaymentDatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(PaymentMethodsTableSeeder::class);
+        $this->call(PaymentTransactionTableSeeder::class);
         $this->call(MenusTableSeeder::class);
         $this->call(PermissionsTableSeeder::class);
 

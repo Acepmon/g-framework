@@ -24,6 +24,7 @@ class MenusTableSeeder extends Seeder
         $adminMenus = [
             // Payment Management
             ['Payment Methods', '/admin/modules/payment/payment_methods', 'icon-credit-card', 'Payment'],
+            ['Transactions', '/admin/modules/payment/transactions', 'icon-transmission', 'Payment'],
         ];
 
         $this->iterate($adminMenus, 2, 1);

@@ -271,4 +271,23 @@ class Content extends Model
             default: return 'default';
         }
     }
+
+    public function publishPremium() {
+        $publishType = $this->metaValue('publishType');
+        if ($publishType == 'best_premium' || $publishType == 'premium') {
+            $author = $this->author;
+            $cash = $author->metaValue('cash');
+            $amount = $this->metaValue('publishAmount');
+            if ($cash - $amount <= 0) {
+                return false;
+            }
+            $cash = $cash - $amount;
+            $author->setMetaValue('cash', $cash);
+            $this->status = self::STATUS_PUBLISHED;
+            $this->visibility = self::VISIBILITY_PUBLIC;
+            $this->save();
+            return true;
+        }
+        return false;
+    }
 }

@@ -106,17 +106,17 @@ $itsIntCar=false;
                             <li class="nav-item">
                                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#allVehicles"
                                    role="tab"
-                                   aria-controls="imported" aria-selected="true">Бүх машинаас</a>
+                                   aria-controls="imported" aria-selected="true">Жижиг тэрэг</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#budget" role="tab"
+                                   aria-controls="budget"
+                                   aria-selected="false">Том тэрэг</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#auction" role="tab"
                                    aria-controls="used"
                                    aria-selected="false">Аукцион</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#budget" role="tab"
-                                   aria-controls="budget"
-                                   aria-selected="false">Төсөвт багтаах</a>
                             </li>
                         </ul>
                         <div class="tab-content p-5" id="heroTabFilter">
@@ -159,7 +159,7 @@ $itsIntCar=false;
                                     <button type="submit" id="submitSearch" class="btn btn-danger btn-lg btn-round shadow mt-4 pl-5 pr-5">Хайх</button>
                                 </form>
                             </div>
-                            <div class="tab-pane fade" id="auction" role="tabpanel" aria-labelledby="used-tab">
+                            <div class="tab-pane fade" id="budget" role="tabpanel" aria-labelledby="used-tab">
                                 <form method="GET" action="/search">
                                     @csrf
                                     <input type="text" name="title" hidden class="searchTitle">
@@ -168,7 +168,7 @@ $itsIntCar=false;
                                             <option value="" >Үйлдвэрлэгч</option>
                                             @getTaxonomys({"filter":[{"field":"taxonomy", "key":"car-manufacturer"}], "returnValue":"manufacturers"})
                                             @foreach($manufacturers as $data)
-                                                <option value="{{$data->term->name}}">{{$data->term->name}}</option>
+                                            <option value="{{$data->term->name}}">{{$data->term->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -182,7 +182,7 @@ $itsIntCar=false;
                                         <select class="form-control" name="buildYear">
                                             <option value="">Үйлдвэрлэсэн жил</option>
                                             @for ($i = \Carbon\Carbon::now()->year; $i >= \Carbon\Carbon::now()->year - 50; $i--)
-                                                <option value="{{$i}}">{{$i}}</option>
+                                            <option value="{{$i}}">{{$i}}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -190,14 +190,14 @@ $itsIntCar=false;
                                         <select class="form-control" name="importDate">
                                             <option value="">Орж ирсэн жил</option>
                                             @for ($i = \Carbon\Carbon::now()->year; $i >= \Carbon\Carbon::now()->year - 50; $i--)
-                                                <option value="{{$i}}">{{$i}}</option>
+                                            <option value="{{$i}}">{{$i}}</option>
                                             @endfor
                                         </select>
                                     </div>
                                     <button type="submit" class="btn btn-danger btn-lg btn-round shadow mt-4 pl-5 pr-5">Хайх</button>
                                 </form>
                             </div>
-                            <div class="tab-pane fade" id="budget" role="tabpanel" aria-labelledby="auction-tab">
+                            <div class="tab-pane fade" id="auction" role="tabpanel" aria-labelledby="auction-tab">
                                 <form method="GET" action="/search">
                                     @csrf
                                     <input name="title" type="text" hidden class="searchTitle">
@@ -206,7 +206,7 @@ $itsIntCar=false;
                                             <option value="" >Үйлдвэрлэгч</option>
                                             @getTaxonomys({"filter":[{"field":"taxonomy", "key":"car-manufacturer"}], "returnValue":"manufacturers"})
                                             @foreach($manufacturers as $data)
-                                                <option value="{{$data->term->name}}">{{$data->term->name}}</option>
+                                            <option value="{{$data->term->name}}">{{$data->term->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
