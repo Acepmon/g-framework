@@ -55,22 +55,8 @@ class CarContentsTableSeeder extends Seeder
             $condition = TaxonomyManager::collection('car-conditions')->random()->term;
             $colorInterior = TaxonomyManager::collection('car-colors')->random()->term;
             $colorExterior = TaxonomyManager::collection('car-colors')->random()->term;
+            $doorCount = TaxonomyManager::collection('door-count')->random()->term;
             $retail = Content::where('type', 'retail')->get()->random()->id;
-
-            // via.placeholder.com images
-            // $thumbWidth = 640;
-            // $thumbHeight = 360;
-            // $mediaWidth = 1920;
-            // $mediaHeight = 1080;
-            // $placeholderUrl = 'https://via.placeholder.com';
-            // $thumbnail = $placeholderUrl . '/' . $thumbWidth . 'x' . $thumbHeight . '/';
-            // $medias = [];
-            // $mediasLimit = rand(1, 20);
-            // for ($i = 0; $i < $mediasLimit; $i++) {
-            //     $media = $placeholderUrl . '/' . $mediaWidth . 'x' . $mediaHeight . '/';
-            //     $meta = new ContentMeta(['key' => 'medias', 'value' => $media]);
-            //     array_push($medias, $meta);
-            // }
 
             // static images
             $thumbnail = asset('car-web/img/Cars/' . rand(1, 12) . '.jpg');
@@ -99,8 +85,20 @@ class CarContentsTableSeeder extends Seeder
                 $wheel,
                 $condition,
                 $colorExterior,
-                $colorInterior
+                $colorInterior,
+                $doorCount
             ]);
+
+            // Car options
+            $option_cats = TaxonomyManager::collection('car-options');
+            foreach($option_cats as $option_cat) {
+                $options = $option_cat->children;
+                foreach($options as $option) {
+                    if (rand(0, 1)) {
+                        $content->terms()->save($option->term);
+                    }
+                }
+            }
 
             $content->metas()->saveMany([
                 new ContentMeta(['key' => 'plateNumber', 'value' => rand(1000, 9999) . \Str::random(3)]),
@@ -160,7 +158,6 @@ class CarContentsTableSeeder extends Seeder
                 new ContentMeta(['key' => 'chassis', 'value' => '4 WD']),
                 new ContentMeta(['key' => 'speedLimitAmount', 'value' => '180']),
                 new ContentMeta(['key' => 'speedLimitUnit', 'value' => 'km/h']),
-                new ContentMeta(['key' => 'doorCount', 'value' => '4']),
 
                 // Doctor Service Verification
                 new ContentMeta(['key' => 'doctorVerified', 'value' => rand(0, 1)]),
@@ -177,54 +174,6 @@ class CarContentsTableSeeder extends Seeder
                 // Diagnostic
                 new ContentMeta(['key' => 'diagnosticConditionImage', 'value' => '/assets/car-web/img/retail.png']),
 
-                // Options - Exterior
-                new ContentMeta(['key' => 'optionExteriorSunroof', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionExteriorAluminumWheel', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionExterior4SeasonTire', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionExteriorElectricSideMirror', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionExteriorRearWiper', 'value' => rand(0, 1)]),
-
-                // Options - Guts
-                new ContentMeta(['key' => 'optionGutsSteerRemoteControl', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionGutsPowerSteering', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionGutsLeatherSeat', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionGutsElectricSeatDriverSeat', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionGutsElectricSeatPassengerSeat', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionGutsHeatedSeatDriverSeat', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionGutsHeatedSeatRearSeat', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionGutsMemorySeatDriverSeat', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionGutsPowerDoorLock', 'value' => rand(0, 1)]),
-
-                // Options - Safety
-                new ContentMeta(['key' => 'optionSafetyAirbagDriverSeat', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionSafetyAirbagPassengerSeat', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionSafetyAirbagSide', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionSafetyAirbagCurtains', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionSafetyCameraFront', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionSafetyCameraRear', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionSafetyCameraSide', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionSafetyParkingSenseRear', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionSafetyParkingSenseFront', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionSafetyABS', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionSafetyElectricParkingBrake', 'value' => rand(0, 1)]),
-
-                // Options - Convenience
-                new ContentMeta(['key' => 'optionConvenienceSmartKey', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConvenienceCruiseControl', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConvenienceAutoAirCondition', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConveniencePowerWindow', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConvenienceCDPlayer', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConvenienceNavigation', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConvenienceUSBTerminal', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConvenienceAUXTerminal', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConvenienceBluetooth', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConvenienceAutoLight', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConvenienceRainSenser', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConvenienceAVMonitorFront', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConvenienceAVMonitorRear', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConvenienceBlinderRear', 'value' => rand(0, 1)]),
-                new ContentMeta(['key' => 'optionConvenienceBlackBox', 'value' => rand(0, 1)]),
-
                 // Publishing
                 new ContentMeta(['key' => 'publishType', 'value' => $publishTypes[array_rand($publishTypes)]]),
                 // new ContentMeta(['key' => 'publishedAt', 'value' => now()]),
@@ -240,8 +189,10 @@ class CarContentsTableSeeder extends Seeder
             $content->metas()->saveMany($medias);
 
             // Update title by merging markName and modelName
-            $content->title = Str::startsWith($modelName->name, $markName->name ? $modelName->name : $markName->name . ' ' . $modelName->name);
+            $content->title = Str::startsWith($modelName->name, $markName->name) ? $modelName->name : $markName->name . ' ' . $modelName->name;
             $content->slug = 'posts/' . $content->id;
+            $content->status = Content::STATUS_PUBLISHED;
+            $content->visibility = Content::VISIBILITY_PUBLIC;
             $content->save();
 
             $value = new \stdClass;

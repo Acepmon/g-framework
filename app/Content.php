@@ -87,6 +87,13 @@ class Content extends Model
         return $this->hasOne('App\User', 'id', 'author_id');
     }
 
+    public function termValue($taxonomy) {
+        $meta = $this->terms->where('taxonomy', $taxonomy)->first();
+        if ($meta)
+            return $meta->term->name;
+        return null;
+    }
+
     public function medias()
     {
         $medias = $this->metas->where('key', 'medias');

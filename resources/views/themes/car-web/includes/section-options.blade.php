@@ -16,7 +16,7 @@
                     <div class="info-list">
                         <ul>
                             @foreach(\App\TermTaxonomy::where('taxonomy', 'car-exterior')->get() as $taxonomy)
-                                @if ($content->metaValue($taxonomy->term->metaValue('metaKey')))
+                                @if ($content->terms->contains($taxonomy->term->id))
                                     <li><i class="fab fa fa-check"></i> {{ $taxonomy->term->name }}</li>
                                 @endif
                             @endforeach
@@ -28,7 +28,7 @@
                     <div class="info-list">
                         <ul>
                             @foreach(\App\TermTaxonomy::where('taxonomy', 'car-guts')->get() as $taxonomy)
-                                @if ($content->metaValue($taxonomy->term->metaValue('metaKey')))
+                                @if ($content->terms->contains($taxonomy->term->id))
                                     <li><i class="fab fa fa-check"></i> {{ $taxonomy->term->name }}</li>
                                 @endif
                             @endforeach
@@ -40,7 +40,7 @@
                     <div class="info-list">
                         <ul>
                             @foreach(\App\TermTaxonomy::where('taxonomy', 'car-safety')->get() as $taxonomy)
-                                @if ($content->metaValue($taxonomy->term->metaValue('metaKey')))
+                                @if ($content->terms->contains($taxonomy->term->id))
                                     <li><i class="fab fa fa-check"></i> {{ $taxonomy->term->name }}</li>
                                 @endif
                             @endforeach
@@ -52,7 +52,7 @@
                     <div class="info-list">
                         <ul>
                             @foreach(\App\TermTaxonomy::where('taxonomy', 'car-convenience')->get() as $taxonomy)
-                                @if ($content->metaValue($taxonomy->term->metaValue('metaKey')))
+                                @if ($content->terms->contains($taxonomy->term->id))
                                     <li><i class="fab fa fa-check"></i> {{ $taxonomy->term->name }}</li>
                                 @endif
                             @endforeach

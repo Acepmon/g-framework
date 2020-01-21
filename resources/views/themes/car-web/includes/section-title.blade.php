@@ -26,7 +26,7 @@
                                     @endif
                                     <p class="vehicle-meta text-muted">Үйлдвэрлэсэн он: {{$content->metaValue('buildYear')}} / Орж ирсэн он: {{$content->metaValue('importDate')}}</p>
                                     <p class="vehicle-meta text-muted">Гүйлт: {{$content->metaValue('mileageAmount')}} {{$content->metaValue('mileageUnit')}} |
-                                        Шатхуун: {{$content->metaValue('fuelType')}} | Хөдөлгүүрийн багтаамж: {{$content->metaValue('capacityAmount')}} {{$content->metaValue('capacityUnit')}}
+                                        Шатахуун: {{$content->termValue('car-fuel') }} | Хөдөлгүүрийн багтаамж: {{$content->metaValue('capacityAmount')}} {{$content->metaValue('capacityUnit')}}
                                     </p>
 
 
