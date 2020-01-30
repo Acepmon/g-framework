@@ -176,7 +176,6 @@ $categoryName = [
             <!-- <a href="/car-list?{{ $category . '=' . $taxonomy->term->name }}" class="text-body text-decoration-none"> -->
             <input type="radio" id="{{$taxonomy->term->name}}" name="{{ $category }}" class="custom-control-input" value="{{ $taxonomy->term->id }}" {{ ($taxonomy->term->id == request($category, Null))?'checked':'' }}>
             <label class="custom-control-label  d-flex justify-content-between" for="{{$taxonomy->term->name}}">{{ ucfirst($taxonomy->term->name) }}
-                {{$taxonomy->count}}
             </label>
             </div>
             @endforeach
