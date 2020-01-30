@@ -90,7 +90,7 @@ class TaxonomyManager extends Manager
     public static function updateTaxonomyCount($taxonomy_id)
     {
         $termTaxonomy = TermTaxonomy::findOrFail($taxonomy_id);
-        $termTaxonomy->count = $termTaxonomy->contents->count();
+        $termTaxonomy->count = max($termTaxonomy->contents->count(), 0);
         $termTaxonomy->save();
     }
 
