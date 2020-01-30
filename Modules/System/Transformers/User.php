@@ -2,6 +2,7 @@
 
 namespace Modules\System\Transformers;
 
+use Modules\System\Transformers\UserGroup;
 use Illuminate\Http\Resources\Json\Resource;
 
 class User extends Resource
@@ -28,7 +29,8 @@ class User extends Resource
             'social_id' => $this->social_id,
             'social_provider' => $this->social_provider,
             'social_token' => $this->social_token,
-            'meta' => $this->metasTransform()
+            'meta' => $this->metasTransform(),
+            'dealer' => new UserGroup($this->get_dealer_group())
         ];
     }
 }

@@ -12,6 +12,7 @@ use Modules\Content\Transformers\Content as ContentResource;
 class ContentManager extends Manager
 {
     //
+    const TERM_KEYS = ['carSubType']; // These keys should be filtered by term_relationships
 
     /**
      * Inserts meta to content
@@ -216,6 +217,15 @@ class ContentManager extends Manager
             }
         }
 
+        $termInputs = self::discernTermsFromRequest($request->input());
+        if (count($termInputs) > 0) {
+            foreach ($termInputs as $key => $value) {
+                $contents = $contents->whereHas('terms', function($q) use($value) {
+                    $q->where('term_taxonomy_id', $value);
+                });
+            }
+        }
+
         // Sort parameter
         if (\Str::startsWith($sort, '-')) {
             $sort = substr($sort, 1);
@@ -239,8 +249,23 @@ class ContentManager extends Manager
     public static function discernMetasFromRequest($input)
     {
         $inputExcept = ['title', 'slug', 'content', 'type', 'status', 'visibility', 'limit', 'page', 'author_id', '_token', '_method', 'sort'];
+        $termExcept = self::TERM_KEYS;
+        $inputExcept = array_merge($inputExcept, $termExcept);
         $metaInputs = array_filter($input, function ($key) use ($inputExcept) {
             return !in_array($key, $inputExcept);
+        }, ARRAY_FILTER_USE_KEY);
+        return $metaInputs;
+    }
+
+    /**
+     * Used to discern content metas from attributes of Content Model.
+     * @return array of ContentMeta, consisting of key, value pairs
+     */
+    public static function discernTermsFromRequest($input)
+    {
+        $termIn = self::TERM_KEYS;
+        $metaInputs = array_filter($input, function ($key) use ($termIn) {
+            return in_array($key, $termIn);
         }, ARRAY_FILTER_USE_KEY);
         return $metaInputs;
     }

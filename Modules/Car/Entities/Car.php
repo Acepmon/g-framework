@@ -8,7 +8,7 @@ use App\Content;
 class Car extends Content
 {
     protected $fillable = [];
-    protected const EXCEPT = ['minPrice', 'maxPrice', 'mileageAmount', 'options'];
+    protected const EXCEPT = ['minPrice', 'maxPrice', 'mileageAmount', 'options', 'carType'];
 
     public static function all($columns = []) {
         return Content::where('type', Content::TYPE_CAR)->where('status', Content::STATUS_PUBLISHED)->where('visibility', Content::VISIBILITY_PUBLIC);
@@ -141,10 +141,15 @@ class Car extends Content
         $request['minPrice'] = request('min_price', Null);
         $request['maxPrice'] = request('max_price', Null);
 
-        $request['truckSize'] = request('truck-size', Null);
-        $request['busSize'] = request('bus-sizes', Null);
-        $request['special'] = request('special', Null);
-
+        $request['carSubType'] = Null;
+        if ($request['carType'] == 'Хүнд ММ') {
+            $request['carSubType'] = request('truck-size', Null);
+        } else if ($request['carType'] == 'Автобус') {
+            $request['carSubType'] = request('bus-sizes', Null);
+        } else if ($request['carType'] == 'Тусгай ММ') {
+            $request['carSubType'] = request('special', Null);
+        }
+    
         // $request = json_encode($request);
         return $request;
     }

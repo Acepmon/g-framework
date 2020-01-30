@@ -52,13 +52,13 @@ class CarContentsTableSeeder extends Seeder
             // $className = '';
             $manCount = TaxonomyManager::collection('car-mancount')->random()->term;
             $fuelType = TaxonomyManager::collection('car-fuel')->random()->term;
-            $colorName = TaxonomyManager::collection('car-colors')->random()->term;
             $transmission = TaxonomyManager::collection('car-transmission')->random()->term;
             $wheelPosition = TaxonomyManager::collection('car-wheel-pos')->random()->term;
             $wheel = TaxonomyManager::collection('car-wheel')->random()->term;
             $condition = TaxonomyManager::collection('car-conditions')->random()->term;
-            $colorInterior = TaxonomyManager::collection('car-colors')->random()->term;
+            $colorInterior = TaxonomyManager::collection('car-interior-colors')->random()->term;
             $colorExterior = TaxonomyManager::collection('car-colors')->random()->term;
+            $colorName = $colorExterior;
             $doorCount = TaxonomyManager::collection('door-count')->random()->term;
             // $retail = Content::where('type', 'retail')->get()->random()->id;
 
