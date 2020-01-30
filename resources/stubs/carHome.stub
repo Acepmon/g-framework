@@ -120,8 +120,12 @@ $itsIntCar=false;
                                     <div class="form-group">
                                         <select id="vehicleManufacturer" class="form-control" name="car-manufacturer">
                                             <option value="">Үйлдвэрлэгч</option>
-                                            @foreach(App\Entities\TaxonomyManager::getManufacturers('normal') as $data)
+                                            @foreach(App\Entities\TaxonomyManager::getManufacturers('normal') as $key=>$data)
+                                            @if($key<5)
+                                                <option id="{{$data->term->name}}" style="font-weight: 700" value="{{$data->term->id}}">{{$data->term->name}}({{$data->count}})</option>
+                                            @else
                                                 <option id="{{$data->term->name}}" value="{{$data->term->id}}">{{$data->term->name}}({{$data->count}})</option>
+                                            @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -341,7 +345,7 @@ $itsIntCar=false;
                     var markName=$(this).find(":selected").attr("id");
                     $.ajax({
                         type: 'Get',
-                        url: '/api/v1/taxonomies/car-'+toKebabCase(markName),
+                        url: '/api/v1/taxonomies/car-'+toKebabCase(markName) + '?count=true',
                         // /data: paramObjs
                     }).done(function(data) {
                         console.log("DONE!");

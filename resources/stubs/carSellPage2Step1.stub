@@ -11,35 +11,59 @@
             </div>
             @endforeach
         </div>
-        <div id="truckSizes" hidden="true" class="grid-radio mt-5">
-            @foreach(\App\TermTaxonomy::where('taxonomy', 'truck-size')->get() as $key => $taxonomy)
-            <div class="cd-radio">
-                <input type="radio" id="{{ $taxonomy->term->name }}" name="carSubType" value="{{ $taxonomy->term->name }}" class="custom-control-input" {{ ($key == 0 || $car->metaValue('carType') == $taxonomy->term->name)?'checked':'' }}>
-                <label class="custom-control-label " for="{{ $taxonomy->term->name }}"> <img src="{{ asset('car-web/img/icons/' . strtolower($taxonomy->term->metaValue('value')) . '.svg') }}" alt=""><span>{{ $taxonomy->term->name }}</span>
-                </label>
-            </div>
-            @endforeach
-        </div>
-        <div id="bus" hidden="true" class="grid-radio mt-5">
-            @foreach(\App\TermTaxonomy::where('taxonomy', 'bus-sizes')->get() as $key => $taxonomy)
-            <div class="cd-radio">
-                <input type="radio" id="{{ $taxonomy->term->name }}" name="carSubType" value="{{ $taxonomy->term->name }}" class="custom-control-input" {{ ($key == 0 || $car->metaValue('carType') == $taxonomy->term->name)?'checked':'' }}>
-                <label class="custom-control-label " for="{{ $taxonomy->term->name }}"> <img src="{{ asset('car-web/img/icons/' . strtolower($taxonomy->term->metaValue('value')) . '.svg') }}" alt=""><span>{{ $taxonomy->term->name }}</span>
-                </label>
-            </div>
-            @endforeach
-        </div>
-        <div id="special" hidden="true" class="grid-radio mt-5">
-            @foreach(\App\TermTaxonomy::where('taxonomy', 'special')->get() as $key => $taxonomy)
-            <div class="cd-radio">
-                <input type="radio" id="{{ $taxonomy->term->name }}" name="carSubType" value="{{ $taxonomy->term->name }}" class="custom-control-input" {{ ($key == 0 || $car->metaValue('carType') == $taxonomy->term->name)?'checked':'' }}>
-                <label class="custom-control-label " for="{{ $taxonomy->term->name }}"> <img src="{{ asset('car-web/img/icons/' . strtolower($taxonomy->term->metaValue('value')) . '.svg') }}" alt=""><span>{{ $taxonomy->term->name }}</span>
-                </label>
-            </div>
-            @endforeach
-        </div>
+
+<!--        <div id="truckSizes" hidden="true" class="grid-radio mt-5">-->
+<!--            @foreach(\App\TermTaxonomy::where('taxonomy', 'truck-size')->get() as $key => $taxonomy)-->
+<!--            <div class="cd-radio">-->
+<!--                <input type="radio" id="{{ $taxonomy->term->name }}" name="carSubType" value="{{ $taxonomy->term->name }}" class="custom-control-input" {{ ($key == 0 || $car->metaValue('carType') == $taxonomy->term->name)?'checked':'' }}>-->
+<!--                <label class="custom-control-label " for="{{ $taxonomy->term->name }}"> <img src="{{ asset('car-web/img/icons/' . strtolower($taxonomy->term->metaValue('value')) . '.svg') }}" alt=""><span>{{ $taxonomy->term->name }}</span>-->
+<!--                </label>-->
+<!--            </div>-->
+<!--            @endforeach-->
+<!--        </div>-->
+<!--        <div id="bus" hidden="true" class="grid-radio mt-5">-->
+<!--            @foreach(\App\TermTaxonomy::where('taxonomy', 'bus-sizes')->get() as $key => $taxonomy)-->
+<!--            <div class="cd-radio">-->
+<!--                <input type="radio" id="{{ $taxonomy->term->name }}" name="carSubType" value="{{ $taxonomy->term->name }}" class="custom-control-input" {{ ($key == 0 || $car->metaValue('carType') == $taxonomy->term->name)?'checked':'' }}>-->
+<!--                <label class="custom-control-label " for="{{ $taxonomy->term->name }}"> <img src="{{ asset('car-web/img/icons/' . strtolower($taxonomy->term->metaValue('value')) . '.svg') }}" alt=""><span>{{ $taxonomy->term->name }}</span>-->
+<!--                </label>-->
+<!--            </div>-->
+<!--            @endforeach-->
+<!--        </div>-->
+<!--        <div id="special" hidden="true" class="grid-radio mt-5">-->
+<!--            @foreach(\App\TermTaxonomy::where('taxonomy', 'special')->get() as $key => $taxonomy)-->
+<!--            <div class="cd-radio">-->
+<!--                <input type="radio" id="{{ $taxonomy->term->name }}" name="carSubType" value="{{ $taxonomy->term->name }}" class="custom-control-input" {{ ($key == 0 || $car->metaValue('carType') == $taxonomy->term->name)?'checked':'' }}>-->
+<!--                <label class="custom-control-label " for="{{ $taxonomy->term->name }}"> <img src="{{ asset('car-web/img/icons/' . strtolower($taxonomy->term->metaValue('value')) . '.svg') }}" alt=""><span>{{ $taxonomy->term->name }}</span>-->
+<!--                </label>-->
+<!--            </div>-->
+<!--            @endforeach-->
+<!--        </div>-->
     </div>
     <div class="form-row">
+
+        <div id="truckSizes1" hidden="true" class="form-group col-md-6">
+            <label id="" for="truckSizes">Төрөл /хэмжээ/:</label>
+            <select id="truckSizes" name="carSubType" class="form-control">
+                <option value="">Хэмжээ</option>
+                @foreach(\App\TermTaxonomy::where('taxonomy', 'truck-size')->get() as $key => $taxonomy)
+                <option {{ ($car->metaValue('markName') == $taxonomy->term->name)?'selected':'' }}>{{$taxonomy->term->name}}</option>
+                @endforeach
+            </select>
+            <select id="bus" hidden="true" name="carSubType" class="form-control">
+                <option value="">Хэмжээ</option>
+                @foreach(\App\TermTaxonomy::where('taxonomy', 'bus-sizes')->get() as $key => $taxonomy)
+                <option {{ ($car->metaValue('markName') == $taxonomy->term->name)?'selected':'' }}>{{$taxonomy->term->name}}</option>
+                @endforeach
+            </select>
+            <select id="special" hidden="true" name="carSubType" class="form-control">
+                <option value="">Төрөл</option>
+                @foreach(\App\TermTaxonomy::where('taxonomy', 'special')->get() as $key => $taxonomy)
+                <option {{ ($car->metaValue('markName') == $taxonomy->term->name)?'selected':'' }}>{{$taxonomy->term->name}}</option>
+                @endforeach
+            </select>
+        </div>
+
         <div class="form-group col-md-6">
             <label for="Manufacturer">Үйлдвэрлэгч:</label>
             <select id="manufacturerSelect" name="markName" class="form-control" required>
@@ -342,7 +366,7 @@
             $('#special' ).attr("hidden", true);
             $('#models').attr("hidden", true).removeAttr("required");
             $('#modelSelect').removeAttr("required");
-            //$('#models' ).removeAttr("required");
+            $('#truckSizes1' ).removeAttr("hidden");
             $('#manufacturerSelect' ).attr("hidden", true).removeAttr("required");
             $('#manufacturerSelect1' ).removeAttr("hidden").attr("required");
             $('#manufacturerSelect2' ).attr("hidden", true).removeAttr("required");
@@ -354,6 +378,7 @@
             $('#special' ).attr("hidden", true);
             $('#models' ).attr("hidden", true).removeAttr("required");
             $('#modelSelect').removeAttr("required");
+            $('#truckSizes1' ).removeAttr("hidden");
             $('#manufacturerSelect' ).attr("hidden", true).removeAttr("required");
             $('#manufacturerSelect1' ).attr("hidden", true).removeAttr("required");
             $('#manufacturerSelect2' ).removeAttr("hidden").attr("required");
@@ -365,6 +390,7 @@
             $('#special' ).removeAttr("hidden");
             $('#models' ).attr("hidden", true).removeAttr("required");
             $('#modelSelect').removeAttr("required");
+            $('#truckSizes1' ).removeAttr("hidden");
             $('#manufacturerSelect' ).attr("hidden", true).removeAttr("required");
             $('#manufacturerSelect1' ).attr("hidden", true.removeAttr("required"));
             $('#manufacturerSelect2' ).attr("hidden", true).removeAttr("required");
@@ -377,6 +403,7 @@
             $('#special' ).attr("hidden", true);
             $('#models' ).removeAttr("hidden").attr("required");
             $('#modelSelect').removeAttr("required");
+            $('#truckSizes1' ).attr("hidden", true);
             $('#manufacturerSelect' ).removeAttr("hidden");
             $('#manufacturerSelect1' ).attr("hidden", true).removeAttr("required");
             $('#manufacturerSelect2' ).attr("hidden", true).removeAttr("required");

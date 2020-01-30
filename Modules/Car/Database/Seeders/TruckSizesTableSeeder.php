@@ -18,7 +18,7 @@ class TruckSizesTableSeeder extends Seeder
     {
         $truckSizes = ['Small-size Truck:Less than 2.5 ton(2,500kg)', 'Mid-size Truck:2.5 ton(2,500kg) ~ Less than 8 ton(8,000kg)', 'Big-size Truck:8 ton(8,000kg) and more'];
 
-        $parent = TaxonomyManager::register('Truck Size', 'car', null, ['metaKey' => 'truckSize']);
+        $parent = TaxonomyManager::register('Truck Size', 'car', null, ['metaKey' => 'carSubType']);
 
         foreach ($truckSizes as $key => $truckSize) {
             TaxonomyManager::register($truckSize, 'truck-size', $parent->term->id);

@@ -16,10 +16,10 @@ class SpecialVehicleTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        $specialVehicles = ['Excavator', 'Dozer', 'Wjeel Loader', 'Tower Crane', 'Cargo Crane', 'Pork Lift', 'Tractor', 'Concrete Mixer Truck', 'Concrete boom pump', 
+        $specialVehicles = ['Excavator', 'Dozer', 'Wheel Loader', 'Tower Crane', 'Cargo Crane', 'Pork Lift', 'Tractor', 'Concrete Mixer Truck', 'Concrete boom pump', 
         'Blasthole drill rigs', 'Tow Truck', 'Tank Lorry', 'Ladder Truck', 'Camping Car', 'Others'];
 
-        $parent = TaxonomyManager::register('Special Vehicle Type', 'car', null, ['metaKey' => 'specialVehicle']);
+        $parent = TaxonomyManager::register('Special Vehicle Type', 'car', null, ['metaKey' => 'carSubType']);
 
         foreach ($specialVehicles as $key => $specialVehicle) {
             TaxonomyManager::register($specialVehicle, 'special', $parent->term->id);

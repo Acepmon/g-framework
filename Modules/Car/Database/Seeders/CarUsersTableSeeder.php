@@ -26,7 +26,7 @@ class CarUsersTableSeeder extends Seeder
             $randomGroupId = $randomGroup->id;
 
             $user->groups()->attach(3);
-            $user->groups()->attach($randomGroupId);
+            // $user->groups()->attach($randomGroupId);
 
             $user->metas()->saveMany([
                 new UserMeta(['user_id' => '4','key' => 'type', 'value' => 'Damoa']),

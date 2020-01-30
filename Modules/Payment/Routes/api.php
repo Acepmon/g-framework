@@ -23,4 +23,12 @@ Route::prefix('v1')->group(function () {
         return new PaymentMethodCollection(PaymentMethod::where('enabled', true)->paginate());
     });
 
+    Route::namespace('API\v1')->group(function () {
+        Route::middleware('auth:api')->group(function () {
+
+            Route::prefix('payment')->group(function () {
+                Route::post('/transactions', 'TransactionController@store');
+            });
+        });
+    });
 });

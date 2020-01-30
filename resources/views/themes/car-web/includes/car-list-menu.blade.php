@@ -32,22 +32,22 @@ $categoryName = [
             @endforeach
         </div>
         <div class="card-body bg-light grid-radio pt-0 pb-0">
-            <select id="truck-choice" class="form-control mb-3 type-choice" name="truck-size" onchange="formSubmit('truckSize','no-value')" @if(!$request['truckSize']) style="display: none" @endif>
+            <select id="truck-choice" class="form-control mb-3 type-choice" name="truck-size" onchange="formSubmit('carSubType','no-value')" @if($request['carType']!='Хүнд ММ') style="display: none" @endif>
             <option value="">Хэмжээ сонгох</option>
             @foreach(App\TermTaxonomy::where('taxonomy', 'truck-size')->get() as $taxonomy)
-            <option {{ ($request['truckSize']==$taxonomy->term->name)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
+            <option value="{{$taxonomy->term->id}}" {{ ($request['carSubType']==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
             @endforeach
             </select>
-            <select id="bus-choice" class="form-control mb-3 type-choice" name="bus-sizes" onchange="formSubmit('busSize','no-value')" @if(!$request['busSize']) style="display: none" @endif>
+            <select id="bus-choice" class="form-control mb-3 type-choice" name="bus-size" onchange="formSubmit('carSubType','no-value')" @if($request['carType']!='Автобус') style="display: none" @endif>
             <option value="">Хэмжээ сонгох</option>
             @foreach(App\TermTaxonomy::where('taxonomy', 'bus-sizes')->get() as $taxonomy)
-            <option {{ ($request['busSize']==$taxonomy->term->name)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
+            <option value="{{$taxonomy->term->id}}" {{ ($request['carSubType']==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
             @endforeach
             </select>
-            <select id="special-choice" class="form-control mb-3 type-choice" name="special" onchange="formSubmit('special','no-value')" @if(!$request['special']) style="display: none" @endif>
+            <select id="special-choice" class="form-control mb-3 type-choice" name="special" onchange="formSubmit('carSubType','no-value')" @if($request['carType']!='Тусгай ММ') style="display: none" @endif>
             <option value="">Төрөл сонгох</option>
             @foreach(App\TermTaxonomy::where('taxonomy', 'special')->get() as $taxonomy)
-            <option {{ ($request['special']==$taxonomy->term->name)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
+            <option value="{{$taxonomy->term->id}}" {{ ($request['carSubType']==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
             @endforeach
             </select>
         </div>
