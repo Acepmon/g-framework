@@ -26,7 +26,7 @@ class CarContentsTableSeeder extends Seeder
         $time = time();
         $rootPath = config('content.cars.rootPath');
 
-        factory(Content::class, 50)->create(['type' => Content::TYPE_CAR])->each(function ($content) use ($time, $rootPath) {
+        factory(Content::class, 50)->create(['type' => Content::TYPE_CAR, 'status' => 'published', 'visibility' => 'public'])->each(function ($content) use ($time, $rootPath) {
 
             $content->slug = config('content.cars.containerPage') . '/' . $content->slug;
             $content->save();
@@ -269,8 +269,6 @@ class CarContentsTableSeeder extends Seeder
             // Update title by merging markName and modelName
             $content->title = \Str::startsWith($content->metaValue('modelName'), $content->metaValue('markName')) ? $content->metaValue('modelName') : $content->metaValue('markName') . ' ' . $content->metaValue('modelName');
             $content->slug = 'posts/' . $content->id;
-            $content->status = 'published';
-            $content->visibility = 'public';
             $content->save();
 
             $value = new \stdClass;
