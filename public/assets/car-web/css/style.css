@@ -1767,6 +1767,7 @@ select {
 .car-filter .grid-radio .cd-radio .custom-control-label span {
   position: absolute;
   bottom: 0;
+  font-size: .7rem;
 }
 
 .car-filter .custom-control-input {
@@ -1884,11 +1885,12 @@ select {
   position: absolute;
   right: 0;
   top: 0;
+  width: 25%;
   background: #DF2626;
   z-index: 1000;
   color: #fff;
-  padding: .5rem .75rem;
-  border-radius: 0 4px 0 8px;
+  padding: .5rem .5rem;
+  border-radius: 0 4px 0 4px;
   font-size: .75rem;
   box-sizing: border-box;
   font-weight: 700;
@@ -1897,6 +1899,10 @@ select {
 .car-list .card .card-body .card-img .doctor-verified-tag span {
   display: block;
   color: #f3abab;
+}
+
+.car-list .card .card-body .card-img .doctor-verified-tag img {
+  width: 100%;
 }
 
 .car-list .card .card-body .card-img .maz-auction-time {
