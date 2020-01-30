@@ -8,11 +8,7 @@
                         <div class="title">DOCTOR-оор
                             <span>батлагдсан</span></div>
                     </div>
-                @else
-                    <div class="dealer-more">
-                        <div class="value"><img src="{{ asset('car-web/img/icons/verify.svg') }}" alt=""></div>
-                        <div class="title">Баталгаажаагүй</div>
-                    </div>
+
                 @endif
 
                 @if ($content->metaValue('viewed'))

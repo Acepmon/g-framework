@@ -6,7 +6,7 @@
             <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/corona.svg') }}" alt=""></div>
             @endif
             @if(getMetasValue($car->metas, 'doctorVerified')==1)
-            <div class="doctor-verified-tag shadow-soft-blue"><span>Verified by</span> CAR DOCTOR</div>
+            <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor.png') }}" alt=""></div>
             @endif
             @if(isset($type) && $type == 'auction' && $car->metaValue('isAuction'))
             <div class="maz-auction-time">
@@ -44,7 +44,7 @@
                 <span class="info-icon">
                     <img src="{{ asset('car-web/img/icons/engine.svg') }}" alt="">
                     @if((getMetasValue($car->metas, 'doctorVerified'))===1)
-                                DV
+                    <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor.png') }}" alt=""></div>
                     @endIf
                     <p>{{ ucfirst($car->metaValue('capacityAmount')) . ' ' . strtoupper($car->metaValue('capacityUnit')) }}</p>
                 </span>

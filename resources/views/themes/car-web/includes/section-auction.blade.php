@@ -35,7 +35,7 @@
                             <div class="card cd-box auction-car">
                                 <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt=""></div>
                                 @if(getMetasValue($auctionPrmCars->metas, 'doctorVerified')==1)
-                                <div class="doctor-verified-tag shadow-soft-blue"><span>Verified by</span> CAR DOCTOR</div>
+                                <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor.png') }}" alt=""></div>
                                 @endif
                                 <div class="card-img">
                                     <img src="{{(getMetasValue($auctionPrmCars->metas, 'thumbnail'))}}" class="img-fluid" alt="alt">
