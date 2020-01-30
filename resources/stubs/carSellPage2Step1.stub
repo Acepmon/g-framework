@@ -44,7 +44,7 @@
 
         <div id="truckSizes1" hidden="true" class="form-group col-md-6">
             <label id="" for="truckSizes">Төрөл /хэмжээ/:</label>
-            <select id="truckSizes" name="carSubType" class="form-control" required>
+            <select id="truckSizes" name="carSubType" class="form-control">
                 <option value="">Хэмжээ</option>
                 @foreach(\App\TermTaxonomy::where('taxonomy', 'truck-size')->get() as $key => $taxonomy)
                 <option {{ ($car->metaValue('markName') == $taxonomy->term->name)?'selected':'' }}>{{$taxonomy->term->name}}</option>

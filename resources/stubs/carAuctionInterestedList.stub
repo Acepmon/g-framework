@@ -1,6 +1,6 @@
 @extends('themes.car-web.layouts.mypage')
 
-@section('title', 'Сонирхосон аукцион машинууд')
+@section('title', 'Сонирхсон аукцион машинууд')
 
 @section('load')
 
@@ -11,8 +11,8 @@
     <div class="card shadow-soft-blue page-top-navbar">
         <div class="mypage-nav">
         <ul>
-            <li class="list-item "><a href="/interested-car?sort=publishedAt">Сонирхосон машинууд</a></li>
-            <li class="list-item active"> <a href="#">Сонирхосон машинууд /дуудлага худалдаа/</a></li>
+            <li class="list-item "><a href="/interested-car?sort=publishedAt">Сонирхсон машинууд</a></li>
+            <li class="list-item active"> <a href="#">Сонирхсон машинууд /дуудлага худалдаа/</a></li>
         </ul>
         </div>
     </div>

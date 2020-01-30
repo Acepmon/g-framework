@@ -10,7 +10,7 @@
                 </div>
                 <form id="add-wish">
                     <div class="modal-body px-5 pt-0">
-                        <div class="maz-modal-title">Авахыг хүсэж буй машина оруулна уу</div>
+                        <div class="maz-modal-title">Авахыг хүсэж буй машинаа оруулна уу</div>
                         <div class="maz-modal-desc">Та авахыг хүсэж буй машиныхаа зарыг оруулсанаар машин худалдаалагч нар танруу таны хайж буй машиныг тань санал болгох болно. Хүсэж буй машинаа олоход тань амжилт хүсье</div>
                         <div class="form-row mt-5">
                             <div class="form-group col-md-6">
