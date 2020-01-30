@@ -340,31 +340,14 @@
             $('#truckSizes1' ).attr("hidden", true);
             sCarType="normal";
         }
+        getManufactures(sCarType);
+        getTypes(speModel);
+    }
+
+    function getManufactures(manufacturers) {
         $.ajax({
             type: 'Get',
-            url: '/api/v1/taxonomies/'+toKebabCase(speModel),
-        }).done(function(data) {
-            console.log("DONE!");
-            var modelList=data;
-            $('#truckSizes')
-                .find('option')
-                .remove()
-                .end()
-                .append('<option>Хэмжээ /Төрөл/</option>')
-                .val('')
-            ;
-            var i;
-            for (i = 0; i < modelList.data.length; i++) {
-                // /console.log(modelList.data[i].term.name);
-                $("#truckSizes").append(new Option(modelList.data[i].term.name, modelList.data[i].term.name));
-            }
-        }).fail(function(err) {
-            console.error("FAIL!");
-            console.error(err);
-        });
-        $.ajax({
-            type: 'Get',
-            url: '/api/v1/taxonomies/car-manufacturer?type='+sCarType,
+            url: '/api/v1/taxonomies/car-manufacturer?type='+manufacturers,
             // /data: paramObjs
         }).done(function(data) {
             console.log("DONE!");
@@ -382,9 +365,36 @@
                 // /console.log(modelList.data[i].term.name);
                 $("#manufacturerSelect").append(new Option(modelList.data[i].term.name, modelList.data[i].term.name));
             }
+            $("#manufacturerSelect option[value='{{ $car->metaValue('markName') }}']").prop('selected', true);
             $('#manufacturerSelect').on('change', onManufactureChange);
+            $('#manufacturerSelect').change();
         }).fail(function(err) {
-            // $("#demo-spinner").css({'display': 'none'});
+            console.error("FAIL!");
+            console.error(err);
+        });
+    }
+
+    function getTypes(types) {
+        $.ajax({
+            type: 'Get',
+            url: '/api/v1/taxonomies/'+toKebabCase(types),
+        }).done(function(data) {
+            console.log("DONE!");
+            var modelList=data;
+            $('#truckSizes')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option>Хэмжээ /Төрөл/</option>')
+                .val('')
+            ;
+            var i;
+            for (i = 0; i < modelList.data.length; i++) {
+                // /console.log(modelList.data[i].term.name);
+                $("#truckSizes").append(new Option(modelList.data[i].term.name, modelList.data[i].term.name));
+            }
+            $("#truckSizes option[value='{{ $car->metaValue('carSubType') }}']").prop('selected', true);
+        }).fail(function(err) {
             console.error("FAIL!");
             console.error(err);
         });
@@ -445,6 +455,22 @@
         @if($car->metaValue('markName'))
         $("#manufacturerSelect").change();
         @endif
+
+        @if($car->metaValue('carType'))
+            var cType="{{$car->metaValue('carType')}}";
+            var vType= "";
+            if(cType=="Суудлын"){
+                vType="Sedan"
+            }
+            else if(cType=="SUV"){vType="SUV"}
+            else if(cType=="Ванн"){vType="Van"}
+            else if(cType=="Хүнд ММ"){vType="Truck"}
+            else if(cType=="Автобус"){vType="Bus"}
+            else if(cType=="Тусгай ММ"){vType="Special"}
+            console.log("            wwwwwwwwwwwwwwwwwwwwwww"+{{$car->id}});
+            $('#'+vType).prop("checked", true);
+            subType(cType);
+        @endif
     });
 
     function step1Submit(__callback) {
@@ -500,7 +526,6 @@
                 }
             });
             console.log(paramObjs);
-            // paramObjs.mileage = parseInt(parseFloat($('#monthlyPrice').val().replace(/[^0-9 | ^.]/g, '')));
             paramObjs.mileage = parseInt(parseFloat(paramObjs.mileage.replace(/[^0-9 | ^.]/g, '')));
             $.ajax({
                 type: 'PUT',
