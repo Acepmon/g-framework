@@ -1889,8 +1889,8 @@ select {
   background: #DF2626;
   z-index: 1000;
   color: #fff;
-  padding: .5rem .75rem;
-  border-radius: 0 4px 0 8px;
+  padding: .5rem .5rem;
+  border-radius: 0 4px 0 4px;
   font-size: .75rem;
   box-sizing: border-box;
   font-weight: 700;
@@ -1899,6 +1899,10 @@ select {
 .car-list .card .card-body .card-img .doctor-verified-tag span {
   display: block;
   color: #f3abab;
+}
+
+.car-list .card .card-body .card-img .doctor-verified-tag img {
+  width: 100%;
 }
 
 .car-list .card .card-body .card-img .maz-auction-time {
