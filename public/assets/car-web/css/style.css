@@ -1790,6 +1790,51 @@ select {
           animation: floatRight 1s linear infinite;
 }
 
+.car-filter .range-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #AAAEB9;
+  outline: none;
+  opacity: 1;
+  transition: opacity .2s;
+}
+
+.car-filter .range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: #2680EB;
+  transform: scale(0.7);
+  cursor: pointer;
+  border: 0px solid #fff;
+  transition: all .3s ease;
+}
+
+.car-filter .range-slider::-moz-range-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: #2680EB;
+  transform: scale(0.7);
+  cursor: pointer;
+}
+
+.car-filter .range-slider:hover::-webkit-slider-thumb {
+  transform: scale(1);
+  border: 2px solid #fff;
+  box-shadow: 0 3px 10px rgba(43, 54, 81, 0.3);
+}
+
+.car-filter .range-slider:hover::-moz-slider-thumb {
+  transform: scale(1);
+  border: 2px solid #fff;
+  box-shadow: 0 3px 10px rgba(43, 54, 81, 0.3);
+}
+
 .car-filter .color-icon {
   display: inline-flex;
   margin-top: 2px;
@@ -2500,7 +2545,7 @@ select {
 
 .detail-page .dealer-information .dealer-img {
   width: 110px;
-  height: 110px;
+  height: 100%;
   overflow: hidden;
   border-radius: 100%;
   margin-right: 10px;
