@@ -435,7 +435,7 @@ hr {
   width: max-content;
   height: 0;
   visibility: hidden;
-  z-index: 1040;
+  z-index: 1;
   top: 20px;
 }
 
@@ -3819,11 +3819,12 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
   position: absolute;
   right: 0;
   top: 0;
+  width: 25%;
   background: #DF2626;
   z-index: 1000;
   color: #fff;
-  padding: .5rem .75rem;
-  border-radius: 0 4px 0 8px;
+  padding: .5rem .5rem;
+  border-radius: 0 4px 0 4px;
   font-size: .75rem;
   box-sizing: border-box;
   font-weight: 700;
@@ -3832,6 +3833,10 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
 .card-list .card .doctor-verified-tag span {
   display: block;
   color: #f3abab;
+}
+
+.card-list .card .doctor-verified-tag img {
+  width: 100%;
 }
 
 .card-list .card .card-img {
