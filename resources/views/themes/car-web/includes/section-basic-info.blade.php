@@ -44,7 +44,7 @@
 
                             @if ($content->metaValue('colorNameInterior'))
                                 <li>
-                                    <span class="info-icon color" data-color="{{ strtolower($content->metaValue('colorNameInterior')) }}">
+                                    <span class="info-icon color" data-color="{{ strtolower(ucfirst(\App\Term::where('name', $content->metaValue('colorNameInterior'))->first()->metaValue('value'))) }}">
                                         <p>{{ ucfirst(\App\Term::where('name', $content->metaValue('colorNameInterior'))->first()->metaValue('value')) }} (Гадна)</p>
                                     </span>
                                 </li>
@@ -52,7 +52,7 @@
 
                             @if ($content->metaValue('colorName'))
                                 <li>
-                                    <span class="info-icon color" data-color="{{ strtolower($content->metaValue('colorName')) }}">
+                                    <span class="info-icon color" data-color="{{ strtolower(ucfirst(\App\Term::where('name', $content->metaValue('colorName'))->first()->metaValue('value'))) }}">
                                         <p>{{ ucfirst(\App\Term::where('name', $content->metaValue('colorName'))->first()->metaValue('value')) }} (Салон)</p>
                                     </span>
                                 </li>
