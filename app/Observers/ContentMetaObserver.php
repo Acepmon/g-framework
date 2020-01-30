@@ -18,7 +18,7 @@ class ContentMetaObserver
     {
         $contentMeta->value = $this->validate($contentMeta->key, $contentMeta->value);
         $content = $contentMeta->content;
-        if ($content->status == Content::STATUS_PUBLISHED && $content->visibility == Content::VISIBILITY_PUBLIC) {
+        if ($content->type == Content::TYPE_CAR && $content->status == Content::STATUS_PUBLISHED && $content->visibility == Content::VISIBILITY_PUBLIC) {
             TaxonomyManager::incrementCount($contentMeta->key, $contentMeta->value);
         }
 
@@ -37,7 +37,7 @@ class ContentMetaObserver
     {
         $contentMeta->value = $this->validate($contentMeta->key, $contentMeta->value);
         $content = $contentMeta->content;
-        if ($content->status == Content::STATUS_PUBLISHED && $content->visibility == Content::VISIBILITY_PUBLIC) {
+        if ($content->type == Content::TYPE_CAR && $content->status == Content::STATUS_PUBLISHED && $content->visibility == Content::VISIBILITY_PUBLIC) {
             TaxonomyManager::decrementCount($contentMeta->key, $contentMeta->getOriginal('value'));
             TaxonomyManager::incrementCount($contentMeta->key, $contentMeta->value);
         }
@@ -49,7 +49,7 @@ class ContentMetaObserver
     public function deleting(ContentMeta $contentMeta)
     {
         $content = $contentMeta->content;
-        if ($content->status == Content::STATUS_PUBLISHED && $content->visibility == Content::VISIBILITY_PUBLIC) {
+        if ($content->type == Content::TYPE_CAR && $content->status == Content::STATUS_PUBLISHED && $content->visibility == Content::VISIBILITY_PUBLIC) {
             TaxonomyManager::decrementCount($contentMeta->key, $contentMeta->value);
         }
     }

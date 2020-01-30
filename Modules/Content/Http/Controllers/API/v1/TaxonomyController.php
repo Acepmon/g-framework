@@ -31,12 +31,12 @@ class TaxonomyController extends Controller
     {
         if ($taxonomy == 'car-manufacturer') {
             $type = request('type', 'normal');
-            return new TaxonomyCollection(TaxonomyManager::getManufacturers($type));
+            return new TaxonomyCollection(TaxonomyManager::getManufacturers($type, request()->input('count', True)));
         }
         if (request()->input('count')) {
             $taxonomies = TaxonomyManager::collection($taxonomy, True);
         } else {
-            $taxonomies = TaxonomyManager::collection($taxonomy);
+            $taxonomies = TaxonomyManager::collection($taxonomy, false);
         }
         return new TaxonomyCollection($taxonomies);
     }
