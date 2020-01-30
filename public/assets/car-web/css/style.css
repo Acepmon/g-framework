@@ -1885,6 +1885,7 @@ select {
   position: absolute;
   right: 0;
   top: 0;
+  width: 25%;
   background: #DF2626;
   z-index: 1000;
   color: #fff;
