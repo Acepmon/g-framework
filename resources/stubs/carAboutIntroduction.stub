@@ -41,7 +41,7 @@
                         <div class="about-heading-title">Танилцуулга </div>
                         <div class="about-text">
                             <p>Манай компани нь Вэб болон Мобайл дээр автомашины зуучлалын платформ нэвтрүүлж байна. 
-                                    Бид автомашин борлуулагч болон найдвартай анхүүгийн байгууллагуудтай хамтран ажиллаж хэрэгэлэгчдийг сэтгэл хангалуун байлгахын тулд зуучлалын системийг хийхээр хичээн ажиллаж байна. 
+                                    Бид автомашин борлуулагч болон найдвартай санхүүгийн байгууллагуудтай хамтран ажиллаж хэрэгэлэгчдийг сэтгэл хангалуун байлгахын тулд зуучлалын системийг хийхээр хичээн ажиллаж байна.
                                     </p>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                                     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et</p>
                                 </li>
                                 <li>
-                                     <p class="font-weight-bold mb-0">Техникийн үзлэг оношлогоо</p>
+                                     <p class="font-weight-bold mb-0">Техникийн үзлэг оношилгоо</p>
                                     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et</p>
                                 </li>
                             </ul>

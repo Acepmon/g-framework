@@ -27,19 +27,19 @@
         <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-            <h3>Техникийн үзлэг оношлогоо</h3>
+            <h3>Техникийн үзлэг оношилгоо</h3>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 intro-advantages">
             <div class="intro-advantage">
-                <h4>Машин худалдан авахыг хүссэн хэрэглэгч сонирхосон машины мэдээллийг оруулна
+                <h4>Машин худалдан авахыг хүссэн хэрэглэгч сонирхсон машины мэдээллийг оруулна
                 </h4>
                 <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutW-icon-1.svg') }}" alt=""></div>
             </div>
 
             <div class="intro-advantage">
-                <h4>Хэрэглэгч борлуулагчдаас өөрийн сонирхосон машины мэдээллийг авах боломжтой
+                <h4>Хэрэглэгч борлуулагчдаас өөрийн сонирхсон машины мэдээллийг авах боломжтой
                 </h4>
                 <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutW-icon-2.svg') }}" alt=""></div>
             </div>

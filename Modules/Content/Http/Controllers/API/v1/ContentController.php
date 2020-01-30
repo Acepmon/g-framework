@@ -5,8 +5,10 @@ namespace Modules\Content\Http\Controllers\API\v1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 use App\Content;
+use App\Term;
 use App\Entities\ContentManager;
 
 class ContentController extends Controller
@@ -79,5 +81,45 @@ class ContentController extends Controller
     public function destroy(Content $content)
     {
         //
+    }
+
+    public function publish(Request $request, $contentId) {
+        try {
+            DB::beginTransaction();
+
+            $content = Content::findOrFail($contentId);
+            $content->status = $request->input('status', Content::STATUS_PUBLISHED);
+            $content->visibility = $request->input('visibility', Content::VISIBILITY_PUBLIC);
+            
+            $author = null;
+            if ($request->has('publishType')) {
+                $publishType = $request->input('publishType');
+            } else {
+                $publishType = $content->metaValue('publishType');
+            }
+            if ($publishType == 'best_premium' || $publishType == 'premium') {
+                $author = $content->author()->first();
+                $amount = $request->input('publishAmount');
+                $content->setMetaValue('publishAmount', $amount);
+                $content->setMetaValue('publishUnit', $request->input('publishUnit'));
+                $content->setMetaValue('publishDuration', $request->input('publishDuration'));
+
+                $cash = $author->metaValue('cash');
+                if ($cash - $amount <= 0) {
+                    DB::commit();
+                    return response()->json(['success' => False, 'message' => 'Insufficient cash']);
+                }
+                $cash = $cash - $amount;
+                $author->setMetaValue('cash', $cash);
+            }
+
+            $content->save();
+
+            DB::commit();
+            return response()->json(['success' => True, 'message' => "Successfully registered"]);
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return response()->json(['success' => True, 'message' => $ex->getMessage()])->setStatusCode(500);
+        }
     }
 }

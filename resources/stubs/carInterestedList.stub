@@ -1,6 +1,6 @@
 @extends('themes.car-web.layouts.mypage')
 
-@section('title', 'Сонирхосон машинууд')
+@section('title', 'Сонирхсон машинууд')
 
 @section('load')
 
@@ -38,7 +38,7 @@
                 <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt=""></div>
                 @endif
                 @if(getMetasValue($car->metas, 'doctorVerified')==1)
-                <div class="doctor-verified-tag shadow-soft-blue"><span>Verified by</span> CAR DOCTOR</div>
+                <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor.png') }}" alt=""></div>
                 @endif
                 <img src="{{$car->metaValue("thumbnail")}}" class="img-fluid" alt="alt" />
             </div>

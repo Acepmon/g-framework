@@ -1,9 +1,9 @@
 @php
 $categorySlug = [
-'car-type', 'car-manufacturer', 'car-year', 'car-distance-driven', 'car-price', 'car-colors', 'car-fuel', 'car-transmission', 'car-options', 'car-mancount', 'car-wheel-pos', 'provinces', 'car-doctor-verified'
+'car-type', 'car-manufacturer', 'car-year', 'car-distance-driven', 'car-price', 'car-colors', 'car-fuel', 'car-transmission', 'car-options', 'car-mancount', 'car-wheel-pos', 'provinces', 'car-seller', 'car-doctor-verified'
 ];
 $categoryName = [
-'Төрөл', 'Үйлдвэрлэгч/Модел', 'Жил', 'Явсан КМ', 'Үнэ', 'Өнгө', 'Шатахуун', 'Араа', 'Option', 'Зорчигч', 'Жолоо', 'Байршил', 'Doctor баталгаажсан'
+'Төрөл', 'Үйлдвэрлэгч/Модел', 'Жил', 'Явсан КМ', 'Үнэ', 'Өнгө', 'Шатахуун', 'Араа', 'Option', 'Зорчигч', 'Жолоо', 'Байршил', 'Seller', 'Doctor баталгаажсан'
 ];
 @endphp
 
@@ -32,22 +32,22 @@ $categoryName = [
             @endforeach
         </div>
         <div class="card-body bg-light grid-radio pt-0 pb-0">
-            <select id="truck-choice" class="form-control mb-3 type-choice" name="truck-size" onchange="formSubmit('truckSize','no-value')" @if(!$request['truckSize']) style="display: none" @endif>
+            <select id="truck-choice" class="form-control mb-3 type-choice" name="truck-size" onchange="formSubmit('carSubType','no-value')" @if($request['carType']!='Хүнд ММ') style="display: none" @endif>
             <option value="">Хэмжээ сонгох</option>
             @foreach(App\TermTaxonomy::where('taxonomy', 'truck-size')->get() as $taxonomy)
-            <option {{ ($request['truckSize']==$taxonomy->term->name)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
+            <option value="{{$taxonomy->term->id}}" {{ ($request['carSubType']==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
             @endforeach
             </select>
-            <select id="bus-choice" class="form-control mb-3 type-choice" name="bus-sizes" onchange="formSubmit('busSize','no-value')" @if(!$request['busSize']) style="display: none" @endif>
+            <select id="bus-choice" class="form-control mb-3 type-choice" name="bus-size" onchange="formSubmit('carSubType','no-value')" @if($request['carType']!='Автобус') style="display: none" @endif>
             <option value="">Хэмжээ сонгох</option>
             @foreach(App\TermTaxonomy::where('taxonomy', 'bus-sizes')->get() as $taxonomy)
-            <option {{ ($request['busSize']==$taxonomy->term->name)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
+            <option value="{{$taxonomy->term->id}}" {{ ($request['carSubType']==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
             @endforeach
             </select>
-            <select id="special-choice" class="form-control mb-3 type-choice" name="special" onchange="formSubmit('special','no-value')" @if(!$request['special']) style="display: none" @endif>
+            <select id="special-choice" class="form-control mb-3 type-choice" name="special" onchange="formSubmit('carSubType','no-value')" @if($request['carType']!='Тусгай ММ') style="display: none" @endif>
             <option value="">Төрөл сонгох</option>
             @foreach(App\TermTaxonomy::where('taxonomy', 'special')->get() as $taxonomy)
-            <option {{ ($request['special']==$taxonomy->term->name)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
+            <option value="{{$taxonomy->term->id}}" {{ ($request['carSubType']==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
             @endforeach
             </select>
         </div>
@@ -164,6 +164,21 @@ $categoryName = [
             <div class="custom-control custom-radio">
                 <input type="radio" id="doctorVerifiedNo" name="car-doctor-verified" class="custom-control-input" value="0" {{ ($request['doctorVerified'] == 0)?'checked':'' }}>
                 <label class="custom-control-label  d-flex justify-content-between" for="doctorVerifiedNo">Баталгаажаагүй
+                </label>
+            </div>
+        </div>
+        </div>
+        @elseif($category == 'car-seller')
+        <div id="{{ $category }}" class="collapse {{ request('car-seller', False)?'show':'' }}" aria-labelledby="{{ $category }}">
+        <div class="card-body bg-light grid-radio">
+            <div class="custom-control custom-radio">
+                <input type="radio" id="individual" name="car-seller" class="custom-control-input" value="individual" {{ ($request['seller'] == 'individual')?'checked':'' }}>
+                <label class="custom-control-label  d-flex justify-content-between" for="individual">Individual
+                </label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="dealer" name="car-seller" class="custom-control-input" value="dealer" {{ ($request['seller'] == 'dealer')?'checked':'' }}>
+                <label class="custom-control-label  d-flex justify-content-between" for="dealer">Dealer
                 </label>
             </div>
         </div>

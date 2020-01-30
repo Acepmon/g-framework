@@ -26,7 +26,7 @@ class CarContentsTableSeeder extends Seeder
         $time = time();
         $rootPath = config('content.cars.rootPath');
 
-        factory(Content::class, 50)->create(['type' => Content::TYPE_CAR])->each(function ($content) use ($time, $rootPath) {
+        factory(Content::class, 50)->create(['type' => Content::TYPE_CAR, 'status' => 'published', 'visibility' => 'public'])->each(function ($content) use ($time, $rootPath) {
 
             $content->slug = config('content.cars.containerPage') . '/' . $content->slug;
             $content->save();
@@ -52,13 +52,13 @@ class CarContentsTableSeeder extends Seeder
             // $className = '';
             $manCount = TaxonomyManager::collection('car-mancount')->random()->term;
             $fuelType = TaxonomyManager::collection('car-fuel')->random()->term;
-            $colorName = TaxonomyManager::collection('car-colors')->random()->term;
             $transmission = TaxonomyManager::collection('car-transmission')->random()->term;
             $wheelPosition = TaxonomyManager::collection('car-wheel-pos')->random()->term;
             $wheel = TaxonomyManager::collection('car-wheel')->random()->term;
             $condition = TaxonomyManager::collection('car-conditions')->random()->term;
-            $colorInterior = TaxonomyManager::collection('car-colors')->random()->term;
+            $colorInterior = TaxonomyManager::collection('car-interior-colors')->random()->term;
             $colorExterior = TaxonomyManager::collection('car-colors')->random()->term;
+            $colorName = $colorExterior;
             $doorCount = TaxonomyManager::collection('door-count')->random()->term;
             // $retail = Content::where('type', 'retail')->get()->random()->id;
 
@@ -269,8 +269,6 @@ class CarContentsTableSeeder extends Seeder
             // Update title by merging markName and modelName
             $content->title = \Str::startsWith($content->metaValue('modelName'), $content->metaValue('markName')) ? $content->metaValue('modelName') : $content->metaValue('markName') . ' ' . $content->metaValue('modelName');
             $content->slug = 'posts/' . $content->id;
-            $content->status = 'published';
-            $content->visibility = 'public';
             $content->save();
 
             $value = new \stdClass;

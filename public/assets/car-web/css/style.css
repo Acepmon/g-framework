@@ -435,7 +435,7 @@ hr {
   width: max-content;
   height: 0;
   visibility: hidden;
-  z-index: 1040;
+  z-index: 1;
   top: 20px;
 }
 
@@ -1767,6 +1767,7 @@ select {
 .car-filter .grid-radio .cd-radio .custom-control-label span {
   position: absolute;
   bottom: 0;
+  font-size: .7rem;
 }
 
 .car-filter .custom-control-input {
@@ -1787,6 +1788,51 @@ select {
   position: absolute;
   -webkit-animation: floatRight 1s linear infinite;
           animation: floatRight 1s linear infinite;
+}
+
+.car-filter .range-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #AAAEB9;
+  outline: none;
+  opacity: 1;
+  transition: opacity .2s;
+}
+
+.car-filter .range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: #2680EB;
+  transform: scale(0.7);
+  cursor: pointer;
+  border: 0px solid #fff;
+  transition: all .3s ease;
+}
+
+.car-filter .range-slider::-moz-range-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: #2680EB;
+  transform: scale(0.7);
+  cursor: pointer;
+}
+
+.car-filter .range-slider:hover::-webkit-slider-thumb {
+  transform: scale(1);
+  border: 2px solid #fff;
+  box-shadow: 0 3px 10px rgba(43, 54, 81, 0.3);
+}
+
+.car-filter .range-slider:hover::-moz-slider-thumb {
+  transform: scale(1);
+  border: 2px solid #fff;
+  box-shadow: 0 3px 10px rgba(43, 54, 81, 0.3);
 }
 
 .car-filter .color-icon {
@@ -1884,11 +1930,12 @@ select {
   position: absolute;
   right: 0;
   top: 0;
+  width: 25%;
   background: #DF2626;
   z-index: 1000;
   color: #fff;
-  padding: .5rem .75rem;
-  border-radius: 0 4px 0 8px;
+  padding: .5rem .5rem;
+  border-radius: 0 4px 0 4px;
   font-size: .75rem;
   box-sizing: border-box;
   font-weight: 700;
@@ -1897,6 +1944,10 @@ select {
 .car-list .card .card-body .card-img .doctor-verified-tag span {
   display: block;
   color: #f3abab;
+}
+
+.car-list .card .card-body .card-img .doctor-verified-tag img {
+  width: 100%;
 }
 
 .car-list .card .card-body .card-img .maz-auction-time {
@@ -2494,7 +2545,7 @@ select {
 
 .detail-page .dealer-information .dealer-img {
   width: 110px;
-  height: 110px;
+  height: 100%;
   overflow: hidden;
   border-radius: 100%;
   margin-right: 10px;
@@ -3819,11 +3870,12 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
   position: absolute;
   right: 0;
   top: 0;
+  width: 25%;
   background: #DF2626;
   z-index: 1000;
   color: #fff;
-  padding: .5rem .75rem;
-  border-radius: 0 4px 0 8px;
+  padding: .5rem .5rem;
+  border-radius: 0 4px 0 4px;
   font-size: .75rem;
   box-sizing: border-box;
   font-weight: 700;
@@ -3832,6 +3884,10 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
 .card-list .card .doctor-verified-tag span {
   display: block;
   color: #f3abab;
+}
+
+.card-list .card .doctor-verified-tag img {
+  width: 100%;
 }
 
 .card-list .card .card-img {
