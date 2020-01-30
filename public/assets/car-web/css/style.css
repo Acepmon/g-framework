@@ -1767,6 +1767,7 @@ select {
 .car-filter .grid-radio .cd-radio .custom-control-label span {
   position: absolute;
   bottom: 0;
+  font-size: .7rem;
 }
 
 .car-filter .custom-control-input {
