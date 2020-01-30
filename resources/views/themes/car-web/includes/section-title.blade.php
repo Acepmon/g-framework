@@ -25,7 +25,7 @@
                                         <h1 class="vehicle-title">{{ $content->title }} - {{$content->metaValue('buildYear')}} / {{$content->metaValue('importDate')}}</h1>
                                     @endif
                                     <p class="vehicle-meta">Гүйлт: {{$content->metaValue('mileageAmount', 0)}} {{$content->metaValue('mileageUnit')}} |
-                                        Шатхуун: {{$content->metaValue('fuelType')}} | Хөдөлгүүрийн багтаамж: {{$content->metaValue('capacityAmount')}} {{$content->metaValue('capacityUnit')}}
+                                        Шатахуун: {{$content->metaValue('fuelType')}} | Хөдөлгүүрийн багтаамж: {{$content->metaValue('capacityAmount')}} {{$content->metaValue('capacityUnit')}}
                                     </p>
 
 
