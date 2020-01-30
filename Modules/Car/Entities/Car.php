@@ -4,11 +4,12 @@ namespace Modules\Car\Entities;
 
 use DB;
 use App\Content;
+use App\User;
 
 class Car extends Content
 {
     protected $fillable = [];
-    protected const EXCEPT = ['minPrice', 'maxPrice', 'mileageAmount', 'options', 'carType'];
+    protected const EXCEPT = ['minPrice', 'maxPrice', 'mileageAmount', 'options', 'carType', 'seller'];
 
     public static function all($columns = []) {
         return Content::where('type', Content::TYPE_CAR)->where('status', Content::STATUS_PUBLISHED)->where('visibility', Content::VISIBILITY_PUBLIC);
@@ -79,6 +80,17 @@ class Car extends Content
             }
         }
 
+        if (array_key_exists('seller', $filter)) {
+            $dealers = User::whereHas('groups', function ($query) {
+                $query->where('id', 9)->orWhere('parent_id', 9);
+            })->pluck('id');
+            if ($filter['seller'] == 'individual') {
+                $contents = $contents->whereNotIn('author_id', $dealers);
+            } else if ($filter['seller'] == 'dealer') {
+                $contents = $contents->whereIn('author_id', $dealers);
+            }
+        }
+
         return $contents;
     }
 
@@ -140,7 +152,7 @@ class Car extends Content
         $request['publishType'] = request('publishType', Null);
         $request['minPrice'] = request('min_price', Null);
         $request['maxPrice'] = request('max_price', Null);
-
+        
         $request['carSubType'] = Null;
         if ($request['carType'] == 'Хүнд ММ') {
             $request['carSubType'] = request('truck-size', Null);
@@ -149,7 +161,8 @@ class Car extends Content
         } else if ($request['carType'] == 'Тусгай ММ') {
             $request['carSubType'] = request('special', Null);
         }
-    
+        $request['seller'] = request('car-seller', Null);
+        
         // $request = json_encode($request);
         return $request;
     }
