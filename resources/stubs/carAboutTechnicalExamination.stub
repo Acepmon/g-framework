@@ -27,23 +27,23 @@
         <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h3>Техникийн үзлэг оношлогоо</h3>
+                <h3>Техникийн үзлэг оношилгоо</h3>
             </div>
             </div>
             <div class="row">
             <div class="col-md-12 intro-advantages">
                 <div class="intro-advantage">
-                    <h4>Техникийн үзлэг оношлогоо</h4>
+                    <h4>Техникийн үзлэг оношилгоо</h4>
                     <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutT-icon-1.svg') }}" alt=""></div>
                 </div>
 
                 <div class="intro-advantage">
-                    <h4>Техникийн үзлэг оношлогоо</h4>
+                    <h4>Техникийн үзлэг оношилгоо</h4>
                     <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutT-icon-2.svg') }}" alt=""></div>
                 </div>
 
                 <div class="intro-advantage">
-                    <h4>Техникийн үзлэг оношлогоо</h4>
+                    <h4>Техникийн үзлэг оношилгоо</h4>
                     <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutT-icon-3.svg') }}" alt=""></div>
                 </div>
             </div>
@@ -56,12 +56,12 @@
       <div class="row">
         <div class="col-md-6 d-flex align-items-center">
           <div class="about-main-text">
-            <div class="about-heading-title">Техникийн үзлэг оношлогоо</div>
+            <div class="about-heading-title">Техникийн үзлэг оношилгоо</div>
             <div class="about-text">
               <p>
                 Манай байгууллагатай хамтран ажилладаг авто засварын газарт өөрөө явагч хэрэгслийн техникийн үзлэгт хамрагдан гадна  болон дотор, моторын үзүүлэлт зэргийг шалгуулан тодорхойлолт гаргуулах.  
               </p>
-              <p>“Техникийн үзлэг оношлогоо”–ны тодорхойлолтыг худалдах гэж буй машины зар дээр нэмэлт мэдээлэл болгон оруулах боломжтой. Ингэснээр худалдан авагч талд илүү итгэл төрүүлнэ.              </p>
+              <p>“Техникийн үзлэг оношилгоо”–ны тодорхойлолтыг худалдах гэж буй машины зар дээр нэмэлт мэдээлэл болгон оруулах боломжтой. Ингэснээр худалдан авагч талд илүү итгэл төрүүлнэ.              </p>
             </div>
           </div>
             
@@ -78,7 +78,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <h4 class="section-heading">“Техникийн үзлэг оношлогоо” хийлгэх</h4>
+          <h4 class="section-heading">“Техникийн үзлэг оношилгоо” хийлгэх</h4>
         </div>
       </div>
       <div class="row">
