@@ -43,7 +43,7 @@ class CarColorTableSeeder extends Seeder
         # Interior Color
         $interior_colour = [
             'Хар' => ['value' => 'black'],
-            'Саарал' => ['value' => 'grey'],
+            'Саарал' => ['value' => 'asphalt-gray'],
             'Цагаан' => ['value' => 'white-ivory'],
             'Шаргал цагаан' => ['value' => 'beige']
         ];
