@@ -47,10 +47,13 @@ class Car extends Content
                 if ($value == '0') {
                     $contents = metaHas($contents, $key, $value, 'doesntHave');
                 } else {
-                    $contents = $contents->whereHas('terms', function($q) use($value) {
-                        $q->where('term_taxonomy_id', $value);
-                    });
-                    // $contents = metaHas($contents, $key, $value);
+                    if (is_integer($value)) {
+                        $contents = $contents->whereHas('terms', function($q) use($value) {
+                            $q->where('term_taxonomy_id', $value);
+                        });
+                    } else {
+                        $contents = metaHas($contents, $key, $value);
+                    }
                 }
             }
         }
