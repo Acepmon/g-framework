@@ -44,10 +44,10 @@ class Car extends Content
 
         foreach ($filter as $key => $value) {
             if ($key != $exclude && $value != Null && !in_array($key, self::EXCEPT)) {
-                if ($value == '0') {
+                if ($value == '-1') {
                     $contents = metaHas($contents, $key, $value, 'doesntHave');
                 } else {
-                    if (is_integer($value)) {
+                    if (is_numeric($value) && $value != "1" && $value != "0") {
                         $contents = $contents->whereHas('terms', function($q) use($value) {
                             $q->where('term_taxonomy_id', $value);
                         });
@@ -83,7 +83,7 @@ class Car extends Content
             }
         }
 
-        if (array_key_exists('seller', $filter)) {
+        if (array_key_exists('seller', $filter) && $filter['seller'] != 0) {
             $dealers = User::whereHas('groups', function ($query) {
                 $query->where('id', 9)->orWhere('parent_id', 9);
             })->pluck('id');
@@ -148,7 +148,6 @@ class Car extends Content
         $request['manCount'] = request('car-mancount', Null);
         $request['wheelPosition'] = request('car-wheel-pos', Null);
         $request['countryName'] = request('provinces', Null);
-        $request['doctorVerified'] = request('car-doctor-verified', Null);
         $request['buildYear'] = request('buildYear', Null);
         $request['importDate'] = request('importDate', Null);
         $request['mileageAmount'] = request('mileageAmount', Null);
@@ -164,7 +163,9 @@ class Car extends Content
         } else if ($request['carType'] == 'Тусгай ММ') {
             $request['carSubType'] = request('special', Null);
         }
-        $request['seller'] = request('car-seller', Null);
+        $request['doctorVerified'] = request('car-doctor-verified', 0);
+        $request['seller'] = request('car-seller', 0);
+        $request['isAuction'] = request('isAuction', Null);
         
         // $request = json_encode($request);
         return $request;
