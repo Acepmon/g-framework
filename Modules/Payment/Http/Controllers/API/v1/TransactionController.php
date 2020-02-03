@@ -1,5 +1,6 @@
 <?php
 
+namespace Modules\Content\Transformers\Author;
 namespace Modules\Payment\Http\Controllers\API\v1;
 
 use Modules\Payment\Entities\Transaction;
@@ -15,7 +16,29 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        return view('payment::index');
+        $authUser = auth('api')->user();
+        $transactions = Transaction::where('user_id', $authUser->id);
+        
+        $transactions->getCollection()->transform(function ($content) use ($authUser) {
+            return [
+                "id" => $this->id,
+                "payment_method" => $this->payment_method,
+                "transaction_type" => $this->transaction_type,
+                "transaction_amount" => $this->transaction_amount,
+                "transaction_usage" => $this->transaction_usage,
+                "bonus" => $this->bonus,
+                "current_amount" => $this->current_amount,
+                "status" => $this->status,
+                "created_at" => $this->created_at,
+                "updated_at" => $this->updated_at,
+                "user" => new Author($this->user),
+                "accepted_by" => new Author($this->accepted_by),
+                "phone" => $this->phone,
+                "content" => $this->content_id
+            ];
+        });
+
+        return response()->json($transactions);
     }
 
     /**
