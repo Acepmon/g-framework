@@ -27,6 +27,7 @@ Route::prefix('v1')->group(function () {
         Route::middleware('auth:api')->group(function () {
 
             Route::prefix('payment')->group(function () {
+                Route::get('/transactions', 'TransactionController@index');
                 Route::post('/transactions', 'TransactionController@store');
             });
         });

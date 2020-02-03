@@ -97,7 +97,7 @@
                                         <div class="form-group">
                                             <label for="phone">Утасны дугаар</label>
                                             <div class="input-group">
-                                                <input type="text" name="cellPhone" id="cellPhone" hidden>
+                                                <input type="text" name="phone" id="phone" hidden>
                                                 <input type="number" class="form-control" id="phoneNumber" placeholder="Утасны дугаар" style="width: 200px;">
                                             </div>
                                         </div>
