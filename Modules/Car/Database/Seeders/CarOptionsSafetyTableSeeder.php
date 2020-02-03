@@ -26,7 +26,7 @@ class CarOptionsSafetyTableSeeder extends Seeder
             'Аюулгүйн дэр : Хөшигөн' => ['metaKey' => 'optionSafetyAirbagCurtains'], 
             'Аюулгүйн дэр : Хажуу' => ['metaKey' => 'optionSafetyAirbagSide'], 
             'Зорчигчын суудал' => ['metaKey' => 'optionSafetyAirbagPassengerSeat'], 
-            'Аюулгүйн дэр : Жолоочын суудал' => ['metaKey' => 'optionSafetyAirbagDriverSeat']];
+            'Аюулгүйн дэр : Жолоочийн суудал' => ['metaKey' => 'optionSafetyAirbagDriverSeat']];
 
         $parent = TaxonomyManager::register('Safety', 'car-options');
 

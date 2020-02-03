@@ -56,24 +56,24 @@ class GroupPermissionTableSeeder extends Seeder
         PermissionManager::attachGroupPermissions(3, Permission::where('title', 'ajax_groups_update')->get());
 
         // Attach System Permissions to System Operator Group
-        PermissionManager::attachGroupPermissions(5, Permission::where('title', 'LIKE', 'admin_configs%')->get());
-        PermissionManager::attachGroupPermissions(5, Permission::where('title', 'LIKE', 'admin_logs%')->get());
-        PermissionManager::attachGroupPermissions(5, Permission::where('title', 'LIKE', 'admin_notifications%')->get());
-        PermissionManager::attachGroupPermissions(5, Permission::where('title', 'LIKE', 'admin_backups%')->get());
-        PermissionManager::attachGroupPermissions(5, Permission::where('title', 'LIKE', 'admin_themes%')->get());
-        PermissionManager::attachGroupPermissions(5, Permission::where('title', 'LIKE', 'admin_users%')->get());
-        PermissionManager::attachGroupPermissions(5, Permission::where('title', 'LIKE', 'admin_groups%')->get());
-        PermissionManager::attachGroupPermissions(5, Permission::where('title', 'LIKE', 'admin_permissions%')->get());
-        PermissionManager::attachGroupPermissions(5, Permission::where('title', 'LIKE', 'ajax_users%')->get());
+        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_configs%')->get());
+        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_logs%')->get());
+        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_notifications%')->get());
+        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_backups%')->get());
+        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_themes%')->get());
+        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_users%')->get());
+        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_groups%')->get());
+        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_permissions%')->get());
+        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'ajax_users%')->get());
 
         // Attach Content Permissions to Content Operator Group
-        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_menus%')->get());
-        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_contents%')->get());
-        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_comments%')->get());
-        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_taxonomy%')->get());
-        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_localizations%')->get());
-        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_media%')->get());
-        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'admin_banners%')->get());
-        PermissionManager::attachGroupPermissions(6, Permission::where('title', 'LIKE', 'ajax_contents%')->get());
+        PermissionManager::attachGroupPermissions(7, Permission::where('title', 'LIKE', 'admin_menus%')->get());
+        PermissionManager::attachGroupPermissions(7, Permission::where('title', 'LIKE', 'admin_contents%')->get());
+        PermissionManager::attachGroupPermissions(7, Permission::where('title', 'LIKE', 'admin_comments%')->get());
+        PermissionManager::attachGroupPermissions(7, Permission::where('title', 'LIKE', 'admin_taxonomy%')->get());
+        PermissionManager::attachGroupPermissions(7, Permission::where('title', 'LIKE', 'admin_localizations%')->get());
+        PermissionManager::attachGroupPermissions(7, Permission::where('title', 'LIKE', 'admin_media%')->get());
+        PermissionManager::attachGroupPermissions(7, Permission::where('title', 'LIKE', 'admin_banners%')->get());
+        PermissionManager::attachGroupPermissions(7, Permission::where('title', 'LIKE', 'ajax_contents%')->get());
     }
 }

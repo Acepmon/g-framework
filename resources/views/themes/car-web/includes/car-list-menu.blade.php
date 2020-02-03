@@ -154,15 +154,20 @@ $categoryName = [
         </div>
         </div>
         @elseif($category == 'car-doctor-verified')
-        <div id="{{ $category }}" class="collapse {{ request('mileageAmount', False)?'show':'' }}" aria-labelledby="{{ $category }}">
+        <div id="{{ $category }}" class="collapse {{ request('car-doctor-verified', False)?'show':'' }}" aria-labelledby="{{ $category }}">
         <div class="card-body bg-light grid-radio">
+            <div class="custom-control custom-radio">
+                <input type="radio" id="doctorVerifiedBoth" name="car-doctor-verified" class="custom-control-input" value="0" {{ ($request['doctorVerified'] == 0)?'checked':'' }}>
+                <label class="custom-control-label  d-flex justify-content-between" for="doctorVerifiedBoth">Бүгд
+                </label>
+            </div>
             <div class="custom-control custom-radio">
                 <input type="radio" id="doctorVerified" name="car-doctor-verified" class="custom-control-input" value="1" {{ ($request['doctorVerified'] == 1)?'checked':'' }}>
                 <label class="custom-control-label  d-flex justify-content-between" for="doctorVerified">Баталгаажсан
                 </label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" id="doctorVerifiedNo" name="car-doctor-verified" class="custom-control-input" value="0" {{ ($request['doctorVerified'] == 0)?'checked':'' }}>
+                <input type="radio" id="doctorVerifiedNo" name="car-doctor-verified" class="custom-control-input" value="-1" {{ ($request['doctorVerified'] == -1)?'checked':'' }}>
                 <label class="custom-control-label  d-flex justify-content-between" for="doctorVerifiedNo">Баталгаажаагүй
                 </label>
             </div>
@@ -172,12 +177,17 @@ $categoryName = [
         <div id="{{ $category }}" class="collapse {{ request('car-seller', False)?'show':'' }}" aria-labelledby="{{ $category }}">
         <div class="card-body bg-light grid-radio">
             <div class="custom-control custom-radio">
-                <input type="radio" id="individual" name="car-seller" class="custom-control-input" value="individual" {{ ($request['seller'] == 'individual')?'checked':'' }}>
+                <input type="radio" id="sellBoth" name="car-seller" class="custom-control-input" value="0" {{ ($request['seller'] == '0')?'checked':'' }}>
+                <label class="custom-control-label  d-flex justify-content-between" for="sellBoth">Бүгд
+                </label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="individual" name="car-seller" class="custom-control-input" value="individual" {{ ($request['seller'] === 'individual')?'checked':'' }}>
                 <label class="custom-control-label  d-flex justify-content-between" for="individual">Individual
                 </label>
             </div>
             <div class="custom-control custom-radio">
-                <input type="radio" id="dealer" name="car-seller" class="custom-control-input" value="dealer" {{ ($request['seller'] == 'dealer')?'checked':'' }}>
+                <input type="radio" id="dealer" name="car-seller" class="custom-control-input" value="dealer" {{ ($request['seller'] === 'dealer')?'checked':'' }}>
                 <label class="custom-control-label  d-flex justify-content-between" for="dealer">Dealer
                 </label>
             </div>

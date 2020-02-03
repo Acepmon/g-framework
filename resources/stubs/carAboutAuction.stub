@@ -27,13 +27,13 @@
         <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-            <h3>Техникийн үзлэг оношлогоо</h3>
+            <h3>Техникийн үзлэг оношилгоо</h3>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 intro-advantages">
             <div class="intro-advantage">
-                <h4>Тээврийн хэрэгслийн үзлэг оношлогоо </h4>
+                <h4>Тээврийн хэрэгслийн үзлэг оношилгоо </h4>
                 <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutA-icon-1.svg') }}" alt=""></div>
             </div>
 
@@ -92,7 +92,7 @@
                     </p>
                 </li>
                 <li class="list-item">
-                    <p class="font-weight-bold">“Техникийн үзлэг оношлогоо” хийлгэх </p>
+                    <p class="font-weight-bold">“Техникийн үзлэг оношилгоо” хийлгэх </p>
                     <p> 3.1 Та манай вэб сайт-д гишүүнээр элссэнээр ‘дуудлага худалдаа’ хэсгийн
                     машины жагсаалтыг харах боломжтой болно.</p>
                     <p>3.2 Машины техникийн оношлогоонд хамрагдсан хуудас, мөн хүсвэл

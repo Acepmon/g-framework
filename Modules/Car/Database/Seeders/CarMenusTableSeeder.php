@@ -45,7 +45,7 @@ class CarMenusTableSeeder extends Seeder
         ]];
         $carTopbarMenus = ['Car Topbar', '', '', 'Car', [
             ['Бидний тухай', '/about-introduction', '', 'Car'],
-            ['Үзлэгт орсон', '/search?doctorVerified=1', '', 'Car'],
+            ['Үзлэгт орсон', '/search?car-doctor-verified=1', '', 'Car'],
             ['+Хүсэлт оруулах', '/wishlist', '', 'Car'],
             ['Төлбөртэй зарын заавар', '/manual', '', 'Car']
         ]];

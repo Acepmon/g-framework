@@ -120,13 +120,13 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="manCount">Суудал:</label>
-            <select id="manCount" name="manCount" class="form-control">
-                <option value="" selected>Сонгох...</option>
-                @foreach(App\TermTaxonomy::where('taxonomy', 'car-mancount')->get() as $taxonomy)
-                <option value="{{ $taxonomy->term->name }}" {{ ($car->metaValue('manCount') == $taxonomy->term->name)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
-                @endforeach
-            </select>
+
+            <label for="capacityAmount">Суудал:</label>
+            <div class="input-group">
+                <input type="number" min="0" class="form-control" id="manCount" name="manCount" placeholder="Суудал" value="{{ $car->metaValue('manCount') }}">
+            </div>
+
+
         </div>
         <div class="form-group col-md-6">
             <label for="manCount">Хаалга:</label>

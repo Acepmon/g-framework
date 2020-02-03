@@ -250,7 +250,7 @@ class ContentManager extends Manager
     {
         $inputExcept = ['title', 'slug', 'content', 'type', 'status', 'visibility', 'limit', 'page', 'author_id', '_token', '_method', 'sort'];
         $termExcept = self::TERM_KEYS;
-        $inputExcept = array_merge($inputExcept, $termExcept);
+        //$inputExcept = array_merge($inputExcept, $termExcept);
         $metaInputs = array_filter($input, function ($key) use ($inputExcept) {
             return !in_array($key, $inputExcept);
         }, ARRAY_FILTER_USE_KEY);
