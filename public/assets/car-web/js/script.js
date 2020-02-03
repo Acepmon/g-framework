@@ -6,7 +6,7 @@
         var offset = $('.container').offset();
 
         $('.fixed-sidebar').css({
-            "left": '' + (parseInt(conWidth) + parseInt(offset.left)) + "px",
+            "left": '' + parseInt(conWidth) + "px",
             "visibility": "visible"
         });
 
