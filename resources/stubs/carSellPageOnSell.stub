@@ -52,9 +52,9 @@
                             <div class="meta">{{ $onSale->metaValue('buildYear') }}/{{ $onSale->metaValue('importDate') }} | {{ $onSale->metaValue('mileage') }}km</div>
                             <div class="price">{{ numerizePrice($onSale->metaValue('priceAmount')) }} {{ $onSale->metaValue('priceUnit') }}</div>
                         </a>
-                        {{--<div href="#" class="card-title">{{$onSale->title}}</div>--}}
-                        {{--<div class="meta">{{$onSale->metaValue("buildYear")}} / {{$onSale->metaValue("importDate")}} | {{$onSale->metaValue("mileageAmount")}}{{$onSale->metaValue("mileageUnit")}}</div>--}}
-                        {{--<div class="price">{{numerizePrice($onSale->metaValue("priceAmount"))}} {{$onSale->metaValue("priceUnit")}}</div>--}}
+                        @if($onSale->metaValue('isAuction')==1)
+                        <div id="countdown" class="countdown"  data-countdown="{{ $onSale->metaValue('endsAt') }}"></div>
+                        @endif
                         <button class="btn btn-warning btn-round shadow-soft-blue btn-icon-left px-3 btn-sm mr-5 mt-2" data-toggle="modal" onclick="transferId({{$onSale->id}})" data-target="#premiumAd" href="#"> Make premium ad</button>
                     </div>
                     <div class="info">
@@ -182,29 +182,72 @@
 @endpush
 
 @section('script')
-    <script type="text/javascript">
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+<script>
+    var carList = $('.card-caption');
+
+    carList.each(function(i,e){
+
+
+        var mazCountdown = $(e).find('.countdown');
+        var mazCDtime = mazCountdown.data('countdown');
+
+        //console.log(mazCDtime);
+        var countDownDate = new Date(mazCDtime).getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="demo"
+            mazCountdown.html((hours + days * 24) + "<span>Цаг</span> "
+                + minutes + "<span>Мин</span> " + seconds + "<span>Сек</span> ");
+
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                mazCountdown.html("ДУУССАН");
             }
-        });
-        function formSubmit(id, value, sortDir, sortDirValue) {
-            console.log(id)
-            if (value != 'no-value') {
-                document.getElementById(id).value = value;
-            }
-            if (sortDir != 'no-value'){
-                document.getElementById(sortDir).value = sortDirValue;
-            }
-            $('#mainForm').submit();
+        }, 1000);
+    })
+
+
+</script>
+
+<script type="text/javascript">
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-
-
-        var contId=null;
-        function contsId(id) {
-           contId=id
+    });
+    function formSubmit(id, value, sortDir, sortDirValue) {
+        console.log(id)
+        if (value != 'no-value') {
+            document.getElementById(id).value = value;
         }
+        if (sortDir != 'no-value'){
+            document.getElementById(sortDir).value = sortDirValue;
+        }
+        $('#mainForm').submit();
+    }
+
+
+    var contId=null;
+    function contsId(id) {
+        contId=id
+    }
     function deleteData() {
 
         console.log(contId)
@@ -263,5 +306,5 @@
 
     }
 
-    </script>
+</script>
 @endsection
