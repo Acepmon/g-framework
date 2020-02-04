@@ -24,8 +24,8 @@
                                     @if ($content->title)
                                         <h1 class="vehicle-title">{{ $content->title }} - {{$content->metaValue('buildYear')}} / {{$content->metaValue('importDate')}}</h1>
                                     @endif
-                                    <p class="vehicle-meta">{{$content->metaValue('mileageAmount', 0)}} {{$content->metaValue('mileageUnit')}} |
-                                         {{$content->metaValue('fuelType')}} |  {{$content->metaValue('capacityAmount')}} {{$content->metaValue('capacityUnit')}}
+                                    <p class="vehicle-meta">{{number_format($content->metaValue('mileageAmount', 0))}} {{$content->metaValue('mileageUnit')}} |
+                                         {{$content->metaValue('fuelType')}} |  {{number_format($content->metaValue('capacityAmount'))}} {{$content->metaValue('capacityUnit')}}
                                     </p>
 
 
