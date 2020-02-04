@@ -40,7 +40,7 @@ class CarMenusTableSeeder extends Seeder
             ['Авна', '/buy', '', 'Car'],
             ['Зарна', '/sell', '', 'Car'],
             ['Лизинг', '/finance', '', 'Car'],
-            ['Аугцион', '/auction', '', 'Car'],
+            ['Аугцион', '/coming-soon', '', 'Car'],
             ['Авъя', '/wishlist', '', 'Car']
         ]];
         $carTopbarMenus = ['Car Topbar', '', '', 'Car', [
