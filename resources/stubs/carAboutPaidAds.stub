@@ -16,7 +16,7 @@
             <div class="d-flex justify-content-around">
                 <a href="{{ url('/about-introduction') }}">Танилцуулга</a>
                 <a class="active" href="{{ url('/about-paid-ads') }}">Төлбөртэй зар</a>
-                <a href="{{ url('/about-finance') }}">Санхүүжилт</a>
+                <a href="{{ url('/about-finance') }}">ББСБ</a>
                 <a href="{{ url('/about-technical-examination') }}">Техникийн үзлэг</a>
                 <a href="{{ url('/about-auction') }}">Дуудлага худалдаа</a>
                 <a href="{{ url('/about-dream-car') }}">Хүслийн машин</a>
