@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Content\Transformers\Author;
 namespace Modules\Payment\Http\Controllers\API\v1;
 
+use Modules\Content\Transformers\Author;
 use Modules\Payment\Entities\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

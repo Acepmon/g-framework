@@ -90,7 +90,7 @@
         @include('themes.car-web.includes.section-options', ['content' => $content])
 
         <!-- Seller Description -->
-<!--        @include('themes.car-web.includes.section-seller-description', ['content' => $content])-->
+        @include('themes.car-web.includes.section-seller-description', ['content' => $content])
 
         @if (!$content->metaValue('isAuction'))
             <!-- Finance section -->
