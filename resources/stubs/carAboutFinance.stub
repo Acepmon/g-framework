@@ -33,7 +33,7 @@
         <div class="row">
             <div class="col-md-12 intro-advantages">
             <div class="intro-advantage">
-                <h4>Урьдчилгаа 30% ийг төлөөд машинтай болох боломж
+                <h4>Урьдчилгаа 20~30% ийг төлөөд машинтай болох боломж
 
                 </h4>
                 <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutF-icon-1.svg') }}" alt=""></div>
