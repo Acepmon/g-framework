@@ -28,8 +28,8 @@ $interestedCars=[];
             var loValue = mPay / (invest / (1 - Math.pow(1 + invest, -months)))
             var totalPrice = Math.round(loValue + (loValue * fPay / (100 - fPay)));
             var firstPayValue = Math.round(totalPrice * (fPay / 100));
-            document.getElementById("firstPayValue").innerHTML = firstPayValue + '₮ (' + fPay + '%)';
-            document.getElementById("totalPrice").innerHTML = totalPrice + ' ₮';
+            document.getElementById("firstPayValue").innerHTML = sepNum(firstPayValue) + '₮ (' + fPay + '%)';
+            document.getElementById("totalPrice").innerHTML = sepNum(totalPrice) + ' ₮';
             //document.getElementById("searchByTotPrice"). =;
             $('#searchByTotPrice').attr("value", totalPrice);
 
@@ -71,44 +71,6 @@ $interestedCars=[];
 
 @section('content')
 <div class="bg-page-header"></div>
-
-<section class="bg-dark p-5 text-white position-relative">
-    <div class="container">
-        <div class="row d-flex align-items-center">
-            <div class="col-md-7">
-                <div class="hero-slider owl-carousel owl-theme">
-                    <div class="slider-item">
-                        <img src="{{ asset('car-web/img/finance-banner.png') }}" alt="">
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-5" style="z-index: 1">
-                <div class="title-mid-line white">
-                    <h2>Сайн байна уу?</h2>
-                </div>
-                <div class="finance-information">
-                    <p>Манай Auto Finance нь машин худалдаж авах гэж буй хэрэглэгч та бүхний төлбөрийн санаа зоволтыг багасгахын тулд,
-                        хамгийн бага хүүтэй лизингийн зээл болон машины барьцаат зээлийг санал болгож байна.</p>
-                    <p>Хэрэглэгч таны авахыг хүссэн машин лизингийн зээл авах боломжтой эсэхийг мэдэхийг хүсвэл бидэнтэй холбогдоно уу.</p>
-                    <p>Хаяг: УБ, Баянгол үндсэн хуулийн гудамж-24, Рокмон Бюлдинг 301 тоот.</p>
-                    <p>Утас: 7011-3322, 7011-8282, 9433-4535, 9650-4535</p>
-                    <p>И-мэйл : sun@damoacapital.com</p>
-                    <p>Веб хуудас : <a target="_blank" href="https://www.damoacapital.com">https://www.damoacapital.com</a></p>
-                </div>
-            </div>
-            <!-- <div class="col-md-12">
-              <div class="row justify-content-md-center">
-                <div class="col-md-6 text-center">
-                  <a class="btn btn-danger btn-round my-4 shadow-red btn-lg px-5" href="/monthly-installments?monthlyPrice=500000&firstPay=20&financeMonth=6&priceAmount=4590104&sort=updated_at">Зээлийн тооцоолуур</a>
-                  <a class="btn btn-light btn-round my-4 shadow-soft-blue btn-lg px-5" href="#" data-toggle="modal" data-target="#modalLoanCalculator">Зээл шалгах</a>
-                </div>
-              </div>
-            </div> -->
-        </div>
-    </div>
-</section>
-
 <section id="loan" class="text-center finance-section bg-dark">
     <div class="container">
         <form method="GET" id="mainForm" action="/finance">
@@ -121,19 +83,17 @@ $interestedCars=[];
                             <div class="row">
                                 <div class="form-group col-md-6 float-left">
                                     <label for="monthlyPrice">Сар бүр төлөх дүн</label>
-                                    {{--<input type="number" name="monthlyPrice" class="form-control" id="monthlyPrice" value="{{ request('monthlyPrice')}}" placeholder="">--}}
-                                    <input type="text" name="monthlyPrice" class="form-control text-left" id="monthlyPrice" value="{{ request('monthlyPrice')}}" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'prefix': '₮ ', 'placeholder': '0'">
+                                    <input type="text" name="monthlyPrice" class="form-control text-left" id="monthlyPrice" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'prefix': '₮ ', 'placeholder': '0'">
                                 </div>
                                 <div class="form-group col-md-6 float-left">
                                     <label for="firstPay">Боломжит урьдчилгаа</label>
-                                    <select class="form-control" name="firstPay" value="{{ request('firstPay')}}" id="firstPay">
-                                        <option value="80" {{ request('firstPay') == 80 ? 'selected' : '' }}>80%</option>
-                                        <option value="70" {{ request('firstPay') == 70 ? 'selected' : '' }}>70%</option>
-                                        <option value="60" {{ request('firstPay') == 60 ? 'selected' : '' }}>60%</option>
-                                        <option value="50" {{ request('firstPay') == 50 ? 'selected' : '' }}>50%</option>
-                                        <option value="40" {{ request('firstPay') == 40 ? 'selected' : '' }}>40%</option>
-                                        <option value="30" {{ request('firstPay') == 30 ? 'selected' : '' }}>30%</option>
-                                        <option value="20" {{ request('firstPay') == 20 ? 'selected' : '' }}>20%</option>
+                                    <select class="form-control" name="firstPay" value="" id="firstPay">
+                                        <option value="80">80%</option>
+                                        <option value="70">70%</option>
+                                        <option value="60">60%</option>
+                                        <option value="50">50%</option>
+                                        <option value="40">40%</option>
+                                        <option value="30">30%</option>
                                     </select>
                                 </div>
                             </div>
@@ -141,7 +101,7 @@ $interestedCars=[];
                             <div class="select-month">
                                 @foreach (\App\Entities\TaxonomyManager::collection('car-loan-terms') as $index => $loanTerm)
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="{{ $loanTerm->term->name }}month" name="financeMonth" value="{{ $loanTerm->term->name }}" data-interest="{{ $loanTerm->term->metaValue('interest') }}" class="loanTerm custom-control-input insMonth" {{ ($loanTerm->term->name == request('financeMonth') || $index == 0) ? 'checked' : ''}}>
+                                    <input type="radio" id="{{ $loanTerm->term->name }}month" name="financeMonth" value="{{ $loanTerm->term->name }}" data-interest="{{ $loanTerm->term->metaValue('interest') }}" class="loanTerm custom-control-input insMonth">
                                     <label class="custom-control-label insMonth" for="{{ $loanTerm->term->name }}month">{{ $loanTerm->term->name }} сар</label>
                                 </div>
                                 @endforeach
@@ -153,18 +113,20 @@ $interestedCars=[];
                     <div class="card monthly-payment" style="border: 1px solid #858994">
                         <div class="card-body">
                             <p class="text-muted">Урьдчилгаа төлбөр</p>
-
-                            @if(request('priceAmount')>0)
-                            <h4 class="font-weight-bolder" id="firstPayValue">{{request('priceAmount')*request('firstPay')/100}} ₮ ({{request('firstPay')}}%) </h4>
-                            @else
                             <h4 class="font-weight-bolder" id="firstPayValue">0 ₮ </h4>
-                            @endif
                             <p class="mt-3 text-muted">Авто машины нийт үнэ</p>
-                            @if(request('priceAmount')>0)
-                            <h2 class="font-weight-bolder" id="totalPrice">{{request('priceAmount')}} ₮</h2>
-                            @else
                             <h2 class="font-weight-bolder" id="totalPrice">0 ₮</h2>
-                            @endif
+<!--                            @if(request('priceAmount')>0)-->
+<!--                            <h4 class="font-weight-bolder" id="firstPayValue">{{request('priceAmount')*request('firstPay')/100}} ₮ ({{request('firstPay')}}%) </h4>-->
+<!--                            @else-->
+<!--                            <h4 class="font-weight-bolder" id="firstPayValue">0 ₮ </h4>-->
+<!--                            @endif-->
+<!--                            <p class="mt-3 text-muted">Авто машины нийт үнэ</p>-->
+<!--                            @if(request('priceAmount')>0)-->
+<!--                            <h2 class="font-weight-bolder" id="totalPrice">{{request('priceAmount')}} ₮</h2>-->
+<!--                            @else-->
+<!--                            <h2 class="font-weight-bolder" id="totalPrice">0 ₮</h2>-->
+<!--                            @endif-->
 
                         </div>
                     </div>
@@ -186,12 +148,12 @@ $interestedCars=[];
             <div class="card page-top-navbar border-0">
                 <div class="d-flex justify-content-start">
 
-                    @if(Auth::user()!="" && Auth::user()->id==1)
-                    @contentInline(type=car, priceType=Зээлээр, sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)
-                    @else
-                    @contentInline(type=car, priceAmount < intval(request()->input("priceAmount")), sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)
-                    @endif
-
+<!--                    @if(Auth::user()!="" && Auth::user()->id==1)-->
+<!--                    @contentInline(type=car, priceType=Зээлээр, sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)-->
+<!--                    @else-->
+<!--                    @contentInline(type=car, priceAmount < intval(request()->input("priceAmount")), sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)-->
+<!--                    @endif-->
+                    @contentInline(type=car, author_id=4, priceAmount < intval(request()->input("priceAmount")), sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)
                     <span class="total-cars ml-0" >НИЙТ {{count($cars)}}</span>
                     <div class="sort-cars col-md-9">
                         <ul>
@@ -202,31 +164,31 @@ $interestedCars=[];
                 </div>
             </div>
 
-            <div class="card-list pt-3">
+            <div class="card-list pt-3" style="width: 100%">
                 <div class="row">
 
                     @foreach($cars as $carDataMonthly)
-                    @if(count($interestedCars) > 0)
-                    @foreach($interestedCars as $intCars)
-                    @if($intCars==$carDataMonthly->id)
-                    @php
-                    $itsIntCar=true;
-                    @endphp
-                    @break;
-                    @else
-                    @php
-                    $itsIntCar=false;
-                    @endphp
-                    @endif
-                    @endforeach
-                    @else
-                    @php
-                    $itsIntCar=false;
-                    @endphp
-                    @endif
+                        @if(count($interestedCars) > 0)
+                        @foreach($interestedCars as $intCars)
+                            @if($intCars==$carDataMonthly->id)
+                                @php
+                                    $itsIntCar=true;
+                                @endphp
+                                @break;
+                            @else
+                                @php
+                                    $itsIntCar=false;
+                                @endphp
+                            @endif
+                        @endforeach
+                        @else
+                            @php
+                                $itsIntCar=false;
+                            @endphp
+                        @endif
                     <!-- col-start -->
 
-                    <div class="col-lg-3 col-md-4">
+                    <div class="col-lg-3">
                         <!-- card start -->
                         <a href="{{$carDataMonthly->slug}}" target="_blank" class="card cd-box">
                             @if(isPremium($carDataMonthly))
@@ -236,12 +198,11 @@ $interestedCars=[];
                             <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor.png') }}" alt=""></div>
                             @endif
                             <div class="card-img">
-                                <img src="{{$carDataMonthly->metaValue("thumbnail")}}" class="img-fluid"
+                                <img src="{{$carDataMonthly->metaValue('thumbnail')}}" class="img-fluid"
                                 alt="alt">
 
                                 <div class="card-caption">
-                                    <div
-                                        class="meta">{{$carDataMonthly->metaValue("mileageAmaount")}} {{$carDataMonthly->metaValue("mileageUnit")}}
+                                    <div class="meta">{{$carDataMonthly->metaValue("mileageAmaount")}} {{$carDataMonthly->metaValue("mileageUnit")}}
                                         | {{$carDataMonthly->metaValue("fuelType")}}
                                         | {{$carDataMonthly->metaValue("capacityAmount")}} {{$carDataMonthly->metaValue("capacityunit")}}</div>
                                     @if(Auth::user()!=null && $carDataMonthly->author_id==Auth::user()->id)
@@ -288,6 +249,8 @@ $interestedCars=[];
 @endsection
 @section('script')
 <script type="text/javascript">
+
+    function sepNum(r,e){return e=e||",",r=String(r).replace(/[\u0660-\u0669\u06f0-\u06f9]/g,function(r){return 15&r.charCodeAt(0)}).replace(/(?:[^\.]|^)\b(\d+)/g,function(r){return r=r.replace(/\B(?=(\d{3})+\b)/g,e)})}
 
     $(":input").inputmask();
 
