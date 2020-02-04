@@ -16,7 +16,7 @@ class BusSizesTableSeeder extends Seeder
      */
     public function run()
     {
-        $busSizes = ['Small-size Bus', 'Mid-size Bus', 'Big-size Bus'];
+        $busSizes = ['20-с доош', '21-40 хүртэл', '40-с дээш'];
 
         $parent = TaxonomyManager::register('Bus Sizes', 'car', null, ['metaKey' => 'carSubType']);
 

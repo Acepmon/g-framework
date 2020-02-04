@@ -88,9 +88,9 @@
             <label for="capacityAmount">Моторын хэмжээ:</label>
             <div class="input-group">
                 <input type="number" min="0" class="form-control" id="capacityAmount" name="capacityAmount" placeholder="Моторын хэмжээ" value="{{ $car->metaValue('capacityAmount') }}">
-                <input type="hidden" class="form-control" id="capacityUnit" name="capacityUnit" value="Л">
+                <input type="hidden" class="form-control" id="capacityUnit" name="capacityUnit" value="CC">
                 <div class="input-group-prepend">
-                    <div class="input-group-text-right">Л</div>
+                    <div class="input-group-text-right">CC</div>
                 </div>
             </div>
         </div>
