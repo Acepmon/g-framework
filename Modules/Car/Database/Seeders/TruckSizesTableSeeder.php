@@ -16,7 +16,7 @@ class TruckSizesTableSeeder extends Seeder
      */
     public function run()
     {
-        $truckSizes = ['2.5 тн-с доош ', '2.5 ~ 8 тн хүртэл', '8 тн-с дээш'];
+        $truckSizes = ['2.5 тн-с доош ', '2.6 ~ 8 тн хүртэл', '8.1 тн-с дээш'];
 
         $parent = TaxonomyManager::register('Truck Size', 'car', null, ['metaKey' => 'carSubType']);
 
