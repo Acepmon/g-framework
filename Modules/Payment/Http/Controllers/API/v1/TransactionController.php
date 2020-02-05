@@ -18,7 +18,7 @@ class TransactionController extends Controller
     {
         $authUser = auth('api')->user();
         $limit = request('limit', 10);
-        $transactions = Transaction::where('user_id', $authUser->id)->paginate($limit);
+        $transactions = Transaction::where('user_id', $authUser->id)->orderBy('id', 'desc')->paginate($limit);
 
         return response()->json($transactions);
     }
