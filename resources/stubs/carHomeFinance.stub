@@ -71,11 +71,15 @@ $interestedCars=[];
 
 @section('content')
 <div class="bg-page-header"></div>
-<section id="loan" class="text-center finance-section bg-dark">
-    <div class="container">
+
+<section id="loan" class="bg-dark text-center finance-section py-5 position-relative">
+    <div class="container mt-5">
         <form method="GET" id="mainForm" action="/finance">
 
             <div class="row">
+                <div class="col-md-12 text-left">
+                    <h2 class="about-heading-title text-white">Лизингтэй машин хайх</h2>
+                </div>
                 <div class="col-lg-8 col-md-7">
                     <div class="card shadow-soft-blue">
                         <div class="card-body text-left">
@@ -83,11 +87,12 @@ $interestedCars=[];
                             <div class="row">
                                 <div class="form-group col-md-6 float-left">
                                     <label for="monthlyPrice">Сар бүр төлөх дүн</label>
-                                    <input type="text" name="monthlyPrice" class="form-control text-left" id="monthlyPrice" value="{{ request('monthlyPrice')}}" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'prefix': '₮ ', 'placeholder': '0'">
+                                    <input type="text" name="monthlyPrice" class="form-control text-left" id="monthlyPrice" value="@php echo (request('monthlyPrice') ?? 500000) @endphp" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'prefix': '₮ ', 'placeholder': '0'">
                                 </div>
                                 <div class="form-group col-md-6 float-left">
                                     <label for="firstPay">Боломжит урьдчилгаа</label>
                                     <select class="form-control" name="firstPay" value="{{ request('firstPay')}}" id="firstPay">
+                                        <option value="20" {{ request('firstPay') == 20 ? 'selected' : '' }}>20%</option>
                                         <option value="30" {{ request('firstPay') == 30 ? 'selected' : '' }}>30%</option>
                                         <option value="40" {{ request('firstPay') == 40 ? 'selected' : '' }}>40%</option>
                                         <option value="50" {{ request('firstPay') == 50 ? 'selected' : '' }}>50%</option>

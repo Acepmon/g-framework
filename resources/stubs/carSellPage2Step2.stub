@@ -24,13 +24,14 @@
             @foreach($imagesList as $index=>$images)
                 <div class="col-sm-3 imgUp">
                 <p class="text-muted text-center">{{$images}}</p> 
-                   @if($car->metaValue($index)!=null)
+
+                    <label class="" style="width:100%">
+                        @if($car->metaValue($index)!=null)
                         <div id="{{$index}}preview" class="imagePreview" style="background-image: url({{$car->metaValue($index)}})"></div>
                         @else
                         <div id="{{$index}}preview" class="imagePreview"></div>
-                    @endif
-                    <label class="btn btn-primary text-center">
-                        Сонгох<input id="{{$index}}" name="{{$index}}" type="file" class="uploadFile img" style="width: 0px;height: 0px;overflow: hidden;" accept="image/x-png,image/gif,image/jpeg">
+                        @endif
+                        <input id="{{$index}}" name="{{$index}}" type="file" class="uploadFile img" style="width: 0px;height: 0px;overflow: hidden;" accept="image/x-png,image/gif,image/jpeg">
                     </label>
                     @if($car->metaValue($index)!=null)
                     <i class="fa fa-times del mt-4" onclick="removeImg('{{$index}}', {{$car->metas->where('key', $index)->first()->id}})"></i>

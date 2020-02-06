@@ -28,9 +28,11 @@ $itemsPerPage = request('itemsPerPage', "10");
                 <thead class="table-dark">
                 <tr>
                     <th>Date</th>
+                    <th>Add mileage</th>
+                    <th>Bonus mileage</th>
                     <th>Used mileage</th>
                     <th>Status</th>
-                    <th>Total mileage</th>
+                    <th>Current mileage</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,7 +40,15 @@ $itemsPerPage = request('itemsPerPage', "10");
                 @foreach($ma as $cash)
                 <tr>
                     <td>{{$cash->created_at}}</td>
+                    @if($cash->transaction_type=="income")
                     <td>{{$cash->transaction_amount}}</td>
+                    <td>{{$cash->bonus}}</td>
+                    <td>-</td>
+                    @elseif($cash->transaction_type=="income")
+                    <td>-</td>
+                    <td>-</td>
+                    <td>{{$cash->transaction_amount}}</td>
+                    @endif
                     <td>{{$cash->status}}</td>
                     <td>{{$cash->current_amount}}</td>
                 </tr>
