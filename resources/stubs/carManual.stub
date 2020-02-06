@@ -16,14 +16,24 @@
                     <div class="about-main-text">
                         <div class="about-heading-title">Заавар </div>
                         <div class="about-text">
-                            <p>
-                                1. Бүртгүүлэх </br>
-                                2. Машины зар оруулах </br>
-                                3. Үйлчилгээний төлбөрөө төлөх.( дансы дугаар :         хэрэглэгчийн төв:           ) </br>
-                                4. My Page –н үйлчилгээний төлбөр төлсний 30 минутын дараа тухайн төлбөр нь mileage болон хувирах. </br>
-                                5. My page-н  “миний оруулсан зар” хэсэгт үнэтэй зар болгох, хугацаа сунгах зэрэг сонгол хийх. </br>
-                                6. mileage –аар үнэтэй зар болгох, хугацаа сунгах боломжтой </br>
-                                7. Үнэтэй зар оруулах, зарын хугацаа сунгах хүсэлт явуулах
+                            <br>
+                            <span class="font-weight-bold">Шинээр үнэтэй зар оруулах тохиолдолд:</span> </br></br>
+
+                                1.Бүртгүүлэх</br>
+                                2.“Зарна” гэсэн цэсэн дээр дарж, зарах машинаа бүртгүүлнэ.</br>
+                                3.Үнэтэй зарын төрлөөс өөрт тохирсныг сонгох.</br>
+                                4.Тухайн дансруу төлбөрөө шилжүүлэх. (Дансны дугаар :                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )</br>
+                                5.My Page дахь “Төлбөр төлөх” товчин дээр даран мэдээллээ оруулах.</br>
+                                6.Төлбөр төлөлт баталгаажсанаар таны зар үнэтэй зараар солигдоно. Зараа шалгах боломжтой.</br></br></br>
+
+
+                            <span class="font-weight-bold">Үнэгүй зараас үнэтэй зарлуу солих тохиолдолд мөн үнэтэй зарын хугацааг сунгах тохиолдолд</span></br></br>
+
+                                1.Үнэтэй зарын төрлөөс өөрт тохирсныг сонгох.</br>
+                                2.Тухайн дансруу төлбөрөө шилжүүлэх. (Дансны дугаар :                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )</br>
+                                3.My Page дээрх “Төлбөр төлөх” товчин дээр даран мэдээллээ оруулах.</br>
+                                4.Төлбөр төлөлт баталгаажсанаас 10 минутын дараа таны Cash хуримтлагдана.</br>
+                                5.My Page дахь “Миний оруулсан зар” дээр өөрийн зараа үнэтэй зарлуу солих мөн зарын хугацааг сунгах боломжтой.</br>
                             </p>
                         </div>
                     </div>
@@ -38,6 +48,77 @@
         </div>
     </section>
 
+<section class="page-section" id="section-best">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="best-zar"></div>
+            </div>
+
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="about-main-text">
+                    <div class="about-heading-title">BEST зар – төлбөртэй </div>
+                    <div class="about-title">
+                        <p>Богино хугацаанд олон хэрэглэгчид зараа хүргэхийг хүсвэл Best зарын хэсгийг ашиглаарай.</p>
+
+                        <p> Best зар нь Main Page болон Sub page-ийн хамгийн дээд хэсэгт байрлах болно. </p>
+
+                        <p> Энэ хэсэгт зөвхөн 12ш зар харагддаг тул хэрэглэгчид хүрэх хамгийн өндөр боломжтой юм.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="page-section bg-light" id="section-special">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="about-main-text">
+                    <div class="about-heading-title">Special зар - төлбөртэй </div>
+                    <div class="about-title">
+                        <p>Онцгой машин хайж байгаа хэрэглэгч нарт зориулан өөрийн зарыг сурталчлах боломж</p>
+
+                        <p> Машин хайх хуудасны дээд талд байрлана. </p>
+
+                        <p> Special зар олон болсон тохиолдолд Random –оор зарын дараалал солигдох болно. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="special-zar"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<section class="page-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ asset('car-web/img/banner-zar.png')}}" class="img-fluid" alt="">
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="about-main-text">
+                    <div class="about-heading-title">Banner зар – төлбөртэй</div>
+                    <div class="about-title">
+                        <p>Машины зарын дундуур Banner зарыг гаргах тул өөрийн зарыг олон хэрэглэгчдэд хүргэх боломжтой. </p>
+
+                        <p>Энд машины зараас гадна машины сэлбэг, төрөл бүрийн тосны худалдаа, даатгалын байгууллага, банк бус
+                            санхүүгийн байгууллага, машин борлуулалтын компани зэрэг автомашинтай холбоотой бүх төрлийн зарыг
+                            харуулах боломжтой.</p>
+
+                        <p> Секунд тутамд нийт 5 сурталчилгаа харуулна.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</section>
+
     <section class="pageType-footer">
         <div class="container">
             <div class="row">
@@ -50,4 +131,50 @@
 @endsection
 
 @section('script')
+<script>
+    var bestZar = {
+        container: document.getElementById('best-zar'),
+        renderer: 'svg',
+        loop: false,
+        rendererSettings: {
+            progressiveLoad: true
+        },
+        autoplay: false,
+        path: '{{asset("car-web/animation/bestAD.json")}}'
+    };
+    anim1 = bodymovin.loadAnimation(bestZar);
+
+    var specialZar = {
+        container: document.getElementById('special-zar'),
+        renderer: 'svg',
+        loop: false,
+        rendererSettings: {
+            progressiveLoad: true
+        },
+        autoplay: false,
+        path: '{{asset("car-web/animation/specialAD.json")}}'
+    };
+    anim2 = bodymovin.loadAnimation(specialZar);
+
+    $(window).scroll(function(){
+        var currentScroll = $(window).scrollTop();
+
+        $('section').each(function(){
+            var $this = $(this);
+            if(($this.offset().top - $(window).height()/2) < currentScroll && currentScroll < ($this.offset().top - $(window).height()/2) + $this.outerHeight()){
+                if(this.id === "section-best"){
+                    anim1.play();
+                }else{
+                    anim1.stop();
+                }
+                if(this.id === "section-special"){
+                    anim2.play();
+                }else{
+                    anim2.stop();
+                }
+                console.log(this.id);
+            }
+        })
+    })
+</script>
 @endsection

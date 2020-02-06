@@ -17,7 +17,7 @@
                     @foreach($contents->take(12) as $content)
                         <div class="card cd-box">
                             <div class="card-top">
-                                <h2 class="title">{{ $content->title }}</h1>
+                                <h2 class="title">{{ $content->metaValue('markName')}} </br> {{ $content->metaValue('modelName')}}</h2>
                             </div>
                             <div class="card-body py-2">
                                 <div class="wish-detail">
