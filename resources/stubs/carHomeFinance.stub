@@ -92,6 +92,7 @@ $interestedCars=[];
                                 <div class="form-group col-md-6 float-left">
                                     <label for="firstPay">Боломжит урьдчилгаа</label>
                                     <select class="form-control" name="firstPay" value="{{ request('firstPay')}}" id="firstPay">
+                                        <option value="20" {{ request('firstPay') == 20 ? 'selected' : '' }}>20%</option>
                                         <option value="30" {{ request('firstPay') == 30 ? 'selected' : '' }}>30%</option>
                                         <option value="40" {{ request('firstPay') == 40 ? 'selected' : '' }}>40%</option>
                                         <option value="50" {{ request('firstPay') == 50 ? 'selected' : '' }}>50%</option>

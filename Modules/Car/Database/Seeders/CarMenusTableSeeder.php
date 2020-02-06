@@ -39,7 +39,7 @@ class CarMenusTableSeeder extends Seeder
             ['Нүүр', '/', '', 'Car'],
             ['Авна', '/buy', '', 'Car'],
             ['Зарна', '/sell', '', 'Car'],
-            ['Лизинг', '/finance', '', 'Car'],
+            ['Лизинг', '/finance?firstPay=30', '', 'Car'],
             ['Аугцион', '/coming-soon', '', 'Car'],
             ['Авъя', '/wishlist', '', 'Car']
         ]];
