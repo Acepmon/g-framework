@@ -223,6 +223,13 @@
             }
         });
 
+        $('.owl-thumb-item').each(function(){
+            if($(this).find('img').attr('src') == 'undefined'){
+                $(this).find('img').attr('src','/assets/car-web/img/video_icon.png');
+            }
+    
+        })
+        
         // $("#ex18b").slider({
         //     min: 0,
         //     max: 10,
@@ -308,5 +315,12 @@
         }
     });
 
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("value");
+    output.innerHTML = slider.value;
+    
+    slider.oninput = function() {
+      output.innerHTML = this.value;
+    }
 
 })(jQuery)
