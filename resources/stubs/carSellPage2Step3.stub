@@ -5,7 +5,7 @@
             <label for="durationDay">Үнэ</label>
             <br>
             <h5>
-                <p class="text-secondary"><small>Одоо байгаа зах зээлийн үнэ. Дараад өөрчилөх боломжтой</small></p>
+                <p class="text-secondary"><small>Одоо байгаа зах зээлийн үнэ. Дараад өөрчлөх боломжтой</small></p>
             </h5>
         </div>
         <div class="input-group col-md-7">
