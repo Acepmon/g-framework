@@ -103,14 +103,26 @@ $categoryName = [
         </div>
         </div>
         @elseif($category == 'car-distance-driven')
-        <div id="{{ $category }}" class="collapse {{ request('mileageAmount', False)?'show':'' }}" aria-labelledby="{{ $category }}">
+        <div id="{{ $category }}" class="collapse {{ request('min_mileageAmount', False)?'show':'' }}" aria-labelledby="{{ $category }}">
         <div class="card-body bg-light grid-radio">
-            <select id="mileageAmount" class="form-control" name="mileageAmount" onchange="formSubmit('mileageAmount','no-value')">
-            <option value="">Явсан КМ сонгох</option>
-            @for($i=0; $i < 500000; $i+=10000)
-            <option value="{{$i}}-{{$i+10000}}" {{ $request['mileageAmount']==$i.'-'.($i+10000)?'selected':'' }}>{{number_format($i)}}-{{number_format($i+10000)}}km</option>
-            @endfor
-            </select>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <select id="min_mileageAmount" class="form-control" name="min_mileageAmount" onchange="formSubmit('min_mileageAmount','no-value')">
+                        <option value="">Эхлэх</option>
+                        @for($i=0; $i < 800000; $i+=10000)
+                        <option value="{{$i}}" {{ $request['min_mileageAmount']==$i ? 'selected':'' }}>{{number_format($i)}} km</option>
+                        @endfor
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <select id="max_mileageAmount" class="form-control" name="max_mileageAmount" onchange="formSubmit('max_mileageAmount','no-value')">
+                        <option value="">Дуусах</option>
+                        @for($i=0; $i < 800000; $i+=10000)
+                        <option value="{{$i}}" {{ $request['max_mileageAmount']==$i ? 'selected':'' }}>{{number_format($i)}} km</option>
+                        @endfor
+                    </select>
+                </div>
+            </div>
         </div>
         </div>
         @elseif($category == 'car-price')

@@ -166,6 +166,9 @@ class Car extends Content
         $request['doctorVerified'] = request('car-doctor-verified', 0);
         $request['seller'] = request('car-seller', 0);
         $request['isAuction'] = request('isAuction', Null);
+
+        $request['min_mileageAmount'] = request('min_mileageAmount', Null);
+        $request['max_mileageAmount'] = request('max_mileageAmount', Null);
         
         // $request = json_encode($request);
         return $request;
