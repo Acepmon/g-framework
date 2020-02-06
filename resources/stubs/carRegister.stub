@@ -171,12 +171,12 @@
                                                 <textarea type="text" class="form-control" name="address" id="address" placeholder="Байгууллагын хаяг"></textarea>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="website">Веб хуудас</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" name="website" id="website" placeholder="Веб хуудас">
-                                            </div>
-                                        </div>
+<!--                                        <div class="form-group">-->
+<!--                                            <label for="website">Веб хуудас</label>-->
+<!--                                            <div class="input-group">-->
+<!--                                                <input type="text" class="form-control" name="website" id="website" placeholder="Веб хуудас">-->
+<!--                                            </div>-->
+<!--                                        </div>-->
                                         <div class="form-group">
                                             <label for="schedule">Цагын хуваарь</label>
                                             <div class="input-group">
