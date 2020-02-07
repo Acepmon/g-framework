@@ -3,7 +3,7 @@ $categorySlug = [
 'car-type', 'car-manufacturer', 'car-year', 'car-distance-driven', 'car-price', 'car-colors', 'car-fuel', 'car-transmission', 'car-options', 'car-mancount', 'car-wheel-pos', 'provinces', 'car-seller', 'car-doctor-verified'
 ];
 $categoryName = [
-'Төрөл', 'Үйлдвэрлэгч/Модел', 'Жил', 'Явсан КМ', 'Үнэ', 'Өнгө', 'Шатахуун', 'Араа', 'Option', 'Зорчигч', 'Жолоо', 'Байршил', 'Seller', 'Doctor баталгаажсан'
+'Төрөл', 'Үйлдвэрлэгч/Модел', 'Жил', 'Явсан КМ', 'Үнэ', 'Өнгө', 'Шатахуун', 'Араа', 'Option', 'Зорчигч', 'Жолоо', 'Байршил', 'Борлуулагч', 'Doctor баталгаажсан'
 ];
 @endphp
 
@@ -195,12 +195,12 @@ $categoryName = [
             </div>
             <div class="custom-control custom-radio">
                 <input type="radio" id="individual" name="car-seller" class="custom-control-input" value="individual" {{ ($request['seller'] === 'individual')?'checked':'' }}>
-                <label class="custom-control-label  d-flex justify-content-between" for="individual">Individual
+                <label class="custom-control-label  d-flex justify-content-between" for="individual">Хувь хүн
                 </label>
             </div>
             <div class="custom-control custom-radio">
                 <input type="radio" id="dealer" name="car-seller" class="custom-control-input" value="dealer" {{ ($request['seller'] === 'dealer')?'checked':'' }}>
-                <label class="custom-control-label  d-flex justify-content-between" for="dealer">Dealer
+                <label class="custom-control-label  d-flex justify-content-between" for="dealer">Дилер
                 </label>
             </div>
         </div>
