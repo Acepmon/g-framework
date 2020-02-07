@@ -65,7 +65,19 @@
                                 <input type="text" name="username" id="username" value="" hidden>
 
                                 <div class="row">
+
                                     <div class="col-md-7">
+                                        <div class="form-group col-md-12 d-inline-block align-top">
+                                            <div class="profile-upload">
+                                                <div class="circle">
+                                                    <img class="profile-pic" src="">
+                                                </div>
+                                                <div class="upload-image">
+                                                    <div class="btn btn-sm btn-primary upload-button" id="image">Зураг</div>
+                                                    <input class="btn btn-primary file-upload" type="file" name="avatar" id="avatar" accept="image/*"/>
+                                                </div>
+                                            </div>
+                                        </div>
 <!--                                        <div class="form-group">-->
 <!--                                            <div class="custom-control custom-checkbox-cd col-5 display-inline-block mr-0 float-left">-->
 <!--                                                <input type="radio" name="groupId" value="{{ \App\Group::where('title', 'Member')->first()->id }}" class="custom-control-input" id="userType1" checked onclick="userType(1)" >-->
@@ -151,18 +163,7 @@
                             <div id="step-3" class="tab-pane">
                                 <div class="row justify-content-center">
                                     <div class="col-md-8">
-                                        <div class="form-group col-md-5 d-inline-block align-top">
-                                            <div class="profile-upload">
-                                                <div class="circle">
-                                                    <img class="profile-pic" src="">
-                                                </div>
-                                                <div class="upload-image">
-                                                    <div class="btn btn-sm btn-primary upload-button" id="image">Зураг</div>
-                                                    <input class="btn btn-primary file-upload" type="file" name="avatar" id="avatar" accept="image/*"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-5 d-inline-block align-top">
+                                        <div class="form-group col-md-12 d-inline-block align-top">
                                             <div class="profile-upload">
                                                 <div class="circle">
                                                     <img class="profile-pic-d" src="">
