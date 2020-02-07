@@ -179,8 +179,8 @@ class GframeworkServiceProvider extends ServiceProvider
             $someObject = json_decode($expression);
             $banners = Banner::select('id', 'banner', 'link', 'location_id', 'status')->whereRaw('1 = 1')->orderBy('id', 'asc');
             $banners = $banners->where('status', '=', 'active');
-            $banners = $banners->whereDate('starts_at', '<', Carbon::now()->toDateTimeString());
-            $banners = $banners->whereDate('ends_at', '>', Carbon::now()->toDateTimeString());
+            $banners = $banners->whereDate('starts_at', '<', Carbon::now());
+            $banners = $banners->whereDate('ends_at', '>', Carbon::now());
             foreach ($someObject as $some) {
                 $banners = $banners->where($some->field, '=', $some->key);
             }
