@@ -92,7 +92,6 @@ $interestedCars=[];
                                 <div class="form-group col-md-6 float-left">
                                     <label for="firstPay">Боломжит урьдчилгаа</label>
                                     <select class="form-control" name="firstPay" value="{{ request('firstPay')}}" id="firstPay">
-                                        <option value="20" {{ request('firstPay') == 20 ? 'selected' : '' }}>20%</option>
                                         <option value="30" {{ request('firstPay') == 30 ? 'selected' : '' }}>30%</option>
                                         <option value="40" {{ request('firstPay') == 40 ? 'selected' : '' }}>40%</option>
                                         <option value="50" {{ request('firstPay') == 50 ? 'selected' : '' }}>50%</option>
@@ -140,8 +139,11 @@ $interestedCars=[];
                 <input hidden id="sortBy" name="sort" value="updated_at">
                 <input hidden id="sortDir" name="sortDir" value="desc">
                 <button type="submit" id="searchFitCars" class="btn btn-danger btn-round  mt-5 px-5 btn-lg">Хайлт хийх</button>
+
+
             </div>
         </form>
+        <a href="#hot-deal" class="js-scroll-trigger discover"></a>
     </div>
 </section>
 
@@ -157,9 +159,12 @@ $interestedCars=[];
 <!--                    @contentInline(type=car, priceAmount < intval(request()->input("priceAmount")), sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)-->
 <!--                    @endif-->
                     @contentInline(type=car, author_id=4, priceAmount < intval(request()->input("priceAmount")), sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)
-                    <span class="total-cars ml-0" >НИЙТ {{count($cars)}}</span>
+                    <span class="total-cars ml-0" >НИЙТ {{count($cars)}}
+<!--                        <a class="">Бүгдийг харах</a><i class="fab fa fa-angle-right"></i>-->
+                    </span>
                     <div class="sort-cars col-md-9">
                         <ul>
+                            <li><a href="#" onclick="formSubmit('searchByTotPrice', 1000000000)">Бүгдийг  харах</a></li>
                             <li class="{{ request('sort')=='updated_at' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'updated_at', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
                             <li class="{{ request('sort')=='priceAmount' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'asc')">Хямд үнэ</a></li>
                         </ul>
@@ -249,7 +254,6 @@ $interestedCars=[];
         </div>
     </div>
 </section>
-
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -260,16 +264,26 @@ $interestedCars=[];
 
     function formSubmit(id, value, sortDir, sortDirValue) {
         console.log(id, value, sortDir, sortDirValue)
-        if (value != 'no-value') {
+        if(value===1000000000){
             document.getElementById(id).value = value;
         }
-        if (sortDir != 'no-value'){
-            document.getElementById(sortDir).value = sortDirValue;
+        else{
+            if (value != 'no-value') {
+                document.getElementById(id).value = value;
+            }
+            if (sortDir != 'no-value'){
+                document.getElementById(sortDir).value = sortDirValue;
+            }
         }
         $('#mainForm').submit();
     }
 
     $(document).ready(function () {
+        @if(request()->input("priceAmount")>1)
+            $('.discover').trigger('click');
+        @endif
+
+
         $(".saveToInterested").click(function (event) {
             event.preventDefault();
             var id = $(this).attr('data-target');
