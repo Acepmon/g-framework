@@ -76,6 +76,20 @@
                                                 <label class="custom-control-label" for="userType2">Дилер</label>
                                             </div>
                                         </div>
+                                        <div class="card-body bg-white grid-radio dealer">
+                                    <div class="cd-radio">
+                                        <input type="radio" id="individual" name="carType" class="custom-control-input">
+                                        <label class="custom-control-label " for="individual"> <img src="img/icons/sedan.svg"
+                                            alt=""><span>Хувь хүн</span>
+                                        </label>
+                                    </div>
+                                    <div class="cd-radio">
+                                        <input type="radio" id="dealer" name="carType" class="custom-control-input">
+                                        <label class="custom-control-label" for="dealer"> <img src="img/icons/suv.svg" alt=""><span>Диллер</span>
+                                        </label>
+                                    </div>
+
+                                    </div>
                                         <div class="form-group">
                                             <label for="email">И-мэйл:</label>
                                             <input type="text" name="email" id="email" maxlength="191" required class="form-control @error('email') is-invalid @enderror" placeholder="example@mail.com" value="{{ old('email') }}">
