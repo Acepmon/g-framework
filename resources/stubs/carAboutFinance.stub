@@ -27,13 +27,13 @@
         <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-            <h3>ББСБ</h3>
+            <h3>Техникийн үзлэг оношилгоо</h3>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 intro-advantages">
             <div class="intro-advantage">
-                <h4>Урьдчилгаа 20~30% ийг төлөөд машинтай болох боломж
+                <h4>Урьдчилгаа 20~30% ийг төлөөд машинтай болох боломж</br> &nbsp;
 
                 </h4>
                 <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutF-icon-1.svg') }}" alt=""></div>
@@ -41,7 +41,7 @@
 
             <div class="intro-advantage">
                 <h4>Урт хугацаатай,
-                бага хүүтэй
+                бага хүүтэй</br> &nbsp;</br> &nbsp;
                 </h4>
                 <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutF-icon-2.svg') }}" alt=""></div>
             </div>

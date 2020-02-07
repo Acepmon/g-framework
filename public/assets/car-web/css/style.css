@@ -1303,6 +1303,85 @@ header.masthead .discover span::after {
   bottom: 0;
 }
 
+.maz-form .grid-radio.dealer {
+  grid-template-columns: 1fr 1fr;
+  padding: 0;
+}
+
+.maz-form .grid-radio.dealer .cd-radio {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.maz-form .grid-radio.dealer .cd-radio:last-child {
+  margin-right: 0;
+}
+
+.maz-form .grid-radio.dealer .cd-radio .custom-control-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #858994;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid #E0E5EB;
+  height: 100px;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.maz-form .grid-radio.dealer .cd-radio .custom-control-label img {
+  opacity: .7;
+  -webkit-filter: grayscale(0.8);
+          filter: grayscale(0.8);
+  margin-bottom: -8px;
+  transition: all .3s ease-out;
+  width: 40px;
+  transform: skewX(0);
+  transition: transform .3s ease-in-out;
+  transform-origin: left bottom;
+  position: absolute;
+  top: 20px;
+}
+
+.maz-form .grid-radio.dealer .cd-radio .custom-control-label:before {
+  display: none;
+}
+
+.maz-form .grid-radio.dealer .cd-radio .custom-control-label:after {
+  display: none;
+}
+
+.maz-form .grid-radio.dealer .cd-radio .custom-control-label span {
+  position: absolute;
+  bottom: 20px;
+}
+
+.maz-form .grid-radio.dealer .custom-control-input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.maz-form .grid-radio.dealer .custom-control-input:checked ~ .custom-control-label {
+  color: #fff;
+  font-weight: 600;
+  background: #2680EB;
+}
+
+.maz-form .grid-radio.dealer .custom-control-input:checked ~ .custom-control-label img {
+  -webkit-filter: grayscale(0);
+          filter: grayscale(0);
+  opacity: 1;
+  position: absolute;
+  -webkit-animation: floatRight 1s linear infinite;
+          animation: floatRight 1s linear infinite;
+}
+
+.maz-form .grid-radio.dealer .custom-control-input:checked ~ .custom-control-label ~ .cd-radio {
+  background: #2680EB;
+}
+
 .maz-form .custom-control-input {
   position: absolute;
   z-index: -1;
@@ -5206,7 +5285,7 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
 
 .finance-section .monthly-payment .info .monthly {
   font-family: "Segoe UI", "Open Sans", Helvetica, sans-serif;
-  font-size: 2.125rem;
+  font-size: 1.8rem;
   font-weight: 700;
   line-height: 2rem;
 }

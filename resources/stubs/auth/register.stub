@@ -66,16 +66,30 @@
 
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox-cd col-5 display-inline-block mr-0 float-left">
-                                                <input type="radio" name="groupId" value="{{ \App\Group::where('title', 'Member')->first()->id }}" class="custom-control-input" id="userType1" checked onclick="userType(1)" >
-                                                <label class="custom-control-label" for="userType1">Хувь хүн</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox-cd col-5 display-inline-block mr-0 float-left">
-                                                <input type="radio" name="groupId" value="{{ \App\Group::where('title', 'Auto Dealer')->first()->id }}" class="custom-control-input" onclick="userType(2)" id="userType2" >
-                                                <label class="custom-control-label" for="userType2">Дилер</label>
-                                            </div>
-                                        </div>
+<!--                                        <div class="form-group">-->
+<!--                                            <div class="custom-control custom-checkbox-cd col-5 display-inline-block mr-0 float-left">-->
+<!--                                                <input type="radio" name="groupId" value="{{ \App\Group::where('title', 'Member')->first()->id }}" class="custom-control-input" id="userType1" checked onclick="userType(1)" >-->
+<!--                                                <label class="custom-control-label" for="userType1">Хувь хүн</label>-->
+<!--                                            </div>-->
+<!--                                            <div class="custom-control custom-checkbox-cd col-5 display-inline-block mr-0 float-left">-->
+<!--                                                <input type="radio" name="groupId" value="{{ \App\Group::where('title', 'Auto Dealer')->first()->id }}" class="custom-control-input" onclick="userType(2)" id="userType2" >-->
+<!--                                                <label class="custom-control-label" for="userType2">Дилер</label>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                        <div class="card-body bg-white grid-radio dealer">
+                                    <div class="cd-radio">
+                                        <input type="radio" id="userType1" name="groupId" value="{{ \App\Group::where('title', 'Member')->first()->id }}" checked onclick="userType(1)"  class="custom-control-input">
+                                        <label class="custom-control-label " for="userType1"> <img src="{{ asset('car-web/img/icons/sedan.svg') }}"
+                                            alt=""><span>Хувь хүн</span>
+                                        </label>
+                                    </div>
+                                    <div class="cd-radio">
+                                        <input type="radio" id="userType2" name="groupId" value="{{ \App\Group::where('title', 'Auto Dealer')->first()->id }}" onclick="userType(2)" class="custom-control-input">
+                                        <label class="custom-control-label" for="userType2"> <img src="{{ asset('car-web/img/icons/suv.svg') }}" alt=""><span>Диллер</span>
+                                        </label>
+                                    </div>
+
+                                    </div>
                                         <div class="form-group">
                                             <label for="email">И-мэйл:</label>
                                             <input type="text" name="email" id="email" maxlength="191" required class="form-control @error('email') is-invalid @enderror" placeholder="example@mail.com" value="{{ old('email') }}">

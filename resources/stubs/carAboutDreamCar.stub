@@ -45,7 +45,7 @@
             </div>
 
             <div class="intro-advantage">
-                <h4>Борлуулагч хэрэглэгчтэй шууд харьцан машинаа сурталчилах боломжтой
+                <h4>Борлуулагч хэрэглэгчтэй шууд харьцан машинаа сурталчлах боломжтой
                 </h4>
                 <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutW-icon-3.svg') }}" alt=""></div>
             </div>

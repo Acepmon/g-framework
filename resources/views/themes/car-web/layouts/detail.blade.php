@@ -145,14 +145,7 @@
         <script src="{{ asset('car-web/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <script src="{{ asset('car-web/js/script.min.js') }}"></script>
         <script src="{{ asset('inputmask/jquery.inputmask.min.js') }}"></script>
-        <script>
-                $('.owl-thumb-item').each(function(){
-            if($(this).find('img').attr('src') == 'undefined'){
-                $(this).find('img').attr('src',"{{ asset('car-web/img/video_icon.png') }}");
-            }
-    
-        })
-        </script>
+        
         @yield('script')
 
         @stack('scripts')

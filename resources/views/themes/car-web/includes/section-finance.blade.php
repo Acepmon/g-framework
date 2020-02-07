@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="info">
                                     <p>Сар бүр төлөх дүн</p>
-                                    <p class="monthly" style="font-size: large"><span id="monthlyPaymentAmount">427,938</span> ₮</p>
+                                    <p class="monthly"><span id="monthlyPaymentAmount">427,938</span> ₮</p>
                                 </div>
                             </div>
                             <a class="btn btn-light btn-round btn-block my-3 shadow-soft-blue p-2" href="#" data-toggle="modal"
