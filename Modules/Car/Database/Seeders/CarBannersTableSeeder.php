@@ -21,12 +21,41 @@ class CarBannersTableSeeder extends Seeder
         $url = "https://via.placeholder.com";
 
         // 1. Home Main Slider (650x650)
-        factory(Banner::class, 3)->create([
+        factory(Banner::class, 1)->create([
             "location_id" => 1,
-        ])->each(function ($banner) use ($url) {
-            $banner->banner = $url . "/" . BannerLocation::find(1)->width . "x" . BannerLocation::find(1)->height;
-            $banner->save();
-        });
+            "title" => "main1",
+            "status" => "active",
+            "starts_at" => "2020-02-05 23:19:09",
+            "ends_at" => "2021-02-05 23:19:09",
+            "banner" => "http://maz.mn:8000/storage/banners/main1.jpg"
+        ]);
+
+        factory(Banner::class, 1)->create([
+            "location_id" => 1,
+            "title" => "main2",
+            "status" => "active",
+            "starts_at" => "2020-02-05 23:19:09",
+            "ends_at" => "2021-02-05 23:19:09",
+            "banner" => "http://maz.mn:8000/storage/banners/main2.jpg"
+        ]);
+
+        factory(Banner::class, 1)->create([
+            "location_id" => 1,
+            "title" => "main3",
+            "status" => "active",
+            "starts_at" => "2020-02-05 23:19:09",
+            "ends_at" => "2021-02-05 23:19:09",
+            "banner" => "http://maz.mn:8000/storage/banners/main3.jpg"
+        ]);
+
+        factory(Banner::class, 1)->create([
+            "location_id" => 1,
+            "title" => "main4",
+            "status" => "active",
+            "starts_at" => "2020-02-05 23:19:09",
+            "ends_at" => "2021-02-05 23:19:09",
+            "banner" => "http://maz.mn:8000/storage/banners/main4.png"
+        ]);
 
         // 2. Login Main Slider (650x650)
         factory(Banner::class, 3)->create([
