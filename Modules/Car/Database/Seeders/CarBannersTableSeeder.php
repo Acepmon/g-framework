@@ -27,7 +27,7 @@ class CarBannersTableSeeder extends Seeder
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2021-02-05 23:19:09",
-            "banner" => "http://maz.mn:8000/storage/banners/main1.jpg"
+            "banner" => "http://maz.mn/storage/banners/main1.jpg"
         ]);
 
         factory(Banner::class, 1)->create([
@@ -36,7 +36,7 @@ class CarBannersTableSeeder extends Seeder
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2021-02-05 23:19:09",
-            "banner" => "http://maz.mn:8000/storage/banners/main2.jpg"
+            "banner" => "http://maz.mn/storage/banners/main2.jpg"
         ]);
 
         factory(Banner::class, 1)->create([
@@ -45,7 +45,7 @@ class CarBannersTableSeeder extends Seeder
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2021-02-05 23:19:09",
-            "banner" => "http://maz.mn:8000/storage/banners/main3.jpg"
+            "banner" => "http://maz.mn/storage/banners/main3.jpg"
         ]);
 
         factory(Banner::class, 1)->create([
@@ -54,7 +54,7 @@ class CarBannersTableSeeder extends Seeder
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2021-02-05 23:19:09",
-            "banner" => "http://maz.mn:8000/storage/banners/main4.png"
+            "banner" => "http://maz.mn/storage/banners/main4.png"
         ]);
 
         // 2. Login Main Slider (650x650)
