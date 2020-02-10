@@ -24,14 +24,13 @@
                                     @if ($content->title)
                                         <h1 class="vehicle-title">{{ $content->title }} - {{$content->metaValue('buildYear')}} / {{$content->metaValue('importDate')}}</h1>
                                     @endif
-                                    <p class="vehicle-meta">{{number_format($content->metaValue('mileageAmount', 0))}} {{$content->metaValue('mileageUnit')}} |
-                                         {{$content->metaValue('fuelType')}} |  {{number_format($content->metaValue('capacityAmount'))}} {{$content->metaValue('capacityUnit')}}
+                                    <p class="vehicle-meta">{{$content->metaValue('area')}} | {{number_format($content->metaValue('mileageAmount', 0))}} {{$content->metaValue('mileageUnit')}} |
+                                         {{$content->metaValue('fuelType')}} |  {{number_format($content->metaValue('capacityAmount'))}} {{$content->metaValue('capacityUnit')}} | 
+                                         @if ($content->metaArray('advantages'))
+                                       {{ implode(' | ', $content->metaArray('advantages')->toArray()) }}
+                                   @endif
                                     </p>
-
-
-<!--                                    @if ($content->metaArray('advantages'))-->
-<!--                                        <p class="vehicle-meta text-muted">{{ implode(' | ', $content->metaArray('advantages')->toArray()) }}</p>-->
-<!--                                    @endif-->
+                                   
 
                                     <div class="d-flex align-items-center">
                                         @if ($content->metaValue('isAuction') && $content->metaValue('startPriceAmount'))

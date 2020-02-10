@@ -6,13 +6,10 @@
 
             <div id="player"></div>
 
-            <script>
-                var str = "{{ $content->metaValue('link') }}" 
-                var split =str.split("=");
-                var vidID = split[1];
-            </script>
-
 <script>
+  var str = "{{ $content->metaValue('link') }}" 
+  var split =str.split("=");
+  var vidID = split[1];
   // 2. This code loads the IFrame Player API code asynchronously.
   var tag = document.createElement('script');
 
