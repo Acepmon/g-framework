@@ -10,7 +10,7 @@
             </div>
             <div class="card-slide owl-carousel owl-theme">
                 @foreach($contents->take(12) as $car)
-                <div class="card cd-box">
+                <a href="/{{ $car->slug }}" class="card cd-box">
                     @if($car->metaValue('publishType') == 'best_premium' || $car->metaValue('publishType') == 'premium')
                     <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/corona.svg') }}" alt=""></div>
                     @endif
@@ -34,7 +34,7 @@
                     <div class="card-body py-2">
                         <div class="card-description">
                             <div class="card-desc-top">
-                                <a href="/{{ $car->slug }}" class="card-title">{{ $car->title }}</a>
+                                <div class="card-title">{{ $car->title }}</div>
                                 <div class="price" style="min-width: 35%">{{ numerizePrice($car->metaValue('priceAmount')) }} {{ $car->metaValue('priceUnit') }}</div>
                             </div>
 
@@ -44,7 +44,7 @@
                             <div class="status">{{ ucfirst($car->metaValue('priceType')) }}</div>
                         </div>
                     </div>
-                </div>
+                </a>
                 @endforeach
             </div>
         </div>
