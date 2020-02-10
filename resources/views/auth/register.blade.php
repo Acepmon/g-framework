@@ -156,8 +156,9 @@
                                 <!-- NEXT PREV BUTTON START -->
                                 <div style="float:right;">
                                     <button class="btn btn-light btn-round px-5 py-2 mr-3" type="button" id="step2Prev">Өмнөх</button>
-                                    <button class="btn btn-danger btn-round shadow-red px-5 py-2" type="button" hidden id="step2Next">Дараах</button>
-                                    <button id="userTypes2" class="btn btn-danger btn-round shadow-red px-5 py-2" type="submit">Бүртгүүлэх</button>
+                                    <button class="btn btn-danger btn-round shadow-red px-5 py-2" type="button" id="step2Next">Бүртгүүлэх</button>
+<!--                                    <button id="userTypes2" class="btn btn-danger btn-round shadow-red px-5 py-2">Бүртгүүлэх</button>-->
+                                    <button id="userRegister" class="btn btn-danger btn-round shadow-red px-5 py-2" hidden type="submit">Бүртгүүлэх</button>
                                 </div>
                             </div>
                             <div id="step-3" class="tab-pane">
@@ -261,19 +262,19 @@
             $("#tab-step-2").trigger('click');
         });
     });
-
+    var regType=1;
     function userType(type) {
-        console.log(type)
         if(type===1){
             $( "#step-3id" ).attr( "hidden","true" );
-            $( "#step2Next" ).attr( "hidden","true" );
-            $( "#userTypes2" ).removeAttr( "hidden" );
+            $( "#step2Next" ).text( "Бүртгүүлэх" );
+            //$( "#userTypes2" ).removeAttr( "hidden" );
         }
         else if(type===2){
             $( "#step-3id" ).removeAttr( "hidden" );
-            $( "#userTypes2" ).attr( "hidden","true" );
-            $( "#step2Next" ).removeAttr( "hidden" );
+            $( "#userTypes2" ).text( "Дараах" );
+            //$( "#step2Next" ).removeAttr( "hidden" );
         }
+        regType=type;
     }
 </script>
 
@@ -392,7 +393,12 @@
 
             setTimeout(function () {
                 if (emailField.hasClass('is-valid') && nameField.hasClass('is-valid') && passwordField.hasClass('is-valid') && passwordConfirmationField.hasClass('is-valid')) {
-                    $("#tab-step-3").trigger('click');
+                    if(regType===1){
+                        $("#userRegister").trigger('click');
+                    }
+                    else if(regType===2){
+                        $("#tab-step-3").trigger('click');
+                    }
                 }
             }, 1000);
             $("#demo-spinner").css({'display': 'none'});
@@ -403,9 +409,7 @@
 
         $("#step-2").find("input").each(function() {
             $(this).keydown(function(event) {
-                console.log("CLICKED ENTER");
                 if(event.keyCode == 13) {
-                    console.log("CLICKED ENTER");
                     event.stopPropagation();
                     event.preventDefault();
                     $("#step2Next").click();
