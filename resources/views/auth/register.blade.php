@@ -361,7 +361,7 @@
                     if (!data.status) {
                         showValidation(1, 'И-мэйл боломжтой!', emailField);
                     } else {
-                        showValidation(-1, 'Энэ и-мэйлээр өмнөн нь бүртгүүлж байсан байна!', emailField);
+                        showValidation(-1, 'Энэ и-мэйлээр өмнө нь бүртгүүлж байсан байна!', emailField);
                     }
                 });
             } else {
