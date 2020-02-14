@@ -17,11 +17,12 @@ class CarOptionsTaxonomyTableSeeder extends Seeder
     public function run()
     {
         $options = ['Гадна байдал', 'Дотор байдал', 'Аюулгүй байдал', 'Тав тух'];
+        $slugs = ['Exterior', 'Guts', 'Safety', 'Convinience'];
 
         $parent = TaxonomyManager::register('Options', 'car');
 
         foreach ($options as $key => $option) {
-            TaxonomyManager::register($option, 'car-options', $parent->term->id);
+            TaxonomyManager::register($option, 'car-options', $parent->term->id, array(), array(), $slugs[$key]);
         }
 
         TaxonomyManager::updateTaxonomyChildrenSlugs($parent->id);

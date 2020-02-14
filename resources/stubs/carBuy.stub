@@ -14,19 +14,34 @@ $banner = \App\Banner::where('location_id', 5)->where('status', 'active')->inRan
 @section('load')
 <link href="{{ asset('car-web/vendor/simple-line-icons/css/simple-line-icons.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('car-web/vendor/bootstrap-slider/css/bootstrap-slider.min.css') }}" rel="stylesheet">
+<style>
+.car-list .card-img .img-fluid {
+  min-height: 100%;
+  object-fit: cover;
+}
+</style>
 @endsection
 
 @section('content')
 
 <div class="bg-page-header"></div>
 
+@php
+
+// Get All items
+$orderBy = request('orderBy', "publishedAt");
+$order = request('order', "desc");
+$page = request('page', "1");
+$itemsPerPage = request('itemsPerPage', "15");
+
+@endphp
+
 @include('themes.car-web.includes.fixed-right-sidebar', array('sideBanners'=>\App\Banner::where('location_id', 4)->where('status', 'active')->get(), 'premium'=>\Modules\Car\Entities\Car::filterByPremium(5)))
 <section class="section">
   <div class="container">
-    <div class="row">
-      <div class="col-lg-3 col-md-4">
-        <input type="hidden" name="search" id="search">
-        <form action="{{ url('search') }}" id="searchForm">
+    <form id="filterForm">
+      <div class="row">
+        <div class="col-lg-3 col-md-4">
           <div class="left-bar-title"><h3>Хайлт хийх</h3>
             <div class="mh-search-input">
               <input class="search" type="search" placeholder="Search" aria-label="Search" name="search" id="searchInput">
@@ -72,12 +87,17 @@ $banner = \App\Banner::where('location_id', 5)->where('status', 'active')->inRan
               </button>
             </div>
           </div>
-        </form>
-        <form action="{{ url('/buy') }}" id="mainForm">
-        @include('themes.car-web.includes.car-list-contents', ['allItems' => $allItems, 'type' => 'buy'])
-        </form>
+          @include('themes.car-web.includes.car-list-menu')
+          <input type="hidden" name="publishType" id="publishType" value="{{ request('publishType', '') }}" />
+          @if(request('except', False))
+          <input type="hidden" name="except" id="exceptInput" value="{{ request('except', '') }}" />
+          @endif
+          <div id="advantageContainer"></div>
+        </div>
+        <div id="carListContentsContainer" class="col-lg-9 col-md-8">
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </section>
 
@@ -94,6 +114,7 @@ $banner = \App\Banner::where('location_id', 5)->where('status', 'active')->inRan
 </section>
 @endif
 <!-- Banner end -->
+@include('themes.car-web.includes.loader')
 
 <!-- Hot deal Grid -->
 @include('themes.car-web.includes.section-slider', array('title'=>'Шилдэг зарууд', 'contents'=>\App\Content::getByMetas('publishType', 'best_premium')->where('status', \App\Content::STATUS_PUBLISHED)->where('visibility', \App\Content::VISIBILITY_PUBLIC)
@@ -108,11 +129,148 @@ $banner = \App\Banner::where('location_id', 5)->where('status', 'active')->inRan
 <script src="{{ asset('car-web/vendor/bootstrap-slider/bootstrap-slider.min.js') }}"></script>
 <script src="{{ asset('car-web/vendor/owl.carousel.thumbs/owl.carousel2.thumbs.min.js') }}"></script>
 <script>
+  $(document).ready(function() {
+    refilter();
+  });
+
+  function refilter() {
+    $("#demo-spinner").css({'display': 'block'});
+    var paramObjs = {};
+    var waiting = true;
+    $.each($('#filterForm').serializeArray(), function(_, kv) {
+      paramObjs[kv.name] = kv.value;
+    });
+    paramObjs = $("#filterForm").serialize();
+    $.ajax({
+      url: '/ajax/cars/filter', 
+      method: 'GET',
+      data: paramObjs,
+      success: function (data) {
+        $data = $(data);
+        $("#carListContentsContainer").hide().html($data).fadeIn();
+        
+         // Double search code
+        if ($("#searchPage").length) {
+          $("#searchInput").val('');
+          $("#searchInput").trigger('blur');
+          $("#searchBtn").parent().unbind('click');
+        } else {
+          $("#searchBtn").parent().on('click', onSearchBtn);
+        }
+
+        // Initiate owl carousel on car advantages
+        $('.advantage-slider').owlCarousel({
+            loop: false,
+            margin: 0,
+            autoplay: false,
+            thumbs: false,
+            autoWidth: true,
+            dots: false,
+            nav: true,
+            rewind:true
+        });
+        hideLoader();
+      },
+      error: function (error) {
+        $data = $(error);
+        $("#carListContentsContainer").hide().html($data).fadeIn();
+        hideLoader();
+      }
+    });
+
+    $.ajax({
+      url: '/ajax/cars/count', 
+      method: 'GET',
+      data: paramObjs,
+      success: function (data) {
+        countCategories = ['car-seller', 'car-doctor-verified'];
+        var count = {};
+        for (var i=0; i<countCategories.length; i++) {
+          count[countCategories[i]] = 0;
+        }
+        for (var i=0; i<data.length; i++) {
+          $("#" + data[i].id + "-count").html(data[i].contents_count);
+          if (countCategories.includes(data[i].taxonomy)) {
+            count[data[i].taxonomy] += data[i].contents_count;
+          }
+        }
+        for (var i=0; i<countCategories.length; i++) {
+          $("#"+countCategories[i]+"-count").html(count[countCategories[i]]);
+        }
+        hideLoader();
+      }
+    });
+  }
+
+  function hideLoader() {
+    if (waiting == false) {
+      $("#demo-spinner").css({'display': 'none'});
+    }
+    waiting = false;
+  }
+
+  $(document).on("submit", "#filterForm", function (e) {
+    if ($("#searchPage").length) { // Double search code
+      $("#searchInput").val($("#searchPage").val());
+    }
+    e.preventDefault();
+    refilter();
+  });
+
   function formSubmit(id, value) {
+    if (id == 'searchInput' && value != '') { // Double search code
+      return false;
+    }
     if (value != 'no-value') {
       document.getElementById(id).value = value;
     }
-    $('#mainForm').submit();
+    refilter();
+  }
+
+  function removeAdvantage(value) {
+    $("#advantageContainer input[value='"+value+"']").prop('checked', false);
+    refilter();
+  }
+
+  function addAdvantage(value) {
+    var selector = $("#advantageContainer input[value='"+value+"']");
+    if (selector.length) {
+      selector.prop('checked', true);
+    } else {
+      $("#advantageContainer").append("<input type='checkbox' style='display:none' name='advantage[]' value='" + value + "' checked />");
+    }
+    refilter();
+  }
+
+  function onSearchBtn() {
+    $(this).addClass('expand');
+    $(this).find('input').focus();
+  }
+
+  function addToInterest(event, value) {
+    event.preventDefault();
+    event.stopPropagation();
+    var target = event.target.closest('div');
+    $.ajax({
+      url: '/ajax/user/interested_cars', 
+      dataType: 'json',
+      method: 'PUT',
+      data: {
+          'content_id': value
+      },
+      success: function (data) {
+        if (data.status == 'added') {
+          target.innerHTML = '<span class="text-danger"><i class="fas fa-heart"></i> Жагсаалтанд нэмэгдсэн</span>';
+        } else if (data.status == 'removed') {
+          target.innerHTML = '<span class=""><i class="far fa-heart"></i> Жагсаалтанд нэмэх</span>';
+        }
+      },
+      error: function (error) {
+        if (error.status == 401) {
+          window.location.href = "{{ url('/login') }}";
+        }
+      }
+    });
   }
 </script>
 @endsection

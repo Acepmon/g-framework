@@ -29,5 +29,6 @@ class CarTaxonomyTableSeeder extends Seeder
         $this->call(CarManufactureTableSeeder::class);
         $this->call(CarOptionsTaxonomyTableSeeder::class);
         $this->call(CarPricingsTableSeeder::class);
+        $this->call(CarFilterTableSeeder::class);
     }
 }

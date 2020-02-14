@@ -28,10 +28,10 @@ class CarOptionsSafetyTableSeeder extends Seeder
             'Зорчигчын суудал' => ['metaKey' => 'optionSafetyAirbagPassengerSeat'], 
             'Аюулгүйн дэр : Жолоочийн суудал' => ['metaKey' => 'optionSafetyAirbagDriverSeat']];
 
-        $parent = TaxonomyManager::register('Safety', 'car-options');
+        $parent = TaxonomyManager::findTerm('Аюулгүй байдал');
 
         foreach ($safeties as $safety => $metas) {
-            TaxonomyManager::register($safety, 'car-safety', $parent->term->id, $metas);
+            TaxonomyManager::register($safety, 'car-safety', $parent->id, $metas);
         }
 
         TaxonomyManager::updateTaxonomyChildrenSlugs($parent->id);

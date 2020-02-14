@@ -28,7 +28,7 @@
                     <span class=""><i class="fas fa-car"></i> Энэ таны машин</span>
                 </div>
                 @else
-                    @if(Auth::user() && count(metaHas(Auth::user(), 'interestedCars', $car->id)->get()) > 0)
+                    @if(Auth::check() && Auth::user()->hasMeta('interestedCars', $car->id))
                     <div class="favorite" onclick="addToInterest(event, {{$car->id}})">
                         <span class="text-danger"><i class="fas fa-heart"></i> Жагсаалтанд нэмэгдсэн</span>
                     </div>
@@ -81,7 +81,7 @@
 
                 <div class="advantage-slider owl-carousel owl-theme">
                     @foreach($car->metas->where('key', 'advantages') as $advantage)
-                    <a class="advantage-item" onclick="formSubmit('advantage', '{{$advantage->value}}')">{{ $advantage->value }}</a>
+                    <a class="advantage-item" onclick="addAdvantage('{{$advantage->value}}')">{{ $advantage->value }}</a>
                     @endforeach
                 </div>
             </div>

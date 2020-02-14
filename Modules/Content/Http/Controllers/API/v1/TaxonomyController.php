@@ -7,7 +7,6 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 use Modules\Content\Transformers\TaxonomyCollection;
-
 use App\Entities\TaxonomyManager;
 use App\TermTaxonomy;
 
