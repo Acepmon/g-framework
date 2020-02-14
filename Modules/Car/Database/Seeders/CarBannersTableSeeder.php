@@ -27,7 +27,7 @@ class CarBannersTableSeeder extends Seeder
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2021-02-05 23:19:09",
-            "banner" => "http://maz.mn/storage/banners/main1.jpg"
+            "banner" => "https://www.maz.mn/storage/banners/main1.jpg"
         ]);
 
         factory(Banner::class, 1)->create([
@@ -36,7 +36,7 @@ class CarBannersTableSeeder extends Seeder
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2021-02-05 23:19:09",
-            "banner" => "http://maz.mn/storage/banners/main2.jpg"
+            "banner" => "https://www.maz.mn/storage/banners/main2.jpg"
         ]);
 
         factory(Banner::class, 1)->create([
@@ -45,7 +45,7 @@ class CarBannersTableSeeder extends Seeder
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2021-02-05 23:19:09",
-            "banner" => "http://maz.mn/storage/banners/main3.jpg"
+            "banner" => "https://www.maz.mn/storage/banners/main3.jpg"
         ]);
 
         factory(Banner::class, 1)->create([
@@ -54,7 +54,7 @@ class CarBannersTableSeeder extends Seeder
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2021-02-05 23:19:09",
-            "banner" => "http://maz.mn/storage/banners/main4.png"
+            "banner" => "https://www.maz.mn/storage/banners/main4.png"
         ]);
 
         // 2. Login Main Slider (650x650)
@@ -82,12 +82,42 @@ class CarBannersTableSeeder extends Seeder
         });
 
         // 5. Mid Content Banner (1170x160)
-        factory(Banner::class, 3)->create([
+
+        factory(Banner::class, 1)->create([
             "location_id" => 5,
-        ])->each(function ($banner) use ($url) {
-            $banner->banner = $url . "/" . BannerLocation::find(5)->width . "x" . BannerLocation::find(5)->height;
-            $banner->save();
-        });
+            "title" => "mainBottom1",
+            "status" => "active",
+            "starts_at" => "2020-02-05 23:19:09",
+            "ends_at" => "2021-02-05 23:19:09",
+            "banner" => "https://www.maz.mn/storage/banners/mainBottom1.png"
+        ]);
+
+        factory(Banner::class, 1)->create([
+            "location_id" => 5,
+            "title" => "mainBottom2",
+            "status" => "active",
+            "starts_at" => "2020-02-05 23:19:09",
+            "ends_at" => "2021-02-05 23:19:09",
+            "banner" => "https://www.maz.mn/storage/banners/mainBottom2.png"
+        ]);
+
+        factory(Banner::class, 1)->create([
+            "location_id" => 5,
+            "title" => "mainBottom3",
+            "status" => "active",
+            "starts_at" => "2020-02-05 23:19:09",
+            "ends_at" => "2021-02-05 23:19:09",
+            "banner" => "https://www.maz.mn/storage/banners/mainBottom3.png"
+        ]);
+
+        factory(Banner::class, 1)->create([
+            "location_id" => 5,
+            "title" => "mainBottom4",
+            "status" => "active",
+            "starts_at" => "2020-02-05 23:19:09",
+            "ends_at" => "2021-02-05 23:19:09",
+            "banner" => "https://www.maz.mn/storage/banners/mainBottom4.png"
+        ]);
 
         // 6. Mobile Home Main Slider (640x360)
         factory(Banner::class, 10)->create([
