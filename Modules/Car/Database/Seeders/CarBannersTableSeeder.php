@@ -23,38 +23,47 @@ class CarBannersTableSeeder extends Seeder
         // 1. Home Main Slider (650x650)
         factory(Banner::class, 1)->create([
             "location_id" => 1,
-            "title" => "main1",
+            "title" => "1",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2021-02-05 23:19:09",
-            "banner" => "https://www.maz.mn/storage/banners/main1.jpg"
+            "banner" => "https://www.maz.mn/storage/banners/1.png"
         ]);
 
         factory(Banner::class, 1)->create([
             "location_id" => 1,
-            "title" => "main2",
+            "title" => "2",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2021-02-05 23:19:09",
-            "banner" => "https://www.maz.mn/storage/banners/main2.jpg"
+            "banner" => "https://www.maz.mn/storage/banners/2.png"
         ]);
 
         factory(Banner::class, 1)->create([
             "location_id" => 1,
-            "title" => "main3",
+            "title" => "3",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2021-02-05 23:19:09",
-            "banner" => "https://www.maz.mn/storage/banners/main3.jpg"
+            "banner" => "https://www.maz.mn/storage/banners/3.png"
         ]);
 
         factory(Banner::class, 1)->create([
             "location_id" => 1,
-            "title" => "main4",
+            "title" => "4",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2021-02-05 23:19:09",
-            "banner" => "https://www.maz.mn/storage/banners/main4.png"
+            "banner" => "https://www.maz.mn/storage/banners/4.png"
+        ]);
+
+        factory(Banner::class, 1)->create([
+            "location_id" => 1,
+            "title" => "5",
+            "status" => "active",
+            "starts_at" => "2020-02-05 23:19:09",
+            "ends_at" => "2021-02-05 23:19:09",
+            "banner" => "https://www.maz.mn/storage/banners/5.png"
         ]);
 
         // 2. Login Main Slider (650x650)

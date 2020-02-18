@@ -213,7 +213,7 @@
     <div class="form-title"><span>Баталгаажуулах </span></div>
     <div class="form-row">
         <div class="col-md-3">
-            <div class="custom-control custom-switch">
+            <div class="custom-control custom-switch">de
                 <input type="checkbox" class="custom-control-input" id="doctorVerifySwitch">
                 <label class="custom-control-label" for="doctorVerifySwitch">Doctor баталгаажуулалт</label>
             </div>
@@ -345,6 +345,7 @@
     }
 
     function getManufactures(manufacturers) {
+        console.log("1111111111111        "+manufacturers);
         $.ajax({
             type: 'Get',
             url: '/api/v1/taxonomies/car-manufacturer?type='+manufacturers,
@@ -361,10 +362,23 @@
             ;
             //console.log(modelList.data);
             var i;
-            for (i = 0; i < modelList.data.length; i++) {
-                // /console.log(modelList.data[i].term.name);
-                $("#manufacturerSelect").append(new Option(modelList.data[i].term.name, modelList.data[i].term.name));
+            if(manufacturers==="normal"){
+                $("#manufacturerSelect").append(new Option("Toyota", "Toyota"));
+                $("#manufacturerSelect").append(new Option("Lexus", "Lexus"));
+                $("#manufacturerSelect").append(new Option("Honda", "Honda"));
+                $("#manufacturerSelect").append(new Option("Hyundai", "Hyundai"));
+                for (i = 0; i < modelList.data.length; i++) {
+                    if(modelList.data[i].term.name==="Toyota" || modelList.data[i].term.name==="Lexus" || modelList.data[i].term.name==="Honda" || modelList.data[i].term.name==="Hyundai"){}
+                    else{$("#manufacturerSelect").append(new Option(modelList.data[i].term.name, modelList.data[i].term.name));}
+                }
             }
+            else{
+                for (i = 0; i < modelList.data.length; i++) {
+                    // /console.log(modelList.data[i].term.name);
+                    $("#manufacturerSelect").append(new Option(modelList.data[i].term.name, modelList.data[i].term.name));
+                }
+            }
+
             $("#manufacturerSelect option[value='{{ $car->metaValue('markName') }}']").prop('selected', true);
             $('#manufacturerSelect').on('change', onManufactureChange);
             $('#manufacturerSelect').change();

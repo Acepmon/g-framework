@@ -30,7 +30,7 @@ class TaxonomyController extends Controller
     {
         if ($taxonomy == 'car-manufacturer') {
             $type = request('type', 'normal');
-            return new TaxonomyCollection(TaxonomyManager::getManufacturers($type, request()->input('count', True)));
+            return new TaxonomyCollection(TaxonomyManager::getManufacturers($type, request()->input('count', request()->input('count')?True:False)));
         }
         if (request()->input('count')) {
             $taxonomies = TaxonomyManager::collection($taxonomy, True);
