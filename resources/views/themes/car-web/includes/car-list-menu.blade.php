@@ -113,16 +113,16 @@ $categoryName = [
                 <div class="col-md-6">
                     <select id="minMileageAmount" class="form-control" name="minMileageAmount" onchange="minChoose('MileageAmount','no-value')">
                         <option value="">Эхлэх</option>
-                        @for($i=10000; $i <= 800000; $i+=10000)
-                        <option value="{{$i}}" {{ request('minMileageAmount', Null)==$i? 'selected':'' }}>{{number_format($i)}} km</option>
+                        @for($i=0; $i <= 800000; $i+=10000)
+                        <option value="{{$i}}" {{ request('minMileageAmount', -1)==$i? 'selected':'' }}>{{number_format($i)}} km</option>
                         @endfor
                     </select>
                 </div>
                 <div class="col-md-6">
                     <select id="maxMileageAmount" class="form-control" name="maxMileageAmount" onchange="formSubmit('maxMileageAmount','no-value')">
                         <option value="">Дуусах</option>
-                        @for($i=10000; $i <= 800000; $i+=10000)
-                        <option value="{{$i}}" {{ request('maxMileageAmount', Null)==$i? 'selected':'' }}>{{number_format($i)}} km</option>
+                        @for($i=0; $i <= 800000; $i+=10000)
+                        <option value="{{$i}}" {{ request('maxMileageAmount', -1)==$i? 'selected':'' }}>{{number_format($i)}} km</option>
                         @endfor
                     </select>
                 </div>

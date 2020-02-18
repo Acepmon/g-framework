@@ -18,21 +18,21 @@ $itemsPerPage = request('itemsPerPage', "10");
 @section('content')
 <div class="row">
     <div class="bg-white shadow-soft-blue page-top-navbar pt-5">
-        <div class="col-md-6 float-left"><h3 class="pl-3">Mileage</h3></div>
-        <div class="col-md-6 float-left text-right font-weight-bold"><p class="d-inline pr-3">My mileage: &nbsp; &nbsp;<span class="pt-2 pr-4 pb-2 pl-4 btn-round bg-primary text-white">{{ Auth::user()->metaValue('cash', 0) }}</span></p></div>
+        <div class="col-md-6 float-left"><h3 class="pl-3">Cash</h3></div>
+        <div class="col-md-6 float-left text-right font-weight-bold"><p class="d-inline pr-3">Миний cash: &nbsp; &nbsp;<span class="pt-2 pr-4 pb-2 pl-4 btn-round bg-primary text-white">{{ number_format(Auth::user()->metaValue('cash', 0)) }}</span></p></div>
         <div class="col-md-12 pt-4 float-left">
-            <p><h5 class="pl-3">Mileage history</h5></p>
+            <p><h5 class="pl-3">Cash history</h5></p>
         </div>
         <div class="pl-4 pr-4">
             <table class="table text-center table-striped">
                 <thead class="table-dark">
                 <tr>
-                    <th>Date</th>
-                    <th>Add mileage</th>
-                    <th>Bonus mileage</th>
-                    <th>Used mileage</th>
-                    <th>Status</th>
-                    <th>Current mileage</th>
+                    <th>Он сар</th>
+                    <th>Утга</th>
+                    <th>Дүн</th>
+                    <th>Бонус дүн</th>
+                    <th>Ашигласан дүн</th>
+                    <th>Статус</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,8 +40,9 @@ $itemsPerPage = request('itemsPerPage', "10");
                 @foreach($ma as $cash)
                 <tr>
                     <td>{{$cash->created_at}}</td>
+                    <td>{{$cash->transaction_usage}}</td>
                     @if($cash->transaction_type=="income")
-                    <td>{{$cash->transaction_amount}}</td>
+                    <td>{{ number_format($cash->transaction_amount) }}</td>
                     <td>{{$cash->bonus}}</td>
                     <td>-</td>
                     @elseif($cash->transaction_type=="income")
@@ -49,8 +50,11 @@ $itemsPerPage = request('itemsPerPage', "10");
                     <td>-</td>
                     <td>{{$cash->transaction_amount}}</td>
                     @endif
-                    <td>{{$cash->status}}</td>
-                    <td>{{$cash->current_amount}}</td>
+                    <td>
+                        {{ ($cash->status == \Modules\Payment\Entities\Transaction::STATUS_PENDING)?'Хүлээгдэж байгаа':(
+                            ($cash->status == \Modules\Payment\Entities\Transaction::STATUS_ACCEPTED)?'Баталгаажсан':( 
+                            ($cash->status == \Modules\Payment\Entities\Transaction::STATUS_REJECTED)?'Татгалзсан':'-')) }}
+                    </td>
                 </tr>
                 @endforeach
                 </tbody>

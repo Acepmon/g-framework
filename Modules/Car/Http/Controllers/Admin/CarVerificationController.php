@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 
 use App\Content;
+use App\Term;
 
 class CarVerificationController extends Controller
 {
@@ -91,11 +92,15 @@ class CarVerificationController extends Controller
     {
         //
         $content = Content::findOrFail($id);
+        $verified = Term::where('slug', 'batalgaazhsan')->first();
+        $notVerified = Term::where('slug', 'batalgaazhaagy')->first();
 
         try {
             DB::beginTransaction();
             $data = ContentManager::discernMetasFromRequest($request->input());
             ContentManager::syncMetas($content->id, $data);
+            $content->terms()->detach($notVerified);
+            $content->terms()->attach($verified);
 
             DB::commit();
             return redirect()->route('admin.modules.car.verifications.index');

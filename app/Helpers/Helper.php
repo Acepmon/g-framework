@@ -58,9 +58,11 @@ function numerizePrice($value) {
     if ($value < 1000) {
         return round($value, 2);
     } else if ($value < 1000000) {
-        return round(($value / 1000), 0) . ' мянга';
+        return number_format(round(($value / 1000), 0)) . ' мянга';
     } else {
-        return round(($value / 1000000), 2) . ' сая';
+        $remainder = rtrim($value % 1000000, "0");
+        $remainder = ($remainder)?'.'.$remainder:'';
+        return number_format(floor($value / 1000000)) . $remainder . ' сая';
     }
 }
 

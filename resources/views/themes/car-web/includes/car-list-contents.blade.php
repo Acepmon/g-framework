@@ -4,7 +4,7 @@
       <span class="d-flex justify-content-start font-weight-bold mb-2">
           Хайлт: 
           @if(request('advantage', True))
-          @foreach(request('advantage', '') as $advantage)
+          @foreach(request('advantage', []) as $advantage)
               <button type="button" class="badge badge-light pl-3 pr-3 ml-2 mr-2" onclick="removeAdvantage('{{ $advantage }}')">{{ $advantage }} x</button>
           @endforeach
           @endif

@@ -7,6 +7,7 @@ use App\User;
 use App\UserMeta;
 use App\Group;
 use App\Config;
+use Modules\Payment\Entities\Transaction;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -107,6 +108,7 @@ class RegisterController extends Controller
             $user->save();
         }
 
+        $userType = 'person';
         $except = self::EXCEPT;
         $groupId = array_key_exists('groupId', $data) ? $data['groupId'] : config('system.register.defaultGroup');
         if (!empty($groupId)) {
@@ -114,14 +116,33 @@ class RegisterController extends Controller
             $group = Group::findOrFail($groupId);
             // If make row per dealer 
             if ($group->title == 'Auto Dealer') {
-                $except = array_merge($except, ['companyName', 'description', 'schedule', 'address']);
+
+                $except = array_merge($except, ['companyName', 'description', 'schedule', 'address', 'retailPhone']);
                 $company = GroupController::register($group, $data);
                 $user->groups()->attach(config('system.register.defaultGroup'));
                 $user->groups()->attach($company);
+                $userType = 'dealer';
             } else {
                 $user->groups()->attach($group);
             }
         }
+
+        // New Registration Bonus
+        // if ($userType == 'person') {
+        //     $cash = 20000;
+        // } elseif ($userType == 'dealer') {
+        //     $cash = 200000;
+        // }
+        // $user->setMetaValue('cash', $cash);
+        // Transaction::create([
+        //     'user_id' => $user->id, 
+        //     'payment_method' => 1, 
+        //     'transaction_type' => 'income', 
+        //     'transaction_amount' => $cash, 
+        //     'transaction_usage' => 'Шинэ бүртгэл', 
+        //     'bonus' => 0, 
+        //     'status' => Transaction::STATUS_ACCEPTED
+        // ]);
 
         if (array_key_exists('social_id', $data) && array_key_exists('social_provider', $data) && array_key_exists('social_token', $data)) {
             $user->social_id = $data['social_id'];

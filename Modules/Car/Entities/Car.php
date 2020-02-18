@@ -12,7 +12,10 @@ class Car extends Content
     protected const EXCEPT = ['minPrice', 'maxPrice', 'mileageAmount', 'options', 'carType', 'seller'];
 
     public static function all($columns = []) {
-        return Content::with('terms')->where('type', Content::TYPE_CAR)->where('status', Content::STATUS_PUBLISHED)->where('visibility', Content::VISIBILITY_PUBLIC);
+        return Content::with('terms')->where('type', Content::TYPE_CAR)->where('status', Content::STATUS_PUBLISHED)->where('visibility', Content::VISIBILITY_PUBLIC)->whereDoesntHave('metas', function ($query) {
+            $query->where('key', 'isAuction');
+            $query->where('value', '1');
+          });
     }
 
     public static function order($orderBy, $order, $contents = Null) {

@@ -18,11 +18,11 @@
     </div>
     <div class="card page-top-navbar border-0 mt-3 bg-transparent">
         <div class="d-flex justify-content-start">
-            @contentInline(type=car, author_id=Auth::user()->id, isSold=0, publishType!=free, publishVerified not 1, sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)
+            @contentInline(type=car, author_id=Auth::user()->id, publishType!=free, publishVerified not 1, sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)
             <span class="total-cars ml-0" >НИЙТ {{count($cars)}}</span>
             <div class="sort-cars col-md-9">
                 <ul>
-                    <li class="{{ request('sort')=='publishedAt' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'publishedAt', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
+                    <li class="{{ (request('sort', 'publishedAt')=='publishedAt')?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'publishedAt', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
                     <li class="{{ request('sort')=='priceAmount' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'asc')">Хямд үнэ</a></li>
                 </ul>
             </div>
@@ -76,14 +76,16 @@
             <img src="{{asset('car-web/img/icons/transmision.svg')}}" alt="">
             <p>{{$check->metaValue("chassis")}}</p>
             </span>
-                        <span class="info-icon color" data-color="{{ strtolower($check->metaValue('colorName')) }}">
-            <p>{{$check->metaValue("colorName")}}</p>
+            @if(\App\Term::where('name', $check->metaValue('colorName'))->first())
+            <span class="info-icon color" data-color="{{ strtolower(\App\Term::where('name', $check->metaValue('colorName'))->first()->metaValue('value')) }}">
+                <p>{{ ucfirst($check->metaValue('colorName')) }}</p>
             </span>
+            @endif
 
                         <div class="sell-action">
                             <div onclick="window.open('/edit?id={{$check->id}}');">Засах</div>
                             <div data-toggle="modal" data-target="#deteleCont" onclick="contsId({{$check->id}})">Устгах</div>
-                            <div data-toggle="modal" data-target="#markCont" onclick="contsId({{$check->id}})">Зарагдасан</div>
+                            <div data-toggle="modal" data-target="#markCont" onclick="contsId({{$check->id}})">Зарагдсан</div>
                             <div data-toggle="modal" data-target="#publishCont" onclick="contsId({{$check->id}})">Идэвхигүй</div>
                         </div>
 
@@ -194,6 +196,7 @@
                 type: 'delete',
                 url: '/ajax/contents/' + contId,
             }).done(function(data) {
+                location.reload();
                 $("#demo-spinner").css({'display': 'none'});
                 console.log("DONE!");
                 //$('#carRegSuccess').modal('show');/
@@ -202,8 +205,8 @@
                 console.error("FAIL!");
                 console.error(err);
             });
-
         }
+
         function statusChange() {
 
             console.log(contId)
@@ -212,6 +215,7 @@
                 url: '/ajax/contents/' + contId,
                 data: {"status":'{{ \App\Content::STATUS_DRAFT}}', "visibility":'{{ \App\Content::VISIBILITY_PRIVATE }}'}
             }).done(function(data) {
+                location.reload();
                 $("#demo-spinner").css({'display': 'none'});
                 console.log("DONE!");
                 //$('#carRegSuccess').modal('show');/
@@ -228,10 +232,11 @@
             console.log(contId)
             $.ajax({
                 type: 'PUT',
-                url: '/ajax/contents/' + contId + '/metas/sync',
-                data: {"isSold":"1"}
+                url: '/ajax/contents/' + contId,
+                data: {"status":"sold"}
             }).done(function(data) {
                 $("#demo-spinner").css({'display': 'none'});
+                location.reload();
                 console.log("DONE!");
                 console.log(data);
             }).fail(function(err) {

@@ -81,6 +81,49 @@
       </div>
     </div>
   </section>
+  <section class="page-section" id="section-new">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 d-flex align-items-center">
+          <div class="about-main-text">
+            <div class="about-heading-title">Шинээр үнэтэй зар оруулах тохиолдолд: </div>
+            <div class="about-title">
+              <ol>
+                <li>Бүртгүүлэх</li>
+                <li>“Зарна” гэсэн цэсэн дээр дарж, зарах машинаа бүртгүүлнэ.</li>
+                <li>Үнэтэй зарын төрлөөс өөрт тохирсныг сонгох.</li>
+                <li>Тухайн дансруу төлбөрөө шилжүүлэх. (Дансны дугаар :                    )</li>
+                <li>My Page дахь “Төлбөр төлөх” товчин дээр даран мэдээллээ оруулах.</li>
+                <li>Төлбөр төлөлт баталгаажсанаар таны зар үнэтэй зараар солигдоно. Зараа шалгах боломжтой.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="page-section bg-light" id="section-change">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 d-flex align-items-center">
+          <div class="about-main-text">
+            <div class="about-heading-title">Үнэгүй зараас үнэтэй зарлуу солих тохиолдолд мөн үнэтэй зарын хугацааг сунгах тохиолдолд </div>
+            <div class="about-title">
+              <ol>
+                <li>Үнэтэй зарын төрлөөс өөрт тохирсныг сонгох.</li>
+                <li>Тухайн дансруу төлбөрөө шилжүүлэх. (Дансны дугаар :                      )</li>
+                <li>My Page дээрх “Төлбөр төлөх” товчин дээр даран мэдээллээ оруулах.</li>
+                <li>Төлбөр төлөлт баталгаажсанаас 10 минутын дараа таны Cash хуримтлагдана.</li>
+                <li>My Page дахь “Миний оруулсан зар” дээр өөрийн зараа үнэтэй зарлуу солих мөн зарын хугацааг сунгах боломжтой.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
   <section class="page-section" id="section-best">
     <div class="container">
       <div class="row">
@@ -98,6 +141,7 @@
 
               <p> Энэ хэсэгт зөвхөн 12ш зар харагддаг тул хэрэглэгчид хүрэх хамгийн өндөр боломжтой юм.
               </p>
+              <p class="text-info">3 өдөр(40,000₮),  7 өдөр(80,000₮),  15 өдөр(160,000₮),  30 өдөр(280,000₮)</p>
             </div>
           </div>
         </div>
@@ -116,6 +160,7 @@
               <p> Машин хайх хуудасны дээд талд байрлана. </p>
 
               <p> Special зар олон болсон тохиолдолд Random –оор зарын дараалал солигдох болно. </p>
+              <p class="text-info">3 өдөр(1,500₮),  7 өдөр(3,000₮),  15 өдөр(6,000₮),  30 өдөр(10,000₮)</p>
             </div>
           </div>
         </div>
@@ -143,6 +188,7 @@
                 харуулах боломжтой.</p>
 
               <p> Секунд тутамд нийт 5 сурталчилгаа харуулна.</p>
+              <p class="text-info">15 өдөр(300,000₮),  30 өдөр(570,000₮),  90өдөр(1,620,000₮),  180 өдөр(3,060,000₮)</p>
             </div>
           </div>
         </div>
@@ -151,6 +197,27 @@
     </div>
     </div>
   </section>
+  <section class="page-section bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 d-flex align-items-center">
+          <div class="about-main-text">
+            <div class="about-heading-title">Зарын төлбөрийн данс</div>
+            <div class="about-title">
+              <ul>
+                <li>Банк :</li>
+                <li>Дансны дугаар : </li>
+                <li>Данс эзэмшигчийн нэр : </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+  </section>
+
 
     <section class="pageType-footer">
         <div class="container">

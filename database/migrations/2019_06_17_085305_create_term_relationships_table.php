@@ -18,8 +18,8 @@ class CreateTermRelationshipsTable extends Migration
             $table->unsignedBigInteger('term_taxonomy_id');
             $table->integer('order')->nullable();
 
-            $table->foreign('content_id')->references('id')->on('contents');
-            $table->foreign('term_taxonomy_id')->references('id')->on('term_taxonomy');
+            $table->foreign('content_id')->references('id')->on('contents')->onDelete('cascade');
+            $table->foreign('term_taxonomy_id')->references('id')->on('term_taxonomy')->onDelete('cascade');
         });
     }
 

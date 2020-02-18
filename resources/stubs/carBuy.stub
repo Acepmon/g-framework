@@ -117,11 +117,7 @@ $itemsPerPage = request('itemsPerPage', "15");
 @include('themes.car-web.includes.loader')
 
 <!-- Hot deal Grid -->
-@include('themes.car-web.includes.section-slider', array('title'=>'Шилдэг зарууд', 'contents'=>\App\Content::getByMetas('publishType', 'best_premium')->where('status', \App\Content::STATUS_PUBLISHED)->where('visibility', \App\Content::VISIBILITY_PUBLIC)
-  ->whereHas('metas', function($query) {
-    $query->where('key', 'publishVerified');
-    $query->where('value', '1');
-  })->get(), 'morelink'=>url('/buy?publishType=best_premium')))
+@include('themes.car-web.includes.section-slider', array('title'=>'Шилдэг зарууд', 'contents'=>\App\Content::where('order', 3)->where('status', \App\Content::STATUS_PUBLISHED)->where('visibility', \App\Content::VISIBILITY_PUBLIC)->get(), 'morelink'=>url('/buy?publishType=best_premium')))
 <!-- Hot deal End -->
 @endsection
 
@@ -133,14 +129,35 @@ $itemsPerPage = request('itemsPerPage', "15");
     refilter();
   });
 
+  function getParamObjs() {
+    var paramObjs = {};
+    $.each($('#filterForm').serializeArray(), function(_, kv) {
+      if (kv.name in paramObjs) {
+        var array = paramObjs[kv.name];
+        if (!Array.isArray(array)) {
+          let tmp = array;
+          array = [];
+          array.push(tmp);
+        }
+        array.push(kv.value);
+        paramObjs[kv.name] = array;
+      } else {
+        paramObjs[kv.name] = kv.value;
+      }
+    });
+    // paramObjs = $("#filterForm").serialize();
+    let countables = new Set();
+    $("#manufacturerBody input[type=radio]").each(function (){
+      countables.add($(this).attr("name"));
+    });
+    paramObjs['countables'] = Array.from(countables);
+    return paramObjs;
+  }
+
   function refilter() {
     $("#demo-spinner").css({'display': 'block'});
-    var paramObjs = {};
     var waiting = true;
-    $.each($('#filterForm').serializeArray(), function(_, kv) {
-      paramObjs[kv.name] = kv.value;
-    });
-    paramObjs = $("#filterForm").serialize();
+    var paramObjs = getParamObjs();
     $.ajax({
       url: '/ajax/cars/filter', 
       method: 'GET',
