@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="col-md-12 text-center mt-5">
-                <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2019. All Rights Reserved.</p>
+                <p class="text-muted small mb-4 mb-lg-0">&copy; Damoa Capital {{ date_format(\Carbon\Carbon::now(), 'Y') }}. All Rights Reserved.</p>
             </div>
         </div>
 

@@ -68,7 +68,7 @@ if ($startsAt) {
     <div class="form-group col-md-4">
       <label for="area">Эхлэх үнэ:</label>
       <div class="input-group">
-        <input type="number" min="0" id="startPrice" name="startPriceAmount" class="form-control" placeholder="0.00" required value="{{ $car->metaValue('startPriceAmount')?doubleval($car->metaValue('startPriceAmount')) / 1000000:'' }}">
+        <input type="text" id="startPrice" name="startPriceAmount" class="form-control" placeholder="0.00" required value="{{ $car->metaValue('startPriceAmount')?doubleval($car->metaValue('startPriceAmount')) / 1000000:'' }}">
         <input type="hidden" name="startPriceUnit" value="{{ $car->metaValue('startPriceUnit')?$car->metaValue('startPriceUnit'):'₮' }}">
         <div class="input-group-prepend">
           <div class="input-group-text-right">Сая ₮</div>
@@ -81,7 +81,7 @@ if ($startsAt) {
     <div class="form-group col-md-4">
       <label for="transmission">Шууд авах үнэ:</label>
       <div class="input-group">
-        <input type="number" min="0" id="buyout" name="buyoutAmount" class="form-control" placeholder="0.00" required value="{{ $car->metaValue('buyoutAmount')?doubleval($car->metaValue('buyoutAmount')) / 1000000:'' }}">
+        <input type="text" id="buyout" name="buyoutAmount" class="form-control" placeholder="0.00" required value="{{ $car->metaValue('buyoutAmount')?doubleval($car->metaValue('buyoutAmount')) / 1000000:'' }}">
         <input type="hidden" name="buyoutUnit" value="{{ $car->metaValue('buyoutUnit')?$car->metaValue('buyoutUnit'):'₮' }}">
         <div class="input-group-prepend">
           <div class="input-group-text-right">Сая ₮</div>
@@ -97,7 +97,7 @@ if ($startsAt) {
         <i class="fas fa-question" data-toggle="tooltip" data-placement="top" title="Шимтгэл тооцогдоно!"></i>
       </span>
       <div class="input-group">
-        <input type="number" min="0" id="reservePrice" name="reservePriceAmount" class="form-control" placeholder="0.00" required value="{{ $car->metaValue('buyoutAmount')?doubleval($car->metaValue('reservePriceAmount')) / 1000000:'' }}">
+        <input type="text" id="reservePrice" name="reservePriceAmount" class="form-control" placeholder="0.00" required value="{{ $car->metaValue('buyoutAmount')?doubleval($car->metaValue('reservePriceAmount')) / 1000000:'' }}">
         <input type="hidden" name="reservePriceUnit" value="{{ $car->metaValue('reservePriceUnit')?$car->metaValue('reservePriceUnit'):'₮' }}">
         <div class="input-group-prepend">
           <div class="input-group-text-right">Сая ₮</div>
@@ -124,6 +124,10 @@ if ($startsAt) {
 @push('scripts')
 <script>
   $(document).ready(function() {
+    $("#startPrice").inputmask('decimal', {groupSeparator: ',', 'autoGroup': true, 'removeMaskOnSubmit': true});
+    $("#buyoutPrice").inputmask('decimal', {groupSeparator: ',', 'autoGroup': true, 'removeMaskOnSubmit': true});
+    $("#reservePrice").inputmask('decimal', {groupSeparator: ',', 'autoGroup': true, 'removeMaskOnSubmit': true});
+
     $('#scheduleDate').datepicker({
       format: 'yyyy-mm-dd',
       startDate: '0d'
@@ -227,6 +231,7 @@ if ($startsAt) {
       __callback(1);
     }).fail(fail);
   }
+
 </script>
 @endpush
 @push('styles')

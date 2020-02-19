@@ -285,6 +285,12 @@ class Content extends Model
             $author->setMetaValue('cash', $cash);
             $this->status = self::STATUS_PUBLISHED;
             $this->visibility = self::VISIBILITY_PUBLIC;
+            $this->order = 1;
+            if ($publishType == 'best_premium') {
+                $this->order = 3;
+            } else if ($publishType == 'premium') {
+                $this->order = 2;
+            }
             $this->save();
             return true;
         }

@@ -6,7 +6,7 @@ use App\Content;
 use App\ContentMeta;
 use App\User;
 use DB;
-use App\TermTaxonomy;
+use App\Term;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
@@ -26,21 +26,27 @@ class CarContentsTableSeeder extends Seeder
         $time = time();
         $rootPath = config('content.cars.rootPath');
 
-        factory(Content::class, 150)->create(['type' => Content::TYPE_CAR, 'status' => 'published', 'visibility' => 'public'])->each(function ($content) use ($time, $rootPath) {
-
+        factory(Content::class, 99)->create(['type' => Content::TYPE_CAR, 'status' => 'published', 'visibility' => 'public'])->each(function ($content) use ($time, $rootPath) {
+            // Publish Types
+            $publishTypes = ['free', 'premium', 'best_premium'];
+            $publishTypeId = array_rand($publishTypes);
             $content->slug = config('content.cars.containerPage') . '/' . $content->slug;
-            $content->save();
-
             // $carUserRandomId = User::whereHas('groups', function ($query) {
             //     $query->where('type', Group::TYPE_DYNAMIC);
             // })->get()->random()->id;
-            $carUserRandomId = User::all()->random()->id;
+            $carUserRandomId = User::all()->random();
+            $seller = Term::where('slug', 'khuv-khn')->first();
+            if ($carUserRandomId->get_dealer_group() != null) {
+                $seller = Term::where('slug', 'borluulagch')->first();
+            }
+            $carUserRandomId = $carUserRandomId->id;
             $content->author_id = $carUserRandomId;
+            $content->order = $publishTypeId + 1;
             $content->save();
 
             // Random values
 
-            $countryName = TaxonomyManager::collection('countries')->random()->term;
+            $countryName = TaxonomyManager::collection('provinces')->random()->term;
             $markName = TaxonomyManager::collection('car-manufacturer')->random()->term;
             $modelName = '';
             if (count(TaxonomyManager::collection('car-' . \Str::kebab($markName->name))) != 0) {
@@ -60,6 +66,8 @@ class CarContentsTableSeeder extends Seeder
             $colorExterior = TaxonomyManager::collection('car-colors')->random()->term;
             $colorName = $colorExterior;
             $doorCount = TaxonomyManager::collection('door-count')->random()->term;
+            $advantage1 = TaxonomyManager::collection('car-advantages')->random()->term;
+            $advantage2 = TaxonomyManager::collection('car-advantages')->random()->term;
             // $retail = Content::where('type', 'retail')->get()->random()->id;
 
             // via.placeholder.com images
@@ -86,9 +94,8 @@ class CarContentsTableSeeder extends Seeder
                 $meta = new ContentMeta(['key' => 'medias', 'value' => $media]);
                 array_push($medias, $meta);
             }
-
-            // Publish Types
-            $publishTypes = ['free', 'premium', 'best_premium'];
+            
+            $doctorVerified = TaxonomyManager::collection('car-doctor-verified')->random()->term;
             $price = rand(1, 10000) . '000';
 
             $content->terms()->saveMany([
@@ -97,14 +104,15 @@ class CarContentsTableSeeder extends Seeder
                 $type,
                 $manCount,
                 $fuelType,
-                $colorName,
                 $transmission,
                 $wheelPosition,
                 $wheel,
                 $condition,
                 $colorExterior,
                 $colorInterior,
-                $doorCount
+                $doorCount,
+                $doctorVerified,
+                $seller
             ]);
 
             // Car options
@@ -121,7 +129,7 @@ class CarContentsTableSeeder extends Seeder
             $content->metas()->saveMany([
                 new ContentMeta(['key' => 'plateNumber', 'value' => rand(1000, 9999) . \Str::random(3)]),
                 new ContentMeta(['key' => 'cabinNumber', 'value' => \Str::uuid()]),
-                new ContentMeta(['key' => 'countryName', 'value' => $countryName->name]),
+                new ContentMeta(['key' => 'area', 'value' => $countryName->name]),
                 new ContentMeta(['key' => 'markName', 'value' => $markName->name]),
                 new ContentMeta(['key' => 'carType', 'value' => $type->name]),
                 new ContentMeta(['key' => 'className', 'value' => 'luxury']),
@@ -154,11 +162,10 @@ class CarContentsTableSeeder extends Seeder
                 new ContentMeta(['key' => 'archiveNumber', 'value' => 'A598WDY987']),
                 new ContentMeta(['key' => 'carCondition', 'value' => $condition->name]),
                 new ContentMeta(['key' => 'wheelDrive', 'value' => $wheel->name]),
-                new ContentMeta(['key' => 'mileageAmount', 'value' => rand(1, 5000)]),
+                new ContentMeta(['key' => 'mileageAmount', 'value' => rand(1, 800000)]),
                 new ContentMeta(['key' => 'mileageUnit', 'value' => 'km']),
-                new ContentMeta(['key' => 'advantages', 'value' => 'Тамхи татаагүй']),
-                new ContentMeta(['key' => 'advantages', 'value' => 'Гражинд байдаг']),
-                new ContentMeta(['key' => 'advantages', 'value' => 'Өвөл зуны дугуйтай']),
+                new ContentMeta(['key' => 'advantages', 'value' => $advantage1->name]),
+                new ContentMeta(['key' => 'advantages', 'value' => $advantage2->name]),
                 new ContentMeta(['key' => 'isSold', 'value' => rand(0, 1)]),
                 new ContentMeta(['key' => 'priceAmount', 'value' => $price]),
                 new ContentMeta(['key' => 'priceUnit', 'value' => '₮']),
@@ -167,7 +174,7 @@ class CarContentsTableSeeder extends Seeder
                 new ContentMeta(['key' => 'link', 'value' => 'https://www.youtube.com/watch?v=2RnGwkWL94I']),
 
                 // Auction fields
-                new ContentMeta(['key' => 'isAuction', 'value' => rand(0, 1)]),
+                new ContentMeta(['key' => 'isAuction', 'value' => 0]),
                 new ContentMeta(['key' => 'buyoutAmount', 'value' => '10000000']),
                 new ContentMeta(['key' => 'buyoutUnit', 'value' => '₮']),
                 new ContentMeta(['key' => 'startPriceAmount', 'value' => $price]),
@@ -191,7 +198,7 @@ class CarContentsTableSeeder extends Seeder
                 new ContentMeta(['key' => 'doorCount', 'value' => '4']),
 
                 // Doctor Service Verification
-                new ContentMeta(['key' => 'doctorVerified', 'value' => rand(0, 1)]),
+                new ContentMeta(['key' => 'doctorVerified', 'value' => ($doctorVerified->name == 'Баталгаажсан')?'1':'0']),
                 new ContentMeta(['key' => 'doctorVerifiedBy', 'value' => '1']),
                 new ContentMeta(['key' => 'doctorVerificationRequest', 'value' => false]),
                 new ContentMeta(['key' => 'doctorVerificationFile', 'value' => '']),
@@ -253,7 +260,7 @@ class CarContentsTableSeeder extends Seeder
                 new ContentMeta(['key' => 'optionConvenienceBlackBox', 'value' => rand(0, 1)]),
 
                 // Publishing
-                new ContentMeta(['key' => 'publishType', 'value' => $publishTypes[array_rand($publishTypes)]]),
+                new ContentMeta(['key' => 'publishType', 'value' => $publishTypes[$publishTypeId]]),
                 // new ContentMeta(['key' => 'publishedAt', 'value' => now()]),
                 new ContentMeta(['key' => 'publishPriceAmount', 'value' => rand(10000, 50000)]),
                 new ContentMeta(['key' => 'publishPriceUnit', 'value' => '₮']),

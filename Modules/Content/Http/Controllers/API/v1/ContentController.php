@@ -84,42 +84,14 @@ class ContentController extends Controller
     }
 
     public function publish(Request $request, $contentId) {
-        try {
-            DB::beginTransaction();
-
-            $content = Content::findOrFail($contentId);
-            $content->status = $request->input('status', Content::STATUS_PUBLISHED);
-            $content->visibility = $request->input('visibility', Content::VISIBILITY_PUBLIC);
-            
-            $author = null;
-            if ($request->has('publishType')) {
-                $publishType = $request->input('publishType');
-            } else {
-                $publishType = $content->metaValue('publishType');
-            }
-            if ($publishType == 'best_premium' || $publishType == 'premium') {
-                $author = $content->author()->first();
-                $amount = $request->input('publishAmount');
-                $content->setMetaValue('publishAmount', $amount);
-                $content->setMetaValue('publishUnit', $request->input('publishUnit'));
-                $content->setMetaValue('publishDuration', $request->input('publishDuration'));
-
-                $cash = $author->metaValue('cash');
-                if ($cash - $amount <= 0) {
-                    DB::commit();
-                    return response()->json(['success' => False, 'message' => 'Insufficient cash']);
-                }
-                $cash = $cash - $amount;
-                $author->setMetaValue('cash', $cash);
-            }
-
-            $content->save();
-
-            DB::commit();
+        $publishAmount = $request->input('publishAmount');
+        $publishUnit = $request->input('publishUnit');
+        $publishDuration = $request->input('publishDuration');
+        $published = ContentManager::publish($request, $contentId, $publishAmount, $publishUnit, $publishDuration);
+        if ($published) {
             return response()->json(['success' => True, 'message' => "Successfully registered"]);
-        } catch (\Exception $ex) {
-            DB::rollback();
-            return response()->json(['success' => True, 'message' => $ex->getMessage()])->setStatusCode(500);
+        } else {
+            return response()->json(['success' => False, 'message' => 'Insufficient cash']);
         }
     }
 }

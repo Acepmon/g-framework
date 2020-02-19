@@ -12,14 +12,16 @@ class Car extends Content
     protected const EXCEPT = ['minPrice', 'maxPrice', 'mileageAmount', 'options', 'carType', 'seller'];
 
     public static function all($columns = []) {
-        return Content::where('type', Content::TYPE_CAR)->where('status', Content::STATUS_PUBLISHED)->where('visibility', Content::VISIBILITY_PUBLIC);
+        return Content::with('terms')->where('type', Content::TYPE_CAR)->where('status', Content::STATUS_PUBLISHED)->where('visibility', Content::VISIBILITY_PUBLIC)->whereDoesntHave('metas', function ($query) {
+            $query->where('key', 'isAuction');
+            $query->where('value', '1');
+          });
     }
 
     public static function order($orderBy, $order, $contents = Null) {
         if ($contents == Null) {
             $contents = self::all();
         }
-
         if ($orderBy != 'updated_at') {
             $contents = $contents->leftJoin('content_metas', function($join) use($orderBy) {
                 $join->on('contents.id', '=', 'content_metas.content_id');
@@ -172,5 +174,87 @@ class Car extends Content
         
         // $request = json_encode($request);
         return $request;
+    }
+
+    public const EXCEPT_FILTER = ['orderBy'=>'', 'page'=>'', 'except'=>'', 'countables'=>'',
+        'minBuildYear'=>'', 'maxBuildYear'=>'', 'minImportDate'=>'', 'maxImportDate'=>'',
+        'minPriceAmount'=>'', 'maxPriceAmount'=>'', 'minMileageAmount'=>'', 'maxMileageAmount'=>'',
+        'publishType'=>'', 'advantage'=>''
+    ];
+    public static function filterCarsByRequest($cars, $filter) {
+        // TODO: possibly change method name. Used in CarController
+        $cars = self::filterCarsByNonTermFields($cars, $filter);
+
+        // Term Filters
+        $filter = array_diff_key($filter, SELF::EXCEPT_FILTER);
+        foreach ($filter as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value as $optionId) {
+                    $cars = $cars->whereHas('terms', function ($query) use ($optionId) {
+                        $query->where('term_taxonomy_id', $optionId);
+                    });
+                }
+            } else {
+                $cars = $cars->whereHas('terms', function ($query) use ($value) {
+                    if (is_numeric($value) && $value != "1" && $value != "0") {
+                        $query->where('term_taxonomy_id', $value);
+                    }
+                });
+            }
+        }
+
+        return $cars;
+    }
+
+    public static function filterCarsByNonTermFields($cars, $filter) {
+        // Custom Filters
+        if (array_key_exists('publishType', $filter) && $filter['publishType'] != '') {
+            $publishType = 1;
+            if ($filter['publishType'] == 'premium') {
+                $publishType = 2;
+            } else if ($filter['publishType'] == 'best_premium') {
+                $publishType = 3;
+            }
+            $cars = $cars->where('order', $publishType);
+        }
+        if (array_key_exists('search', $filter) && $filter['search'] != '') {
+            $cars = $cars->where('title', 'LIKE', '%'.$filter['search'].'%');
+        }
+        if (array_key_exists('except', $filter) && $filter['except'] != '') {
+            $cars = $cars->where('contents.id', '!=', $filter['except']);
+        }
+        if (array_key_exists('advantage', $filter) && $filter['advantage'] != '') {
+            $advantages = $filter['advantage'];
+            foreach ($advantages as $advantage) {
+                $cars = $cars->whereHas('metas', function($query) use($advantage) {
+                    $query->where('key', 'advantages');
+                    $query->where('value', $advantage);
+                });
+            }
+        }
+        $cars = self::filterCustom($cars, $filter, 'minBuildYear', 'buildYear', '>=');
+        $cars = self::filterCustom($cars, $filter, 'maxBuildYear', 'buildYear', '<=');
+        $cars = self::filterCustom($cars, $filter, 'minImportDate', 'importDate', '>=');
+        $cars = self::filterCustom($cars, $filter, 'maxImportDate', 'importDate', '<=');
+        $cars = self::filterCustom($cars, $filter, 'minMileageAmount', 'mileageAmount', '>=');
+        $cars = self::filterCustom($cars, $filter, 'maxMileageAmount', 'mileageAmount', '<=');
+        $cars = self::filterCustom($cars, $filter, 'minPriceAmount', 'priceAmount', '>=');
+        $cars = self::filterCustom($cars, $filter, 'maxPriceAmount', 'priceAmount', '<=');
+        return $cars;
+    }
+
+    public static function filterCustom($cars, $filter, $key, $metaKey, $operator='=') {
+        if (array_key_exists($key, $filter) && $filter[$key] != '') {
+            $value = $filter[$key];
+            $cars = $cars->whereHas('metas', function($query) use($metaKey, $value, $operator) {
+                $query->where('key', $metaKey);
+                if ($operator == '=') {
+                    $query->where('value', $value);
+                } else if (in_array($operator, ['>', '<', '<=', '>='])) {
+                    $query->whereRAW('cast(value as unsigned) ' . $operator . ' '. $value);
+                }
+            });
+        }
+        return $cars;
     }
 }

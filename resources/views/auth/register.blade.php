@@ -204,13 +204,12 @@
                                                 <textarea type="text" class="form-control" name="description" id="description" placeholder="Танилцуулга"></textarea>
                                             </div>
                                         </div>
-<!--                                        <div class="form-group">-->
-<!--                                            <label for="phone">Утасны дугаар</label>-->
-<!--                                            <div class="input-group">-->
-<!--                                                <input type="text" name="phone" id="phone" hidden>-->
-<!--                                                <input type="number" class="form-control" id="phoneNumber" placeholder="Утасны дугаар" style="width: 200px;">-->
-<!--                                            </div>-->
-<!--                                        </div>-->
+                                       <div class="form-group">
+                                           <label for="retailPhone">Утасны дугаар</label>
+                                           <div class="input-group">
+                                                <input type="number" name="retailPhone" id="retailPhone" class="form-control" placeholder="Утасны дугаар" style="width: 200px;">
+                                           </div>
+                                       </div>
                                     </div>
                                 </div>
 
@@ -449,17 +448,17 @@
     $("#dealerImage").on('click', function() {
         $("#dealerAvatar").click();
     });
-    // $(document).ready(function () {
-    //     var phoneNumber = $("#phoneNumber");
-    //     var phone = $("#phone");
-    //
-    //     var onPhoneChange = function () {
-    //         phone.val(phoneNumber.val());
-    //     }
-    //
-    //     phoneNumber.change(onPhoneChange);
-    //
-    //     onPhoneChange();
-    // });
+    $(document).ready(function () {
+        var phoneNumber = $("#phoneNumber");
+        var phone = $("#phone");
+    
+        var onPhoneChange = function () {
+            phone.val(phoneNumber.val());
+        }
+    
+        phoneNumber.change(onPhoneChange);
+    
+        onPhoneChange();
+    });
 </script>
 @endsection
