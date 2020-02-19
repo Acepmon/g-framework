@@ -7,6 +7,8 @@ use App\ContentMeta;
 use App\TermTaxonomy;
 use App\Term;
 use App\TermMeta;
+use Modules\Car\Entities\Car;
+use Modules\Content\Transformers\TaxonomyCollection;
 
 class TaxonomyManager extends Manager
 {
@@ -177,7 +179,14 @@ class TaxonomyManager extends Manager
     {
         $terms_id = Term::where($type, True)->pluck('id');
         if ($count) {
-            $manufacturers = TermTaxonomy::where([['taxonomy', 'car-manufacturer'], ['count', '!=', 0]])->whereIn('term_id', $terms_id);
+            $filteredIds = Car::all()->pluck('id');
+            $manufacturers = TermTaxonomy::where([['taxonomy', 'car-manufacturer'], ['count', '!=', 0]])->whereIn('term_id', $terms_id)->withCount(['contents' => function($query) use ($filteredIds) {
+                $query->whereIn('id', $filteredIds);
+            }]);
+            $most = clone $manufacturers;
+            $most = $most->orderBy('contents_count', 'desc')->limit($limit);
+            $most = $most->get()->merge($manufacturers->get());
+            return $most;
         } else {
             $manufacturers = TermTaxonomy::where('taxonomy', 'car-manufacturer')->whereIn('term_id', $terms_id);
         }

@@ -40,8 +40,9 @@ class CarContentsTableSeeder extends Seeder
                 $seller = Term::where('slug', 'borluulagch')->first();
             }
             $carUserRandomId = $carUserRandomId->id;
+            $publishVerified = rand(0, 1);
             $content->author_id = $carUserRandomId;
-            $content->order = $publishTypeId + 1;
+            $content->order = $publishVerified?$publishTypeId + 1:1;
             $content->save();
 
             // Random values
@@ -265,7 +266,7 @@ class CarContentsTableSeeder extends Seeder
                 new ContentMeta(['key' => 'publishPriceAmount', 'value' => rand(10000, 50000)]),
                 new ContentMeta(['key' => 'publishPriceUnit', 'value' => '₮']),
                 new ContentMeta(['key' => 'publishDuration', 'value' => rand(1, 31)]),
-                new ContentMeta(['key' => 'publishVerified', 'value' => rand(0, 1)]),
+                new ContentMeta(['key' => 'publishVerified', 'value' => $publishVerified]),
                 new ContentMeta(['key' => 'publishVerifiedBy', 'value' => 1]),
                 new ContentMeta(['key' => 'publishVerifiedAt', 'value' => now()]),
                 //new ContentMeta(['key' => 'publishVerifiedEnd', 'value' => now()->addDays(rand(1, 31))]),

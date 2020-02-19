@@ -10,6 +10,7 @@ use Modules\Content\Transformers\TaxonomyCollection;
 use App\Entities\TaxonomyManager;
 use App\TermTaxonomy;
 use App\Term;
+use Modules\Car\Entities\Car;
 
 class TaxonomyController extends Controller
 {
@@ -42,6 +43,15 @@ class TaxonomyController extends Controller
         } else {
             $taxonomies = TaxonomyManager::collection($taxonomy, false);
         }
+
+        if (request()->input('home')) {
+            $filteredIds = Car::all()->pluck('id');
+            $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->withCount(['contents' => function($query) use ($filteredIds) {
+                $query->whereIn('id', $filteredIds);
+            }])->get()->where('contents_count', '!=', '0');
+            return $taxonomies;
+        }
+
         return new TaxonomyCollection($taxonomies);
     }
 }

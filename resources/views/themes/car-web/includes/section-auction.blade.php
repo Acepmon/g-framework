@@ -4,7 +4,7 @@
             <div class="section-title text-light">
                 <h2>Аугцион машинууд</h2>
                 <span>
-            <a href="/auction">Бүгдийг харах ( @contentsTotal({"filter":[{"field":"type", "key":"car"}, {"field":"status", "key":"published"}, {"field":"visibility", "key":"public"}], "metasFilter": [{"key": "isAuction", "value": 1}] }) ) <i class="fab fa fa-angle-right"></i></a>
+            <a href="/coming-soon">Бүгдийг харах <!--( @contentsTotal({"filter":[{"field":"type", "key":"car"}, {"field":"status", "key":"published"}, {"field":"visibility", "key":"public"}], "metasFilter": [{"key": "isAuction", "value": 1}] }) )--> <i class="fab fa fa-angle-right"></i></a>
           </span>
             </div>
         </div>

@@ -65,6 +65,7 @@
                                 <input type="text" name="username" id="username" value="" hidden>
 
                                 <div class="row">
+
                                     <div class="col-md-7">
                                         <div class="form-group col-md-12 d-inline-block align-top">
                                             <div class="profile-upload">

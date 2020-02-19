@@ -25,7 +25,7 @@ $categoryName = [
         <div class="card-body bg-light grid-radio gr-3">
             @foreach(App\TermTaxonomy::where('taxonomy', $category)->get() as $taxonomy)
             <div class="cd-radio">
-            <input type="radio" id="{{ $taxonomy->term->metaValue('value') }}" name="{{ $category }}" class="custom-control-input" value="{{ $taxonomy->term->id }}" {{ ($taxonomy->term->name == $request['carType'])?'checked':''}}>
+            <input type="radio" id="{{ $taxonomy->term->id }}" name="{{ $category }}" class="custom-control-input" value="{{ $taxonomy->term->id }}" {{ ($taxonomy->term->id == request('car-type', Null))?'checked':''}}>
             <label class="custom-control-label " for="{{ $taxonomy->term->metaValue('value') }}">
                 <img src="{{ asset('car-web/img/icons/'.strtolower($taxonomy->term->metaValue('value')).'.svg') }}">
                 <span>{{ $taxonomy->term->name }}</span>
@@ -34,22 +34,22 @@ $categoryName = [
             @endforeach
         </div>
         <div class="card-body bg-light grid-radio pt-0 pb-0">
-            <select id="truck-choice" class="form-control mb-3 type-choice" name="truck-size" onchange="formSubmit('carSubType','no-value')" @if($request['carType']!='Хүнд ММ') style="display: none" @endif>
+            <select id="truck-choice" class="form-control mb-3 type-choice" name="truck-size" onchange="formSubmit('carSubType','no-value')" style="display: none">
             <option value="">Хэмжээ сонгох</option>
             @foreach(App\TermTaxonomy::where('taxonomy', 'truck-size')->get() as $taxonomy)
-            <option value="{{$taxonomy->term->id}}" {{ ($request['carSubType']==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
+            <option value="{{$taxonomy->term->id}}" {{ (request('carSubType')==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
             @endforeach
             </select>
-            <select id="bus-choice" class="form-control mb-3 type-choice" name="bus-size" onchange="formSubmit('carSubType','no-value')" @if($request['carType']!='Автобус') style="display: none" @endif>
+            <select id="bus-choice" class="form-control mb-3 type-choice" name="bus-size" onchange="formSubmit('carSubType','no-value')"  style="display: none">
             <option value="">Хэмжээ сонгох</option>
             @foreach(App\TermTaxonomy::where('taxonomy', 'bus-sizes')->get() as $taxonomy)
-            <option value="{{$taxonomy->term->id}}" {{ ($request['carSubType']==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
+            <option value="{{$taxonomy->term->id}}" {{ (request('carSubType')==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
             @endforeach
             </select>
-            <select id="special-choice" class="form-control mb-3 type-choice" name="special" onchange="formSubmit('carSubType','no-value')" @if($request['carType']!='Тусгай ММ') style="display: none" @endif>
+            <select id="special-choice" class="form-control mb-3 type-choice" name="special" onchange="formSubmit('carSubType','no-value')"  style="display: none">
             <option value="">Төрөл сонгох</option>
             @foreach(App\TermTaxonomy::where('taxonomy', 'special')->get() as $taxonomy)
-            <option value="{{$taxonomy->term->id}}" {{ ($request['carSubType']==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
+            <option value="{{$taxonomy->term->id}}" {{ (request('carSubType')==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
             @endforeach
             </select>
         </div>
@@ -57,7 +57,10 @@ $categoryName = [
         @elseif($category == 'car-manufacturer')
         <div id="{{ $category }}" class="collapse {{ request($category, False)?'show':'' }}" aria-labelledby="{{ $category }}">
         <div id="manufacturerBody" class="card-body bg-light">
-            <div class="manufacturer"></div>
+            <div class="manufacturer">
+                <input type="hidden" name="car-manufacturer" value="{{request('car-manufacturer', Null)}}"/>
+                <input type="hidden" name="car-model" value="{{request('car-model', Null)}}"/>
+            </div>
         </div>
         </div>
         @elseif($category == 'car-build-year')
@@ -68,7 +71,7 @@ $categoryName = [
                 <select id="minBuildYear" class="form-control" name="minBuildYear" onchange="minChoose('BuildYear','no-value')">
                 <option value="">Доод</option>
                 @for($i=date('Y'); $i>=1990; $i--)
-                <option value="{{ $i }}" {{ request('minBuildYear', null)==$i?'selected':'' }}>{{ $i }}</option>
+                <option value="{{ $i }}" {{ request('buildYear', null)==$i?'selected':'' }}>{{ $i }}</option>
                 @endfor
                 </select>
             </div>
@@ -76,7 +79,7 @@ $categoryName = [
                 <select id="maxBuildYear" class="form-control" name="maxBuildYear" onchange="formSubmit('maxBuildYear','no-value')">
                 <option value="">Дээд</option>
                 @for($i=date('Y'); $i>=request('minBuildYear', 1990); $i--)
-                <option value="{{ $i }}" {{ request('maxBuildYear', null)==$i?'selected':'' }}>{{ $i }}</option>
+                <option value="{{ $i }}" {{ request('buildYear', null)==$i?'selected':'' }}>{{ $i }}</option>
                 @endfor
                 </select>
             </div>
@@ -91,7 +94,7 @@ $categoryName = [
                 <select id="minImportDate" class="form-control" name="minImportDate" onchange="minChoose('ImportDate','no-value')">
                 <option value="">Доод</option>
                 @for($i=date('Y'); $i>=1990; $i--)
-                <option value="{{ $i }}" {{ request('minImportDate', null)==$i?'selected':'' }}>{{ $i }}</option>
+                <option value="{{ $i }}" {{ request('importDate', null)==$i?'selected':'' }}>{{ $i }}</option>
                 @endfor
                 </select>
             </div>
@@ -99,7 +102,7 @@ $categoryName = [
                 <select id="maxImportDate" class="form-control" name="maxImportDate" onchange="formSubmit('maxImportDate','no-value')">
                 <option value="">Дээд</option>
                 @for($i=date('Y'); $i>=request('minImportDate', 1990); $i--)
-                <option value="{{ $i }}" {{ request('maxImportDate', null)==$i?'selected':'' }}>{{ $i }}</option>
+                <option value="{{ $i }}" {{ request('importDate', null)==$i?'selected':'' }}>{{ $i }}</option>
                 @endfor
                 </select>
             </div>
@@ -212,7 +215,14 @@ function submitMenu(event) {
 var waiting = 0;
 
 $(document).ready(function() {
-    callManufacturers('');
+    callManufacturers('', ()=>{
+        @if(request('car-manufacturer', False))
+        $("#{{ request('car-manufacturer', 0) }}").trigger('click');
+        @endif
+    });
+    @if(request('car-type', False))
+    $("#{{ request('car-type', 0) }}").trigger('click');
+    @endif
 });
 
 $("input[name='car-type']").on("click", function() {
@@ -232,14 +242,18 @@ $("input[name='car-type']").on("click", function() {
 
         waiting = 1;
         load();
-        callManufacturers(type);
+        callManufacturers(type, ()=>{});
     }
 });
 
-function callManufacturers(type) {
+function callManufacturers(type, __callback) {
+    var getParams = '&count=True&order=count';
+    @if(request('car-manufacturer', False))
+    getParams += '&car-manufacturer=' + {{ request('car-manufacturer', 0) }};
+    @endif
     $.ajax({
         type: 'Get',
-        url: '/ajax/cars/taxonomy/car-manufacturer?type=' + type + '&count=True&order=count'
+        url: '/ajax/cars/taxonomy/car-manufacturer?type=' + type + getParams
     }).done(function(data) {
         $data = $(data);
         $("#demo-spinner").css({'display': 'none'});
@@ -255,12 +269,17 @@ function callManufacturers(type) {
         //$("input[type=radio][name=\"car-model\"]").click(submitMenu);
         //$("input[type=radio][name=\"car-model\"]").click(load);
         waiting = 0;
+        return __callback();
     }).fail(fail);
 }
 
 $("input.car-manufacturer").on("click", onManufacturerSelect);
 
 function onManufacturerSelect() {
+    var getParams = '?count=False';
+    @if(request('car-model', False))
+    getParams += '&car-model=' + {{ request('car-model', 0) }};
+    @endif
     if (waiting == 0) {
         let val = $(this).attr("placeholder");
         let name = "car-" + toKebabCase(val) + "-container";
@@ -274,7 +293,7 @@ function onManufacturerSelect() {
             var paramObjs = getParamObjs();
             $.ajax({
                 type: 'Get',
-                url: '/ajax/cars/taxonomy/car-' + toKebabCase(val) + '?count=False',
+                url: '/ajax/cars/taxonomy/car-' + toKebabCase(val) + getParams,
                 // data: paramObjs
             }).done(function(data) {
                 $("#demo-spinner").css({'display': 'none'});

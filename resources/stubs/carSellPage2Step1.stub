@@ -365,10 +365,10 @@
             if(manufacturers==="normal"){
                 $("#manufacturerSelect").append(new Option("Toyota", "Toyota"));
                 $("#manufacturerSelect").append(new Option("Lexus", "Lexus"));
-                $("#manufacturerSelect").append(new Option("Honda", "Honda"));
+                $("#manufacturerSelect").append(new Option("Nissan", "Nissan"));
                 $("#manufacturerSelect").append(new Option("Hyundai", "Hyundai"));
                 for (i = 0; i < modelList.data.length; i++) {
-                    if(modelList.data[i].term.name==="Toyota" || modelList.data[i].term.name==="Lexus" || modelList.data[i].term.name==="Honda" || modelList.data[i].term.name==="Hyundai"){}
+                    if(modelList.data[i].term.name==="Toyota" || modelList.data[i].term.name==="Lexus" || modelList.data[i].term.name==="Nissan" || modelList.data[i].term.name==="Hyundai"){}
                     else{$("#manufacturerSelect").append(new Option(modelList.data[i].term.name, modelList.data[i].term.name));}
                 }
             }
