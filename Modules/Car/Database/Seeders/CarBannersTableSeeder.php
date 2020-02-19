@@ -23,6 +23,7 @@ class CarBannersTableSeeder extends Seeder
         // 1. Home Main Slider (650x650)
         factory(Banner::class, 1)->create([
             "location_id" => 1,
+            "link" => "/about-introduction",
             "title" => "1",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
@@ -32,6 +33,7 @@ class CarBannersTableSeeder extends Seeder
 
         factory(Banner::class, 1)->create([
             "location_id" => 1,
+            "link" => "/about-technical-examination",
             "title" => "2",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
@@ -41,6 +43,7 @@ class CarBannersTableSeeder extends Seeder
 
         factory(Banner::class, 1)->create([
             "location_id" => 1,
+            "link" => "/about-auction",
             "title" => "3",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
@@ -50,6 +53,7 @@ class CarBannersTableSeeder extends Seeder
 
         factory(Banner::class, 1)->create([
             "location_id" => 1,
+            "link" => "/about-dream-car",
             "title" => "4",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
@@ -59,6 +63,7 @@ class CarBannersTableSeeder extends Seeder
 
         factory(Banner::class, 1)->create([
             "location_id" => 1,
+            "link" => "/about-finance",
             "title" => "5",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",

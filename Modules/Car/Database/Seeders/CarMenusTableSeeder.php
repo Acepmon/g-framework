@@ -47,7 +47,7 @@ class CarMenusTableSeeder extends Seeder
         $doctorVerified = Term::where('slug', 'batalgaazhsan')->first();
         $carTopbarMenus = ['Car Topbar', '', '', 'Car', [
             ['Бидний тухай', '/about-introduction', '', 'Car'],
-            ['Үзлэгт орсон', '/buy?car-doctor-verified='+$doctorVerified->id, '', 'Car'],
+            ['Үзлэгт орсон', '/buy?car-doctor-verified='.$doctorVerified->id, '', 'Car'],
             ['+Хүсэлт оруулах', '/wishlist', '', 'Car'],
             ['Төлбөртэй зарын заавар', '/manual', '', 'Car']
         ]];
