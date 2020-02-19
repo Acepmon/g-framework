@@ -108,8 +108,8 @@
                                     <span>Upload</span>
                                 </div> -->
                                 <div class="custom-file">
-                                    <input name="doc" type="file" class="custom-file-input" id="docFile">
-                                    <label class="custom-file-label" for="docFile">Файл сонгох</label>
+                                    <input name="doc" type="file" class="custom-file-input" id="docFile" onChange="changeFileLabel(this, 'docFileLbl')">
+                                    <label class="custom-file-label" for="docFile" id="docFileLbl">Файл сонгох</label>
                                 </div>
                             </div>
                         </form>
@@ -144,6 +144,12 @@
             $(document).ready(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             });
+            function changeFileLabel(input, id) {
+                var filePath = $(input)[0].value;
+                filePath = filePath.split('\\');
+                filePath = filePath[filePath.length - 1];
+                $("#"+id).text(filePath);
+            }
         </script>
     @endpush
 

@@ -213,7 +213,7 @@
     <div class="form-title"><span>Баталгаажуулах </span></div>
     <div class="form-row">
         <div class="col-md-3">
-            <div class="custom-control custom-switch">de
+            <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" id="doctorVerifySwitch">
                 <label class="custom-control-label" for="doctorVerifySwitch">Doctor баталгаажуулалт</label>
             </div>
