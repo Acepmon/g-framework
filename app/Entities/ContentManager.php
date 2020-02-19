@@ -4,10 +4,14 @@ namespace App\Entities;
 
 use App\Content;
 use App\ContentMeta;
+use App\Term;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Modules\Payment\Entities\Transaction;
 use Modules\Content\Transformers\Content as ContentResource;
+
 
 class ContentManager extends Manager
 {
@@ -374,5 +378,95 @@ class ContentManager extends Manager
             $result = array_merge($result->toArray(request()), $additional);
         }
         return $result;
+    }
+
+    public static function publish($request, $contentId, $publishAmount, $publishUnit, $publishDuration) {
+        try {
+            DB::beginTransaction();
+
+            $content = Content::findOrFail($contentId);
+            $content->status = $request->input('status', Content::STATUS_PUBLISHED);
+            $content->visibility = $request->input('visibility', Content::VISIBILITY_PUBLIC);
+            $content->updateMeta('publishedAt', Carbon::now());
+            
+            // Attach default Term id
+            $notVerified = Term::where('slug', 'batalgaazhaagy')->first();
+            $content->terms()->attach($notVerified);
+            $author = $content->author()->first();
+            $sellerTerm = Term::where('slug', 'khuv-khn')->first();
+            if ($author->get_dealer_group()) {
+                $sellerTerm = Term::where('slug', 'borluulagch')->first();
+            }
+            $content->terms()->attach($sellerTerm);
+
+            if ($request->has('publishType')) {
+                $publishType = $request->input('publishType');
+            } else {
+                $publishType = $content->metaValue('publishType');
+            }
+
+            if ($publishType == 'best_premium' || $publishType == 'premium') {
+                $content->setMetaValue('publishAmount', $publishAmount);
+                $content->setMetaValue('publishUnit', $publishUnit);
+                $content->setMetaValue('publishDuration', $publishDuration);
+
+                $result = self::publishPremium($content);
+                if ($result) {
+                    // continue;
+                } else {
+                    $content->order = 1;
+                    $content->save();
+                    DB::commit();
+                    return 0;
+                }
+            } elseif($publishType == 'free') {
+                $content->order = 1;
+            }
+
+            $content->save();
+            DB::commit();
+            return 1;
+        } catch (\Exception $ex) {
+            dd($ex->getMessage());
+            DB::rollBack();
+            // return 0;
+        }
+    }
+
+    public static function publishPremium($content) {
+        $content->order = 1;
+        $publishType = $content->metaValue('publishType');
+        if ($publishType == 'best_premium' || $publishType == 'premium') {
+            $author = $content->author;
+            $cash = $author->metaValue('cash');
+            $amount = $content->metaValue('publishAmount');
+            if ($cash - $amount <= 0) {
+                return false;
+            }
+            $cash = $cash - $amount;
+            $author->setMetaValue('cash', $cash);
+            Transaction::create([
+                'user_id' => $author->id, 
+                'payment_method' => 1, 
+                'transaction_type' => 'outcome', 
+                'transaction_amount' => $amount, 
+                'transaction_usage' => $publishType, 
+                'status' => Transaction::STATUS_ACCEPTED, 
+                'content_id' => $content->id
+            ]);
+
+            $content->status = Content::STATUS_PUBLISHED;
+            $content->visibility = Content::VISIBILITY_PUBLIC;
+            if ($publishType == 'best_premium') {
+                $content->order = 3;
+            } else if ($publishType == 'premium') {
+                $content->order = 2;
+            }
+            $content->updateMeta('publishedAt', Carbon::now());
+
+            $content->save();
+            return true;
+        }
+        return true;
     }
 }

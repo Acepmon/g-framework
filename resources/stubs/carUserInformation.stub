@@ -133,7 +133,7 @@
                                 </span>
                         @enderror
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="website">Веб хуудас:</label>
                         <input type="text" class="form-control" id="website" name="website" value="{{ old('website')?old('website'):Auth::user()->get_dealer_group()->metaValue('website') }}" readonly>
                         @error('website')
@@ -141,7 +141,7 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                         @enderror
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label for="millage">Утас:</label>
                         <div class="d-flex">

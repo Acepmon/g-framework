@@ -18,7 +18,7 @@ class TaxonomyManager extends Manager
      * @parameter $parent_id = (integer) (Optional) Taxonomy parent taxonomy key.
      * @parameter $args = (array|string) (Optional) Array or query string of arguments for registering a taxonomy.
      */
-    public static function register($term, $taxonomy, $parent_id = null, $args = array(), $other_columns = array())
+    public static function register($term, $taxonomy, $parent_id = null, $args = array(), $other_columns = array(), $slug = null)
     {
         $termTaxonomy = TermTaxonomy::where('taxonomy', $taxonomy)->whereHas('term', function ($query) use ($term) {
             $query->where('name', $term);
@@ -29,7 +29,7 @@ class TaxonomyManager extends Manager
             $bus = array_key_exists('bus', $other_columns)?$other_columns['bus']:False;
             $truck = array_key_exists('truck', $other_columns)?$other_columns['truck']:False;
             $special = array_key_exists('special', $other_columns)?$other_columns['special']:False;
-            $term = self::createTerm($term, $parent_id, $normal, $bus, $truck, $special);
+            $term = self::createTerm($term, $parent_id, $normal, $bus, $truck, $special, $slug);
             self::saveTermMetas($term->id, $args);
             $termTaxonomy = self::createTaxonomy($term->id, $taxonomy, $parent_id);
         }
@@ -40,17 +40,17 @@ class TaxonomyManager extends Manager
     public static function collection($taxonomy, $count = False)
     {
         if ($count) {
-            return TermTaxonomy::where('taxonomy', $taxonomy)->where('count', '!=', 0)->get()->orderBy('taxonomy', 'ASC');
+            return TermTaxonomy::where('taxonomy', $taxonomy)->where('count', '!=', 0)->get();
         }
-        $taxonomies = TermTaxonomy::where('taxonomy', $taxonomy)->get()->orderBy('taxonomy', 'ASC');
+        $taxonomies = TermTaxonomy::where('taxonomy', $taxonomy)->get();//->orderBy('taxonomy', 'ASC');
         return $taxonomies;
     }
 
-    public static function createTerm($name, $group_id = null, $normal = False, $bus = False, $truck = False, $special = False)
+    public static function createTerm($name, $group_id = null, $normal = False, $bus = False, $truck = False, $special = False, $slug = null)
     {
         $term = new Term();
         $term->name = $name;
-        $term->slug = \Str::slug($name);
+        $term->slug = $slug?$slug:\Str::slug($name);
         $term->group_id = $group_id;
         $term->normal = $normal;
         $term->bus = $bus;

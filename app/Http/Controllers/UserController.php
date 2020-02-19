@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 // use App\Http\Controllers\Controller;
 use Modules\Content\Http\Controllers\Ajax\GroupController;
 use Validator;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -66,6 +67,7 @@ class UserController extends Controller
         $success['token'] = $user->createToken('MyApp')->accessToken;
         $success['name'] = $user->name;
 
+        $userType = 'person';
         if (array_key_exists('groupId', $input) && $input['groupId']) {
             $group = Group::findOrFail($input['groupId']);
             // If make row per dealer 
@@ -73,10 +75,30 @@ class UserController extends Controller
                 $company = GroupController::register($group, $input);
                 $user->groups()->attach($company);
                 $user->groups()->attach($group);
+                $userType = 'dealer';
             }
         }
         $user->groups()->attach(config('system.register.defaultGroup'));
 
+        // New Registration Bonus
+        if (Carbon::now()->lte(Carbon::parse('2020-03-10'))) {
+            if ($userType == 'person') {
+                $cash = 20000;
+            } elseif ($userType == 'dealer') {
+                $cash = 200000;
+            }
+            $user->setMetaValue('cash', $cash);
+            Transaction::create([
+                'user_id' => $user->id, 
+                'payment_method' => 1, 
+                'transaction_type' => 'income', 
+                'transaction_amount' => $cash, 
+                'transaction_usage' => 'Шинэ бүртгэл', 
+                'bonus' => 0, 
+                'status' => Transaction::STATUS_ACCEPTED
+                ]);
+        }
+                
         return response()->json(['success' => $success], $this->successStatus);
     }
 

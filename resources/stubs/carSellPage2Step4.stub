@@ -182,7 +182,6 @@ $("input").click(function(){
         else{
             publishPricing = 0;
         }
-        paramObjs['publishedAt'] = new Date();
         delete paramObjs.publishPriceAmountBest;
         delete paramObjs.publishPriceAmountPremium;
         var userCash={{Auth::user()->metaValue('cash' ,0 )}}

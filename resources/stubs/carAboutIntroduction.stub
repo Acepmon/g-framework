@@ -38,10 +38,10 @@
             <div class="row">
                 <div class="col-md-6 d-flex align-items-center">
                     <div class="about-main-text">
-                        <div class="about-heading-title">Танилцуулга </div>
+                        <div class="about-heading-title">MAZ.mn - ТАНИЛЦУУЛГА </div>
                         <div class="about-text">
                             <p>Манай компани нь Вэб болон Мобайл дээр автомашины зуучлалын платформ нэвтрүүлж байна. 
-                                    Бид автомашин борлуулагч болон найдвартай санхүүгийн байгууллагуудтай хамтран ажиллаж хэрэглэгчдийг сэтгэл хангалуун байлгахын тулд зуучлалын системийг хийхээр хичээн ажиллаж байна.
+Бид автомашин борлуулагч болон найдвартай санхүүгийн байгууллагуудтай хамтран ажиллаж хэрэглэгчдийг сэтгэл хангалуун байлгахын тулд зуучлалын системийг хийхээр хичээн ажиллаж байна.
                                     </p>
                             <a href="/finance?firstPay=30" class="btn btn-primary">Лизингийн машинруу очих</a>
                         </div>
@@ -60,7 +60,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h4 class="section-heading">Автомашины зуучлалын <br>платформын онцлог</h4>
+                    <h4 class="section-heading">MAZ.mn - Автомашины зуучлалын <br>платформын онцлог</h4>
                 </div>
             </div>
             <div class="row">
@@ -73,20 +73,51 @@
                             <ul>
                                 <li>
                                     <p class="font-weight-bold mb-0">Автомашин худалдах, худалдан авах зар</p>
-                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et</p>
+                                    <p>Автомашин худалдан борлуулах сурталчилгаанаас гадна та авмомашин худалдаж авах хүсвэлтийг автомашиныхаа 
+    мэдээллийг бичиж үнэгүй зар байрлуулж болно. 
+    Мөн автомашин худалдан борлуулж байгаа олон хүмүүс худалдан авах зарыг харж, автомашинаа худалдан 
+    авагчдад санал  болгох болно.</p>
                                 </li>
                                 <li>
                                      <p class="font-weight-bold mb-0"> AUCTION зуучлах</p>
-                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et</p>
+                                    <p>MAZ.mn дуудлага худалдааны систем нь эрсдэлгүй, шуурхай, боломжийн үнээр сайхан автомашиныг худалдах 
+    боломжтой систем юм.</p>
                                 </li>
                                 <li>
                                      <p class="font-weight-bold mb-0">Машин зээлийн асуудал шийдүүлэх</p>
-                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et</p>
+                                    <p>MAZ.mn –ээс арилжсан ихэнхи машины тухай лизенгийн зээл болон барьцаад зээл авах боломжтой.
+    Мөн зээлийн тооцоолуурыг ашиглан өөрт хэрэгтэй мөнгө, машиныг сонгох боломжтой.</p>
                                 </li>
                                 <li>
                                      <p class="font-weight-bold mb-0">Техникийн үзлэг оношилгоо</p>
-                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et</p>
+                                    <p>MAZ.mn –ийн заасан автомашин засварын газар очиж “техникийн үзлэг оношилгоо”-нд ороорой.
+    Худалдан борлуулах гэж байгаа автомашиныг худалдан авагчид илүү итгэл найдвартай, улам илүү боломжийн 
+    үнээр худалдан борлуулах боломжтой.</p>
                                 </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="page-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="section-heading">MAZ.mn - ҮЙЛЧЛҮҮЛЭГЧИЙН ТӨВ : <span class="text-danger">7011-1211, 9585-1140<span></h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 d-flex align-items-center">
+                    <div class="about-main-text">
+                        <div class="about-text">
+MAZ.mn-ний үйлчилгээний талаар мэдэхийг хүссэн зүйл юм уу, зартай холбоотой асуулт, автомашины дуудлага худалдаа, оношлогоо үзлэгийн үйлчилгээтэй холбоотой гэх мэт бүхий л асуултуудад эелдэгээр тайлбарлаж өгөх болно. Баярлалаа
+                            <ul>
+                                <li>Хаяг : УБ, Баянгол, Үндсэн хуулийн гудамж 24, "Рокмон бюлдинг" 301 тоот</li>
+                                <li>Ажлын цагийн хуваарь : Даваа~Баасан  : 09:00 ~ 18:00     </li>
+                                <li>Компаний нэр : Дамоа капитал</li>
+                                <li>Зарын төлбөр төлөх дансны дугаар: </li>
                             </ul>
                         </div>
                     </div>

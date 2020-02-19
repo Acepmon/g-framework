@@ -418,7 +418,7 @@
         '': [''],
         @foreach(App\ TermTaxonomy::where('taxonomy', 'car-manufacturer')->get() as $taxonomy)
         '{{ $taxonomy->term->name}}': [
-            @foreach($taxonomy-> children as $model)
+            @foreach($taxonomy-> children->sortBy('term.name') as $model)
             '{{ $model->term->name }}',
             @endforeach
         ],

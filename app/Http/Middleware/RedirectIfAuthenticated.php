@@ -32,6 +32,9 @@ class RedirectIfAuthenticated
             } else {
                 $path = config('system.auth.guestRedirectPath');
             }
+            if ($request->ajax()) {
+                // return $next($request);
+            }
 
             return redirect($path);
         }

@@ -10,6 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::prefix('ajax')->group(function () {
+    Route::namespace('Ajax')->group(function () {
+
+        Route::get('/cars/count', 'CarController@count');
+        Route::get('/cars/filter', 'CarController@filter');
+        Route::get('/cars/taxonomy/{taxonomy}', 'CarController@getTaxonomy');
+    });
+});
 Route::middleware(['auth'])->group(function () {
     Route::prefix('ajax')->group(function () {
         Route::namespace('Ajax')->group(function () {

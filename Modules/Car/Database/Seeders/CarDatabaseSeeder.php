@@ -19,7 +19,6 @@ class CarDatabaseSeeder extends Seeder
         $this->call(CarAuthPagesTableSeeder::class);
         $this->call(CarPermissionsTableSeeder::class);
         $this->call(CarGroupsTableSeeder::class);
-        $this->call(CarMenusTableSeeder::class);
         $this->call(CarGroupMenuTableSeeder::class);
         $this->call(CarGroupPermissionTableSeeder::class);
         $this->call(CarUsersTableSeeder::class);
@@ -30,6 +29,7 @@ class CarDatabaseSeeder extends Seeder
         $this->call(CarBuyPageTableSeeder::class);
         $this->call(CarSellPagesTableSeeder::class);
         $this->call(CarTaxonomyTableSeeder::class);
+        $this->call(CarMenusTableSeeder::class);
         $this->call(CarRetailTableSeeder::class);
         $this->call(CarWannaBuyTableSeeder::class);
         $this->call(CarDoorCountTableSeeder::class);

@@ -18,11 +18,11 @@
     </div>
     <div class="card page-top-navbar border-0 mt-3 bg-transparent">
         <div class="d-flex justify-content-start">
-            @contentInline(type=car, author_id=Auth::user()->id, isSold=1, sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $solds | paginate)
+            @contentInline(type=car, author_id=Auth::user()->id, status=sold, sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $solds | paginate)
             <span class="total-cars ml-0" >НИЙТ {{ count($solds) }}</span>
             <div class="sort-cars col-md-9">
                 <ul>
-                    <li class="{{ request('sort')=='updated_at' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'updated_at', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
+                    <li class="{{ request('sort', 'publishedAt')=='publishedAt' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'publishedAt', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
                     <li class="{{ request('sort')=='priceAmount' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'asc')">Хямд үнэ</a></li>
                 </ul>
             </div>
@@ -72,9 +72,11 @@
                 <img src="{{asset('car-web/img/icons/transmision.svg')}}" alt="">
                 <p>{{$sold->metaValue("chassis")}}</p>
                 </span>
-                        <span class="info-icon color" data-color="{{ strtolower($sold->metaValue('colorName')) }}">
+                @if(\App\Term::where('name', $sold->metaValue('colorName'))->first())
+                <span class="info-icon color" data-color="{{ strtolower(\App\Term::where('name', $sold->metaValue('colorName'))->first()->metaValue('value')) }}">
                 <p>{{$sold->metaValue("colorName")}}</p>
                 </span>
+                @endif
                     <div class="sell-action">
                         <div onclick="window.open('/edit?id={{$sold->id}}');">Засах</div>
                         <div data-toggle="modal" data-target="#deteleCont" onclick="contsId({{$sold->id}})">Устгах</div>
@@ -164,6 +166,7 @@
                 url: '/ajax/contents/' + contId,
             }).done(function(data) {
                 $("#demo-spinner").css({'display': 'none'});
+                location.reload();
                 console.log("DONE!");
                 //$('#carRegSuccess').modal('show');/
             }).fail(function(err) {
@@ -179,10 +182,11 @@
             console.log(contId)
             $.ajax({
                 type: 'PUT',
-                url: '/ajax/contents/' + contId + '/metas/sync',
-                data: {"isSold":"0"}
+                url: '/ajax/contents/' + contId,
+                data: {"status":"{{ \App\Content::STATUS_PUBLISHED }}"}
             }).done(function(data) {
                 $("#demo-spinner").css({'display': 'none'});
+                location.reload();
                 console.log("DONE!");
                 console.log(data);
             }).fail(function(err) {

@@ -22,10 +22,10 @@ class CarOptionsExteriorTableSeeder extends Seeder
             'Хөнгөн цагаан дугуй' => ['metaKey' => 'optionExteriorAluminumWheel'], 
             'Дээврийн цонх' => ['metaKey' => 'optionExteriorSunroof']];
 
-        $parent = TaxonomyManager::register('Exterior', 'car-options');
+        $parent = TaxonomyManager::findTerm('Гадна байдал');
 
         foreach ($exteriors as $exterior => $metas) {
-            TaxonomyManager::register($exterior, 'car-exterior', $parent->term->id, $metas);
+            TaxonomyManager::register($exterior, 'car-exterior', $parent->id, $metas);
         }
 
         TaxonomyManager::updateTaxonomyChildrenSlugs($parent->id);
