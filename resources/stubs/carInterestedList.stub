@@ -38,7 +38,7 @@
                 <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt=""></div>
                 @endif
                 @if(getMetasValue($car->metas, 'doctorVerified')==1)
-                <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor.png') }}" alt=""></div>
+                <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
                 @endif
                 <img src="{{$car->metaValue("thumbnail")}}" class="img-fluid" alt="alt" />
             </div>
