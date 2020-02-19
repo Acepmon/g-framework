@@ -155,7 +155,6 @@ $itsIntCar=false;
                             </div>
                             <div class="tab-pane fade" id="budget" role="tabpanel" aria-labelledby="used-tab">
                                 <form method="GET" action="/buy">
-                                    @csrf
                                     <input type="text" name="title" hidden class="searchTitle">
                                     <div class="form-group">
                                         <select id="vehicleManufacturer1" class="form-control" name="car-type">
@@ -193,8 +192,7 @@ $itsIntCar=false;
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="auction" role="tabpanel" aria-labelledby="auction-tab">
-                                <form method="GET" action="/buy">
-                                    @csrf
+                                <form method="GET" action="/coming-soon">
                                     <input name="title" type="text" hidden class="searchTitle">
                                     <div class="form-group">
                                         <select id="vehicleManufacturer2" class="form-control" name="car-manufacturer">

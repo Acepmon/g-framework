@@ -25,7 +25,7 @@ $categoryName = [
         <div class="card-body bg-light grid-radio gr-3">
             @foreach(App\TermTaxonomy::where('taxonomy', $category)->get() as $taxonomy)
             <div class="cd-radio">
-            <input type="radio" id="{{ $taxonomy->term->id }}" name="{{ $category }}" class="custom-control-input" value="{{ $taxonomy->term->id }}" {{ ($taxonomy->term->id == request('car-type', Null))?'checked':''}}>
+            <input type="radio" id="{{ $taxonomy->term->metaValue('value') }}" name="{{ $category }}" class="custom-control-input" value="{{ $taxonomy->term->id }}" >
             <label class="custom-control-label " for="{{ $taxonomy->term->metaValue('value') }}">
                 <img src="{{ asset('car-web/img/icons/'.strtolower($taxonomy->term->metaValue('value')).'.svg') }}">
                 <span>{{ $taxonomy->term->name }}</span>
@@ -221,7 +221,7 @@ $(document).ready(function() {
         @endif
     });
     @if(request('car-type', False))
-    $("#{{ request('car-type', 0) }}").trigger('click');
+    $("input[name=car-type][value={{ request('car-type', 0) }}]").trigger('click');
     @endif
 });
 
