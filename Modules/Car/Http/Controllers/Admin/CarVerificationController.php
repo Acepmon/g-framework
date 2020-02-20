@@ -19,20 +19,34 @@ class CarVerificationController extends Controller
      */
     public function index()
     {
-        $published = Content::where('type', 'car')->where('status', Content::STATUS_PUBLISHED)->whereHas('metas', function ($query) {
-            $query->where('key', 'doctorVerificationRequest');
-            $query->where('value', true);
+        $verified = Term::where('slug', 'batalgaazhsan')->first();
+        $notVerified = Term::where('slug', 'batalgaazhaagy')->first();
+
+        $published = Content::where('type', 'car')->where('status', Content::STATUS_PUBLISHED)->whereHas('terms', function ($query) use($notVerified) {
+            $query->where('term_id', $notVerified->id);
         })->orderBy('visibility', 'desc')->get();
 
-        $pending = Content::where('type', 'car')->where('status', Content::STATUS_PENDING)->whereHas('metas', function ($query) {
-            $query->where('key', 'doctorVerificationRequest');
-            $query->where('value', true);
+        $pending = Content::where('type', 'car')->where('status', Content::STATUS_PENDING)->whereHas('terms', function ($query) use($notVerified) {
+            $query->where('term_id', $notVerified->id);
         })->orderBy('visibility', 'desc')->get();
 
-        $draft = Content::where('type', 'car')->where('status', Content::STATUS_DRAFT)->whereHas('metas', function ($query) {
-            $query->where('key', 'doctorVerificationRequest');
-            $query->where('value', true);
+        $draft = Content::where('type', 'car')->where('status', Content::STATUS_DRAFT)->whereHas('terms', function ($query) use ($notVerified) {
+            $query->where('term_id', $notVerified->id);
         })->orderBy('visibility', 'desc')->get();
+        // $published = Content::where('type', 'car')->where('status', Content::STATUS_PUBLISHED)->whereHas('metas', function ($query) {
+        //     $query->where('key', 'doctorVerificationRequest');
+        //     $query->where('value', true);
+        // })->orderBy('visibility', 'desc')->get();
+
+        // $pending = Content::where('type', 'car')->where('status', Content::STATUS_PENDING)->whereHas('metas', function ($query) {
+        //     $query->where('key', 'doctorVerificationRequest');
+        //     $query->where('value', true);
+        // })->orderBy('visibility', 'desc')->get();
+
+        // $draft = Content::where('type', 'car')->where('status', Content::STATUS_DRAFT)->whereHas('metas', function ($query) {
+        //     $query->where('key', 'doctorVerificationRequest');
+        //     $query->where('value', true);
+        // })->orderBy('visibility', 'desc')->get();
 
         $contents = [
             Content::STATUS_PUBLISHED => $published,

@@ -487,22 +487,31 @@
         @endif
     });
 
+    function showError(id, validated) {
+        $('#' + id).addClass('is-invalid');
+        $('#' + id + 'Alert').css('display', 'block');
+        if (validated) {
+            scrollTo(id);
+        }
+
+        return false;
+    }
+
     function step1Submit(__callback) {
         let validated = true;
         $('#form-1 input[required], #form-1 select[required]').each(function() {
             if ($(this).val() == "") {
                 let id = $(this).attr('id');
                 if (id) {
-                    $('#' + id).addClass('is-invalid');
-                    $('#' + id + 'Alert').css('display', 'block');
-                    if (validated) {
-                        scrollTo(id);
-                    }
-
-                    validated = false;
+                    validated = showError(id, validated);
                 }
             }
         });
+        // Custom validation
+        var val = $("#form-1 #manufacturerSelect").val();
+        if (val == "" || val == "Үйлдвэрлэгч") {
+            validated = showError("manufacturerSelect", validated);
+        }
         if (validated) {
             step1SubmitAjax(__callback);
         } else {
