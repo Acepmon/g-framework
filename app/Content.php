@@ -90,12 +90,12 @@ class Content extends Model
     public function medias($addPath = True)
     {
         $medias = array();
-        $thumbnail = $this->metas->where('key', 'thumbnail');
+        $thumbnail = $this->metas->where('key', 'thumbnail')->first();
         if ($thumbnail) {
             array_push($medias, $thumbnail->value);
         }
         for ($i=2; $i<=15; $i++) {
-            $media = $this->metas->where('key', 'image'.$i);
+            $media = $this->metas->where('key', 'image'.$i)->first();
             if ($media) {
                 array_push($medias, $media->value);
             }
