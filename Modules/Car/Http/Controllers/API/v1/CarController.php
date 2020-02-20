@@ -79,6 +79,22 @@ class CarController extends Controller
 
         $data = ContentManager::discernMetasFromRequest($request->input());
         ContentManager::syncMetas($content_id, $data);
+        // Custom validation
+        $priceAmount = $request->input('priceAmount', 0);
+        if ($priceAmount) {
+            ContentManager::updateMeta($content_id, 'priceAmount', $priceAmount, $priceAmount * 1000000);
+        }
+        if ($request->input('markName')) {
+            $content = Content::findOrFail($content_id);
+            $title = $request->input('markName');
+            if ($request->input('modelName')) {
+                $title = $title . ' ' . $request->input('modelName');
+            }
+
+            $content->title = $title;
+            $content->slug = 'posts/' . $content->id;
+            $content->save();
+        }
 
         return response()->json($data);
     }

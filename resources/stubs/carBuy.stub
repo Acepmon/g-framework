@@ -186,9 +186,12 @@ $itemsPerPage = request('itemsPerPage', "15");
         
          // Double search code
         if ($("#searchPage").length) {
+          var val=$("#searchInput").val();
           $("#searchInput").val('');
           $("#searchInput").trigger('blur');
           $("#searchBtn").parent().unbind('click');
+
+          $("#searchInput").val(val);
         } else {
           $("#searchBtn").parent().on('click', onSearchBtn);
         }

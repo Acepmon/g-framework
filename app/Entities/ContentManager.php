@@ -185,7 +185,7 @@ class ContentManager extends Manager
         $status = self::requestOperator('status', $request, Content::STATUS_PUBLISHED);
         $visibility = self::requestOperator('visibility', $request, Content::VISIBILITY_PUBLIC);
         $limit = self::requestOperator('limit', $request, 10);
-        $sort = $request->input('sort', '+id');
+        $sort = $request->input('sort', '-id');
 
         $metaInputs = self::discernMetasFromRequest($request->input());
         $contents = Content::where($type['field'], $type['operator'], $type['value'])
@@ -201,7 +201,7 @@ class ContentManager extends Manager
 
         if (count($metaInputs) > 0) {
             foreach ($metaInputs as $key => $value) {
-                if ($value == "0" || $value == 0) {
+                if ($value === "0" || $value === 0) {
                     $contents = $contents->whereDoesntHave('metas', function ($query) use ($key, $value, $request) {
                         $query->where('key', $key);
                         $query->where('value', "1");
@@ -212,7 +212,13 @@ class ContentManager extends Manager
                         $query->where('key', $key);
     
                         if (\Str::endsWith($key, 'Amount')) {
-                            $query->whereRaw('cast(value as unsigned) ' . $meta['operator'] . ' ' . $meta['value']);
+                            if (is_array($meta)) {
+                                foreach ($meta as $m) {
+                                    $query->whereRaw('cast(value as unsigned) ' . $m['operator'] . ' ' . $m['value']);
+                                }
+                            } else {
+                                $query->whereRaw('cast(value as unsigned) ' . $meta['operator'] . ' ' . $meta['value']);
+                            }
                         } else {
                             $query->where('value', $meta['operator'], $meta['value']);
                         }
@@ -224,9 +230,12 @@ class ContentManager extends Manager
         $termInputs = self::discernTermsFromRequest($request->input());
         if (count($termInputs) > 0) {
             foreach ($termInputs as $key => $value) {
-                $contents = $contents->whereHas('terms', function($q) use($value) {
-                    $q->where('term_taxonomy_id', $value);
-                });
+                if (is_number($value)) {
+
+                    $contents = $contents->whereHas('terms', function($q) use($value) {
+                        $q->where('term_taxonomy_id', $value);
+                    });
+                }
             }
         }
 
@@ -262,7 +271,7 @@ class ContentManager extends Manager
     }
 
     /**
-     * Used to discern content metas from attributes of Content Model.
+     * Used to discern terms from attributes of Content Model.
      * @return array of ContentMeta, consisting of key, value pairs
      */
     public static function discernTermsFromRequest($input)
@@ -294,9 +303,11 @@ class ContentManager extends Manager
     {
         $op = $request->input($inputName, $defaultValue);
         if (is_array($op)) {
+            $opArray = array();
             foreach ($op as $key => $value) {
-                $op = self::operator($inputName, self::operatorSymbol($key), self::operatorValue($key, $value));
+                array_push($opArray, self::operator($inputName, self::operatorSymbol($key), self::operatorValue($key, $value)));
             }
+            return $opArray;
         } else {
             $op = self::operator($inputName, self::operatorSymbol('eq'), self::operatorValue('eq', $op));
         }

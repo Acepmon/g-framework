@@ -9,6 +9,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 // use App\Http\Controllers\Controller;
+use Modules\Payment\Entities\Transaction;
 use Modules\Content\Http\Controllers\Ajax\GroupController;
 use Validator;
 use Carbon\Carbon;

@@ -90,6 +90,10 @@ class Content extends Model
     public function medias()
     {
         $medias = $this->metas->where('key', 'medias');
+        // $thumbnail = $this->metas->where('key', 'thumbnail');
+        // if ($thumbnail) {
+        //     array_unshift($medias, $thumbnail);
+        // }
         $media_path = array();
         foreach($medias as &$media) {
             $imagepath = $media->value;
@@ -246,6 +250,14 @@ class Content extends Model
     public function metasTransform() {
         $arr = [];
         foreach ($this->metas->groupBy('key')->toArray() as $key => $metaValues) {
+            // Serializer - on mobile add thumbnail to medias
+            if ($key == 'medias') {
+                $thumbnail = $this->metas->where('key', 'thumbnail')->first();
+                if ($thumbnail) {
+                    array_unshift($metaValues, $thumbnail);
+                }
+            }
+
             if (count($metaValues) > 1 || in_array($key, self::META_ARRAY)) {
                 $arr[$key] = array_map(function ($meta) {
                     return $this->isJson($meta['value']) ? json_decode($meta['value']) : $meta['value'];
