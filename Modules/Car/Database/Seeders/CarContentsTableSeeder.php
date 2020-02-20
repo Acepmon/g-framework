@@ -90,6 +90,7 @@ class CarContentsTableSeeder extends Seeder
             $thumbnail = asset('car-web/img/Cars/' . rand(1, 12) . '.jpg');
             $medias = [];
             $mediasLimit = rand(1, 20);
+            array_push($thumbnail);
             for ($i = 0; $i < $mediasLimit; $i++) {
                 $media = asset('car-web/img/Cars/' . rand(1, 12) . '.jpg');
                 $meta = new ContentMeta(['key' => 'medias', 'value' => $media]);

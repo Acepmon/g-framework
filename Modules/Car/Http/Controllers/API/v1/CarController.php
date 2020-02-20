@@ -103,14 +103,21 @@ class CarController extends Controller
         $content_id = $request->route('car');
 
         $media_list = MediaManager::uploadFiles($request->medias);//$request->getContent());
+        $metas = array();
         if (count($media_list) > 0) {
-            $media_list = ['medias' => $media_list, 'thumbnail' => $media_list[0]];
+            foreach ($media_list as $key => $media) {
+                if ($key == 0) {
+                    $metas['thumbnail'] = $media;
+                } else {
+                    $metas['image' . ($key+1)] = $media;
+                }
+            }
         } else {
-            $media_list = ['medias' => $media_list];
+            $metas = ['medias' => $media_list];
         }
-        ContentManager::attachMetas($content_id, $media_list);
+        ContentManager::attachMetas($content_id, $metas);
 
-        return response()->json($media_list);
+        return response()->json($metas);
     }
 
     public function attachDoc(Request $request) {
