@@ -107,9 +107,6 @@ $itsIntCar=false;
                             <li class="nav-item">
                                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#budget" role="tab" aria-controls="budget" aria-selected="false">Том тэрэг</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#auction" role="tab" aria-controls="used" aria-selected="false">Аукцион</a>
-                            </li>
                         </ul>
                         <div class="tab-content p-5" id="heroTabFilter">
                             <div class="tab-pane fade show active" id="allVehicles" role="tabpanel"
@@ -214,7 +211,7 @@ $itsIntCar=false;
 
     <!-- Auction Grid -->
 
-    @include('themes.car-web.includes.section-auction')
+    <!-- @include('themes.car-web.includes.section-auction') -->
 
     <!-- wish list -->
 
