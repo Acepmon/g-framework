@@ -362,7 +362,7 @@ $itsIntCar=false;
                             .find('option')
                             .remove()
                             .end()
-                            .append('<option>Модел</option>')
+                            .append('<option>Ангилал</option>')
                             .val('')
                         ;
                         console.log(modelList.data);
