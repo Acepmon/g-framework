@@ -117,6 +117,24 @@ class Content extends Model
         return $media_path;
     }
 
+    public function youtubeLink()
+    {
+        try{
+            $link = $this->metaValue('link');
+            // Code is taken from https://stackoverflow.com/questions/9973520/getting-youtube-video-id-the-php
+            $video_id = explode("?v=", $link); // For videos like http://www.youtube.com/watch?v=...
+            if (empty($video_id[1]))
+                $video_id = explode("/v/", $link); // For videos like http://www.youtube.com/watch/v/..
+            
+            $video_id = explode("&", $video_id[1]); // Deleting any other params
+            $video_id = $video_id[0];
+            return $video_id;
+        } catch (\ErrorException $ex) {
+            // Undefined offset error
+        }
+        return null;
+    }
+
     public function currentView()
     {
         $slug = $this->slug;
