@@ -61,6 +61,9 @@ class CronPremium extends Command
                 $update->save();
                 $delete = ContentMeta::find($data->id);
                 $delete->delete();
+                $content = $data->content();
+                $content->order = 1;
+                $content->save();
             }
         }
     }
