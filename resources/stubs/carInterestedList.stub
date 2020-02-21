@@ -15,7 +15,7 @@
             <span class="total-cars ml-0" >НИЙТ {{count($cars)}}</span>
             <div class="sort-cars col-md-9">
                 <ul>
-                    <li class="{{ request('sort')=='publishedAt' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'publishedAt', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
+                    <li class="{{ request('sort','publishedAt')=='publishedAt' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'publishedAt', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
                     <li class="{{ request('sort')=='priceAmount' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'asc')">Хямд үнэ</a></li>
                 </ul>
             </div>
@@ -38,7 +38,7 @@
                 <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt=""></div>
                 @endif
                 @if(getMetasValue($car->metas, 'doctorVerified')==1)
-                <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor.png') }}" alt=""></div>
+                <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
                 @endif
                 <img src="{{$car->metaValue("thumbnail")}}" class="img-fluid" alt="alt" />
             </div>
@@ -78,9 +78,11 @@
                         <img src="{{asset('car-web/img/icons/transmision.svg')}}" alt="">
                         <p>{{$car->metaValue("chassis")}}</p>
                       </span>
-                    <span class="info-icon color" data-color="{{ strtolower($car->metaValue('colorName')) }}">
-                        <p>{{$car->metaValue("colorName")}}</p>
-                      </span>
+                    @if(\App\Term::where('name', $car->metaValue('colorName'))->first())
+                    <span class="info-icon color" data-color="{{ strtolower(\App\Term::where('name', $car->metaValue('colorName'))->first()->metaValue('value')) }}">
+                        <p>{{ ucfirst($car->metaValue('colorName')) }}</p>
+                    </span>
+                    @endif
                     <div class="advantage-slider owl-carousel owl-theme">
                         @foreach($car->metas->where('key', 'advantages') as $advantage)
                             <a class="advantage-item" onclick="formSubmit('advantage', '{{$advantage->value}}')">{{ $advantage->value }}</a>

@@ -33,10 +33,10 @@ class CarOptionsConvenienceTableSeeder extends Seeder
             'Хурдны удирдлага' => ['metaKey' => 'optionConvenienceCruiseControl'], 
             'Ухаалаг түлхүүр' => ['metaKey' => 'optionConvenienceSmartKey']];
 
-        $parent = TaxonomyManager::register('Convenience', 'car-options');
+        $parent = TaxonomyManager::findTerm('Тав тух');
 
         foreach ($conveniences as $convenience => $metas) {
-            TaxonomyManager::register($convenience, 'car-convenience', $parent->term->id, $metas);
+            TaxonomyManager::register($convenience, 'car-convenience', $parent->id, $metas);
         }
 
         TaxonomyManager::updateTaxonomyChildrenSlugs($parent->id);

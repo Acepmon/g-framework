@@ -58,9 +58,11 @@ function numerizePrice($value) {
     if ($value < 1000) {
         return round($value, 2);
     } else if ($value < 1000000) {
-        return round(($value / 1000), 0) . ' мянга';
+        return number_format(round(($value / 1000), 0)) . ' мянга';
     } else {
-        return round(($value / 1000000), 2) . ' сая';
+        $remainder = rtrim($value % 1000000, "0");
+        $remainder = ($remainder)?'.'.$remainder:'';
+        return number_format(floor($value / 1000000)) . $remainder . ' сая';
     }
 }
 
@@ -86,7 +88,7 @@ function isPremium($car) {
         $car->status == App\Content::STATUS_PUBLISHED &&
         $car->visibility == App\Content::VISIBILITY_PUBLIC &&
         $car->metaValue('publishVerified') == True &&
-        $car->metaValue('publishVerifiedEnd') >= now() &&
+        // $car->metaValue('publishVerifiedEnd') >= now() &&
         ($car->metaValue('publishType') == 'best_premium' || $car->metaValue('publishType') == 'premium');
         // ($car->metaValue('publishType') == 'premium');
 }

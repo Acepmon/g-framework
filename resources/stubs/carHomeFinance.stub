@@ -136,6 +136,7 @@ $interestedCars=[];
             </div>
             <div class="col-md-12 text-center">
                 <input hidden id="searchByTotPrice" value="{{ request('priceAmount')}}" name="priceAmount">
+                <input hidden id="page" name="page" value="{{ request('page', 1) }}">
                 <input hidden id="sortBy" name="sort" value="updated_at">
                 <input hidden id="sortDir" name="sortDir" value="desc">
                 <button type="submit" id="searchFitCars" class="btn btn-danger btn-round  mt-5 px-5 btn-lg">Хайлт хийх</button>
@@ -153,11 +154,6 @@ $interestedCars=[];
             <div class="card page-top-navbar border-0">
                 <div class="d-flex justify-content-start">
 
-<!--                    @if(Auth::user()!="" && Auth::user()->id==1)-->
-<!--                    @contentInline(type=car, priceType=Зээлээр, sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)-->
-<!--                    @else-->
-<!--                    @contentInline(type=car, priceAmount < intval(request()->input("priceAmount")), sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)-->
-<!--                    @endif-->
                     @contentInline(type=car, author_id=4, priceAmount < intval(request()->input("priceAmount")), sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)
                     <span class="total-cars ml-0" >НИЙТ {{count($cars)}}
 <!--                        <a class="">Бүгдийг харах</a><i class="fab fa fa-angle-right"></i>-->
@@ -203,7 +199,7 @@ $interestedCars=[];
                             <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt=""></div>
                             @endif
                             @if(getMetasValue($carDataMonthly->metas, 'doctorVerified')==1)
-                            <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor.png') }}" alt=""></div>
+                            <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
                             @endif
                             <div class="card-img">
                                 <img src="{{$carDataMonthly->metaValue("thumbnail")}}" class="img-fluid"
@@ -249,7 +245,32 @@ $interestedCars=[];
                     </div>
                     <!-- col-end -->
                     @endforeach
+
+                    
                 </div>
+        <!-- Pagination -->
+        @php
+        $page = request("page", 1);
+        @endphp
+        <nav aria-label="Page navigation">
+            <input type="hidden" value="{{ $page }}" name="page" id="page" />
+            <ul class="pagination d-flex justify-content-end mt-2">
+                <li class="page-item {{ ($page <= 1)?'disabled':'' }}">
+                    <button class="page-link" onclick="formSubmit('page', {{$page-1}})" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </button>
+                </li>
+                @for($i = 1; $i <= $cars->lastPage(); $i++)
+                <li class="page-item {{ ($i == $page)?'active':'' }}"><button class="page-link" onclick="formSubmit('page', {{$i}})">{{ $i }}</button></li>
+                @endfor
+                <li class="page-item {{ ($page >= $cars->lastPage())?'disabled':'' }}">
+                    <button class="page-link" onclick="formSubmit('page', {{$page+1}})" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+        <!-- Pagination end -->
             </div>
         </div>
     </div>
@@ -271,7 +292,7 @@ $interestedCars=[];
             if (value != 'no-value') {
                 document.getElementById(id).value = value;
             }
-            if (sortDir != 'no-value'){
+            if (sortDir != null && sortDir != 'no-value'){
                 document.getElementById(sortDir).value = sortDirValue;
             }
         }

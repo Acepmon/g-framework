@@ -114,17 +114,16 @@ $itsIntCar=false;
                         <div class="tab-content p-5" id="heroTabFilter">
                             <div class="tab-pane fade show active" id="allVehicles" role="tabpanel"
                                  aria-labelledby="imported-tab">
-                                <form method="GET" action="/search">
-                                    @csrf
+                                <form method="GET" action="/buy">
                                     <input type="text" name="search" hidden class="searchTitle">
                                     <div class="form-group">
                                         <select id="vehicleManufacturer" class="form-control" name="car-manufacturer">
                                             <option value="">Үйлдвэрлэгч</option>
                                             @foreach(App\Entities\TaxonomyManager::getManufacturers('normal') as $key=>$data)
                                             @if($key<5)
-                                                <option id="{{$data->term->name}}" style="font-weight: 700" value="{{$data->term->id}}">{{$data->term->name}}({{$data->count}})</option>
+                                                <option id="{{$data->term->name}}" style="font-weight: 700" value="{{$data->term->id}}">{{$data->term->name}}({{$data->contents_count}})</option>
                                             @else
-                                                <option id="{{$data->term->name}}" value="{{$data->term->id}}">{{$data->term->name}}({{$data->count}})</option>
+                                                <option id="{{$data->term->name}}" value="{{$data->term->id}}">{{$data->term->name}}({{$data->contents_count}})</option>
                                             @endif
                                             @endforeach
                                         </select>
@@ -155,8 +154,7 @@ $itsIntCar=false;
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="budget" role="tabpanel" aria-labelledby="used-tab">
-                                <form method="GET" action="/search">
-                                    @csrf
+                                <form method="GET" action="/buy">
                                     <input type="text" name="title" hidden class="searchTitle">
                                     <div class="form-group">
                                         <select id="vehicleManufacturer1" class="form-control" name="car-type">
@@ -194,7 +192,6 @@ $itsIntCar=false;
                                 </form>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="master-head-bg">
@@ -317,7 +314,7 @@ $itsIntCar=false;
                     var markName=$(this).find(":selected").attr("id");
                     $.ajax({
                         type: 'Get',
-                        url: '/api/v1/taxonomies/car-'+toKebabCase(markName) + '?count=true',
+                        url: '/api/v1/taxonomies/car-'+toKebabCase(markName) + '?count=true&home=True',
                         // /data: paramObjs
                     }).done(function(data) {
                         console.log("DONE!");
@@ -329,11 +326,11 @@ $itsIntCar=false;
                             .append('<option>Модел</option>')
                             .val('')
                         ;
-                        console.log(modelList.data);
+                        console.log(modelList);
                         var i;
-                        for (i = 0; i < modelList.data.length; i++) {
-                            console.log(modelList.data[i].term.name);
-                            $("#vehicleManufacturerModels").append(new Option(modelList.data[i].term.name, modelList.data[i].id));
+                        for (let [key, value] of Object.entries(modelList)) {
+                            console.log(value);
+                            $("#vehicleManufacturerModels").append(new Option(value.term.name, value.id));
                         }
                     }).fail(function(err) {
                         // $("#demo-spinner").css({'display': 'none'});

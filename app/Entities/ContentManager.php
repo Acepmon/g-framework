@@ -4,10 +4,14 @@ namespace App\Entities;
 
 use App\Content;
 use App\ContentMeta;
+use App\Term;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Modules\Payment\Entities\Transaction;
 use Modules\Content\Transformers\Content as ContentResource;
+
 
 class ContentManager extends Manager
 {
@@ -181,7 +185,7 @@ class ContentManager extends Manager
         $status = self::requestOperator('status', $request, Content::STATUS_PUBLISHED);
         $visibility = self::requestOperator('visibility', $request, Content::VISIBILITY_PUBLIC);
         $limit = self::requestOperator('limit', $request, 10);
-        $sort = $request->input('sort', '+id');
+        $sort = $request->input('sort', '-id');
 
         $metaInputs = self::discernMetasFromRequest($request->input());
         $contents = Content::where($type['field'], $type['operator'], $type['value'])
@@ -197,7 +201,7 @@ class ContentManager extends Manager
 
         if (count($metaInputs) > 0) {
             foreach ($metaInputs as $key => $value) {
-                if ($value == "0" || $value == 0) {
+                if ($value === "0" || $value === 0) {
                     $contents = $contents->whereDoesntHave('metas', function ($query) use ($key, $value, $request) {
                         $query->where('key', $key);
                         $query->where('value', "1");
@@ -208,7 +212,13 @@ class ContentManager extends Manager
                         $query->where('key', $key);
     
                         if (\Str::endsWith($key, 'Amount')) {
-                            $query->whereRaw('cast(value as unsigned) ' . $meta['operator'] . ' ' . $meta['value']);
+                            if (is_array($meta)) {
+                                foreach ($meta as $m) {
+                                    $query->whereRaw('cast(value as unsigned) ' . $m['operator'] . ' ' . $m['value']);
+                                }
+                            } else {
+                                $query->whereRaw('cast(value as unsigned) ' . $meta['operator'] . ' ' . $meta['value']);
+                            }
                         } else {
                             $query->where('value', $meta['operator'], $meta['value']);
                         }
@@ -220,9 +230,12 @@ class ContentManager extends Manager
         $termInputs = self::discernTermsFromRequest($request->input());
         if (count($termInputs) > 0) {
             foreach ($termInputs as $key => $value) {
-                $contents = $contents->whereHas('terms', function($q) use($value) {
-                    $q->where('term_taxonomy_id', $value);
-                });
+                if (is_number($value)) {
+
+                    $contents = $contents->whereHas('terms', function($q) use($value) {
+                        $q->where('term_taxonomy_id', $value);
+                    });
+                }
             }
         }
 
@@ -258,7 +271,7 @@ class ContentManager extends Manager
     }
 
     /**
-     * Used to discern content metas from attributes of Content Model.
+     * Used to discern terms from attributes of Content Model.
      * @return array of ContentMeta, consisting of key, value pairs
      */
     public static function discernTermsFromRequest($input)
@@ -290,9 +303,11 @@ class ContentManager extends Manager
     {
         $op = $request->input($inputName, $defaultValue);
         if (is_array($op)) {
+            $opArray = array();
             foreach ($op as $key => $value) {
-                $op = self::operator($inputName, self::operatorSymbol($key), self::operatorValue($key, $value));
+                array_push($opArray, self::operator($inputName, self::operatorSymbol($key), self::operatorValue($key, $value)));
             }
+            return $opArray;
         } else {
             $op = self::operator($inputName, self::operatorSymbol('eq'), self::operatorValue('eq', $op));
         }
@@ -374,5 +389,95 @@ class ContentManager extends Manager
             $result = array_merge($result->toArray(request()), $additional);
         }
         return $result;
+    }
+
+    public static function publish($request, $contentId, $publishAmount, $publishUnit, $publishDuration) {
+        try {
+            DB::beginTransaction();
+
+            $content = Content::findOrFail($contentId);
+            $content->status = $request->input('status', Content::STATUS_PUBLISHED);
+            $content->visibility = $request->input('visibility', Content::VISIBILITY_PUBLIC);
+            $content->updateMeta('publishedAt', Carbon::now());
+            
+            // Attach default Term id
+            $notVerified = Term::where('slug', 'batalgaazhaagy')->first();
+            $content->terms()->attach($notVerified);
+            $author = $content->author()->first();
+            $sellerTerm = Term::where('slug', 'khuv-khn')->first();
+            if ($author->get_dealer_group()) {
+                $sellerTerm = Term::where('slug', 'borluulagch')->first();
+            }
+            $content->terms()->attach($sellerTerm);
+
+            if ($request->has('publishType')) {
+                $publishType = $request->input('publishType');
+            } else {
+                $publishType = $content->metaValue('publishType');
+            }
+
+            if ($publishType == 'best_premium' || $publishType == 'premium') {
+                $content->setMetaValue('publishAmount', $publishAmount);
+                $content->setMetaValue('publishUnit', $publishUnit);
+                $content->setMetaValue('publishDuration', $publishDuration);
+
+                $result = self::publishPremium($content);
+                if ($result) {
+                    // continue;
+                } else {
+                    $content->order = 1;
+                    $content->save();
+                    DB::commit();
+                    return 0;
+                }
+            } elseif($publishType == 'free') {
+                $content->order = 1;
+            }
+
+            $content->save();
+            DB::commit();
+            return 1;
+        } catch (\Exception $ex) {
+            dd($ex->getMessage());
+            DB::rollBack();
+            // return 0;
+        }
+    }
+
+    public static function publishPremium($content) {
+        $content->order = 1;
+        $publishType = $content->metaValue('publishType');
+        if ($publishType == 'best_premium' || $publishType == 'premium') {
+            $author = $content->author;
+            $cash = $author->metaValue('cash');
+            $amount = $content->metaValue('publishAmount');
+            if ($cash - $amount <= 0) {
+                return false;
+            }
+            $cash = $cash - $amount;
+            $author->setMetaValue('cash', $cash);
+            Transaction::create([
+                'user_id' => $author->id, 
+                'payment_method' => 1, 
+                'transaction_type' => 'outcome', 
+                'transaction_amount' => $amount, 
+                'transaction_usage' => $publishType, 
+                'status' => Transaction::STATUS_ACCEPTED, 
+                'content_id' => $content->id
+            ]);
+
+            $content->status = Content::STATUS_PUBLISHED;
+            $content->visibility = Content::VISIBILITY_PUBLIC;
+            if ($publishType == 'best_premium') {
+                $content->order = 3;
+            } else if ($publishType == 'premium') {
+                $content->order = 2;
+            }
+            $content->updateMeta('publishedAt', Carbon::now());
+
+            $content->save();
+            return true;
+        }
+        return true;
     }
 }

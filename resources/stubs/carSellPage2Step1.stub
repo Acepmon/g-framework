@@ -46,53 +46,68 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="carcondition">Машины нөхцөл:</label>
-            <select id="carcondition" name="carCondition" class="form-control">
+            <select id="carcondition" name="carCondition" class="form-control" required>
                 <option value="" selected>Сонгох...</option>
                 @foreach(App\TermTaxonomy::where('taxonomy', 'car-conditions')->get() as $taxonomy)
                 <option value="{{ $taxonomy->term->name }}" {{ ($car->metaValue('carCondition') == $taxonomy->term->name)?'selected':'' }}>{{$taxonomy->term->name}}</option>
                 @endforeach
             </select>
+            <span id="carconditionAlert" class="invalid-feedback" role="alert" style="display: none">
+                Машины нөхцлөө сонгоно уу
+            </span>
         </div>
         <div class="form-group col-md-6">
             <label for="Color">Өнгө:</label>
-            <select id="Color" name="colorName" class="form-control">
+            <select id="Color" name="colorName" class="form-control" required>
                 <option value="" selected>Сонгох...</option>
                 @foreach(App\TermTaxonomy::where('taxonomy', 'car-colors')->get() as $taxonomy)
                 <option value="{{ $taxonomy->term->name }}" {{ ($car->metaValue('colorName') == $taxonomy->term->name)?'selected':'' }}>{{$taxonomy->term->name}}</option>
                 @endforeach
             </select>
+            <span id="ColorAlert" class="invalid-feedback" role="alert" style="display: none">
+                Өнгөө сонгоно уу
+            </span>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="yearProduct">Үйлдвэрлэгдсэн он:</label>
-            <select id="yearProduct" name="buildYear" class="form-control">
+            <select id="yearProduct" name="buildYear" class="form-control" required>
                 <option value="" selected>Сонгох...</option>
                 @for($i=date('Y'); $i>=1990; $i--)
                 <option value="{{ $i }}" {{ ($car->metaValue('buildYear') == $i)?'selected':'' }}>{{ $i }}</option>
                 @endfor
             </select>
+            <span id="yearProductAlert" class="invalid-feedback" role="alert" style="display: none">
+                Үйлдвэрлэсэн оноо сонгоно уу
+            </span>
         </div>
         <div class="form-group col-md-6">
             <label for="yearEntry">Орж ирсэн он:</label>
-            <select id="yearEntry" name="importDate" class="form-control">
+            <select id="yearEntry" name="importDate" class="form-control" required>
                 <option value="" selected>Сонгох...</option>
                 @for($i=date('Y'); $i>=($car->metaValue('buildYear')?$car->metaValue('buildYear'):1990); $i--)
                 <option value="{{ $i }}" {{ ($car->metaValue('importDate') == $i)?'selected':'' }}>{{ $i }}</option>
                 @endfor
             </select>
+            <span id="yearEntryAlert" class="invalid-feedback" role="alert" style="display: none">
+                Орж ирсэн оноо сонгоно уу
+            </span>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="capacityAmount">Моторын хэмжээ:</label>
             <div class="input-group">
-                <input type="number" min="0" class="form-control" id="capacityAmount" name="capacityAmount" placeholder="Моторын хэмжээ" value="{{ $car->metaValue('capacityAmount') }}">
+                <input type="number" min="0" class="form-control" id="capacityAmount" name="capacityAmount" placeholder="Моторын хэмжээ" value="{{ $car->metaValue('capacityAmount') }}" required>
                 <input type="hidden" class="form-control" id="capacityUnit" name="capacityUnit" value="CC">
                 <div class="input-group-prepend">
                     <div class="input-group-text-right">CC</div>
                 </div>
             </div>
+            <span id="manufacturerSelectAlert" class="invalid-feedback" role="alert" style="display: none">
+                Моторын хэмжээгээ сонгоно уу
+            </span>
         </div>
     </div>
 
@@ -213,7 +228,7 @@
     <div class="form-title"><span>Баталгаажуулах </span></div>
     <div class="form-row">
         <div class="col-md-3">
-            <div class="custom-control custom-switch">de
+            <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" id="doctorVerifySwitch">
                 <label class="custom-control-label" for="doctorVerifySwitch">Doctor баталгаажуулалт</label>
             </div>
@@ -348,7 +363,7 @@
         console.log("1111111111111        "+manufacturers);
         $.ajax({
             type: 'Get',
-            url: '/api/v1/taxonomies/car-manufacturer?type='+manufacturers,
+            url: '/api/v1/taxonomies/car-manufacturer?type='+manufacturers+'&sort=True',
             // /data: paramObjs
         }).done(function(data) {
             console.log("DONE!");
@@ -365,10 +380,10 @@
             if(manufacturers==="normal"){
                 $("#manufacturerSelect").append(new Option("Toyota", "Toyota"));
                 $("#manufacturerSelect").append(new Option("Lexus", "Lexus"));
-                $("#manufacturerSelect").append(new Option("Honda", "Honda"));
+                $("#manufacturerSelect").append(new Option("Nissan", "Nissan"));
                 $("#manufacturerSelect").append(new Option("Hyundai", "Hyundai"));
                 for (i = 0; i < modelList.data.length; i++) {
-                    if(modelList.data[i].term.name==="Toyota" || modelList.data[i].term.name==="Lexus" || modelList.data[i].term.name==="Honda" || modelList.data[i].term.name==="Hyundai"){}
+                    if(modelList.data[i].term.name==="Toyota" || modelList.data[i].term.name==="Lexus" || modelList.data[i].term.name==="Nissan" || modelList.data[i].term.name==="Hyundai"){}
                     else{$("#manufacturerSelect").append(new Option(modelList.data[i].term.name, modelList.data[i].term.name));}
                 }
             }
@@ -418,7 +433,7 @@
         '': [''],
         @foreach(App\ TermTaxonomy::where('taxonomy', 'car-manufacturer')->get() as $taxonomy)
         '{{ $taxonomy->term->name}}': [
-            @foreach($taxonomy-> children as $model)
+            @foreach($taxonomy-> children->sortBy('term.name') as $model)
             '{{ $model->term->name }}',
             @endforeach
         ],
@@ -487,22 +502,31 @@
         @endif
     });
 
+    function showError(id, validated) {
+        $('#' + id).addClass('is-invalid');
+        $('#' + id + 'Alert').css('display', 'block');
+        if (validated) {
+            scrollTo(id);
+        }
+
+        return false;
+    }
+
     function step1Submit(__callback) {
         let validated = true;
         $('#form-1 input[required], #form-1 select[required]').each(function() {
             if ($(this).val() == "") {
                 let id = $(this).attr('id');
                 if (id) {
-                    $('#' + id).addClass('is-invalid');
-                    $('#' + id + 'Alert').css('display', 'block');
-                    if (validated) {
-                        scrollTo(id);
-                    }
-
-                    validated = false;
+                    validated = showError(id, validated);
                 }
             }
         });
+        // Custom validation
+        var val = $("#form-1 #manufacturerSelect").val();
+        if (val == "" || val == "Үйлдвэрлэгч") {
+            validated = showError("manufacturerSelect", validated);
+        }
         if (validated) {
             step1SubmitAjax(__callback);
         } else {

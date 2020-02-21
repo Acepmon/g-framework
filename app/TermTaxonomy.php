@@ -29,6 +29,6 @@ class TermTaxonomy extends Model
 
     public function contents()
     {
-        return $this->belongsToMany('App\Content', 'term_relationship', 'term_taxonomy_id', 'content_id');
+        return $this->belongsToMany('App\Content', 'term_relationships', 'term_taxonomy_id', 'content_id');
     }
 }

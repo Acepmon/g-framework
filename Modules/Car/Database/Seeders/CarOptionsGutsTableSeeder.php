@@ -26,10 +26,10 @@ class CarOptionsGutsTableSeeder extends Seeder
             'Залуурын удирдлага' => ['metaKey' => 'optionGutsPowerSteering'], 
             'Автомат жолоодлого' => ['metaKey' => 'optionGutsSteerRemoteControl']];
 
-        $parent = TaxonomyManager::register('Guts', 'car-options');
+        $parent = TaxonomyManager::findTerm('Дотор байдал');
 
         foreach ($guts as $gut => $metas) {
-            TaxonomyManager::register($gut, 'car-guts', $parent->term->id, $metas);
+            TaxonomyManager::register($gut, 'car-guts', $parent->id, $metas);
         }
 
         TaxonomyManager::updateTaxonomyChildrenSlugs($parent->id);

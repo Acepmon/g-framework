@@ -39,6 +39,6 @@ class Config extends Model
 
     public static function getStorage()
     {
-        return config('content.storage.host') . ':' . config('content.storage.port') . '/';
+        return config('content.storage.host') . ':' . config('content.storage.port');// . '/';
     }
 }

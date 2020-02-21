@@ -9,7 +9,7 @@
             </h5>
         </div>
         <div class="input-group col-md-7">
-            <input type="number" name="priceAmount" class="form-control" id="reserve-price" required placeholder="0.00"  value="{{ $car->metaValue('priceAmount')?doubleval($car->metaValue('priceAmount')) / 1000000:'' }}">
+            <input type="text" name="priceAmount" class="form-control" id="reserve-price" required placeholder="0.00"  value="{{ $car->metaValue('priceAmount')?doubleval($car->metaValue('priceAmount')) / 1000000:'' }}">
             <input type="text" hidden name="priceUnit" class="form-control" value="₮">
             <div class="input-group-prepend">
                 <div class="input-group-text-right">Сая ₮</div>
@@ -51,6 +51,10 @@
     </div>
 </form>
 <script>
+    $(document).ready(function() {
+        $("#reserve-price").inputmask('decimal', {groupSeparator: ',', 'autoGroup': true, 'removeMaskOnSubmit': true});
+    });
+
     function step3Submit(__callback) {
         let validated = true;
         $('#step-3-price input[required]').each(function() {

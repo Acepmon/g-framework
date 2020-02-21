@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Menu;
+use App\Term;
 
 class CarMenusTableSeeder extends Seeder
 {
@@ -43,9 +44,10 @@ class CarMenusTableSeeder extends Seeder
             ['Аугцион', '/coming-soon', '', 'Car'],
             ['Авъя', '/wishlist', '', 'Car']
         ]];
+        $doctorVerified = Term::where('slug', 'batalgaazhsan')->first();
         $carTopbarMenus = ['Car Topbar', '', '', 'Car', [
             ['Бидний тухай', '/about-introduction', '', 'Car'],
-            ['Үзлэгт орсон', '/search?car-doctor-verified=1', '', 'Car'],
+            ['Үзлэгт орсон', '/buy?car-doctor-verified='.$doctorVerified->id, '', 'Car'],
             ['+Хүсэлт оруулах', '/wishlist', '', 'Car'],
             ['Төлбөртэй зарын заавар', '/manual', '', 'Car']
         ]];

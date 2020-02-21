@@ -6,7 +6,7 @@
             <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/corona.svg') }}" alt=""></div>
             @endif
             @if(getMetasValue($car->metas, 'doctorVerified')==1)
-            <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor.png') }}" alt=""></div>
+            <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
             @endif
             @if(isset($type) && $type == 'auction' && $car->metaValue('isAuction'))
             <div class="maz-auction-time">
@@ -20,15 +20,22 @@
             <div class="card-caption">
                 <a href="{{ $car->slug }}" target="_blank">
                     <div class="card-title">{{ (strlen($car->title) > 40)?substr($car->title, 0, 37) . '...':$car->title }}</div>
-                    <div class="meta">{{ $car->metaValue('buildYear') }}/{{ $car->metaValue('importDate') }} | {{ $car->metaValue('mileageAmount') }} {{ $car->metaValue('mileageUnit') }}</div>
+                    <div class="meta">{{ $car->metaValue('buildYear') }}/{{ $car->metaValue('importDate') }} | {{ number_format($car->metaValue('mileageAmount')) }} {{ $car->metaValue('mileageUnit') }}</div>
                     <div class="price">{{ numerizePrice($car->metaValue('priceAmount')) }} {{ $car->metaValue('priceUnit') }}</div>
                 </a>
-                @if(Auth::user() && $car->author_id == Auth::user()->id)
+
+                @if(isset($type) && $type=='my-page')
+                    @if(\App\PaymentTransaction::where('content_id', $car->id)->count() > 0)
+                    <div class="is-premium font-weight-normal text-danger">Шалгагдаж байна</div>
+                    @else
+                    <button class="btn btn-warning btn-round shadow-soft-blue btn-icon-left px-3 btn-sm mr-5 mt-2" data-toggle="modal" onclick="transferId({{$onSale->id}})" data-target="#premiumAd" href="#"> Make premium ad</button>
+                    @endif
+                @elseif(Auth::user() && $car->author_id == Auth::user()->id)
                 <div class="favorite">
                     <span class=""><i class="fas fa-car"></i> Энэ таны машин</span>
                 </div>
                 @else
-                    @if(Auth::user() && count(metaHas(Auth::user(), 'interestedCars', $car->id)->get()) > 0)
+                    @if(Auth::check() && Auth::user()->hasMeta('interestedCars', $car->id))
                     <div class="favorite" onclick="addToInterest(event, {{$car->id}})">
                         <span class="text-danger"><i class="fas fa-heart"></i> Жагсаалтанд нэмэгдсэн</span>
                     </div>
@@ -44,7 +51,7 @@
                 <span class="info-icon">
                     <img src="{{ asset('car-web/img/icons/engine.svg') }}" alt="">
                     @if((getMetasValue($car->metas, 'doctorVerified'))===1)
-                    <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor.png') }}" alt=""></div>
+                    <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
                     @endIf
                     <p>{{ ucfirst($car->metaValue('capacityAmount')) . ' ' . strtoupper($car->metaValue('capacityUnit')) }}</p>
                 </span>
@@ -79,11 +86,20 @@
                 </span>
                 @endif
 
+                @if(isset($type) && $type=='my-page')
+                <div class="sell-action">
+                    <div onclick="window.open('/edit?id={{$car->id}}');">Засах</div>
+                    <div data-toggle="modal" data-target="#deteleCont" onclick="contsId({{$car->id}})">Устгах</div>
+                    <div data-toggle="modal" data-target="#markCont" onclick="contsId({{$car->id}})">Зарагдсан</div>
+                    <div data-toggle="modal" data-target="#publishCont" onclick="contsId({{$car->id}})">Идэвхгүй</div>
+                </div>
+                @else
                 <div class="advantage-slider owl-carousel owl-theme">
                     @foreach($car->metas->where('key', 'advantages') as $advantage)
-                    <a class="advantage-item" onclick="formSubmit('advantage', '{{$advantage->value}}')">{{ $advantage->value }}</a>
+                    <a class="advantage-item" onclick="addAdvantage('{{$advantage->value}}')">{{ $advantage->value }}</a>
                     @endforeach
                 </div>
+                @endif
             </div>
         </div>
     </div>

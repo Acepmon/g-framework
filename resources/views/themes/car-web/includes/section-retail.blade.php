@@ -8,7 +8,7 @@
                 <div class="col-md-12">
                     <div class="detail-section-title">
                         <p>
-                            Ретайл дэлгүүр
+                            Диллерийн мэдээлэл
                         </p>
                     </div>
                 </div>

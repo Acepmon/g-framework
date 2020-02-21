@@ -87,13 +87,24 @@ class Content extends Model
         return $this->hasOne('App\User', 'id', 'author_id');
     }
 
-    public function medias()
+    public function medias($addPath = True)
     {
-        $medias = $this->metas->where('key', 'medias');
+        $medias = array();
+        $thumbnail = $this->metas->where('key', 'thumbnail')->first();
+        if ($thumbnail) {
+            array_push($medias, $thumbnail->value);
+        }
+        for ($i=2; $i<=15; $i++) {
+            $media = $this->metas->where('key', 'image'.$i)->first();
+            if ($media) {
+                array_push($medias, $media->value);
+            }
+        }
+        // $medias = $this->metas->where('key', 'medias');
         $media_path = array();
         foreach($medias as &$media) {
-            $imagepath = $media->value;
-            if (!\Str::startsWith($imagepath, 'http')) {
+            $imagepath = $media;//->value;
+            if ($addPath && !\Str::startsWith($imagepath, 'http')) {
                 $imagepath = Config::getStorage() . $imagepath;
             }
             array_push($media_path, $imagepath);
@@ -104,6 +115,24 @@ class Content extends Model
             // array_push($media_path, Storage::disk('local')->url($imagepath));
         }
         return $media_path;
+    }
+
+    public function youtubeLink()
+    {
+        try{
+            $link = $this->metaValue('link');
+            // Code is taken from https://stackoverflow.com/questions/9973520/getting-youtube-video-id-the-php
+            $video_id = explode("?v=", $link); // For videos like http://www.youtube.com/watch?v=...
+            if (empty($video_id[1]))
+                $video_id = explode("/v/", $link); // For videos like http://www.youtube.com/watch/v/..
+            
+            $video_id = explode("&", $video_id[1]); // Deleting any other params
+            $video_id = $video_id[0];
+            return $video_id;
+        } catch (\ErrorException $ex) {
+            // Undefined offset error
+        }
+        return null;
     }
 
     public function currentView()
@@ -246,6 +275,7 @@ class Content extends Model
     public function metasTransform() {
         $arr = [];
         foreach ($this->metas->groupBy('key')->toArray() as $key => $metaValues) {
+
             if (count($metaValues) > 1 || in_array($key, self::META_ARRAY)) {
                 $arr[$key] = array_map(function ($meta) {
                     return $this->isJson($meta['value']) ? json_decode($meta['value']) : $meta['value'];
@@ -254,6 +284,7 @@ class Content extends Model
                 $arr[$key] = $this->isJson($metaValues[0]['value']) ? json_decode($metaValues[0]['value']) : $metaValues[0]['value'];
             }
         }
+        $arr['medias'] = $this->medias(False);
         return $arr;
     }
 
@@ -285,6 +316,12 @@ class Content extends Model
             $author->setMetaValue('cash', $cash);
             $this->status = self::STATUS_PUBLISHED;
             $this->visibility = self::VISIBILITY_PUBLIC;
+            $this->order = 1;
+            if ($publishType == 'best_premium') {
+                $this->order = 3;
+            } else if ($publishType == 'premium') {
+                $this->order = 2;
+            }
             $this->save();
             return true;
         }

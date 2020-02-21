@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 
+use App\Entities\ContentManager;
 use Modules\Payment\Entities\PaymentMethod;
 use Modules\Payment\Entities\Transaction;
 
@@ -98,7 +99,8 @@ class TransactionController extends Controller
             // If content is supplied, make that premium
             if ($transaction->content()) {
                 $content = $transaction->content;
-                $result = $content->publishPremium();
+                $result = ContentManager::publishPremium($content);
+                // $result = $content->publishPremium();
                 if ($result) {
                     $content->setMetaValue('publishVerified', True);
                     $content->setMetaValue('publishVerifiedBy', Auth::user()->id);

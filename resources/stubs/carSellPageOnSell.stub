@@ -19,79 +19,51 @@
     </div>
     <div class="card page-top-navbar border-0 mt-3 bg-transparent">
         <div class="d-flex justify-content-start">
-            @contentInline(type=car, author_id=Auth::user()->id, isSold not 1, sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $onSales | paginate)
+            @contentInline(type=car, author_id=Auth::user()->id, status!=sold, sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $onSales | paginate)
             <span class="total-cars ml-0" >НИЙТ {{ count($onSales) }}</span>
             <div class="sort-cars col-md-9">
                 <ul>
-                    <li class="{{ request('sort')=='updated_at' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'updated_at', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
+                    <li class="{{ request('sort', 'publishedAt')=='publishedAt' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'publishedAt', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
                     <li class="{{ request('sort')=='priceAmount' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'asc')">Хямд үнэ</a></li>
                 </ul>
             </div>
         </div>
         <form method="GET" id="mainForm" action="/sell-page-on-sell">
             <div class="col-md-12 text-center">
-                <input hidden id="sortBy" name="sort">
-                <input hidden id="sortDir" name="sortDir">
+                <input hidden id="page" name="page" value="{{ request('page', 1) }}">
+                <input hidden id="sortBy" name="sort" value="{{ request('sort', 'publishedAt') }}">
+                <input hidden id="sortDir" name="sortDir" value="{{ request('sortDir', 'desc') }}">
             </div>
         </form>
     </div>
     <div class="car-list sell-car">
-        {{--@content(type=car, author_id=Auth::user()->id, isSold=0, publishType=best_premium as $onSale | paginate)--}}
-
-        {{--@content(type=car, author_id=Auth::user()->id, isSold=0,  as $onSales | paginate)--}}
         @foreach($onSales as $onSale)
-        <div class="card">
-            <div class="card-body">
-                <div class="card-img">
-                    <img src="{{$onSale->metaValue("thumbnail")}}" class="img-fluid" alt="alt" />
-                </div>
-                <div class="card-description">
-                    <div class="card-caption">
-                        <a href="{{ $onSale->slug }}" target="_blank">
-                            <div class="card-title">{{ (strlen($onSale->title) > 40)?substr($onSale->title, 0, 37) . '...':$onSale->title }}</div>
-                            <div class="meta">{{ $onSale->metaValue('buildYear') }}/{{ $onSale->metaValue('importDate') }} | {{ $onSale->metaValue('mileage') }}km</div>
-                            <div class="price">{{ numerizePrice($onSale->metaValue('priceAmount')) }} {{ $onSale->metaValue('priceUnit') }}</div>
-                        </a>
-                        @if($onSale->metaValue('isAuction')==1)
-                        <div id="countdown" class="countdown"  data-countdown="{{ $onSale->metaValue('endsAt') }}"></div>
-                        @endif
-                        <button class="btn btn-warning btn-round shadow-soft-blue btn-icon-left px-3 btn-sm mr-5 mt-2" data-toggle="modal" onclick="transferId({{$onSale->id}})" data-target="#premiumAd" href="#"> Make premium ad</button>
-                    </div>
-                    <div class="info">
-                      <span class="info-icon">
-                        <img src="{{asset('car-web/img/icons/engine.svg')}}" alt="">
-                        <p>{{$onSale->metaValue("capacityAmount")}}{{$onSale->metaValue("capacityUnit")}}</p>
-                      </span>
-                        <span class="info-icon">
-                        <img src="{{asset('car-web/img/icons/wheel.svg')}}" alt="">
-                        <p>{{$onSale->metaValue("wheelPosition")}}</p>
-                      </span>
-                        <span class="info-icon">
-                        <img src="{{asset('car-web/img/icons/gearShift.svg')}}" alt="">
-                        <p>{{$onSale->metaValue("transmission")}}</p>
-                      </span>
-                        <span class="info-icon">
-                        <img src="{{asset('car-web/img/icons/fuel.svg')}}" alt="">
-                        <p>{{$onSale->metaValue("fuelType")}}</p>
-                      </span>
-                        <span class="info-icon">
-                        <img src="{{asset('car-web/img/icons/transmision.svg')}}" alt="">
-                        <p>{{$onSale->metaValue("chassis")}}</p>
-                      </span>
-                        <span class="info-icon color" data-color="{{ strtolower($onSale->metaValue('colorName')) }}">
-                        <p>{{$onSale->metaValue("colorName")}}</p>
-                      </span>
-                        <div class="sell-action">
-                            <div onclick="window.open('/edit?id={{$onSale->id}}');">Засах</div>
-                            <div data-toggle="modal" data-target="#deteleCont" onclick="contsId({{$onSale->id}})">Устгах</div>
-                            <div data-toggle="modal" data-target="#markCont" onclick="contsId({{$onSale->id}})">Зарагдсан</div>
-                            <div data-toggle="modal" data-target="#publishCont" onclick="contsId({{$onSale->id}})">Идэвхгүй</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('themes.car-web.includes.car-list-card', array('car'=>$onSale, 'type'=>'my-page'))
         @endforeach
+
+        <!-- Pagination -->
+        @php
+        $page = request("page", 1);
+        @endphp
+        <nav aria-label="Page navigation">
+            <input type="hidden" value="{{ $page }}" name="page" id="page" />
+            <ul class="pagination d-flex justify-content-end mt-2">
+                <li class="page-item {{ ($page <= 1)?'disabled':'' }}">
+                    <button class="page-link" onclick="formSubmit('page', {{$page-1}})" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </button>
+                </li>
+                @for($i = 1; $i <= $onSales->lastPage(); $i++)
+                <li class="page-item {{ ($i == $page)?'active':'' }}"><button class="page-link" onclick="formSubmit('page', {{$i}})">{{ $i }}</button></li>
+                @endfor
+                <li class="page-item {{ ($page >= $onSales->lastPage())?'disabled':'' }}">
+                    <button class="page-link" onclick="formSubmit('page', {{$page+1}})" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+        <!-- Pagination end -->
     </div>
 </div>
 
@@ -237,7 +209,7 @@
         if (value != 'no-value') {
             document.getElementById(id).value = value;
         }
-        if (sortDir != 'no-value'){
+        if (sortDir != null && sortDir != 'no-value'){
             document.getElementById(sortDir).value = sortDirValue;
         }
         $('#mainForm').submit();
@@ -292,8 +264,8 @@
         console.log(contId)
         $.ajax({
             type: 'PUT',
-            url: '/ajax/contents/' + contId + '/metas/sync',
-            data: {"isSold":"1"}
+            url: '/ajax/contents/' + contId,
+            data: {"status":"sold"}
         }).done(function(data) {
             $("#demo-spinner").css({'display': 'none'});
             console.log("DONE!");

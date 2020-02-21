@@ -4,7 +4,7 @@
             <div class="section-title text-light">
                 <h2>Аугцион машинууд</h2>
                 <span>
-            <a href="/auction">Бүгдийг харах ( @contentsTotal({"filter":[{"field":"type", "key":"car"}, {"field":"status", "key":"published"}, {"field":"visibility", "key":"public"}], "metasFilter": [{"key": "isAuction", "value": 1}] }) ) <i class="fab fa fa-angle-right"></i></a>
+            <a href="/coming-soon">Бүгдийг харах <!--( @contentsTotal({"filter":[{"field":"type", "key":"car"}, {"field":"status", "key":"published"}, {"field":"visibility", "key":"public"}], "metasFilter": [{"key": "isAuction", "value": 1}] }) )--> <i class="fab fa fa-angle-right"></i></a>
           </span>
             </div>
         </div>
@@ -35,7 +35,7 @@
                             <div class="card cd-box auction-car">
                                 <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt=""></div>
                                 @if(getMetasValue($auctionPrmCars->metas, 'doctorVerified')==1)
-                                <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor.png') }}" alt=""></div>
+                                <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
                                 @endif
                                 <div class="card-img">
                                     <img src="{{(getMetasValue($auctionPrmCars->metas, 'thumbnail'))}}" class="img-fluid" alt="alt">

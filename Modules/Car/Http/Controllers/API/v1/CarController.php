@@ -79,6 +79,22 @@ class CarController extends Controller
 
         $data = ContentManager::discernMetasFromRequest($request->input());
         ContentManager::syncMetas($content_id, $data);
+        // Custom validation
+        $priceAmount = $request->input('priceAmount', 0);
+        if ($priceAmount) {
+            ContentManager::updateMeta($content_id, 'priceAmount', $priceAmount, $priceAmount * 1000000);
+        }
+        if ($request->input('markName')) {
+            $content = Content::findOrFail($content_id);
+            $title = $request->input('markName');
+            if ($request->input('modelName')) {
+                $title = $title . ' ' . $request->input('modelName');
+            }
+
+            $content->title = $title;
+            $content->slug = 'posts/' . $content->id;
+            $content->save();
+        }
 
         return response()->json($data);
     }
@@ -87,14 +103,21 @@ class CarController extends Controller
         $content_id = $request->route('car');
 
         $media_list = MediaManager::uploadFiles($request->medias);//$request->getContent());
+        $metas = array();
         if (count($media_list) > 0) {
-            $media_list = ['medias' => $media_list, 'thumbnail' => $media_list[0]];
+            foreach ($media_list as $key => $media) {
+                if ($key == 0) {
+                    $metas['thumbnail'] = $media;
+                } else {
+                    $metas['image' . ($key+1)] = $media;
+                }
+            }
         } else {
-            $media_list = ['medias' => $media_list];
+            $metas = ['medias' => $media_list];
         }
-        ContentManager::attachMetas($content_id, $media_list);
+        ContentManager::attachMetas($content_id, $metas);
 
-        return response()->json($media_list);
+        return response()->json($metas);
     }
 
     public function attachDoc(Request $request) {

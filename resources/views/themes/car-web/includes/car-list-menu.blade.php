@@ -1,9 +1,11 @@
 @php
 $categorySlug = [
-'car-type', 'car-manufacturer', 'car-year', 'car-distance-driven', 'car-price', 'car-colors', 'car-fuel', 'car-transmission', 'car-options', 'car-mancount', 'car-wheel-pos', 'provinces', 'car-seller', 'car-doctor-verified'
+'car-type', 'car-manufacturer', 'car-build-year','car-import-year', 'car-distance-driven', 'car-price', 'car-colors', 'car-fuel', 'car-transmission',
+'car-options', 'car-mancount', 'car-wheel-pos', 'provinces', 'car-seller', 'car-doctor-verified'
 ];
 $categoryName = [
-'Төрөл', 'Үйлдвэрлэгч/Модел', 'Жил', 'Явсан КМ', 'Үнэ', 'Өнгө', 'Шатахуун', 'Араа', 'Option', 'Зорчигч', 'Жолоо', 'Байршил', 'Борлуулагч', 'Doctor баталгаажсан'
+'Төрөл', 'Үйлдвэрлэгч/Модел', 'Үйлдвэрлэсэн он', 'Орж ирсэн он', 'Явсан КМ', 'Үнэ', 'Өнгө', 'Шатахуун', 'Араа',
+'Option', 'Зорчигч', 'Жолоо', 'Байршил', 'Борлуулагч', 'Doctor баталгаажсан'
 ];
 @endphp
 
@@ -23,7 +25,7 @@ $categoryName = [
         <div class="card-body bg-light grid-radio gr-3">
             @foreach(App\TermTaxonomy::where('taxonomy', $category)->get() as $taxonomy)
             <div class="cd-radio">
-            <input type="radio" id="{{ $taxonomy->term->metaValue('value') }}" name="{{ $category }}" class="custom-control-input" value="{{ $taxonomy->term->name }}" {{ ($taxonomy->term->name == $request['carType'])?'checked':''}}>
+            <input type="radio" id="{{ $taxonomy->term->metaValue('value') }}" name="{{ $category }}" class="custom-control-input" value="{{ $taxonomy->term->id }}" >
             <label class="custom-control-label " for="{{ $taxonomy->term->metaValue('value') }}">
                 <img src="{{ asset('car-web/img/icons/'.strtolower($taxonomy->term->metaValue('value')).'.svg') }}">
                 <span>{{ $taxonomy->term->name }}</span>
@@ -32,22 +34,22 @@ $categoryName = [
             @endforeach
         </div>
         <div class="card-body bg-light grid-radio pt-0 pb-0">
-            <select id="truck-choice" class="form-control mb-3 type-choice" name="truck-size" onchange="formSubmit('carSubType','no-value')" @if($request['carType']!='Хүнд ММ') style="display: none" @endif>
+            <select id="truck-choice" class="form-control mb-3 type-choice" name="truck-size" onchange="formSubmit('carSubType','no-value')" style="display: none">
             <option value="">Хэмжээ сонгох</option>
             @foreach(App\TermTaxonomy::where('taxonomy', 'truck-size')->get() as $taxonomy)
-            <option value="{{$taxonomy->term->id}}" {{ ($request['carSubType']==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
+            <option value="{{$taxonomy->term->id}}" {{ (request('carSubType')==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
             @endforeach
             </select>
-            <select id="bus-choice" class="form-control mb-3 type-choice" name="bus-size" onchange="formSubmit('carSubType','no-value')" @if($request['carType']!='Автобус') style="display: none" @endif>
+            <select id="bus-choice" class="form-control mb-3 type-choice" name="bus-size" onchange="formSubmit('carSubType','no-value')"  style="display: none">
             <option value="">Хэмжээ сонгох</option>
             @foreach(App\TermTaxonomy::where('taxonomy', 'bus-sizes')->get() as $taxonomy)
-            <option value="{{$taxonomy->term->id}}" {{ ($request['carSubType']==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
+            <option value="{{$taxonomy->term->id}}" {{ (request('carSubType')==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
             @endforeach
             </select>
-            <select id="special-choice" class="form-control mb-3 type-choice" name="special" onchange="formSubmit('carSubType','no-value')" @if($request['carType']!='Тусгай ММ') style="display: none" @endif>
+            <select id="special-choice" class="form-control mb-3 type-choice" name="special" onchange="formSubmit('carSubType','no-value')"  style="display: none">
             <option value="">Төрөл сонгох</option>
             @foreach(App\TermTaxonomy::where('taxonomy', 'special')->get() as $taxonomy)
-            <option value="{{$taxonomy->term->id}}" {{ ($request['carSubType']==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
+            <option value="{{$taxonomy->term->id}}" {{ (request('carSubType')==$taxonomy->term->id)?'selected':'' }}>{{ $taxonomy->term->name }}</option>
             @endforeach
             </select>
         </div>
@@ -56,46 +58,51 @@ $categoryName = [
         <div id="{{ $category }}" class="collapse {{ request($category, False)?'show':'' }}" aria-labelledby="{{ $category }}">
         <div id="manufacturerBody" class="card-body bg-light">
             <div class="manufacturer">
-                @foreach(App\Entities\TaxonomyManager::getManufacturers('normal') as $taxonomy)
-                <div class="custom-control custom-radio">
-                    <!-- <a href="/car-list?{{ $category . '=' . $taxonomy->term->name }}" class="text-body text-decoration-none"> -->
-                    <input type="radio" id="{{$taxonomy->term->id}}" name="{{ $category }}" class="custom-control-input car-manufacturer" value="{{ $taxonomy->term->id }}" placeholder="{{$taxonomy->term->name}}" {{ ($taxonomy->term->id == request($category, Null))?'checked':'' }}>
-                    <label class="custom-control-label  d-flex justify-content-between" for="{{$taxonomy->term->id}}">{{ $taxonomy->term->name }}
-                    </label>
-                </div>
-                @endforeach
+                <input type="hidden" name="car-manufacturer" value="{{request('car-manufacturer', Null)}}"/>
+                <input type="hidden" name="car-model" value="{{request('car-model', Null)}}"/>
             </div>
-            @if(request('car-model', Null))
-            <div class="models" name="{{ request('car-manufacturer', 'no-id') }}" style="display: none">
-                <div class="models-back" style="cursor:pointer"><i class="fab fa fa-angle-left"></i> буцах</div> 
-                @foreach(App\TermTaxonomy::where('parent_id', request('car-manufacturer', Null))->where('count', '!=', 0)->get() as $taxonomy)
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="{{$taxonomy->term->name}}" name="car-model" class="custom-control-input" value="{{ $taxonomy->term->id }}" {{ ($taxonomy->term->id == request('car-model', Null))?'checked':'' }}>
-                    <label class="custom-control-label  d-flex justify-content-between" for="{{$taxonomy->term->name}}">{{ $taxonomy->term->name }}
-                    </label>
-                </div>
-                @endforeach
-            </div>
-            @endif
         </div>
         </div>
-        @elseif($category == 'car-year')
-        <div id="{{ $category }}" class="collapse {{ request('buildYear', False)?'show':'' }}" aria-labelledby="{{ $category }}">
+        @elseif($category == 'car-build-year')
+        <div id="{{ $category }}" class="collapse" aria-labelledby="{{ $category }}">
         <div class="card-body bg-light grid-radio">
             <div class="form-row">
             <div class="col-md-6">
-                <select id="min-year" class="form-control" name="buildYear" onchange="formSubmit('buildYear','no-value')">
-                <option value="">Үйлдвэрлэсэн Он</option>
+                <select id="minBuildYear" class="form-control" name="minBuildYear" onchange="minChoose('BuildYear','no-value')">
+                <option value="">Доод</option>
                 @for($i=date('Y'); $i>=1990; $i--)
-                <option value="{{ $i }}" {{ $request['buildYear']==$i?'selected':'' }}>{{ $i }}</option>
+                <option value="{{ $i }}" {{ request('buildYear', null)==$i?'selected':'' }}>{{ $i }}</option>
                 @endfor
                 </select>
             </div>
             <div class="col-md-6">
-                <select id="max-year" class="form-control" name="importDate" onchange="formSubmit('importDate','no-value')">
-                <option value="">Орж ирсэн он</option>
-                @for($i=date('Y'); $i>=($request['buildYear']?$request['buildYear']:1990); $i--)
-                <option value="{{ $i }}" {{ $request['importDate']==$i?'selected':'' }}>{{ $i }}</option>
+                <select id="maxBuildYear" class="form-control" name="maxBuildYear" onchange="formSubmit('maxBuildYear','no-value')">
+                <option value="">Дээд</option>
+                @for($i=date('Y'); $i>=request('minBuildYear', 1990); $i--)
+                <option value="{{ $i }}" {{ request('buildYear', null)==$i?'selected':'' }}>{{ $i }}</option>
+                @endfor
+                </select>
+            </div>
+            </div>
+        </div>
+        </div>
+        @elseif($category == 'car-import-year')
+        <div id="{{ $category }}" class="collapse" aria-labelledby="{{ $category }}">
+        <div class="card-body bg-light grid-radio">
+            <div class="form-row">
+            <div class="col-md-6">
+                <select id="minImportDate" class="form-control" name="minImportDate" onchange="minChoose('ImportDate','no-value')">
+                <option value="">Доод</option>
+                @for($i=date('Y'); $i>=1990; $i--)
+                <option value="{{ $i }}" {{ request('importDate', null)==$i?'selected':'' }}>{{ $i }}</option>
+                @endfor
+                </select>
+            </div>
+            <div class="col-md-6">
+                <select id="maxImportDate" class="form-control" name="maxImportDate" onchange="formSubmit('maxImportDate','no-value')">
+                <option value="">Дээд</option>
+                @for($i=date('Y'); $i>=request('minImportDate', 1990); $i--)
+                <option value="{{ $i }}" {{ request('importDate', null)==$i?'selected':'' }}>{{ $i }}</option>
                 @endfor
                 </select>
             </div>
@@ -103,22 +110,22 @@ $categoryName = [
         </div>
         </div>
         @elseif($category == 'car-distance-driven')
-        <div id="{{ $category }}" class="collapse {{ request('min_mileageAmount', False)?'show':'' }}" aria-labelledby="{{ $category }}">
+        <div id="{{ $category }}" class="collapse {{ request('minMileageAmount', False)?'show':'' }}" aria-labelledby="{{ $category }}">
         <div class="card-body bg-light grid-radio">
             <div class="form-row">
                 <div class="col-md-6">
-                    <select id="min_mileageAmount" class="form-control" name="min_mileageAmount" onchange="formSubmit('min_mileageAmount','no-value')">
+                    <select id="minMileageAmount" class="form-control" name="minMileageAmount" onchange="minChoose('MileageAmount','no-value')">
                         <option value="">Эхлэх</option>
-                        @for($i=0; $i < 800000; $i+=10000)
-                        <option value="{{$i}}" {{ $request['min_mileageAmount']==$i ? 'selected':'' }}>{{number_format($i)}} km</option>
+                        @for($i=0; $i <= 800000; $i+=10000)
+                        <option value="{{$i}}" {{ request('minMileageAmount', -1)==$i? 'selected':'' }}>{{number_format($i)}} km</option>
                         @endfor
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <select id="max_mileageAmount" class="form-control" name="max_mileageAmount" onchange="formSubmit('max_mileageAmount','no-value')">
+                    <select id="maxMileageAmount" class="form-control" name="maxMileageAmount" onchange="formSubmit('maxMileageAmount','no-value')">
                         <option value="">Дуусах</option>
-                        @for($i=0; $i < 800000; $i+=10000)
-                        <option value="{{$i}}" {{ $request['max_mileageAmount']==$i ? 'selected':'' }}>{{number_format($i)}} km</option>
+                        @for($i=0; $i <= 800000; $i+=10000)
+                        <option value="{{$i}}" {{ request('maxMileageAmount', -1)==$i? 'selected':'' }}>{{number_format($i)}} km</option>
                         @endfor
                     </select>
                 </div>
@@ -126,22 +133,22 @@ $categoryName = [
         </div>
         </div>
         @elseif($category == 'car-price')
-        <div id="{{ $category }}" class="collapse {{ (request('min_price', False) || request('max_price'))?'show':'' }}" aria-labelledby="{{ $category }}">
+        <div id="{{ $category }}" class="collapse {{ (request('minPriceAmount', False) || request('max_price'))?'show':'' }}" aria-labelledby="{{ $category }}">
         <div class="card-body bg-light grid-radio">
             <div class="form-row">
             <div class="col-md-6">
-                <select id="min_price" class="form-control" name="min_price" onchange="formSubmit('min_price','no-value')">
-                <option value="">доод</option>
+                <select id="minPriceAmount" class="form-control" name="minPriceAmount" onchange="minChoose('PriceAmount','no-value')">
+                <option value="{{ request('minPriceAmount') }}">Доод</option>
                 @for($i=1000000; $i<=500000000; $i+=1000000)
-                <option value="{{ $i }}" {{ $request['minPrice']==$i?'selected':'' }}>{{ numerizePrice($i) }}</option>
+                <option value="{{ $i }}">{{ numerizePrice($i) }}</option>
                 @endfor
                 </select>
             </div>
             <div class="col-md-6">
-                <select id="max_price" class="form-control" name="max_price" onchange="formSubmit('max_price','no-value')">
-                <option value="">дээд</option>
-                @for($i=$request['minPrice']?$request['minPrice']:1000000; $i<=500000000; $i+=1000000)
-                <option value="{{ $i }}" {{ $request['maxPrice']==$i?'selected':'' }}>{{ numerizePrice($i) }}</option>
+                <select id="maxPriceAmount" class="form-control" name="maxPriceAmount" onchange="formSubmit('maxPriceAmount','no-value')">
+                <option value="{{ request('maxPriceAmount') }}">Дээд</option>
+                @for($i=request('minPriceAmount', Null)?request('minPriceAmount', Null):1000000; $i<=500000000; $i+=1000000)
+                <option value="{{ $i }}">{{ numerizePrice($i) }}</option>
                 @endfor
                 </select>
             </div>
@@ -152,207 +159,155 @@ $categoryName = [
         <div id="{{ $category }}" class="collapse {{ request($category, False)?'show':'' }}" aria-labelledby="{{ $category }}">
         <div class="card-body bg-light" style="overflow: auto; height: auto">
             @foreach(App\TermTaxonomy::where('taxonomy', $category)->get() as $taxonomy_parent)
+            <h6>{{$taxonomy_parent->term->name}}</h6>
             @foreach($taxonomy_parent->children as $taxonomy)
                 <div class="custom-control custom-radio">
-                <input type="checkbox" id="{{ $taxonomy->term->name }}" name="{{ $category }}[]" class="custom-control-input" value="{{ $taxonomy->term->metaValue('metaKey') }}" {{ in_array($taxonomy->term->metaValue('metaKey'), request($category, []))?'checked':'' }}>
+                <input type="checkbox" id="{{ $taxonomy->term->name }}" name="{{ $taxonomy->taxonomy }}[]" class="custom-control-input" value="{{ $taxonomy->term->id }}" {{ in_array($taxonomy->term->metaValue('metaKey'), request($category, []))?'checked':'' }}>
                 <label class="custom-control-label  d-flex justify-content-between" for="{{ $taxonomy->term->name }}">{{ $taxonomy->term->name }}
+                    <div class="text-muted" id="{{$taxonomy->id}}-count" ></div>
                 </label>
                 </div>
             @endforeach
+            <br>
             @endforeach
         </div>
         <div class="apply-filter bg-light text-center p-2 border-top">
             <button class="btn btn-round btn-primary btn-sm px-3 mx-auto" onclick="submitMenu()">Шүүх</button>
         </div>
         </div>
-        @elseif($category == 'car-doctor-verified')
-        <div id="{{ $category }}" class="collapse {{ request('car-doctor-verified', False)?'show':'' }}" aria-labelledby="{{ $category }}">
-        <div class="card-body bg-light grid-radio">
-            <div class="custom-control custom-radio">
-                <input type="radio" id="doctorVerifiedBoth" name="car-doctor-verified" class="custom-control-input" value="0" {{ ($request['doctorVerified'] == 0)?'checked':'' }}>
-                <label class="custom-control-label  d-flex justify-content-between" for="doctorVerifiedBoth">Бүгд
-                </label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="doctorVerified" name="car-doctor-verified" class="custom-control-input" value="1" {{ ($request['doctorVerified'] == 1)?'checked':'' }}>
-                <label class="custom-control-label  d-flex justify-content-between" for="doctorVerified">Баталгаажсан
-                </label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="doctorVerifiedNo" name="car-doctor-verified" class="custom-control-input" value="-1" {{ ($request['doctorVerified'] == -1)?'checked':'' }}>
-                <label class="custom-control-label  d-flex justify-content-between" for="doctorVerifiedNo">Баталгаажаагүй
-                </label>
-            </div>
-        </div>
-        </div>
-        @elseif($category == 'car-seller')
-        <div id="{{ $category }}" class="collapse {{ request('car-seller', False)?'show':'' }}" aria-labelledby="{{ $category }}">
-        <div class="card-body bg-light grid-radio">
-            <div class="custom-control custom-radio">
-                <input type="radio" id="sellBoth" name="car-seller" class="custom-control-input" value="0" {{ ($request['seller'] == '0')?'checked':'' }}>
-                <label class="custom-control-label  d-flex justify-content-between" for="sellBoth">Бүгд
-                </label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="individual" name="car-seller" class="custom-control-input" value="individual" {{ ($request['seller'] === 'individual')?'checked':'' }}>
-                <label class="custom-control-label  d-flex justify-content-between" for="individual">Хувь хүн
-                </label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="dealer" name="car-seller" class="custom-control-input" value="dealer" {{ ($request['seller'] === 'dealer')?'checked':'' }}>
-                <label class="custom-control-label  d-flex justify-content-between" for="dealer">Дилер
-                </label>
-            </div>
-        </div>
-        </div>
         @else
         <div id="{{ $category }}" class="collapse {{ request($category, False)?'show':'' }}" aria-labelledby="{{ $category }}">
         <div class="card-body bg-light">
-            @foreach(App\TermTaxonomy::where('taxonomy', $category)->get() as $taxonomy)
-            <div class="custom-control custom-radio">
-            <!-- <a href="/car-list?{{ $category . '=' . $taxonomy->term->name }}" class="text-body text-decoration-none"> -->
-            <input type="radio" id="{{$taxonomy->term->name}}" name="{{ $category }}" class="custom-control-input" value="{{ $taxonomy->term->id }}" {{ ($taxonomy->term->id == request($category, Null))?'checked':'' }}>
-            <label class="custom-control-label  d-flex justify-content-between" for="{{$taxonomy->term->name}}">{{ ucfirst($taxonomy->term->name) }}
-            </label>
-            </div>
-            @endforeach
+            @include('themes.car-web.includes.car-list-menu-items', [
+                'taxonomies' => App\TermTaxonomy::where('taxonomy', $category)->get(),
+                'name' => $category,
+                'showAll' => ($category == 'car-seller' || $category == 'car-doctor-verified')
+                ])
         </div>
         </div>
         @endif
     </div>
     @endforeach
-
 </div>
-
-@push('modals')
-@include('themes.car-web.includes.loader')
-<!-- <div class="spinner-border" id="demo-spinner" role="status" style="position: fixed; z-index: 1000; top: 50%; left: 50%; display: none">
-  <span class="sr-only">Loading...</span>
-</div> -->
-@endpush
 
 @push('scripts')
 <script>
-$("input[type=radio][name!='car-manufacturer'][name!='car-type']").click(submitMenu);
-// $("input[type=checkbox]").click(submitMenu);
-$("input[type=radio][name!='car-manufacturer'][name!='car-type'], .page-link, .advantage-item, .sort-cars li").click(load);
+$("input[type=radio][name!='car-manufacturer']").click(submitMenu);
+$("input[type=radio][name!='car-manufacturer'], .page-link, .advantage-item, .sort-cars li").click(load);
 
 function load(event) {
     $("#demo-spinner").css('display', 'block');
 }
 
 function submitMenu(event) {
-    event.preventDefault();
-    if (event.target.defaultChecked) {
-      event.target.checked = false;
+    var target = $(event.target)[0];
+    var $prevChecked = $('input[name=' + target.name + ']:not(:checked).checked');
+    $prevChecked.removeClass('checked');
+    if ($(this).hasClass('checked')) {
+        event.target.checked = false;
+        $(this).removeClass('checked');
+    } else {
+        $(this).addClass('checked');
     }
-    $('#mainForm').submit();
+    refilter();
 }
 
 var waiting = 0;
 
 $(document).ready(function() {
-    @if(request('car-model', Null))
-    $("#{{ request('car-manufacturer', 'no-id') }}").trigger('click');
+    callManufacturers('', ()=>{
+        @if(request('car-manufacturer', False))
+        $("#{{ request('car-manufacturer', 0) }}").trigger('click');
+        @endif
+    });
+    @if(request('car-type', False))
+    $("input[name=car-type][value={{ request('car-type', 0) }}]").trigger('click');
     @endif
 });
 
 $("input[name='car-type']").on("click", function() {
     if (waiting == 0) {
-        let val = $(this).val();
-        if (val == "Автобус") {
-            val = "bus";
-        } else if (val == "Хүнд ММ") {
-            val = "truck";
-        } else if (val == "Тусгай ММ") {
-            val = "special";
+        let type = $(this).val();
+        if (type == {{ \App\Term::where('name', 'Автобус')->first()->id }}) {
+            type = "bus";
+        } else if (type == {{ \App\Term::where('name', 'Хүнд ММ')->first()->id }}) {
+            type = "truck";
+        } else if (type == {{ \App\Term::where('name', 'Тусгай ММ')->first()->id }}) {
+            type = "special";
         } else {
-            val = 'normal';
+            type = 'normal';
         }
         $(".type-choice").hide(300);
-        $("#"+val+"-choice").show(300);
+        $("#"+type+"-choice").show(300);
 
         waiting = 1;
         load();
-        $.ajax({
-            type: 'Get',
-            url: '/api/v1/taxonomies/car-manufacturer?type=' + val,
-        }).done(function(data) {
-            $("#demo-spinner").css({'display': 'none'});
-            $(".manufacturer").empty();
-            var modelList=data;
-
-            var html = '';
-            for (var i = 0; i < modelList.data.length; i++) {
-                let termname = modelList.data[i].term.name;
-                let termid = modelList.data[i].term.id;
-                let checked = (termid == '{{ $request['markName'] }}')?'checked':'';
-
-                html = '<div class="custom-control custom-radio">' +
-                    '<input type="radio" id="'+termid+'" name="{{ $category }}" class="custom-control-input car-manufacturer" value="'+termid+'"' +checked+ ' placeholder="'+termname+'">'+
-                    '<label class="custom-control-label  d-flex justify-content-between" for="'+termid+'">'+termname+'</label>';
-                $(".manufacturer").append(html);
-            }
-            switchToManufacturer();
-            //switchToModel(val);
-
-            $("input.car-manufacturer").on("click", onManufacturerSelect);
-            //$("input[type=radio][name=\"car-model\"]").click(submitMenu);
-            //$("input[type=radio][name=\"car-model\"]").click(load);
-            waiting = 0;
-        }).fail(function(err) {
-            $("#demo-spinner").css({'display': 'none'});
-            console.error("FAIL!");
-            console.error(err);
-            waiting = 0;
-        });
+        callManufacturers(type, ()=>{});
     }
 });
+
+function callManufacturers(type, __callback) {
+    var getParams = '&count=True&order=count';
+    @if(request('car-manufacturer', False))
+    getParams += '&car-manufacturer=' + {{ request('car-manufacturer', 0) }};
+    @endif
+    $.ajax({
+        type: 'Get',
+        url: '/ajax/cars/taxonomy/car-manufacturer?type=' + type + getParams
+    }).done(function(data) {
+        $data = $(data);
+        $("#demo-spinner").css({'display': 'none'});
+        $("#manufacturerBody .manufacturer").empty();
+        $("#manufacturerBody .manufacturer").html(data);
+        if (type != '') {
+            $("#car-manufacturer").collapse('show');
+        }
+
+        switchToManufacturer();
+
+        $("input.car-manufacturer").on("click", onManufacturerSelect);
+        //$("input[type=radio][name=\"car-model\"]").click(submitMenu);
+        //$("input[type=radio][name=\"car-model\"]").click(load);
+        waiting = 0;
+        return __callback();
+    }).fail(fail);
+}
 
 $("input.car-manufacturer").on("click", onManufacturerSelect);
 
 function onManufacturerSelect() {
+    var getParams = '?count=False';
+    @if(request('car-model', False))
+    getParams += '&car-model=' + {{ request('car-model', 0) }};
+    @endif
     if (waiting == 0) {
-        // let val = $(this).val();
         let val = $(this).attr("placeholder");
-        console.log(val);
-        let subList = $(".car-filter .models[name=\"" + val + "\"");
+        let name = "car-" + toKebabCase(val) + "-container";
+        let subList = $(".car-filter .models[name=\"" + name + "\"");
 
         if (subList.length) {
-            switchToModel(val);
+            switchToModel(name);
         } else {
             waiting = 1;
             load();
+            var paramObjs = getParamObjs();
             $.ajax({
                 type: 'Get',
-                url: '/api/v1/taxonomies/car-' + toKebabCase(val) + '?count=1',
+                url: '/ajax/cars/taxonomy/car-' + toKebabCase(val) + getParams,
+                // data: paramObjs
             }).done(function(data) {
                 $("#demo-spinner").css({'display': 'none'});
-                var modelList=data;
-                var html = '<div class="models" name="'+val+'"> \
-                <div class="models-back" style="cursor:pointer"><i class="fab fa fa-angle-left"></i> буцах</div> ';
-
-                for (var i = 0; i < modelList.data.length; i++) {
-                    let termname = modelList.data[i].term.name;
-                    let termid = modelList.data[i].term.id;
-                    let checked = (termid == '{{ $request['modelName'] }}')?'checked':'';
-                    html = html + '<div class="custom-control custom-radio"> '+ 
-                        '<input type="radio" id="' + termname + '" name="car-model" value="' + termid + '" class="custom-control-input" '+checked+'> '+
-                        '<label class="custom-control-label d-flex justify-content-between" for="' + termname + '">' + termname + '</label></div>';
-                }
-
-                html += '</div>';
-                $('#manufacturerBody').append(html);
-                switchToModel(val);
-                $("input[type=radio][name=\"car-model\"]").click(submitMenu);
-                $("input[type=radio][name=\"car-model\"]").click(load);
+                $('#manufacturerBody').append($(data));
+                switchToModel(name);
+                $(".models[name=\""+name+"\"] input[type=radio]").click(function() {
+                    $("#manufacturerBody .models input[type=radio][name!=\""+$(this).attr("name")+"\"]").each(function() {
+                        $(this).prop('checked', false);
+                    });
+                });
+                $(".models[name=\""+name+"\"] input[type=radio]").click(submitMenu);
+                $(".models[name=\""+name+"\"] input[type=radio]").click(load);
                 waiting = 0;
-            }).fail(function(err) {
-                $("#demo-spinner").css({'display': 'none'});
-                console.error("FAIL!");
-                console.error(err);
-                waiting = 0;
-            });
+            }).fail(fail);
         }
     }
 }
@@ -362,17 +317,41 @@ function switchToManufacturer() {
     $('.car-filter .manufacturer').show(300);
 }
 
-function switchToModel(val) {
+function switchToModel(name) {
     $(".car-filter .models.active").hide();
-    var subList = $(".car-filter .models[name=\"" + val + "\"");
+    var subList = $(".car-filter .models[name=\"" + name + "\"");
     if (subList.length) {
-        $('.car-filter .manufacturer').hide(300);
+        $('.car-filter .car-manufacturer').hide(300);
         subList.show(300);
         $('.models-back').on('click', function () {
             subList.hide(300);
-            $('.car-filter .manufacturer').show(300);
+            $('.car-filter .car-manufacturer').show(300);
         })
     }
+}
+
+function hideSubList(hideSelector, showSelector) {
+    $(hideSelector).hide(300);
+    $(showSelector).show(300);
+}
+
+function minChoose(name, value) {
+    var minValue = $("#min"+name).val();
+    $("#max"+name + " option").each(function() {
+        if (parseInt(this.value) < parseInt(minValue)) {
+            $(this).hide();
+        } else {
+            $(this).show();
+        }
+    });
+    formSubmit('min'+name, 'no-value');
+}
+
+function fail(err) {
+    $("#demo-spinner").css({'display': 'none'});
+    console.error("FAIL!");
+    console.error(err);
+    waiting = 0;
 }
 </script>
 @endpush

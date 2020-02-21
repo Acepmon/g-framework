@@ -24,11 +24,12 @@ class ContentMetaObserver
         }
 
         if ($contentMeta->key == 'publishType') {
-            $content->updateMeta('publishedAt', Carbon::now());
+            // $content->updateMeta('publishedAt', Carbon::now());
             if ($contentMeta->value == 'best_premium' || $contentMeta->value == 'premium') {
                 
             }
         }
+        $this->publishVerified($contentMeta, $content);
 
         $this->calculateDays($contentMeta, 'startsAt', 'endsAt', 'publishDuration');
         $this->calculateDays($contentMeta, 'publishVerifiedAt', 'publishVerifiedEnd', 'publishDuration');
@@ -54,6 +55,20 @@ class ContentMetaObserver
         if ($content->type == Content::TYPE_CAR && $content->status == Content::STATUS_PUBLISHED && $content->visibility == Content::VISIBILITY_PUBLIC
             && $content->metaValue("isAuction") != "1") {
             TaxonomyManager::decrementCount($contentMeta->key, $contentMeta->value);
+        }
+    }
+
+
+    public function publishVerified($contentMeta, $content) {
+        if ($contentMeta->key == 'publishVerified' && $contentMeta->value == '1') {
+            $publishType = $content->metaValue('publishType');
+            $content->order = 1;
+            if ($publishType == 'premium') {
+                $content->order = 2;
+            } else if ($publishType == 'best_premium') {
+                $content->order = 3;
+            }
+            $content->save();
         }
     }
 
