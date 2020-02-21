@@ -31,13 +31,13 @@
         </div>
         <form method="GET" id="mainForm" action="/purchase-page-published">
             <div class="col-md-12 text-center">
-                <input hidden id="sortBy" name="sort">
-                <input hidden id="sortDir" name="sortDir">
+                <input hidden id="page" name="page" value="{{ request('page', 1) }}">
+                <input hidden id="sortBy" name="sort" value="{{ request('sort', 'publishedAt') }}">
+                <input hidden id="sortDir" name="sortDir" value="{{ request('sortDir', 'desc') }}">
             </div>
         </form>
     </div>
     <div class="car-list sell-car">
-        {{--@content(type=car, author_id=Auth::user()->id, publishType=best_premium as $published | paginate)--}}
             @foreach($cars as $published)
         <!-- card start -->
         <div class="card">
@@ -92,6 +92,30 @@
             </div>
         </div>
         @endforeach
+        
+        <!-- Pagination -->
+        @php
+        $page = request("page", 1);
+        @endphp
+        <nav aria-label="Page navigation">
+            <input type="hidden" value="{{ $page }}" name="page" id="page" />
+            <ul class="pagination d-flex justify-content-end mt-2">
+                <li class="page-item {{ ($page <= 1)?'disabled':'' }}">
+                    <button class="page-link" onclick="formSubmit('page', {{$page-1}})" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </button>
+                </li>
+                @for($i = 1; $i <= $cars->lastPage(); $i++)
+                <li class="page-item {{ ($i == $page)?'active':'' }}"><button class="page-link" onclick="formSubmit('page', {{$i}})">{{ $i }}</button></li>
+                @endfor
+                <li class="page-item {{ ($page >= $cars->lastPage())?'disabled':'' }}">
+                    <button class="page-link" onclick="formSubmit('page', {{$page+1}})" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+        <!-- Pagination end -->
     </div>
 
 </div>
@@ -190,7 +214,7 @@
             if (value != 'no-value') {
                 document.getElementById(id).value = value;
             }
-            if (sortDir != 'no-value'){
+            if (sortDir != null && sortDir != 'no-value'){
                 document.getElementById(sortDir).value = sortDirValue;
             }
             $('#mainForm').submit();

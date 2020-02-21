@@ -88,9 +88,10 @@ class CarContentsTableSeeder extends Seeder
 
             // static images
             $thumbnail = asset('car-web/img/Cars/' . rand(1, 12) . '.jpg');
+            $thumbnail = new ContentMeta(['key' => 'thumbnail', 'value' => $thumbnail]);
             $medias = [];
             $mediasLimit = rand(1, 20);
-            array_push($thumbnail);
+            array_push($medias, $thumbnail);
             for ($i = 0; $i < $mediasLimit; $i++) {
                 $media = asset('car-web/img/Cars/' . rand(1, 12) . '.jpg');
                 $meta = new ContentMeta(['key' => 'medias', 'value' => $media]);
@@ -172,7 +173,6 @@ class CarContentsTableSeeder extends Seeder
                 new ContentMeta(['key' => 'priceAmount', 'value' => $price]),
                 new ContentMeta(['key' => 'priceUnit', 'value' => '₮']),
                 new ContentMeta(['key' => 'priceType', 'value' => 'Зээлээр']),
-                new ContentMeta(['key' => 'thumbnail', 'value' => $thumbnail]),
                 new ContentMeta(['key' => 'link', 'value' => 'https://www.youtube.com/watch?v=2RnGwkWL94I']),
 
                 // Auction fields

@@ -46,53 +46,68 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="carcondition">Машины нөхцөл:</label>
-            <select id="carcondition" name="carCondition" class="form-control">
+            <select id="carcondition" name="carCondition" class="form-control" required>
                 <option value="" selected>Сонгох...</option>
                 @foreach(App\TermTaxonomy::where('taxonomy', 'car-conditions')->get() as $taxonomy)
                 <option value="{{ $taxonomy->term->name }}" {{ ($car->metaValue('carCondition') == $taxonomy->term->name)?'selected':'' }}>{{$taxonomy->term->name}}</option>
                 @endforeach
             </select>
+            <span id="carconditionAlert" class="invalid-feedback" role="alert" style="display: none">
+                Машины нөхцлөө сонгоно уу
+            </span>
         </div>
         <div class="form-group col-md-6">
             <label for="Color">Өнгө:</label>
-            <select id="Color" name="colorName" class="form-control">
+            <select id="Color" name="colorName" class="form-control" required>
                 <option value="" selected>Сонгох...</option>
                 @foreach(App\TermTaxonomy::where('taxonomy', 'car-colors')->get() as $taxonomy)
                 <option value="{{ $taxonomy->term->name }}" {{ ($car->metaValue('colorName') == $taxonomy->term->name)?'selected':'' }}>{{$taxonomy->term->name}}</option>
                 @endforeach
             </select>
+            <span id="ColorAlert" class="invalid-feedback" role="alert" style="display: none">
+                Өнгөө сонгоно уу
+            </span>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="yearProduct">Үйлдвэрлэгдсэн он:</label>
-            <select id="yearProduct" name="buildYear" class="form-control">
+            <select id="yearProduct" name="buildYear" class="form-control" required>
                 <option value="" selected>Сонгох...</option>
                 @for($i=date('Y'); $i>=1990; $i--)
                 <option value="{{ $i }}" {{ ($car->metaValue('buildYear') == $i)?'selected':'' }}>{{ $i }}</option>
                 @endfor
             </select>
+            <span id="yearProductAlert" class="invalid-feedback" role="alert" style="display: none">
+                Үйлдвэрлэсэн оноо сонгоно уу
+            </span>
         </div>
         <div class="form-group col-md-6">
             <label for="yearEntry">Орж ирсэн он:</label>
-            <select id="yearEntry" name="importDate" class="form-control">
+            <select id="yearEntry" name="importDate" class="form-control" required>
                 <option value="" selected>Сонгох...</option>
                 @for($i=date('Y'); $i>=($car->metaValue('buildYear')?$car->metaValue('buildYear'):1990); $i--)
                 <option value="{{ $i }}" {{ ($car->metaValue('importDate') == $i)?'selected':'' }}>{{ $i }}</option>
                 @endfor
             </select>
+            <span id="yearEntryAlert" class="invalid-feedback" role="alert" style="display: none">
+                Орж ирсэн оноо сонгоно уу
+            </span>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="capacityAmount">Моторын хэмжээ:</label>
             <div class="input-group">
-                <input type="number" min="0" class="form-control" id="capacityAmount" name="capacityAmount" placeholder="Моторын хэмжээ" value="{{ $car->metaValue('capacityAmount') }}">
+                <input type="number" min="0" class="form-control" id="capacityAmount" name="capacityAmount" placeholder="Моторын хэмжээ" value="{{ $car->metaValue('capacityAmount') }}" required>
                 <input type="hidden" class="form-control" id="capacityUnit" name="capacityUnit" value="CC">
                 <div class="input-group-prepend">
                     <div class="input-group-text-right">CC</div>
                 </div>
             </div>
+            <span id="manufacturerSelectAlert" class="invalid-feedback" role="alert" style="display: none">
+                Моторын хэмжээгээ сонгоно уу
+            </span>
         </div>
     </div>
 
