@@ -59,11 +59,11 @@ class CronPremium extends Command
                 $update = ContentMeta::where('key','=','publishVerified')->where('content_id', '=', $data->content_id)->firstOrFail();
                 $update->value=0;
                 $update->save();
-                $delete = ContentMeta::find($data->id);
-                $delete->delete();
-                $content = $data->content();
+                $content = $data->content;
                 $content->order = 1;
                 $content->save();
+                $delete = ContentMeta::find($data->id);
+                $delete->delete();
             }
         }
     }

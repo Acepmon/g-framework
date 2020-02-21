@@ -211,7 +211,7 @@ $itsIntCar=false;
 
     <!-- Auction Grid -->
 
-    <!-- @include('themes.car-web.includes.section-auction') -->
+    {{-- <!-- @include('themes.car-web.includes.section-auction') --> --}}
 
     <!-- wish list -->
 
