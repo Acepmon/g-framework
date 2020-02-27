@@ -107,9 +107,6 @@ $itsIntCar=false;
                             <li class="nav-item">
                                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#budget" role="tab" aria-controls="budget" aria-selected="false">Том тэрэг</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#auction" role="tab" aria-controls="used" aria-selected="false">Аукцион</a>
-                            </li>
                         </ul>
                         <div class="tab-content p-5" id="heroTabFilter">
                             <div class="tab-pane fade show active" id="allVehicles" role="tabpanel"
@@ -169,7 +166,7 @@ $itsIntCar=false;
                                     </div>
                                     <div class="form-group">
                                         <select id="vehicleManufacturerModels1" class="form-control" name="carSubType">
-                                            <option value="" >Модел</option>
+                                            <option value="" >Ангилал</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -191,35 +188,7 @@ $itsIntCar=false;
                                     <button type="submit" class="btn btn-danger btn-lg btn-round shadow mt-4 pl-5 pr-5">Хайх</button>
                                 </form>
                             </div>
-                            <div class="tab-pane fade" id="auction" role="tabpanel" aria-labelledby="auction-tab">
-                                <form method="GET" action="/coming-soon">
-                                    <input name="title" type="text" hidden class="searchTitle">
-                                    <div class="form-group">
-                                        <select id="vehicleManufacturer2" class="form-control" name="car-manufacturer">
-                                            <option value="" >Үйлдвэрлэгч</option>
-                                            @getTaxonomys({"filter":[{"field":"taxonomy", "key":"car-manufacturer"}], "returnValue":"manufacturers"})
-                                            @foreach($manufacturers as $data)
-                                            <option id="{{$data->term->name}}" value="{{$data->term->id}}">{{$data->term->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <select id="vehicleManufacturerModels2" class="form-control" name="car-model">
-                                            <option value="" >Модел</option>
-                                            {{--//@getTaxonomys({"filter":[{"field":"taxonomy", "key":"model"}], "returnValue":"models"})--}}
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="form-control" name="min_price" type="number" placeholder="Доод үнэ" aria-label="Search">
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="form-control" name="max_price" type="number" placeholder="Дээр үнэ" aria-label="Search">
-                                    </div>
-                                    <button type="submit" class="btn btn-danger btn-lg btn-round shadow mt-4 pl-5 pr-5">Хайх</button>
-                                </form>
-                            </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="master-head-bg">
@@ -242,7 +211,7 @@ $itsIntCar=false;
 
     <!-- Auction Grid -->
 
-    @include('themes.car-web.includes.section-auction')
+    {{-- <!-- @include('themes.car-web.includes.section-auction') --> --}}
 
     <!-- wish list -->
 
@@ -393,7 +362,7 @@ $itsIntCar=false;
                             .find('option')
                             .remove()
                             .end()
-                            .append('<option>Модел</option>')
+                            .append('<option>Ангилал</option>')
                             .val('')
                         ;
                         console.log(modelList.data);

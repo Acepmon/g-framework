@@ -208,7 +208,7 @@ class CarContentsTableSeeder extends Seeder
                 // Retail
 
                 // Seller
-                new ContentMeta(['key' => 'sellerDescription', 'value' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ullam, explicabo iure delectus asperiores sed aliquam provident magnam similique accusantium magni! Neque dolorum similique aliquam id recusandae aliquid nihil sit, blanditiis corporis? Odit, repudiandae recusandae. Libero rem aliquid, distinctio vel ad ab nostrum nulla repellendus modi officia eligendi officiis ducimus labore? Ad, praesentium laborum fugiat vitae doloremque qui beatae consectetur.']),
+                new ContentMeta(['key' => 'sellerDescription', 'value' => 'Диллерийн оруулсан нэмэлт тайлбар мэдээлэл.']),
 
                 // Diagnostic
                 new ContentMeta(['key' => 'diagnosticConditionImage', 'value' => '/assets/car-web/img/retail.png']),
