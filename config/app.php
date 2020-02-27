@@ -187,6 +187,8 @@ return [
         * Image Intervention
         */
         Intervention\Image\ImageServiceProvider::class,
+        // Debugging
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -242,6 +244,7 @@ return [
         'LogReader' => Jackiedo\LogReader\Facades\LogReader::class,
         // Image Intervention
         'Image' => Intervention\Image\Facades\Image::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
     /*

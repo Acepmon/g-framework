@@ -105,7 +105,7 @@
         @include('themes.car-web.includes.section-retail', ['content' => $content])
 
         <!-- Hot deals -->
-        @include('themes.car-web.includes.section-slider', ['title' => 'Шилдэг зарууд', 'contents' => \Modules\Car\Entities\Car::filterByPremium(null, null, ['best_premium'])->get(), 'morelink'=> url('/buy?publishType=best_premium')])
+        @include('themes.car-web.includes.section-slider', ['title' => 'Шилдэг зарууд', 'contents' => \Modules\Car\Entities\Car::filterByPremium(null, null, ['best_premium'])->get(), 'morelink'=> url('/buy?publishType=best_premium&except='.$content->id)])
 
         <!-- Similar Price -->
         @php
