@@ -68,6 +68,11 @@ class CarController extends Controller
     public function filter()
     {
         $filter = request()->all();
+        foreach ($filter as $key => $value) {
+            if (!$value) {
+                unset($filter[$key]);
+            }
+        }
         $cars = Car::all();
 
         $type = 'buy';

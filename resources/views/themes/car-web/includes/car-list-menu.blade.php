@@ -138,7 +138,7 @@ $categoryName = [
             <div class="form-row">
             <div class="col-md-6">
                 <select id="minPriceAmount" class="form-control" name="minPriceAmount" onchange="minChoose('PriceAmount','no-value')">
-                <option value="{{ request('minPriceAmount') }}">Доод</option>
+                <option value="{{ request('minPriceAmount', '') }}">Доод</option>
                 @for($i=1000000; $i<=500000000; $i+=1000000)
                 <option value="{{ $i }}">{{ numerizePrice($i) }}</option>
                 @endfor
@@ -146,8 +146,8 @@ $categoryName = [
             </div>
             <div class="col-md-6">
                 <select id="maxPriceAmount" class="form-control" name="maxPriceAmount" onchange="formSubmit('maxPriceAmount','no-value')">
-                <option value="{{ request('maxPriceAmount') }}">Дээд</option>
-                @for($i=request('minPriceAmount', Null)?request('minPriceAmount', Null):1000000; $i<=500000000; $i+=1000000)
+                <option value="{{ request('maxPriceAmount', '') }}">Дээд</option>
+                @for($i=request('minPriceAmount', False)?request('minPriceAmount', 1000000):1000000; $i<=500000000; $i+=1000000)
                 <option value="{{ $i }}">{{ numerizePrice($i) }}</option>
                 @endfor
                 </select>
