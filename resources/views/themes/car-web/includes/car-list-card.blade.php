@@ -94,7 +94,7 @@
                     <div data-toggle="modal" data-target="#publishCont" onclick="contsId({{$car->id}})">Идэвхгүй</div>
                 </div>
                 @else
-                <div class="advantage-slider owl-carousel owl-theme">
+                <div class="advantage-slider owl-carousel owl-theme" style="display: inherit">
                     @foreach($car->metas->where('key', 'advantages') as $advantage)
                     <a class="advantage-item" onclick="addAdvantage('{{$advantage->value}}')">{{ $advantage->value }}</a>
                     @endforeach
