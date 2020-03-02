@@ -443,6 +443,7 @@
     var modelName = "{{ $car->metaValue('modelName') }}";
 
     $(document).ready(function() {
+        $("#mileage").inputmask('decimal', {groupSeparator: ',', 'autoGroup': true, 'removeMaskOnSubmit': true});
         $('input[type="checkbox"]').on('change', function() {
             if (!$(this).is(':checked')) {
                 this.value = 'off';
@@ -564,7 +565,6 @@
                 }
             });
             console.log(paramObjs);
-            paramObjs.mileageAmount = parseInt(parseFloat(paramObjs.mileageAmount.replace(/[^0-9 | ^.]/g, '')));
             $.ajax({
                 type: 'PUT',
                 url: '/ajax/contents/' + carId + '/metas/sync',

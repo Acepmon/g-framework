@@ -43,7 +43,10 @@
                                     <img src="{{(getMetasValue($bpCars->metas, 'thumbnail'))}}" class="img-fluid" alt="alt">
 
                                     <div class="card-caption">
-                                        <div class="meta">{{$itsIntCar}}{{(getMetasValue($bpCars->metas, 'mileageAmount'))}} {{(getMetasValue($bpCars->metas, 'mileageUnit'))}}| {{(getMetasValue($bpCars->metas, 'fuelType'))}} | {{(getMetasValue($bpCars->metas, 'capacityAmount'))}} {{(getMetasValue($bpCars->metas, 'capacityunit'))}}</div>
+                                        <div class="meta">{{$itsIntCar}}
+                                            {{(number_format(getMetasValue($bpCars->metas, 'mileageAmount')))}} {{(getMetasValue($bpCars->metas, 'mileageUnit'))}}
+                                             | {{(getMetasValue($bpCars->metas, 'fuelType'))}} | 
+                                            {{number_format(getMetasValue($bpCars->metas, 'capacityAmount'))}} {{(getMetasValue($bpCars->metas, 'capacityUnit'))}}</div>
                                         @if(Auth::user()!=null && $bpCars->author_id==Auth::user()->id)
                                             <div class="favorite">
                                                 <span class=""><i class="fas fa-car"></i></span>

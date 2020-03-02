@@ -180,12 +180,14 @@ class TaxonomyManager extends Manager
         $terms_id = Term::where($type, True)->pluck('id');
         if ($count) {
             $filteredIds = Car::all()->pluck('id');
-            $manufacturers = TermTaxonomy::where([['taxonomy', 'car-manufacturer'], ['count', '!=', 0]])->whereIn('term_id', $terms_id)->withCount(['contents' => function($query) use ($filteredIds) {
+            $manufacturers = TermTaxonomy::where([['taxonomy', 'car-manufacturer']])->whereIn('term_id', $terms_id)->withCount(['contents' => function($query) use ($filteredIds) {
                 $query->whereIn('id', $filteredIds);
             }]);
             $most = clone $manufacturers;
             $most = $most->orderBy('contents_count', 'desc')->limit($limit);
-            $most = $most->get()->merge($manufacturers->get());
+            
+            $manufacturers = $manufacturers->get()->sortBy('term.name')->where('contents_count', '!=', '0');
+            $most = $most->get()->merge($manufacturers);
             return $most;
         } else {
             $manufacturers = TermTaxonomy::where('taxonomy', 'car-manufacturer')->whereIn('term_id', $terms_id);
