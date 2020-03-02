@@ -178,7 +178,7 @@
             <label for="mileage">Явсан КМ:</label>
             <div class="input-group">
 <!--                <input type="number" min="0" class="form-control" id="mileage" name="mileageAmount" placeholder="Гүйлт" value="{{ $car->metaValue('mileageAmount') }}">-->
-                <input type="text" min="0" name="mileage" class="form-control text-left" value="{{ $car->metaValue('mileageAmount') }}" id="mileage" placeholder="Гүйлт" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 0, 'digitsOptional': false">
+                <input type="text" min="0" name="mileageAmount" class="form-control text-left" value="{{ $car->metaValue('mileageAmount') }}" id="mileage" placeholder="Гүйлт" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 0, 'digitsOptional': false">
                 <input type="hidden" name="mileageUnit" value="km">
                 <div class="input-group-prepend">
                     <div class="input-group-text-right">KM</div>
@@ -564,7 +564,7 @@
                 }
             });
             console.log(paramObjs);
-            paramObjs.mileage = parseInt(parseFloat(paramObjs.mileage.replace(/[^0-9 | ^.]/g, '')));
+            paramObjs.mileageAmount = parseInt(parseFloat(paramObjs.mileageAmount.replace(/[^0-9 | ^.]/g, '')));
             $.ajax({
                 type: 'PUT',
                 url: '/ajax/contents/' + carId + '/metas/sync',

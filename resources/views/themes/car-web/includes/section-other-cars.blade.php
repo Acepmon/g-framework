@@ -10,7 +10,7 @@
             </div>
             <div class="car-list">
                 <div class="row">
-                    @content(type=car, status=published, limit=10 as $othCars | paginate)
+                    @content(type=car, status=published, limit=10, sort=publishedAt as $othCars | paginate)
                     @if(count($interestedCars) > 0)
                         @foreach($interestedCars as $intCars)
                             @if($intCars==$othCars->id)

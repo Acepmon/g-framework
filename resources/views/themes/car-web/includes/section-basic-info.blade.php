@@ -112,6 +112,33 @@
                     </div>
                 </div>
             </div>
+
+
+            @if($content->metaArray('advantages'))
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="title">Давуу тал</div>
+
+                    <div class="info-list">
+                        <ul style="grid-template-columns: auto auto auto auto">
+                            @foreach($content->metaArray('advantages') as $advantage)
+                                <li><i class="fab fa fa-check advantage-check"></i> {{ $advantage }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
     </section>
 @endif
+
+<style>
+.advantage-check {
+    padding: .5rem;
+    background: #e0e5eb;
+    border-radius: 50%;
+    font-size: .5rem;
+    margin-right: 20px
+}
+</style>
