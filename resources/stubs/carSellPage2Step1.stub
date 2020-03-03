@@ -537,9 +537,12 @@
 
     function step1SubmitAjax(__callback) {
         console.log(sCarType);
-        var title = ""
-        title = $("#manufacturerSelect").val() + ' ' + $("#modelSelect").val();
-
+        var title = "";
+        title = $("#manufacturerSelect").val() + ' ';
+        var model = $("#modelSelect").val();
+        if (model && model != "null") {
+            title += model;
+        }
 
         $("#demo-spinner").css({'display': 'block'});
         $.ajax({
@@ -564,6 +567,7 @@
                     }
                 }
             });
+            paramObjs.mileageAmount = $("#mileage").inputmask('unmaskedvalue');
             console.log(paramObjs);
             $.ajax({
                 type: 'PUT',

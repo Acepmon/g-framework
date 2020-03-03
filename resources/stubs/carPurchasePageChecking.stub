@@ -50,7 +50,7 @@
                     <div class="card-caption">
                         <a href="{{$check->slug}}" target="_blank">
                             <div href="#" class="card-title">{{$check->title}}</div>
-                            <div class="meta">{{$check->metaValue("buildYear")}} / {{$check->metaValue("importDate")}} | {{$check->metaValue("mileageAmount")}}{{$check->metaValue("mileageUnit")}}</div>
+                            <div class="meta">{{$check->metaValue("buildYear")}} / {{$check->metaValue("importDate")}} | {{ number_format($check->metaValue("mileageAmount"))}} {{$check->metaValue("mileageUnit")}}</div>
                             <div class="price">{{numerizePrice($check->metaValue("priceAmount"))}} {{$check->metaValue("priceUnit")}}</div>
                             <div class="is-premium font-weight-normal text-danger">Шалгагдаж байна</div>
                         </a>

@@ -77,6 +77,13 @@ function getDateFromDatetime($value) {
 function getMetasValue($metas, $key) {
     foreach($metas as $meta){
         if($meta->key==$key){
+            if (\Str::endsWith($key, 'Amount')) {
+                if (is_numeric($meta->value)) {
+                    return $meta->value;                    
+                } else {
+                    return '0';
+                }
+            }
             return $meta->value;
         }
     }

@@ -194,8 +194,16 @@ class Content extends Model
     public function metaValue($key) {
         try {
             $meta = $this->metas->where('key', $key)->first();
-            if ($meta)
+            if ($meta) {
+                if (\Str::endsWith($key, 'Amount')) {
+                    if (is_numeric($meta->value)) {
+                        return $meta->value;                    
+                    } else {
+                        return '0';
+                    }
+                }
                 return $meta->value;
+            }
         } catch (\Exception $ex) {
             return Null;
         }

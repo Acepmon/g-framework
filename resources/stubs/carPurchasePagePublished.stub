@@ -52,7 +52,7 @@
                     <div class="card-caption">
                         <a href="{{$published->slug}}" target="_blank" >
                             <div href="#" class="card-title">{{$published->title}}</div>
-                            <div class="meta">{{$published->metaValue("buildYear")}} / {{$published->metaValue("importDate")}} | {{$published->metaValue("mileageAmount")}}{{$published->metaValue("mileageUnit")}}</div>
+                            <div class="meta">{{$published->metaValue("buildYear")}} / {{$published->metaValue("importDate")}} | {{number_format($published->metaValue("mileageAmount"))}} {{$published->metaValue("mileageUnit")}}</div>
                             <div class="price">{{numerizePrice($published->metaValue("priceAmount"))}} {{$published->metaValue("priceUnit")}}</div>
                             <div class="is-premium"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt="">
                             @if($published->metaValue('publishType') == 'best_premium')
