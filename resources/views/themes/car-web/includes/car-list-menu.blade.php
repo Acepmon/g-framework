@@ -236,6 +236,9 @@ $("input[name='car-type']").on("click", function() {
             type = "special";
         } else {
             type = 'normal';
+            $("#car-manufacturer #manufacturerBoy input[type=radio][checked=true]").each(()=>{
+                $(this).prop('checked', false); 
+            });
         }
         $(".type-choice").hide(300);
         $("#"+type+"-choice").show(300);
@@ -247,7 +250,7 @@ $("input[name='car-type']").on("click", function() {
 });
 
 function callManufacturers(type, __callback) {
-    var getParams = '&count=True&order=count';
+    var getParams = '&count=True&order=name';
     @if(request('car-manufacturer', False))
     getParams += '&car-manufacturer=' + {{ request('car-manufacturer', 0) }};
     @endif

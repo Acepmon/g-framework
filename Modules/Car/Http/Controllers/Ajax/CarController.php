@@ -143,6 +143,9 @@ class CarController extends Controller
             $taxonomies = $firstFive->merge($taxonomies);
         } else if ($order == "count") {
             $taxonomies = $taxonomies->sortByDesc('contents_count');
+        } else if ($order == "name") {
+            $taxonomies = $taxonomies->sortBy('term.name');
+            $taxonomies = $taxonomies->where('contents_count', '!=', 0);
         }
 
         return view('themes.car-web.includes.car-list-menu-items', [

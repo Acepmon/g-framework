@@ -32,6 +32,25 @@
     </div>
 </section>
 
+<div class="modal fade" id="comingSoon">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body text-center">
+            <div class="maz-modal-title" style="font-size:1.5rem">Coming soon!</div>
+            <div id="sent-ad" style="width: 300px; display:inline-block"></div>
+                <h5 id="responseText" class="mb-5">Зохистой үнээр хурдан шуурхай худалдан авах, худалдах боломжтой 
+автомашины дуудлага худалдааны үйлчилгээ 
+2020 оны эхний хагаст хэрэгжиж эхлэх төлөвтэй байна.</h5>
+            </div>
+        </div>
+    </div>
+</div>
 @include('themes.car-web.includes.loader')
 <!-- <div class="spinner-border" id="demo-spinner" role="status" style="position: fixed; z-index: 1000; top: 50%; left: 50%; display: none">
   <span class="sr-only">Loading...</span>
@@ -47,6 +66,10 @@ headers: {
 });
 
 function postCar(type) {
+    if (type == 'auction') {
+        $("#comingSoon").modal('show');
+        return 0;
+    }
     var data = {
         'title': 'Sample Car',
         'slug': '{{ \Str::uuid() }}',

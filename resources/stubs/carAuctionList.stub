@@ -1,5 +1,25 @@
 @extends('themes.car-web.layouts.default')
 
+@section('title', 'Coming Soon')
+
+@section('load')
+@endsection
+
+@section('content')
+<h1 class="text-center p-5">Coming Soon</h1>
+<h6 class="body text-center">
+Зохистой үнээр хурдан шуурхай худалдан авах, худалдах боломжтой <br>
+автомашины дуудлага худалдааны үйлчилгээ <br>
+2020 оны эхний хагаст хэрэгжиж эхлэх төлөвтэй байна.
+</h6>
+@endsection
+
+@section('script')
+@endsection
+
+{{--
+@extends('themes.car-web.layouts.default')
+
 @php
 $request = \Modules\Car\Entities\Car::manageRequest();
 $allItems = \Modules\Car\Entities\Car::all();
@@ -153,3 +173,4 @@ $banner = \App\Banner::where('location_id', 5)->where('status', 'active')->inRan
 
 </script>
 @endsection
+--}}

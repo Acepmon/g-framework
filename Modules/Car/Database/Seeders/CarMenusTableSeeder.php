@@ -41,7 +41,7 @@ class CarMenusTableSeeder extends Seeder
             ['Авна', '/buy', '', 'Car'],
             ['Зарна', '/sell', '', 'Car'],
             ['Лизинг', '/finance?firstPay=30', '', 'Car'],
-            ['Аугцион', '/coming-soon', '', 'Car'],
+            ['Аугцион', '/auction', '', 'Car'],
             ['Авъя', '/wishlist', '', 'Car']
         ]];
         $doctorVerified = Term::where('slug', 'batalgaazhsan')->first();

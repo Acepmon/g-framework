@@ -24,12 +24,13 @@ class PaymentMethodsTableSeeder extends Seeder
             'name' => 'Bank Transaction',
             'data' => json_encode([
                     'bankName' => 'Хаан Банк',
-                    'accountNo' => '00000000',
-                    'accountName' => 'Example',
+                    'accountNo' => '5027798864',
+                    'accountName' => 'ДАМОА МОТОРС ХХК',
                     'accountCurrency' => 'MNT'
             ]),
             'enabled' => true
         ]);
+        /*
         PaymentMethod::create([
             'code' => 'transaction',
             'name' => 'Bank Transaction',
@@ -65,6 +66,7 @@ class PaymentMethodsTableSeeder extends Seeder
             ]),
             'enabled' => true
         ]);
+        */
 
         // Card Local
         PaymentMethod::create([

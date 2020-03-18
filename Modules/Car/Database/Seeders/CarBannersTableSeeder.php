@@ -27,7 +27,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "1",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/1.png"
         ]);
 
@@ -37,7 +37,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "2",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/2.png"
         ]);
 
@@ -47,7 +47,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "3",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/3.png"
         ]);
 
@@ -57,7 +57,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "4",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/4.png"
         ]);
 
@@ -67,17 +67,29 @@ class CarBannersTableSeeder extends Seeder
             "title" => "5",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/5.png"
         ]);
 
         // 2. Login Main Slider (650x650)
-        factory(Banner::class, 3)->create([
+        factory(Banner::class, 1)->create([
             "location_id" => 2,
-        ])->each(function ($banner) use ($url) {
-            $banner->banner = $url . "/" . BannerLocation::find(2)->width . "x" . BannerLocation::find(2)->height;
-            $banner->save();
-        });
+            "link" => "/about-introduction",
+            "title" => "1",
+            "status" => "active",
+            "starts_at" => "2020-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
+            "banner" => "https://www.maz.mn/storage/banners/1.png"
+        ]);
+        factory(Banner::class, 1)->create([
+            "location_id" => 2,
+            "link" => "/about-finance",
+            "title" => "5",
+            "status" => "active",
+            "starts_at" => "2020-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
+            "banner" => "https://www.maz.mn/storage/banners/5.png"
+        ]);
 
         // 3. Finance Main Slider (650x650)
         factory(Banner::class, 3)->create([
@@ -102,7 +114,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "mainBottom1",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/mainBottom1.png"
         ]);
 
@@ -111,7 +123,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "mainBottom2",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/mainBottom2.png"
         ]);
 
@@ -120,7 +132,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "mainBottom3",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/mainBottom3.png"
         ]);
 
@@ -129,7 +141,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "mainBottom4",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/mainBottom4.png"
         ]);
 
@@ -140,7 +152,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Home 1",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/1.png"
         ]);
 
@@ -150,7 +162,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Home 2",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/2.png"
         ]);
 
@@ -160,7 +172,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Home 3",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/3.png"
         ]);
 
@@ -170,7 +182,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Home 4",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/4.png"
         ]);
 
@@ -180,7 +192,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Home 5",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/5.png"
         ]);
 
@@ -191,7 +203,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Mid Content 1",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/1.png"
         ]);
 
@@ -201,7 +213,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Mid Content 2",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/2.png"
         ]);
 
@@ -211,7 +223,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Mid Content 3",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/3.png"
         ]);
 
@@ -221,7 +233,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Mid Content 4",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/4.png"
         ]);
 
@@ -231,7 +243,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Mid Content 5",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/5.png"
         ]);
 
@@ -242,7 +254,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Finance 1",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/1.png"
         ]);
 
@@ -252,7 +264,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Finance 2",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/2.png"
         ]);
 
@@ -262,7 +274,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Finance 3",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/3.png"
         ]);
 
@@ -272,7 +284,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Finance 4",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/4.png"
         ]);
 
@@ -282,7 +294,7 @@ class CarBannersTableSeeder extends Seeder
             "title" => "Mobile Finance 5",
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
-            "ends_at" => "2021-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/5.png"
         ]);
     }
