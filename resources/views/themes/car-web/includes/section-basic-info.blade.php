@@ -112,25 +112,34 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-
-            @if($content->metaArray('advantages'))
+    @if($content->metaArray('advantages'))
+    <section class="detail-items bg-white detail-basic-information">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="detail-section-title">
+                        <p>Давуу тал
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <div class="title">Давуу тал</div>
-
                     <div class="info-list">
                         <ul style="grid-template-columns: auto auto auto auto">
                             @foreach($content->metaArray('advantages') as $advantage)
-                                <li><i class="fab fa fa-check advantage-check"></i> {{ $advantage }}</li>
+                                <li><i class="fab fa fa-check advantage-check" style="background-color: #d0d4da"></i> {{ $advantage }}</li>
                             @endforeach
                         </ul>
                     </div>
                 </div>
             </div>
-            @endif
         </div>
     </section>
+    @endif
 @endif
 
 <style>

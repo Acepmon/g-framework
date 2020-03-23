@@ -2021,7 +2021,7 @@ select {
 .car-list .card .card-body .card-img .doctor-verified-tag {
   position: absolute;
   top: 6px;
-  left: 38px;
+  right: 6px;
   width: 30px;
   height: 30px;
   background: #DF2626;
@@ -3962,7 +3962,7 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
 .card-list .card .doctor-verified-tag {
   position: absolute;
   top: 6px;
-  left: 38px;
+  right: 6px;
   width: 30px;
   height: 30px;
   background: #DF2626;

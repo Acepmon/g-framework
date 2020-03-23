@@ -54,7 +54,7 @@
             margin: 100,
             stagePadding: 30,
             autoplay:true,
-            autoplayTimeout: 7000,
+            autoplayTimeout: 3000,
             autoplayHoverPause:true,
             loop: true,
             nav: false,
@@ -70,7 +70,7 @@
                 },
                 1000: {
                     items: 1,
-                    loop: false
+                    loop: true
                 }
             }
         });
@@ -315,13 +315,4 @@
             })
         }
     });
-
-    var slider = document.getElementById("myRange");
-    var output = document.getElementById("value");
-    output.innerHTML = slider.value;
-    
-    slider.oninput = function() {
-      output.innerHTML = this.value;
-    }
-
 })(jQuery)
