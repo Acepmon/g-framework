@@ -27,6 +27,36 @@
         <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
+            <h3>Coming Soon</h3>
+            </div>
+        </div>
+        <div class="row text-center">
+            Зохистой үнээр хурдан шуурхай худалдан авах, худалдах боломжтой
+            автомашины дуудлага худалдааны үйлчилгээ
+            2020 оны эхний хагаст хэрэгжиж эхлэх төлөвтэй байна. 
+        </div>
+        </div>
+    </section>
+
+    {{--
+    <section class="bg-dark p-5 text-white position-relative">
+        <div class="container">
+        <div class="row">
+            <div class="card shadow-soft-blue page-top-navbar mb-5">
+            <div class="d-flex justify-content-around">
+                <a href="{{ url('/about-introduction') }}">Танилцуулга</a>
+                <a href="{{ url('/about-paid-ads') }}">Төлбөртэй зар</a>
+                <a href="{{ url('/about-finance') }}">ББСБ</a>
+                <a href="{{ url('/about-technical-examination') }}">Техникийн үзлэг</a>
+                <a class="active" href="{{ url('/about-auction') }}">Дуудлага худалдаа</a>
+                <a href="{{ url('/about-dream-car') }}">Хүслийн машин</a>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
             <h3>Дуудлага худалдаа</h3>
             </div>
         </div>
@@ -265,6 +295,7 @@
         </div>
         </div>
     </section>
+    --}}
 
     <section class="page-section bg-light mb-5">
         <div class="container">
