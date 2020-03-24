@@ -27,13 +27,46 @@
         <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
+            <h3>Дуудлага худалдаа</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 intro-advantages">
+            <div class="intro-advantage">
+                <h4>Тээврийн хэрэгслийн үзлэг оношилгоо </h4>
+                <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutA-icon-1.svg') }}" alt=""></div>
+            </div>
+
+            <div class="intro-advantage">
+                <h4>Зах зээлийн ханшаар борлуулах боломж </h4>
+                <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutA-icon-2.svg') }}" alt=""></div>
+            </div>
+
+            <div class="intro-advantage">
+                <h4>Зарах гэж буй машинаа илүү хурдан таниулах </h4>
+                <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutA-icon-3.svg') }}" alt=""></div>
+            </div>
+            <div class="intro-advantage">
+                <h4>Дуудлага худалдааны үнийг Real time харах </h4>
+                <div class="intro-advantage-img"><img src="{{ asset('car-web/img/about-icons/aboutA-icon-4.svg') }}" alt=""></div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    
+    <section class="section my-5">
+        <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
             <h3>Coming Soon</h3>
             </div>
         </div>
-        <div class="row text-center">
-            Зохистой үнээр хурдан шуурхай худалдан авах, худалдах боломжтой
-            автомашины дуудлага худалдааны үйлчилгээ
-            2020 оны эхний хагаст хэрэгжиж эхлэх төлөвтэй байна. 
+        <div class="row">
+            <div class="col-md-12 text-center">
+            Зохистой үнээр хурдан шуурхай худалдан авах, худалдах боломжтой автомашины<br>
+            дуудлага худалдааны үйлчилгээ 2020 оны эхний хагаст хэрэгжиж эхлэх төлөвтэй байна.
+            </div>
         </div>
         </div>
     </section>
