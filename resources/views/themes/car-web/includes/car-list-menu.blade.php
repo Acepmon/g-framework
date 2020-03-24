@@ -236,7 +236,7 @@ $("input[name='car-type']").on("click", function() {
             type = "special";
         } else {
             type = 'normal';
-            $("#car-manufacturer #manufacturerBoy input[type=radio][checked=true]").each(()=>{
+            $("#car-manufacturer .models input[type=radio]").each(function (){
                 $(this).prop('checked', false); 
             });
         }
