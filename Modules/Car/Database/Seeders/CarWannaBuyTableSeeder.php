@@ -42,6 +42,7 @@ class CarWannaBuyTableSeeder extends Seeder
             $content->metas()->saveMany([
                 new ContentMeta(['key' => 'markName', 'value' => $markName]),
                 new ContentMeta(['key' => 'modelName', 'value' => $modelName]),
+                new ContentMeta(['key' => 'publishedAt', 'value' => \Carbon\Carbon::now()]),
                 new ContentMeta(['key' => 'priceAmountStart', 'value' => rand(100000, 5000000)]),
                 new ContentMeta(['key' => 'priceAmountEnd', 'value' => rand(100000, 5000000)]),
                 new ContentMeta(['key' => 'priceUnit', 'value' => '₮']),

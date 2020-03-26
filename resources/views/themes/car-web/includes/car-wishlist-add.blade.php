@@ -16,14 +16,14 @@
                             <div class="form-group col-md-6">
                                 <label for="Manufacturer">Үйлдвэрлэгч:</label>
                                 <select id="addWishMark" name="markName" class="form-control" required>
-                                    @foreach(App\TermTaxonomy::where('taxonomy', 'car-manufacturer')->get() as $taxonomy)
+                                    @foreach(App\TermTaxonomy::where('taxonomy', 'car-manufacturer')->get()->sortBy('term.name') as $taxonomy)
                                         <option value="{{$taxonomy->term->name}}">{{$taxonomy->term->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="Model">Загвар:</label>
-                                <select id="addWishModel" name="modelName" class="form-control" required></select>
+                                <select id="addWishModel" name="modelName" class="form-control"></select>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="priceAmountStart">Эхлэх үнэ</label>
@@ -62,10 +62,20 @@
         }
     });
 
+    function toTwoDigits(number) {
+        return ("0" + number).slice(-2);
+    }
+
     $(document).ready(function () {
         var onChange = function (markName, modelNameElement) {
             $.getJSON('/api/v1/taxonomies/car-' + toKebabCase(markName), function (data) {
                 var modelList=data;
+                if (modelList.data.length == 0) {
+                    $("#addWishModel").removeAttr("required");
+                } else {
+                    $("#addWishModel").attr("required", true);
+                }
+                console.log(modelList.data.length);
                 modelNameElement.find('option').remove().end().append('<option value=""></option>').val('');
                 for (var i = 0; i < modelList.data.length; i++) {
                     modelNameElement.append(new Option(modelList.data[i].term.name, modelList.data[i].term.name));
@@ -94,10 +104,14 @@
                 data: data
             }).done(function(data) {
                 var carId = data['id'];
+                var now = new Date();
+                var publishedAt = now.getFullYear() + "-" + toTwoDigits(now.getUTCMonth()+1) + "-" + toTwoDigits(now.getDate());
+                publishedAt = publishedAt + " " + toTwoDigits(now.getHours()) + ":" + toTwoDigits(now.getMinutes()) + ":" + toTwoDigits(now.getSeconds());
                 var paramObjs = {
                     "markName": markName,
                     "modelName": modelName,
                     "priceUnit": priceUnit,
+                    "publishedAt": publishedAt,
                     "priceAmountStart": parseInt(priceAmountStart.replace(/,/g, '')),
                     "priceAmountEnd": parseInt(priceAmountEnd.replace(/,/g, ''))
                 };
@@ -126,8 +140,10 @@
 
         onChange($("#addWishMark").val(), $("#add-wish").find('select[name=modelName]'));
 
-        $("#add-wish").find('input[name=priceAmountStart]').inputmask({alias: 'currency'});
-        $("#add-wish").find('input[name=priceAmountEnd]').inputmask({alias: 'currency'});
+        $("#add-wish").find('input[name=priceAmountStart]').inputmask('decimal', {groupSeparator: ',', 'autoGroup': true, 'removeMaskOnSubmit': true});
+        $("#add-wish").find('input[name=priceAmountEnd]').inputmask('decimal', {groupSeparator: ',', 'autoGroup': true, 'removeMaskOnSubmit': true});
+        // $("#add-wish").find('input[name=priceAmountStart]').inputmask({alias: 'currency'});
+        // $("#add-wish").find('input[name=priceAmountEnd]').inputmask({alias: 'currency'});
     });
 </script>
 @endpush

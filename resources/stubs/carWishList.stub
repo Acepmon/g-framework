@@ -46,9 +46,9 @@ $banner = App\Banner::where('location_id', 5)->where('status', 'active')->inRand
                                 <div class="form-group">
                                     <select id="vehicleManufacturer" class="form-control" name="markName">
                                         <option value="" selected>Үйлдвэрлэгч</option>
-                                        @taxonomy(taxonomy=car-manufacturer as $data)
+                                        @foreach(\App\TermTaxonomy::where('taxonomy', 'car-manufacturer')->get()->sortBy('term.name') as $data)
                                             <option value="{{$data->term->name}}" {{ ($data->term->name == $markName) ? 'selected' : '' }}>{{$data->term->name}}</option>
-                                        @endtaxonomy
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -56,6 +56,7 @@ $banner = App\Banner::where('location_id', 5)->where('status', 'active')->inRand
                                         <option value="">Загвар</option>
                                     </select>
                                 </div>
+                                {{--
                                 <div class="form-group">
                                     <select class="form-control" name="priceAmount">
                                         <option value="">Доод үнэ</option>
@@ -64,6 +65,7 @@ $banner = App\Banner::where('location_id', 5)->where('status', 'active')->inRand
                                         @endfor
                                     </select>
                                 </div>
+                                --}}
 
                                 <button type="submit" class="btn btn-danger btn-lg btn-round shadow mt-4 px-5">Хайх</button>
                             </form>
@@ -90,7 +92,7 @@ $banner = App\Banner::where('location_id', 5)->where('status', 'active')->inRand
             <div class="container mt-5">
                 <div class="people-wish-list">
                     <div class="row mt-2">
-                        @contentInline(type=wanna-buy, markName=request()->input('markName'), modelName=request()->input('modelName'), priceAmountStart>=intval(request()->input('priceAmount')), sortDir=desc, sort=updated_at, limit=18 as $cars | paginate)
+                        @contentInline(type=wanna-buy, markName=request()->input('markName'), modelName=request()->input('modelName'), priceAmountStart>=intval(request()->input('priceAmount')), sortDir=desc, sort=publishedAt, limit=18 as $cars | paginate)
                         @if($cars->total() != 0)
                         @foreach($cars as $car)
                             <div class="col-lg-4 col-md-4">

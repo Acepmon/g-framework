@@ -203,7 +203,7 @@ class CarContentsTableSeeder extends Seeder
                 new ContentMeta(['key' => 'doctorVerified', 'value' => ($doctorVerified->name == 'Баталгаажсан')?'1':'0']),
                 new ContentMeta(['key' => 'doctorVerifiedBy', 'value' => '1']),
                 new ContentMeta(['key' => 'doctorVerificationRequest', 'value' => false]),
-                new ContentMeta(['key' => 'doctorVerificationFile', 'value' => '']),
+                new ContentMeta(['key' => 'doctorVerificationFile', 'value' => '/assets/car-web/img/doctor-service-examination.JPG']),
 
                 // Retail
 

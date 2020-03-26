@@ -81,12 +81,12 @@ if ($startsAt) {
     <div class="form-group col-md-4">
       <label for="transmission">Шууд авах үнэ:</label>
       <div class="input-group">
-        <input type="text" id="buyout" name="buyoutAmount" class="form-control" placeholder="0.00" required value="{{ $car->metaValue('buyoutAmount')?doubleval($car->metaValue('buyoutAmount')) / 1000000:'' }}">
+        <input type="text" id="buyoutPrice" name="buyoutAmount" class="form-control" placeholder="0.00" required value="{{ $car->metaValue('buyoutAmount')?doubleval($car->metaValue('buyoutAmount')) / 1000000:'' }}">
         <input type="hidden" name="buyoutUnit" value="{{ $car->metaValue('buyoutUnit')?$car->metaValue('buyoutUnit'):'₮' }}">
         <div class="input-group-prepend">
           <div class="input-group-text-right">₮</div>
         </div>
-        <span id="buyoutAlert" class="invalid-feedback" role="alert" style="display: none">
+        <span id="buyoutPriceAlert" class="invalid-feedback" role="alert" style="display: none">
           Please choose buyout amount
         </span>
       </div>
@@ -196,7 +196,8 @@ if ($startsAt) {
     var paramObjs = {};
     $.each($('#form-3').serializeArray(), function(_, kv) {
       if (kv.name.endsWith('Amount')) {
-        paramObjs[kv.name] = parseFloat(kv.value);// * 1000000 + "";
+        paramObjs[kv.name] = kv.value.replace(/,/g, "");
+        // paramObjs[kv.name] = parseFloat(kv.value);// * 1000000 + "";
       } else if (!kv.name.startsWith('schedule')) {
         paramObjs[kv.name] = kv.value;
       }

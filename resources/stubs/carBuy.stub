@@ -143,6 +143,7 @@ $itemsPerPage = request('itemsPerPage', "15");
 <script src="{{ asset('car-web/vendor/owl.carousel.thumbs/owl.carousel2.thumbs.min.js') }}"></script>
 <script>
   var waiting = true;
+  var lastCount = null;
   $(document).ready(function() {
     refilter();
   });
@@ -221,6 +222,7 @@ $itemsPerPage = request('itemsPerPage', "15");
       method: 'GET',
       data: paramObjs,
       success: function (data) {
+        lastCount = data;
         countCategories = ['car-seller', 'car-doctor-verified'];
         var count = {};
         for (var i=0; i<countCategories.length; i++) {

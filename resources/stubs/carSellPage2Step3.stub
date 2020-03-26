@@ -9,10 +9,10 @@
             </h5>
         </div>
         <div class="input-group col-md-7">
-            <input type="text" name="priceAmount" class="form-control" id="reserve-price" required placeholder="0.00"  value="{{ $car->metaValue('priceAmount')?doubleval($car->metaValue('priceAmount')) / 1000000:'' }}">
+            <input type="text" name="priceAmount" class="form-control" id="reserve-price" required placeholder="0.00"  value="{{ $car->metaValue('priceAmount') }}">
             <input type="text" hidden name="priceUnit" class="form-control" value="₮">
             <div class="input-group-prepend">
-                <div class="input-group-text-right">Сая ₮</div>
+                <div class="input-group-text-right">₮</div>
             </div>
             <span id="reserve-priceAlert" class="invalid-feedback" role="alert" style="display: none">
                 Үнээ сонгоно уу
@@ -22,7 +22,7 @@
     <div class="form-row mt-4">
         <div class="col-md-2">
             <div class="custom-control custom-radio">
-                <input type="radio" name="priceType" class="custom-control-input" id="sell-negotiate" value="Тохиролцох" {{ ($car->metaValue('priceType') == Null || $car->metaValue('Тохиролцох') == 'Тохиролцох')?'checked':'' }}>
+                <input type="radio" name="priceType" class="custom-control-input" id="sell-negotiate" value="Тохиролцох" {{ ($car->metaValue('priceType') == Null || $car->metaValue('priceType') == 'Тохиролцох')?'checked':'' }}>
                 <label class="custom-control-label" for="sell-negotiate">Тохиролцох</label>
             </div>
         </div>
@@ -83,7 +83,7 @@
         var paramObjs = {};
         $.each($('#step-3-price').serializeArray(), function(_, kv) {
             if (kv.name.endsWith('Amount')) {
-                paramObjs[kv.name] = parseFloat(kv.value) * 1000000 + "";
+                paramObjs[kv.name] = kv.value.replace(/,/g, "");// * 1000000 + "";
             } else {
                 paramObjs[kv.name] = kv.value;
             }

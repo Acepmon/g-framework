@@ -250,6 +250,13 @@ $("input[name='car-type']").on("click", function() {
 });
 
 function callManufacturers(type, __callback) {
+    // Save previous state
+    var prevChecked = $("#manufacturerBody .car-manufacturer input[type=radio]:checked");
+    var prevCheckedId = 0;
+    if (prevChecked.length != 0) {
+        prevCheckedId = prevChecked[0].id;
+    }
+
     var getParams = '&count=True&order=name';
     @if(request('car-manufacturer', False))
     getParams += '&car-manufacturer=' + {{ request('car-manufacturer', 0) }};
@@ -262,6 +269,16 @@ function callManufacturers(type, __callback) {
         $("#demo-spinner").css({'display': 'none'});
         $("#manufacturerBody .manufacturer").empty();
         $("#manufacturerBody .manufacturer").html(data);
+        //Apply previous states
+        if (lastCount != null) {
+            for (var i=0; i<lastCount.length; i++) {
+                $("#" + lastCount[i].id + "-count").html(lastCount[i].contents_count);
+            }
+        }
+        if (prevCheckedId) {
+            $("#"+prevCheckedId).prop('checked', true);
+        }
+
         if (type != '') {
             $("#car-manufacturer").collapse('show');
         }

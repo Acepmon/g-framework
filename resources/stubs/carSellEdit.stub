@@ -110,7 +110,7 @@
           } else {
             switchStep(2);
           }
-        });
+        }, true);
       } else {
         switchStep(1);
       }

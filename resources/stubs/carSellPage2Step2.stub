@@ -249,8 +249,10 @@
     });
 
 
-    function step2Submit(__callback) {
-        event.preventDefault();
+    function step2Submit(__callback, prevent) {
+        if (!prevent) {
+            event.preventDefault();
+        }
         formData = new FormData();
         var totalSize = 0;
         for (let [key, value] of Object.entries(fileList)) {

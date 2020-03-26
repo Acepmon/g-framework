@@ -66,6 +66,8 @@
 
                                             @if (!$content->metaValue('doctorVerified') && Auth::user()->id == $content->author_id)
                                                 <a class="btn btn-round shadow-soft-blue ml-3" href="#modalVerifyCar" id="modalVerifyCarLabel" data-toggle="modal">Баталгаажуулах</a>
+                                            @elseif ($content->metaValue('doctorVerified'))
+                                                <a class="btn btn-round shadow-soft-blue ml-3" href="#modalVerifiedCar" id="modalVerifyCarLabel" data-toggle="modal">Баталгаажуулалтыг харах</a>
                                             @endif
 
                                             @if (Auth::user()->id == $content->author_id)
@@ -83,6 +85,25 @@
     </section>
 
     @push('modals')
+        <div class="modal fade" id="modalVerifiedCar" tabindex="-1" role="dialog" aria-labelledby="modalVerifiedCarLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px!important">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" id="modalVerifiedCarClose" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body px-5">
+                        <div class="maz-modal-title">Doctor баталгаажуулалтын файл</div>
+                        @if ($content->metaValue('doctorVerified') && $content->metaValue('doctorVerificationFile'))
+                        <img src="{{ $content->metaValue('doctorVerificationFile') }}" style="width:100%">
+                        @else
+                        <div class="maz-modal-desc">Энэ машин Doctor-р баталгаажуулагдаагүй эсвэл файлыг яг одоогоор харах боломжгүй байна.</div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="modal fade" id="modalVerifyCar" tabindex="-1" role="dialog" aria-labelledby="modalVerifyCarLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
