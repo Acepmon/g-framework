@@ -305,16 +305,18 @@ function onManufacturerSelect() {
         let name = "car-" + toKebabCase(val) + "-container";
         let subList = $(".car-filter .models[name=\"" + name + "\"");
 
+        refilter();
         if (subList.length) {
             switchToModel(name);
         } else {
             waiting = 1;
             load();
             var paramObjs = getParamObjs();
+            paramObjs['manufacturer-id'] = paramObjs['car-manufacturer'];
             $.ajax({
                 type: 'Get',
                 url: '/ajax/cars/taxonomy/car-' + toKebabCase(val) + getParams,
-                // data: paramObjs
+                data: paramObjs
             }).done(function(data) {
                 $("#demo-spinner").css({'display': 'none'});
                 $('#manufacturerBody').append($(data));

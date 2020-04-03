@@ -123,7 +123,9 @@ class CarController extends Controller
         $filter = request()->all();
         $filter = array_diff_key($filter, Car::EXCEPT_FILTER);
         $filtered = Car::all();
-        // $filtered = Car::filterCarsByRequest($filtered, $filter);// <-- comment this
+        if (array_key_exists('manufacturer-id', $filter)) {
+            $filtered = Car::filterCarsByRequest($filtered, $filter);
+        }
         $filteredIds = $filtered->pluck('id');
 
         $taxonomies = $taxonomies->withCount(['contents' => function($query) use ($filteredIds) {
