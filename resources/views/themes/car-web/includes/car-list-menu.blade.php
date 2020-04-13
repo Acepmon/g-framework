@@ -194,6 +194,7 @@ $categoryName = [
 <script>
 $("input[type=radio][name!='car-manufacturer']").click(submitMenu);
 $("input[type=radio][name!='car-manufacturer'], .page-link, .advantage-item, .sort-cars li").click(load);
+var firstLoad = false;
 
 function load(event) {
     $("#demo-spinner").css('display', 'block');
@@ -222,10 +223,15 @@ $(document).ready(function() {
     callManufacturers('', ()=>{
         @if(request('car-manufacturer', False))
         $("#{{ request('car-manufacturer', 0) }}").trigger('click');
+        window.firstLoad = true;
         @endif
     });
     @if(request('car-type', False))
     $("input[name=car-type][value={{ request('car-type', 0) }}]").trigger('click');
+    window.firstLoad = true;
+    @endif
+    @if(request('car-model', False))
+    window.firstLoad = true;
     @endif
 });
 
@@ -240,10 +246,10 @@ $("input[name='car-type']").on("click", function() {
             type = "special";
         } else {
             type = 'normal';
-            $("#car-manufacturer .models input[type=radio]").each(function (){
-                $(this).prop('checked', false); 
-            });
         }
+        $("#car-manufacturer input[type=radio]").each(function (){
+            $(this).prop('checked', false); 
+        });
         $(".type-choice").hide(300);
         $("#"+type+"-choice").show(300);
 
@@ -279,6 +285,9 @@ function callManufacturers(type, __callback) {
                 $("#" + lastCount[i].id + "-count").html(lastCount[i].contents_count);
             }
         }
+        $("#manufacturerBody .manufacturer input[type=radio]").each(function() {
+            $(this).prop('checked', false);
+        });
         if (prevCheckedId) {
             // $("#"+prevCheckedId).prop('checked', true);
         }
@@ -301,15 +310,24 @@ $("input.car-manufacturer").on("click", onManufacturerSelect);
 
 function onManufacturerSelect() {
     var getParams = '?count=False';
-    @if(request('car-model', False))
-    getParams += '&car-model=' + {{ request('car-model', 0) }};
-    @endif
+    if($("input[name='car-model']").val()) {
+        getParams += '&car-model=' + {{ request('car-model', 0) }};
+        $("input[name='car-model']").removeAttr("value");
+    }
+    $("#car-manufacturer .models input[type=radio]").each(function (){
+        $(this).prop('checked', false); 
+    });
+
     if (waiting == 0) {
         let val = $(this).attr("placeholder");
         let name = "car-" + toKebabCase(val) + "-container";
-        let subList = $(".car-filter .models[name=\"" + name + "\"");
+        let subList = $(".car-filter .models[name='" + name + "'");
 
-        refilter();
+        if (window.firstLoad) {//Used from search
+            window.firstLoad = false;
+        } else {
+            refilter();
+        }
         if (subList.length) {
             switchToModel(name);
         } else {
@@ -330,6 +348,9 @@ function onManufacturerSelect() {
                         $(this).prop('checked', false);
                     });
                 });
+                if (window.firstLoad) {
+                    $("#"+{{ request('car-model', 0) }}).prop("checked", true);
+                }
                 $(".models[name=\""+name+"\"] input[type=radio]").click(submitMenu);
                 $(".models[name=\""+name+"\"] input[type=radio]").click(load);
                 waiting = 0;
@@ -345,7 +366,7 @@ function switchToManufacturer() {
 
 function switchToModel(name) {
     $(".car-filter .models.active").hide();
-    var subList = $(".car-filter .models[name=\"" + name + "\"");
+    var subList = $(".car-filter .models[name='" + name + "'");
     if (subList.length) {
         $('.car-filter .car-manufacturer').hide(300);
         subList.show(300);
