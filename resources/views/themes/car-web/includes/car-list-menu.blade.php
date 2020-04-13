@@ -209,7 +209,11 @@ function submitMenu(event) {
     } else {
         $(this).addClass('checked');
     }
-    refilter();
+    if (event.currentTarget.name == 'car-type') {
+        refilter(true);
+    } else {
+        refilter();
+    }
 }
 
 var waiting = 0;
@@ -276,7 +280,7 @@ function callManufacturers(type, __callback) {
             }
         }
         if (prevCheckedId) {
-            $("#"+prevCheckedId).prop('checked', true);
+            // $("#"+prevCheckedId).prop('checked', true);
         }
 
         if (type != '') {

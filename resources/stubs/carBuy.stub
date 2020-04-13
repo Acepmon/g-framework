@@ -164,6 +164,7 @@ $itemsPerPage = request('itemsPerPage', "15");
         paramObjs[kv.name] = kv.value;
       }
     });
+    console.log(paramObjs);
     // paramObjs = $("#filterForm").serialize();
     let countables = new Set();
     $("#manufacturerBody input[type=radio]").each(function (){
@@ -173,10 +174,17 @@ $itemsPerPage = request('itemsPerPage', "15");
     return paramObjs;
   }
 
-  function refilter() {
+  function refilter(ignoreManufacturer) {
     $("#demo-spinner").css({'display': 'block'});
     $("#content-spinner").css({'display': 'block'});
     var paramObjs = getParamObjs();
+    if (ignoreManufacturer) {
+      delete paramObjs['car-manufacturer'];
+      var model = $("#filterForm .models input:checked")[0];
+      if (model) {
+        delete paramObjs[model.name];
+      }
+    }
     $.ajax({
       url: '/ajax/cars/filter', 
       method: 'GET',
