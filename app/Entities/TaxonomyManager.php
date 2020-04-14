@@ -197,4 +197,20 @@ class TaxonomyManager extends Manager
         $most = $most->get()->merge($manufacturers->get());
         return $most;
     }
+    
+    public static function getWishlistManufacturers($limit=5)
+    {
+        $taxonomies = TermTaxonomy::where('taxonomy', 'car-manufacturer');
+        $filtered = Content::with('terms')->where('type', 'wanna-buy')->where('status', Content::STATUS_PUBLISHED)->where('visibility', Content::VISIBILITY_PUBLIC)->get();
+        $filteredIds = $filtered->pluck('id');
+
+        $taxonomies = $taxonomies->withCount(['contents' => function($query) use ($filteredIds) {
+            $query->whereIn('id', $filteredIds);
+        }]);
+
+        $most = clone $taxonomies;
+        $most = $most->orderBy('contents_count', 'desc')->limit($limit);
+        $most = $most->get()->merge($taxonomies->get());
+        return $most;
+    }
 }

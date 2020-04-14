@@ -349,7 +349,7 @@ function onManufacturerSelect() {
                     });
                 });
                 if (window.firstLoad) {
-                    $("#"+{{ request('car-model', 0) }}).prop("checked", true);
+                    $("#{{ request('car-model', 0) }}").prop("checked", true);
                 }
                 $(".models[name=\""+name+"\"] input[type=radio]").click(submitMenu);
                 $(".models[name=\""+name+"\"] input[type=radio]").click(load);

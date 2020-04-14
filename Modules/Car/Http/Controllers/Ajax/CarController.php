@@ -109,7 +109,6 @@ class CarController extends Controller
     public function getTaxonomy($taxonomy) {
         $count = request('count', False);
         $type = request('type', '');
-        $filter = request()->all();
         if ($taxonomy == 'car-manufacturer') {
             $type = request('type', '');
         }

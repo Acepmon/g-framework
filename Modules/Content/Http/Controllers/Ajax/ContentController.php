@@ -227,6 +227,20 @@ class ContentController extends Controller
 
         return response()->json($doc_list);
     }
+
+    public function attachTerms(Request $request) {
+        $content = Content::find($request->route('contentId'));
+
+        $result = [];
+        $inputs = $request->all();
+        foreach ($inputs as $key=>$value) {
+            $term = Term::find($value);
+            $content->terms()->save($term);
+        }
+
+        return response()->json("yes");
+    }
+
     
     /**
      * Remove the specified resource from storage.

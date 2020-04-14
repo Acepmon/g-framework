@@ -36,11 +36,18 @@ class CarWannaBuyTableSeeder extends Seeder
             $content->author_id = $carUserRandomId;
             $content->save();
 
-            $markName = TaxonomyManager::collection('car-manufacturer')->random()->term->name;
-            $modelName = TaxonomyManager::collection('car-' . \Str::kebab($markName))->random()->term->name;
+            $markName = TaxonomyManager::collection('car-manufacturer')->random()->term;
+            $models = TaxonomyManager::collection('car-' . \Str::kebab($markName->name));
+            $content->terms()->save($markName);
+            $modelName = '';
+            if ($models->count() > 0) {
+                $modelName = $models->random()->term;
+                $content->terms()->save($modelName);
+                $modelName = $modelName->name;
+            }
 
             $content->metas()->saveMany([
-                new ContentMeta(['key' => 'markName', 'value' => $markName]),
+                new ContentMeta(['key' => 'markName', 'value' => $markName->name ]),
                 new ContentMeta(['key' => 'modelName', 'value' => $modelName]),
                 new ContentMeta(['key' => 'publishedAt', 'value' => \Carbon\Carbon::now()]),
                 new ContentMeta(['key' => 'priceAmountStart', 'value' => rand(100000, 5000000)]),

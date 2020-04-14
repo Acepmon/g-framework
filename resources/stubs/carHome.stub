@@ -127,7 +127,7 @@ $itsIntCar=false;
                                     </div>
                                     <div class="form-group">
                                         <select id="vehicleManufacturerModels" class="form-control" name="car-model">
-                                            <option value="" >Модел</option>
+                                            <option value="">Модел</option>
                                             {{--//@getTaxonomys({"filter":[{"field":"taxonomy", "key":"model"}], "returnValue":"models"})--}}
                                         </select>
                                     </div>

@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/contents/{contentId}/medias', 'ContentController@attachMedias');
             Route::post('/contents/{contentId}/medias/delete', 'ContentController@detachMedias');
             Route::post('/contents/{contentId}/doc', 'ContentController@attachDoc');
+            Route::post('/contents/{contentId}/terms', 'ContentController@attachTerms');
 
             Route::prefix('users')->group(function () {
                 Route::get('', 'UserController@index')->name('ajax.users.index');

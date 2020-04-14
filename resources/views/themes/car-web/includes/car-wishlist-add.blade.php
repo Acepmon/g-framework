@@ -17,7 +17,7 @@
                                 <label for="Manufacturer">Үйлдвэрлэгч:</label>
                                 <select id="addWishMark" name="markName" class="form-control" required>
                                     @foreach(App\TermTaxonomy::where('taxonomy', 'car-manufacturer')->get()->sortBy('term.name') as $taxonomy)
-                                        <option value="{{$taxonomy->term->name}}">{{$taxonomy->term->name}}</option>
+                                        <option value="{{$taxonomy->term->name}}" placeholder="{{$taxonomy->term->id}}">{{$taxonomy->term->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -78,7 +78,9 @@
                 console.log(modelList.data.length);
                 modelNameElement.find('option').remove().end().append('<option value=""></option>').val('');
                 for (var i = 0; i < modelList.data.length; i++) {
-                    modelNameElement.append(new Option(modelList.data[i].term.name, modelList.data[i].term.name));
+                    var termName = modelList.data[i].term.name;
+                    var termId = modelList.data[i].term.id;
+                    modelNameElement.append('<option value="'+termName+'" placehodler="'+termId+'">'+termName+'</option>');
                 }
             });
         }
@@ -108,8 +110,6 @@
                 var publishedAt = now.getFullYear() + "-" + toTwoDigits(now.getUTCMonth()+1) + "-" + toTwoDigits(now.getDate());
                 publishedAt = publishedAt + " " + toTwoDigits(now.getHours()) + ":" + toTwoDigits(now.getMinutes()) + ":" + toTwoDigits(now.getSeconds());
                 var paramObjs = {
-                    "markName": markName,
-                    "modelName": modelName,
                     "priceUnit": priceUnit,
                     "publishedAt": publishedAt,
                     "priceAmountStart": parseInt(priceAmountStart.replace(/,/g, '')),
@@ -120,9 +120,19 @@
                     url: '/ajax/contents/' + carId + '/metas',
                     data: paramObjs
                 }).done(function(data) {
-                    $("#demo-spinner").css({'display': 'none'});
-                    window.location.href = "/wishlist";
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ajax/contents/' + carId + '/terms',
+                        data: {
+                            "markName": $("#add-wish select[name=markName]").find("option:selected").attr('placeholder'),
+                            "modelName": $("#add-wish select[name=modelName]").find("option:selected").attr('placeholder'),
+                        }
+                    }).done(function(data) {
+                        $("#demo-spinner").css({'display': 'none'});
+                        window.location.href = "/wishlist";
+                    });
                 });
+
             }).fail(function(err) {
                 console.log(err);
                 alert(err.responseJSON.message);
