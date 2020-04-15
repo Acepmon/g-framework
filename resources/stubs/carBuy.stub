@@ -166,8 +166,11 @@ $itemsPerPage = request('itemsPerPage', "15");
     });
     // paramObjs = $("#filterForm").serialize();
     let countables = new Set();
-    $("#manufacturerBody input[type=radio]").each(function (){
-      countables.add($(this).attr("name"));
+    $("#manufacturerBody input[type=radio]:checked").each(function (){
+      let val = $(this).attr("placeholder");
+      if (val != null && val != undefined) {
+        countables.add("car-" + toKebabCase(val));
+      }
     });
     paramObjs['countables'] = Array.from(countables);
     return paramObjs;

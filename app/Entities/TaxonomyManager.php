@@ -206,11 +206,11 @@ class TaxonomyManager extends Manager
 
         $taxonomies = $taxonomies->withCount(['contents' => function($query) use ($filteredIds) {
             $query->whereIn('id', $filteredIds);
-        }]);
+        }])->get()->where('contents_count', '!=', '0');
 
         $most = clone $taxonomies;
-        $most = $most->orderBy('contents_count', 'desc')->limit($limit);
-        $most = $most->get()->merge($taxonomies->get());
+        $most = $most->sortByDesc('contents_count', -1)->take($limit);
+        $most = $most->merge($taxonomies->sortBy('term.name'));
         return $most;
     }
 }

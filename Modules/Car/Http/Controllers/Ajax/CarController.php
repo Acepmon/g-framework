@@ -124,6 +124,12 @@ class CarController extends Controller
         $filtered = Car::all();
         if (array_key_exists('manufacturer-id', $filter)) {
             $filtered = Car::filterCarsByRequest($filtered, $filter);
+            $value = $filter['manufacturer-id'];
+            // $filtered = $filtered->whereHas('terms', function ($query) use ($value) {
+            //     if (is_numeric($value)) {
+            //         $query->where('term_taxonomy_id', $value);
+            //     }
+            // });
         }
         $filteredIds = $filtered->pluck('id');
 
@@ -132,21 +138,26 @@ class CarController extends Controller
         }]);
         $taxonomies = $taxonomies->get();
         
-        if ($count) {
-            $taxonomies = $taxonomies->where('contents_count', '!=', 0);
-        }
         $order = request('order', '');
-        if ($order == "top-5") {
-            // <<< Take most common 5 manufacturers and order other by id
-            $taxonomies = $taxonomies->sortByDesc('contents_count');
-            $firstFive = $taxonomies->take(5);
-            $taxonomies = $taxonomies->slice(5)->sortBy('id');
-            $taxonomies = $firstFive->merge($taxonomies);
-        } else if ($order == "count") {
-            $taxonomies = $taxonomies->sortByDesc('contents_count');
-        } else if ($order == "name") {
+        if ($order == "name") {
             $taxonomies = $taxonomies->sortBy('term.name');
             $taxonomies = $taxonomies->where('contents_count', '!=', 0);
+        } else {
+            if ($count) {
+                $taxonomies = $taxonomies->where('contents_count', '!=', 0);
+            }
+            if ($order == "top-5") {
+                // <<< Take most common 5 manufacturers and order other by id
+                $taxonomies = $taxonomies->sortByDesc('contents_count');
+                $firstFive = $taxonomies->take(5);
+                $taxonomies = $taxonomies->slice(5)->sortBy('id');
+                $taxonomies = $firstFive->merge($taxonomies);
+            } else if ($order == "count") {
+                if ($count) {
+                    $taxonomies = $taxonomies->where('contents_count', '!=', 0);
+                }
+                $taxonomies = $taxonomies->sortByDesc('contents_count');
+            }
         }
 
         return view('themes.car-web.includes.car-list-menu-items', [
