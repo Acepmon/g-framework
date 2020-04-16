@@ -181,7 +181,7 @@ $banner = App\Banner::where('location_id', 5)->where('status', 'active')->inRand
             var requestModelName = '{{ $modelName }}'
             $.ajax({
                 type: 'Get',
-                url: '/api/v1/taxonomies/car-' + toKebabCase(markName),
+                url: '/api/v1/taxonomies/car-' + toKebabCase(markName) + "?wishlist=True",
             }).done(function(data) {
                 var modelList=data;
                 $('#vehicleManufacturerModels')
@@ -191,9 +191,9 @@ $banner = App\Banner::where('location_id', 5)->where('status', 'active')->inRand
                     .append('<option value="">Модел</option>')
                     .val('')
                 ;
-                for (var i = 0; i < modelList.data.length; i++) {
-                    var option = new Option(modelList.data[i].term.name, modelList.data[i].term.name);
-                    if (modelList.data[i].term.name == requestModelName) {
+                for (let [key, value] of Object.entries(modelList)) {
+                    var option = new Option(value.term.name, value.id);
+                    if (value.term.name == requestModelName) {
                         option.selected = true;
                     }
                     $("#vehicleManufacturerModels").append(option);

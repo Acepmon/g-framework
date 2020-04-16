@@ -10,6 +10,7 @@ use Modules\Content\Transformers\TaxonomyCollection;
 use App\Entities\TaxonomyManager;
 use App\TermTaxonomy;
 use App\Term;
+use App\Content;
 use Modules\Car\Entities\Car;
 
 class TaxonomyController extends Controller
@@ -46,6 +47,14 @@ class TaxonomyController extends Controller
 
         if (request()->input('home')) {
             $filteredIds = Car::all()->pluck('id');
+            $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->withCount(['contents' => function($query) use ($filteredIds) {
+                $query->whereIn('id', $filteredIds);
+            }])->get()->where('contents_count', '!=', '0');
+            return $taxonomies;
+        }
+        if (request()->input('wishlist')) {
+            $filtered = Content::with('terms')->where('type', 'wanna-buy')->where('status', Content::STATUS_PUBLISHED)->where('visibility', Content::VISIBILITY_PUBLIC)->get();
+            $filteredIds = $filtered->pluck('id');
             $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->withCount(['contents' => function($query) use ($filteredIds) {
                 $query->whereIn('id', $filteredIds);
             }])->get()->where('contents_count', '!=', '0');
