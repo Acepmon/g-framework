@@ -21,7 +21,11 @@
 <input type="radio" id="{{$taxonomy->id}}" name="{{ $name }}" class="custom-control-input {{ $taxonomy->taxonomy }}" value="{{ $taxonomy->term->id }}"
     placeholder="{{ $taxonomy->term->name }}" {{ ($taxonomy->term->id == request($name, Null) || $taxonomy->term->id == request('car-model', Null))?'checked':'' }}>
 <label class="custom-control-label  d-flex justify-content-between" for="{{$taxonomy->id}}">{{ ucfirst($taxonomy->term->name) }}
-    <div class="text-muted" id="{{$taxonomy->id}}-count">{{ $taxonomy->contents_count }}</div>
+    <div class="text-muted" id="{{$taxonomy->id}}-count">
+        @if($name == "car-manufacturer") 
+            {{ $taxonomy->contents_count }}
+        @endif
+    </div>
 </label>
 </div>
 @endforeach

@@ -123,13 +123,13 @@ class CarController extends Controller
         $filter = array_diff_key($filter, Car::EXCEPT_FILTER);
         $filtered = Car::all();
         if (array_key_exists('manufacturer-id', $filter)) {
-            $filtered = Car::filterCarsByRequest($filtered, $filter);
+            // $filtered = Car::filterCarsByRequest($filtered, $filter);
             $value = $filter['manufacturer-id'];
-            // $filtered = $filtered->whereHas('terms', function ($query) use ($value) {
-            //     if (is_numeric($value)) {
-            //         $query->where('term_taxonomy_id', $value);
-            //     }
-            // });
+            $filtered = $filtered->whereHas('terms', function ($query) use ($value) {
+                if (is_numeric($value)) {
+                    $query->where('term_taxonomy_id', $value);
+                }
+            });
         }
         $filteredIds = $filtered->pluck('id');
 

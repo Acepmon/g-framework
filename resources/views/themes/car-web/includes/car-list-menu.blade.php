@@ -351,6 +351,21 @@ function onManufacturerSelect() {
                 if (window.firstLoad) {
                     $("#{{ request('car-model', 0) }}").prop("checked", true);
                 }
+
+                // Set last count
+                console.log(lastCount);
+                $(".car-filter .models[name='" + name + "'] input[type=radio]").each(function () {
+                    console.log(this);
+                    let id = $(this).attr("id");
+                    console.log(id);
+                    for (var i=0; i<lastCount.length; i++) {
+                        if (lastCount[i].id == id) {
+                            $("#"+id+"-count").html(lastCount[i].contents_count);
+                            break;
+                        }
+                    }
+                });
+
                 $(".models[name=\""+name+"\"] input[type=radio]").click(submitMenu);
                 $(".models[name=\""+name+"\"] input[type=radio]").click(load);
                 waiting = 0;
@@ -366,7 +381,7 @@ function switchToManufacturer() {
 
 function switchToModel(name) {
     $(".car-filter .models.active").hide();
-    var subList = $(".car-filter .models[name='" + name + "'");
+    var subList = $(".car-filter .models[name='" + name + "']");
     if (subList.length) {
         $('.car-filter .car-manufacturer').hide(300);
         subList.show(300);
