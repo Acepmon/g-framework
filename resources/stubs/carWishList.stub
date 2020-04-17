@@ -192,7 +192,7 @@ $banner = App\Banner::where('location_id', 5)->where('status', 'active')->inRand
                     .val('')
                 ;
                 for (let [key, value] of Object.entries(modelList)) {
-                    var option = new Option(value.term.name, value.id);
+                    var option = new Option(value.term.name + " ("+value.contents_count+")", value.id);
                     if (value.term.name == requestModelName) {
                         option.selected = true;
                     }
