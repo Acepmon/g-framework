@@ -327,7 +327,7 @@ $itsIntCar=false;
                         var i;
                         for (let [key, value] of Object.entries(modelList)) {
                             console.log(value);
-                            $("#vehicleManufacturerModels").append(new Option(value.term.name, value.id));
+                            $("#vehicleManufacturerModels").append(new Option(value.term.name + " (" +value.contents_count+ ")", value.id));
                         }
                     }).fail(function(err) {
                         // $("#demo-spinner").css({'display': 'none'});

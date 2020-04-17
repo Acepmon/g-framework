@@ -19,6 +19,9 @@ $banner = \App\Banner::where('location_id', 5)->where('status', 'active')->inRan
   min-height: 100%;
   object-fit: cover;
 }
+.none {
+  display: none;
+}
 </style>
 @endsection
 
@@ -168,7 +171,7 @@ $itemsPerPage = request('itemsPerPage', "15");
     let countables = new Set();
     $("#manufacturerBody input[type=radio]:checked").each(function (){
       let val = $(this).attr("placeholder");
-      if (val != null && val != undefined) {
+      if (val != null && val != undefined && val != "Бусад") {
         countables.add("car-" + toKebabCase(val));
       }
     });
@@ -243,6 +246,13 @@ $itemsPerPage = request('itemsPerPage', "15");
         }
         for (var i=0; i<data.length; i++) {
           $("#" + data[i].id + "-count").html(data[i].contents_count);
+          //Hide/show 0 count options
+          if (data[i].contents_count == 0) {
+            $("#"+data[i].id).parent().hide();//addClass("none");
+          } else {
+            $("#"+data[i].id).parent().show();//removeClass("none");
+          }
+
           if (countCategories.includes(data[i].taxonomy)) {
             count[data[i].taxonomy] += data[i].contents_count;
           }

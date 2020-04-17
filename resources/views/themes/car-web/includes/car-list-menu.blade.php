@@ -353,11 +353,8 @@ function onManufacturerSelect() {
                 }
 
                 // Set last count
-                console.log(lastCount);
                 $(".car-filter .models[name='" + name + "'] input[type=radio]").each(function () {
-                    console.log(this);
                     let id = $(this).attr("id");
-                    console.log(id);
                     for (var i=0; i<lastCount.length; i++) {
                         if (lastCount[i].id == id) {
                             $("#"+id+"-count").html(lastCount[i].contents_count);

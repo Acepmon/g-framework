@@ -17,14 +17,12 @@
 @endif
 
 @foreach($taxonomies as $taxonomy)
-<div class="custom-control custom-radio">
+<div class="custom-control custom-radio {{ ($taxonomy->contents_count==0)?'none':'' }}">
 <input type="radio" id="{{$taxonomy->id}}" name="{{ $name }}" class="custom-control-input {{ $taxonomy->taxonomy }}" value="{{ $taxonomy->term->id }}"
     placeholder="{{ $taxonomy->term->name }}" {{ ($taxonomy->term->id == request($name, Null) || $taxonomy->term->id == request('car-model', Null))?'checked':'' }}>
 <label class="custom-control-label  d-flex justify-content-between" for="{{$taxonomy->id}}">{{ ucfirst($taxonomy->term->name) }}
     <div class="text-muted" id="{{$taxonomy->id}}-count">
-        @if($name == "car-manufacturer") 
-            {{ $taxonomy->contents_count }}
-        @endif
+        {{ $taxonomy->contents_count }}
     </div>
 </label>
 </div>
