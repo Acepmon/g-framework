@@ -247,12 +247,7 @@ $itemsPerPage = request('itemsPerPage', "15");
         for (var i=0; i<data.length; i++) {
           $("#" + data[i].id + "-count").html(data[i].contents_count);
           //Hide/show 0 count options
-          if (data[i].contents_count == 0) {
-            $("#"+data[i].id).parent().hide();//addClass("none");
-          } else {
-            $("#"+data[i].id).parent().show();//removeClass("none");
-          }
-
+          hideZeroCount(data[i].id, data[i].contents_count);
           if (countCategories.includes(data[i].taxonomy)) {
             count[data[i].taxonomy] += data[i].contents_count;
           }
@@ -263,6 +258,14 @@ $itemsPerPage = request('itemsPerPage', "15");
         hideLoader();
       }
     });
+  }
+
+  function hideZeroCount(id, count) {
+    if (count == 0) {
+      $("#"+id).parent().hide();//addClass("none");
+    } else {
+      $("#"+id).parent().show();//removeClass("none");
+    }
   }
 
   function hideLoader() {

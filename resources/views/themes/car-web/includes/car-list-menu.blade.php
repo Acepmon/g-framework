@@ -283,6 +283,7 @@ function callManufacturers(type, __callback) {
         if (lastCount != null) {
             for (var i=0; i<lastCount.length; i++) {
                 $("#" + lastCount[i].id + "-count").html(lastCount[i].contents_count);
+                hideZeroCount(lastCount[i].id, lastCount[i].contents_count);
             }
         }
         $("#manufacturerBody .manufacturer input[type=radio]").each(function() {
@@ -358,6 +359,7 @@ function onManufacturerSelect() {
                     for (var i=0; i<lastCount.length; i++) {
                         if (lastCount[i].id == id) {
                             $("#"+id+"-count").html(lastCount[i].contents_count);
+                            hideZeroCount(id, lastCount[i].contents_count);
                             break;
                         }
                     }
