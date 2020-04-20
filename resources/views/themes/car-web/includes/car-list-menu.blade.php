@@ -192,7 +192,7 @@ $categoryName = [
 
 @push('scripts')
 <script>
-$("input[type=radio][name!='car-manufacturer']").click(submitMenu);
+$("input[type=radio][name!='car-manufacturer'][name!='car-type']").click(submitMenu);
 $("input[type=radio][name!='car-manufacturer'], .page-link, .advantage-item, .sort-cars li").click(load);
 var firstLoad = false;
 
@@ -238,6 +238,9 @@ $(document).ready(function() {
 $("input[name='car-type']").on("click", function() {
     if (waiting == 0) {
         let type = $(this).val();
+        $("#truck-choice option:selected").prop('selected', false);
+        $("#bus-choice option:selected").prop('selected', false);
+        $("#special-choice option:selected").prop('selected', false);
         if (type == {{ \App\Term::where('name', 'Автобус')->first()->id }}) {
             type = "bus";
         } else if (type == {{ \App\Term::where('name', 'Хүнд ММ')->first()->id }}) {
@@ -247,9 +250,10 @@ $("input[name='car-type']").on("click", function() {
         } else {
             type = 'normal';
         }
-        $("#car-manufacturer input[type=radio]").each(function (){
+        $("#car-manufacturer input[type=radio]").each(function () {
             $(this).prop('checked', false); 
         });
+        refilter();
         $(".type-choice").hide(300);
         $("#"+type+"-choice").show(300);
 
