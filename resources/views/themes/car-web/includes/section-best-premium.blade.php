@@ -47,25 +47,25 @@
                                             {{(number_format(getMetasValue($bpCars->metas, 'mileageAmount')))}} {{(getMetasValue($bpCars->metas, 'mileageUnit'))}}
                                              | {{(getMetasValue($bpCars->metas, 'fuelType'))}} | 
                                             {{number_format(getMetasValue($bpCars->metas, 'capacityAmount'))}} {{(getMetasValue($bpCars->metas, 'capacityUnit'))}}</div>
-                                        @if(Auth::user()!=null && $bpCars->author_id==Auth::user()->id)
-                                            <div class="favorite">
-                                                <span class=""><i class="fas fa-car"></i></span>
-                                            </div>
-                                        @else
-                                            <div class="favorite saveToInterested" data-target="{{ $bpCars->id }}">
-                                                @if($itsIntCar==true)
-                                                    <span class="text-danger"><i class="fas fa-heart"></i></span>
-                                                @else
-                                                    <i class="icon-heart"></i>
-                                                @endif
-                                            </div>
-                                        @endif
                                     </div>
                                 </div>
                                 <div class="card-body py-2">
                                     <div class="card-description">
                                         <div class="card-desc-top">
                                             <div class="card-title">{{$bpCars->title}}</div>
+                                            @if(Auth::user()!=null && $bpCars->author_id==Auth::user()->id)
+                                                <div class="favorite">
+                                                    <span class="text-dark"><i class="fas fa-car"></i></span>
+                                                </div>
+                                            @else
+                                                <div class="favorite saveToInterested" data-target="{{ $bpCars->id }}">
+                                                    @if($itsIntCar==true)
+                                                        <span class="text-danger"><i class="fas fa-heart"></i></span>
+                                                    @else
+                                                        <i class="text-danger icon-heart"></i>
+                                                    @endif
+                                                </div>
+                                            @endif
                                             <div class="price">{{numerizePrice((getMetasValue($bpCars->metas, 'priceAmount')))}} {{(getMetasValue($bpCars->metas, 'priceUnit'))}}</div>
                                         </div>
 

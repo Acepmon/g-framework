@@ -16,7 +16,7 @@
                 <div class="wish-slide owl-carousel owl-theme">
 
 
-                    @content(type=wanna-buy, sort=publishedAt, limit=12 as $wannaBuyData | paginate)
+                    @content(type=wanna-buy, sort=publishedAt, sortDir=desc, limit=12 as $wannaBuyData | paginate)
                     <!-- card start -->
                         <!-- <div class="card">
                             <div class="card-top">

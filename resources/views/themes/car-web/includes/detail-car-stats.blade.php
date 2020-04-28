@@ -4,7 +4,7 @@
             <div class="dealer-information">
                 @if ($content->metaValue('doctorVerified') && !$content->metaValue('doctorVerificationRequest'))
                     <div class="dealer-more">
-                        <div class="value"><img src="{{ asset('car-web/img/icons/verify.svg') }}" alt=""></div>
+                        <div class="value" style="background-color: #df2626"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
                         <div class="title">DOCTOR-оор
                             <span>батлагдсан</span></div>
                     </div>
