@@ -171,7 +171,7 @@ $itemsPerPage = request('itemsPerPage', "15");
     let countables = new Set();
     $("#manufacturerBody input[type=radio]:checked").each(function (){
       let val = $(this).attr("placeholder");
-      if (val != null && val != undefined && val != "Бусад") {
+      if (val != null && val != undefined && val != "Бусад" && !$.isNumeric(val)) {
         countables.add("car-" + toKebabCase(val));
       }
     });
