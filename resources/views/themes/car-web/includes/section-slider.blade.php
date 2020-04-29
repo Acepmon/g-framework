@@ -19,15 +19,6 @@
 
                         <div class="card-caption">
                             <div class="meta">{{ $car->metaValue('mileageAmount') }} {{ $car->metaValue('mileageUnit') }} | {{ ucfirst($car->metaValue('fuelType')) }} | {{ $car->metaValue('capacityAmount') }} {{ $car->metaValue('capacityUnit') }}</div>
-                            @if(Auth::user() && count(metaHas(Auth::user(), 'interestedCars', $car->id)->get()) > 0)
-                            <div class="favorite" onclick="addToInterestFromSlider(event, {{$car->id}})">
-                                <span class="text-danger"><i class="fas fa-heart"></i></span>
-                            </div>
-                            @else
-                            <div class="favorite" onclick="addToInterestFromSlider(event, {{$car->id}})">
-                                <span class=""><i class="far fa-heart"></i></span>
-                            </div>
-                            @endif
                         </div>
                     </div>
 
@@ -35,6 +26,21 @@
                         <div class="card-description">
                             <div class="card-desc-top">
                                 <div class="card-title">{{ $car->title }}</div>
+                                @if(Auth::user() && $car->author_id==Auth::user()->id)
+                                    <div class="favorite">
+                                        <span class="text-dark"><i class="fas fa-car"></i></span>
+                                    </div>
+                                @else
+                                    @if(Auth::user() && count(metaHas(Auth::user(), 'interestedCars', $car->id)->get()) > 0)
+                                    <div class="favorite" onclick="addToInterestFromSlider(event, {{$car->id}})">
+                                        <span class="text-danger"><i class="fas fa-heart"></i></span>
+                                    </div>
+                                    @else
+                                    <div class="favorite" onclick="addToInterestFromSlider(event, {{$car->id}})">
+                                        <span class="text-danger"><i class="far fa-heart"></i></span>
+                                    </div>
+                                    @endif
+                                @endif
                                 <div class="price" style="min-width: 35%">{{ numerizePrice($car->metaValue('priceAmount')) }} {{ $car->metaValue('priceUnit') }}</div>
                             </div>
 
@@ -89,7 +95,7 @@ function addToInterestFromSlider(event, value) {
         if (data.status == 'added') {
           target.innerHTML = '<span class="text-danger"><i class="fas fa-heart"></i></span>';
         } else if (data.status == 'removed') {
-          target.innerHTML = '<span class=""><i class="far fa-heart"></i></span>';
+          target.innerHTML = '<span class="text-danger"><i class="far fa-heart"></i></span>';
         }
       },
       error: function (error) {

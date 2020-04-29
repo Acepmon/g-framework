@@ -2093,15 +2093,18 @@ select {
   text-align: left;
   font-weight: 600;
   font-size: .875rem;
-  color: #AAAEB9;
+  color: #2b3651;
 }
 
+.favorite i {
+  font-size: 18px;
+}
 .car-list .card .card-body .card-caption .favorite {
   margin-top: 5px;
   font-size: .875rem;
   text-align: left;
   cursor: pointer;
-  color: #AAAEB9;
+  color: #2b3651;
 }
 
 .car-list .card .card-body .card-caption .is-favorited {
@@ -2151,7 +2154,8 @@ select {
   font-size: 1.25rem;
   font-weight: 700;
   text-align: left;
-  color: #17191D;
+  /*color: #17191D;*/
+  color: #DF2626;
 }
 
 .car-list .card .card-body .info {
@@ -2363,6 +2367,7 @@ select {
     font-size: 1.5rem;
     right: -1rem;
     top: -3.5rem;
+    color: #DF2626;
   }
   .car-list .card .card-body .card-description .info {
     display: none;
@@ -2394,6 +2399,9 @@ select {
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
+  .car-list .card .card-body {
+    height: 162px;
+  }
   .car-list .card .card-body .card-description .card-caption {
     padding-top: .5rem;
     width: 100%;
@@ -3920,7 +3928,7 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
 
 .card-list.hot-deal a.card .card-body .card-description .card-meta .status {
   font-size: .75rem;
-  color: #AAAEB9;
+  color: #2b3651;
   text-align: left;
   width: 50%;
 }
@@ -3929,6 +3937,7 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
   font-size: 1.25rem;
   font-weight: 700;
   text-align: right;
+  color: #DF2626;
 }
 
 .card-list .card {
@@ -4150,6 +4159,7 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
   position: absolute;
   bottom: 0;
   right: 0;
+  color: #DF2626;
 }
 
 .card-list .card .card-body .card-description .card-meta {
@@ -4166,14 +4176,14 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
 
 .card-list .card .card-body .card-description .card-meta .status {
   font-size: .75rem;
-  color: #AAAEB9;
+  color: #2b3651;
   text-align: left;
   width: 50%;
 }
 
 .card-list .card .card-body .status {
   font-size: .875rem;
-  color: #AAAEB9;
+  color: #2b3651;
 }
 
 .card-list .card .card-body .overall {
@@ -4314,13 +4324,14 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
 }
 
 .people-wish-list .card .card-body .wish-detail .price {
-  color: #2B3651;
+  /*color: #2B3651;*/
   font-weight: 600;
   margin: .5rem;
+  color: #DF2626;
 }
 
 .people-wish-list .card .card-body .wish-detail .phone {
-  color: #2B3651;
+  color: #2b3651;
   font-weight: 700;
   margin: .5rem;
 }
@@ -4352,7 +4363,7 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
   line-height: 1.25rem;
   font-size: 1rem;
   font-weight: 600;
-  color: #2B3651;
+  color: #2b3651;
   white-space: nowrap;
   width: 70%;
   overflow: hidden;
@@ -4402,11 +4413,12 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
 }
 
 .people-wish-list .wish-card .card-body .wish-detail .price {
-  color: #3d4c72;
+  /*color: #3d4c72;*/
   opacity: .6;
   font-size: 1.5rem;
   font-weight: 600;
   margin: .5rem;
+  color: #DF2626;
 }
 
 .people-wish-list .wish-card .card-body .wish-detail i {
@@ -4445,7 +4457,7 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
   line-height: 1.25rem;
   font-size: 1rem;
   font-weight: 600;
-  color: #858994;
+  color: #2b3651;
   white-space: nowrap;
   width: 70%;
   overflow: hidden;
@@ -4459,7 +4471,7 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
 
 .people-wish-list .wish-card .card-body .wish-user .phone {
   width: 100%;
-  color: #858994;
+  color: #2b3651;
   font-weight: 700;
   margin: .5rem;
   text-align: right;

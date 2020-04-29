@@ -33,6 +33,11 @@
 </div>
 
 @if ($items->all() && sizeof($items->all()) != 0)
+  @php
+    if (sizeof($items->all()) < ($page-0) * $itemsPerPage) {
+      $page = 1;
+    }
+  @endphp
   <div class="car-list {{ ($type == 'auction')?'auction-list':'' }}">
     @if ($type == 'auction')
         @foreach($items->forPage($page, $itemsPerPage) as $car)
