@@ -492,7 +492,7 @@ $itsIntCar=false;
                         if (data.status == 'added') {
                             elm.html('<span class="text-danger"><i class="fas fa-heart"></i></span>');
                         } else if (data.status == 'removed') {
-                            elm.html('<span class=""><i class="far fa-heart"></i></span>');
+                            elm.html('<span class="text-dark"><i class="far fa-heart"></i></span>');
                         }
                     },
                     error: function (error) {
@@ -519,7 +519,7 @@ $itsIntCar=false;
                         if (data.status == 'added') {
                             elm.html('<span class="text-danger"><i class="fas fa-heart"></i> Жаглаастанд нэмэгдсэн</span>');
                         } else if (data.status == 'removed') {
-                            elm.html('<span class=""><i class="far fa-heart"></i> Жаглаастанд нэмэх</span>');
+                            elm.html('<span class="text-dark"><i class="far fa-heart"></i> Жаглаастанд нэмэх</span>');
                         }
                     },
                     error: function (error) {
