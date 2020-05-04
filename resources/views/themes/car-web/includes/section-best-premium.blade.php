@@ -62,7 +62,7 @@
                                                     @if($itsIntCar==true)
                                                         <span class="text-danger"><i class="fas fa-heart"></i></span>
                                                     @else
-                                                        <i class="text-danger icon-heart"></i>
+                                                        <i class="text-dark icon-heart"></i>
                                                     @endif
                                                 </div>
                                             @endif
