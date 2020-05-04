@@ -4,7 +4,8 @@
             <div class="section-title">
                 <h2>Авъя гэнээ</h2>
                 <span>
-            <a href="/wishlist">Бүгдийг харах ( @contentsTotal({"filter":[{"field":"type", "key":"wanna-buy"}, {"field":"status", "key":"published"}, {"field":"visibility", "key":"public"}]}) ) <i class="fab fa fa-angle-right"></i></a>
+                    @contentInline(type=wanna-buy, markName=, sort=publishedAt, sortDir=desc, limit=12 as $cars | paginate)
+            <a href="/wishlist">Бүгдийг харах ( {{ $cars->total() }} ) <i class="fab fa fa-angle-right"></i></a>
 
           </span>
             </div>
@@ -16,7 +17,7 @@
                 <div class="wish-slide owl-carousel owl-theme">
 
 
-                    @content(type=wanna-buy, sort=publishedAt, sortDir=desc, limit=12 as $wannaBuyData | paginate)
+                    @foreach($cars as $wannaBuyData)
                     <!-- card start -->
                         <!-- <div class="card">
                             <div class="card-top">
@@ -39,7 +40,7 @@
                          <div class="wish-card cd-box">
                         <div class="card-body">
                             <h2 class="title">
-                            {{(getMetasValue($wannaBuyData->metas, 'markName'))}} </br> {{(getMetasValue($wannaBuyData->metas, 'modelName'))}} авъя</h2>
+                            {{ $wannaBuyData->title }} авъя</h2>
                             <div class="wish-detail">
                             <div class="price">{{numerizePrice((getMetasValue($wannaBuyData->metas,'priceAmountStart')))}} ~ {{numerizePrice((getMetasValue($wannaBuyData->metas,'priceAmountEnd')))}}</div>
                             </div>
@@ -56,7 +57,7 @@
                          </div>
                     <!-- card end -->
                     
-                    @endcontent
+                    @endforeach
                 </div>
             </div>
         </div>

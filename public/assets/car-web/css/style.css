@@ -3872,7 +3872,7 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
 }
 
 .card-list.hot-deal a.card .card-img .card-caption .meta {
-  width: 90%;
+  width: 100%;
   text-align: left;
   font-weight: 600;
   font-size: .75rem;
@@ -4086,7 +4086,7 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
 }
 
 .card-list .card .card-img .card-caption .meta {
-  width: 90%;
+  width: 100%;
   text-align: left;
   font-weight: 600;
   font-size: .875rem;
