@@ -267,6 +267,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
                 Route::delete('{localization}', 'LocalizationController@destroy')->name('admin.localizations.destroy');
             });
 
+            Route::prefix('notifications')->group(function () {
+                Route::get('', 'NotificationController@index')->name('admin.notifications.index');
+                Route::get('create', 'NotificationController@create')->name('admin.notifications.create');
+                Route::post('', 'NotificationController@store')->name('admin.notifications.store');
+                Route::get('{menu}', 'NotificationController@show')->name('admin.notifications.show');
+                Route::get('{menu}/edit', 'NotificationController@edit')->name('admin.notifications.edit');
+                Route::put('{menu}', 'NotificationController@update')->name('admin.notifications.update');
+                Route::delete('{menu}', 'NotificationController@destroy')->name('admin.notifications.destroy');
+            });
         });
     });
 });

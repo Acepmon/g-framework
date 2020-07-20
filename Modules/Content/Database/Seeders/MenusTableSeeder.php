@@ -65,6 +65,7 @@ class MenusTableSeeder extends Seeder
             ['Localization', '/admin/localizations', 'icon-sphere', 'Content'],
             ['Categories', '/admin/taxonomy?taxonomy=category', 'icon-grid6', 'Content'],
             ['Tags', '/admin/taxonomy?taxonomy=tag', 'icon-price-tag2', 'Content'],
+            ['Notifications', '/admin/notifications', 'icon-bubble-notification', 'Content'],
             // Banner
             ['Banners', '/admin/banners', 'icon-printer4', 'Banner'],
             ['Create Banner', '/admin/banners/create', 'icon-plus3', 'Banner']

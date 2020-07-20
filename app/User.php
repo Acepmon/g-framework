@@ -272,4 +272,10 @@ class User extends Authenticatable implements CanResetPassword
 
         return asset(config('system.avatar.default'));
     }
+
+    public function terms()
+    {
+        return $this->belongsToMany('App\TermTaxonomy', 'term_relationships');
+    }
+
 }

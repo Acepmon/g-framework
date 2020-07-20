@@ -91,13 +91,11 @@ Route::prefix('v1')->group(function () {
                 return new UserResource($user);
             });
 
-            Route::get('/user/notifications', function () {
-                return new UserNotificationCollection(Auth::user()->notifications);
-            });
+            Route::get('/user/notifications', 'NotificationController@userAll');
 
-            Route::get('/user/notifications/unread', function () {
-                return new UserNotificationCollection(Auth::user()->unreadNotifications);
-            });
+            Route::get('/user/notifications/unread', 'NotificationController@userUnread');
+
+            Route::post('/user/notifications/read', 'NotificationController@userRead');
 
             Route::get('/user/groups', function () {
                 return new UserGroupCollection(Auth::user()->groups);

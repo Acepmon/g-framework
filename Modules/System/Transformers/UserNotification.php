@@ -16,8 +16,8 @@ class UserNotification extends Resource
     {
         return [
             'id' => $this->id,
-            'data' => $this->data,
-            'read_at' => $this->read_at,
+            'title' => $this->title,
+            'body' => $this->metaValue('body'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];
