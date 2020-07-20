@@ -335,4 +335,14 @@ class Content extends Model
         }
         return false;
     }
+
+    public function thumbnail() {
+        if ($this->metaValue('thumbnail')) {
+            if (substr($this->metaValue('thumbnail'), 0, 4) !== 'http') {
+                return Config::getStorage() . $this->metaValue('thumbnail');
+            }
+            return $this->metaValue('thumbnail');
+        }
+        return "/assets/car-web/img/default.png";
+    }
 }

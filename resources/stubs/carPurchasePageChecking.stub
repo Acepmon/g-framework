@@ -43,7 +43,7 @@
             <div class="card-body">
                 <div class="card-img">
 
-                    <img src="{{$check->metaValue("thumbnail")}}" class="img-fluid" alt="alt" />
+                    <img src="{{$check->thumbnail()}}" class="img-fluid" alt="alt" />
                 </div>
 
                 <div class="card-description">

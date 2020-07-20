@@ -37,7 +37,7 @@
                                     @if(getMetasValue($othCars->metas, 'doctorVerified')==1)
                                     <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
                                     @endif
-                                        <img src="{{(getMetasValue($othCars->metas,'thumbnail'))}}" class="img-fluid" alt="alt">
+                                        <img src="{{ $othCars->thumbnail() }}" class="img-fluid" alt="alt">
                                     </div>
                                     <div class="card-description">
                                         <div class="card-caption">

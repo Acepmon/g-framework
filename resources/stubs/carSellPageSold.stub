@@ -41,7 +41,7 @@
 
             <div class="card-body">
                 <div class="card-img">
-                    <img src="{{$sold->metaValue("thumbnail")}}" class="img-fluid" alt="alt" />
+                    <img src="{{$sold->thumbnail()}}" class="img-fluid" alt="alt" />
                 </div>
 
                 <div class="card-description">

@@ -202,7 +202,7 @@ $interestedCars=[];
                             <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
                             @endif
                             <div class="card-img">
-                                <img src="{{$carDataMonthly->metaValue("thumbnail")}}" class="img-fluid"
+                                <img src="{{$carDataMonthly->thumbnail()}}" class="img-fluid"
                                 alt="alt">
 
                                 <div class="card-caption">

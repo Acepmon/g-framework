@@ -195,7 +195,7 @@
                                 <div class="premium-tag shadow-soft-blue"><img
                                         src="{{asset('car-web/img/icons/corona.svg')}}" alt=""></div>
                                 <div class="card-img">
-                                    <img src="{{$carDataMonthly->metaValue("thumbnail")}}" class="img-fluid"
+                                    <img src="{{$carDataMonthly->thumbnail()}}" class="img-fluid"
                                          alt="alt">
 
                                     <div class="card-caption">

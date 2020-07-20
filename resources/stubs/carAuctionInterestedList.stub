@@ -39,7 +39,7 @@
     <div class="card">
         <div class="card-body">
             <div class="card-img">
-                <img src="{{$car->metaValue("thumbnail")}}" class="img-fluid" alt="alt" />
+                <img src="{{$car->thumbnail()}}" class="img-fluid" alt="alt" />
             </div>
             <div class="card-description">
                 <div class="card-caption">

@@ -14,7 +14,7 @@
                 <!-- may 5, 2020 15:37:25 -->
             </div>
             @endif
-            <img src="{{ (substr($car->metaValue('thumbnail'), 0, 4) !== 'http')?(App\Config::getStorage() . $car->metaValue('thumbnail')):$car->metaValue('thumbnail') }}" class="img-fluid" alt="alt">
+            <img src="{{ $car->thumbnail() }}" class="img-fluid" alt="alt">
         </a>
         <div class="card-description">
             <div class="card-caption">
