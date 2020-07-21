@@ -10,6 +10,7 @@ use App\Banner;
 use App\TermTaxonomy;
 use App\PaymentTransaction;
 use App\ContentMeta;
+use App\Entities\NotificationManager;
 use DB;
 use Modules\Content\Transformers\TaxonomyCollection;
 use App\Entities\ContentManager;
@@ -213,6 +214,17 @@ class GframeworkServiceProvider extends ServiceProvider
             return "<?php {$daaataaa} = json_decode('$taxonomys');?>";
         });
 
+        Blade::directive('notifications', function ($expression) {
+            $parsed = $this->parseExpression($expression);
+            $type = '';
+            foreach ($parsed->filters as $key=>$value) {
+                if ($key == 'type') {
+                    $type = $value['value'];
+                }
+            }
+
+            return "<?php {$parsed->variable} = App\Entities\NotificationManager::all(Auth::user()->id, {$type})->paginate(10);?>";
+        });
     }
 
     private function parseContent($parsed, $returnArg) {

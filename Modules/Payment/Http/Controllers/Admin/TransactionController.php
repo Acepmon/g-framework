@@ -3,6 +3,7 @@
 namespace Modules\Payment\Http\Controllers\Admin;
 
 use Auth;
+use App\Entities\NotificationManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -96,8 +97,10 @@ class TransactionController extends Controller
             $transaction->user->setMetaValue('cash', $cash);
             $transaction->save();
 
+            NotificationManager::store($transaction->transaction_amount . ' Cash', 'Таны данс ' . $transaction->transaction_amount . '-р цэнэглэгдлээ.', 'Notification Mileage', $transaction->user_id);
+
             // If content is supplied, make that premium
-            if ($transaction->content()) {
+            if ($transaction->content) {
                 $content = $transaction->content;
                 $result = ContentManager::publishPremium($content);
                 // $result = $content->publishPremium();

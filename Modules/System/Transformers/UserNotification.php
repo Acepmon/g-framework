@@ -15,11 +15,12 @@ class UserNotification extends Resource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'body' => $this->metaValue('body'),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'id' => $this->content->id,
+            'title' => $this->content->title,
+            'body' => $this->content->metaValue('body'),
+            'read' => $this->isRead(),
+            'created_at' => $this->content->created_at,
+            'updated_at' => $this->content->updated_at
         ];
     }
 }

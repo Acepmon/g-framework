@@ -1,0 +1,109 @@
+@extends('themes.car-web.layouts.mypage')
+
+@php
+
+//Filter
+$page = request('page', "1");
+$itemsPerPage = request('itemsPerPage', "10");
+
+@endphp
+
+@section('title', 'Мэдээлэл')
+
+@section('load')
+
+
+@endsection
+
+@section('content')
+<div class="row">
+    <div class="bg-white shadow-soft-blue page-top-navbar pt-5">
+        <div class="col-md-6"><h3 class="pl-3">Мэдэгдэл</h3></div>
+        <div class="pl-4 pr-4 d-flex justify-content-start">
+            @notifications(type=request()->input("type","event") as $notifications | paginate)
+            <span class="total-cars ml-0" >НИЙТ {{ count($notifications) }}</span>
+            <div class="sort-cars col-md-9">
+                <ul>
+                    <li class="{{ request('type', 'event')=='event' ?'active':'' }}"><a href="#" onclick="formSubmit('type', 'event')">Эвент</a></li>
+                    <li class="{{ request('type')=='info' ?'active':'' }}"><a href="#" onclick="formSubmit('type', 'info')">Хяналт</a></li>
+                    <li class="{{ request('type')=='mileage' ?'active':'' }}"><a href="#" onclick="formSubmit('type', 'mileage')">Cash</a></li>
+                    <li class="{{ request('type')=='other' ?'active':'' }}"><a href="#" onclick="formSubmit('type', 'other')">Other</a></li>
+                </ul>
+            </div>
+            <form method="GET" id="mainForm" action="/my-notifications">
+                <div class="col-md-12 text-center">
+                    <input hidden id="page" name="page" value="{{ request('page', 1) }}">
+                    <input hidden id="type" name="type" value="{{ request('type', 'event') }}">
+                </div>
+            </form>
+        </div>
+        <div class="pl-4 pr-4 pt-4">
+            <table class="table text-center table-striped">
+                <colgroup>
+                    <col style="width: 15%">
+                    <col>
+                    <col style="width: 25%">
+                </colgroup>
+                <thead class="table-dark">
+                <tr>
+                    <th>Гарчиг</th>
+                    <th>Утга</th>
+                    <th>Он сар</th>
+                </tr>
+                </thead>
+                <tbody>
+                
+                @foreach($notifications as $notification)
+                <tr style="{{ $notification->isRead()?'':'font-weight: bold' }}">
+                    <td>{{ $notification->content->title }}</td>
+                    <td>{{ $notification->content->metaValue('body') }}</td>
+                    <td>{{ $notification->content->created_at }}</td>
+                </tr>
+                @endforeach
+                </tbody>
+            </table>
+            <!-- Pagination -->
+            <nav aria-label="Page navigation">
+                <form action="my-mileage" id="mainForm">
+                <input type="hidden" value="{{ $page }}" name="page" id="page" />
+                <ul class="pagination d-flex justify-content-end mt-2">
+                    <li class="page-item {{ ($page <= 1)?'disabled':'' }}">
+                        <button class="page-link" onclick="formSubmit('page', {{$page-1}})" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </button>
+                    </li>
+                    @for($i = 1; $i <= $notifications->lastPage(); $i++)
+                    <li class="page-item {{ ($i == $page)?'active':'' }}"><button class="page-link" onclick="formSubmit('page', {{$i}})">{{ $i }}</button></li>
+                    @endfor
+                    <li class="page-item {{ ($page >= $notifications->lastPage())?'disabled':'' }}">
+                        <button class="page-link" onclick="formSubmit('page', {{$page+1}})" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </button>
+                    </li>
+                </ul>
+                </form>
+            </nav>
+            <!-- Pagination end -->
+        </div>
+
+    </div>
+</div>
+<?php
+App\Entities\NotificationManager::read(Auth::user()->id, request('type', 'event'));
+?>
+@endsection
+
+@section('script')
+<script>
+
+function formSubmit(id, value, sortDir, sortDirValue) {
+    if (value != 'no-value') {
+        document.getElementById(id).value = value;
+    }
+    if (sortDir != null && sortDir != 'no-value'){
+        document.getElementById(sortDir).value = sortDirValue;
+    }
+    $('#mainForm').submit();
+}
+</script>
+@endsection

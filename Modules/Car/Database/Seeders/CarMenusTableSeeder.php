@@ -61,6 +61,7 @@ class CarMenusTableSeeder extends Seeder
             ['Зарах хүсэлтүүд', '/sell-page-on-sell', '', 'Car'],
             ['Төлбөрийн хүсэлтүүд', '/purchase-page-published', '', 'Car'],
             ['Гүйлт', '/my-mileage', '', 'Car'],
+            ['Мэдээлэл', '/my-notifications', '', 'Car'],
             ['Миний хуудас', '/home', '', 'Car'],
         ]];
 

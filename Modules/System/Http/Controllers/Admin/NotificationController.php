@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 
 use App\Content;
+use App\Entities\NotificationManager;
 use App\Term;
 use App\TermRelationship;
 use App\TermTaxonomy;
@@ -50,38 +51,10 @@ class NotificationController extends Controller
             'type' => 'required|max:191',
         ]);
 
-        try {
-            DB::beginTransaction();
-
-            $content = new Content();
-            $content->title = $request->input('title');
-            $content->slug = \Str::slug($request->input('title'));
-            $content->type = Content::TYPE_NOTIFICATION;
-            $content->status = Content::STATUS_PUBLISHED;
-            $content->author_id = Auth::id();
-            $content->visibility = Content::VISIBILITY_PUBLIC;
-            $content->save();
-            ContentManager::addMeta($content->id, "body", $request->input('body'));
-
-            $type = Term::where('name', $request->input('type'))->first()->taxonomy;
-            $unread = Term::where('name', "Unread")->first()->taxonomy;
-            foreach(User::all() as $user) {
-                $rel = new TermRelationship();
-                $rel->content_id = $content->id;
-                $rel->term_taxonomy_id = $type->id;
-                $rel->user_id = $user->id;
-                $rel->save();
-                $rel = new TermRelationship();
-                $rel->content_id = $content->id;
-                $rel->term_taxonomy_id = $unread->id;
-                $rel->user_id = $user->id;
-                $rel->save();
-            }
-
-            DB::commit();
+        $result = NotificationManager::store($request->input('title'), $request->input('body'), $request->input('type'), null);
+        if ($result) {
             return redirect()->route('admin.notifications.index');
-        } catch (\Exception $e) {
-            DB::rollBack();
+        } else {
             return redirect()->route('admin.notifications.create')->with('error', $e->getMessage());
         }
     }

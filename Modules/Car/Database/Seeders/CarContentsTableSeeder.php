@@ -26,7 +26,7 @@ class CarContentsTableSeeder extends Seeder
         $time = time();
         $rootPath = config('content.cars.rootPath');
 
-        factory(Content::class, 99)->create(['type' => Content::TYPE_CAR, 'status' => 'published', 'visibility' => 'public'])->each(function ($content) use ($time, $rootPath) {
+        factory(Content::class, 49)->create(['type' => Content::TYPE_CAR, 'status' => 'published', 'visibility' => 'public'])->each(function ($content) use ($time, $rootPath) {
             // Publish Types
             $publishTypes = ['free', 'premium', 'best_premium'];
             $publishTypeId = array_rand($publishTypes);
