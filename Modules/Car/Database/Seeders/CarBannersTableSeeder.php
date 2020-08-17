@@ -153,7 +153,7 @@ class CarBannersTableSeeder extends Seeder
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2030-02-05 23:19:09",
-            "banner" => "https://www.maz.mn/storage/banners/1.png"
+            "banner" => "https://www.maz.mn/storage/banners/mobileBanner1.png"
         ]);
 
         factory(Banner::class, 1)->create([
@@ -163,7 +163,7 @@ class CarBannersTableSeeder extends Seeder
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2030-02-05 23:19:09",
-            "banner" => "https://www.maz.mn/storage/banners/2.png"
+            "banner" => "https://www.maz.mn/storage/banners/mobileBanner2.png"
         ]);
 
         factory(Banner::class, 1)->create([
@@ -173,7 +173,7 @@ class CarBannersTableSeeder extends Seeder
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2030-02-05 23:19:09",
-            "banner" => "https://www.maz.mn/storage/banners/3.png"
+            "banner" => "https://www.maz.mn/storage/banners/mobileBanner3.png"
         ]);
 
         factory(Banner::class, 1)->create([
@@ -183,7 +183,7 @@ class CarBannersTableSeeder extends Seeder
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2030-02-05 23:19:09",
-            "banner" => "https://www.maz.mn/storage/banners/4.png"
+            "banner" => "https://www.maz.mn/storage/banners/mobileBanner4.png"
         ]);
 
         factory(Banner::class, 1)->create([
@@ -193,10 +193,20 @@ class CarBannersTableSeeder extends Seeder
             "status" => "active",
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2030-02-05 23:19:09",
-            "banner" => "https://www.maz.mn/storage/banners/5.png"
+            "banner" => "https://www.maz.mn/storage/banners/mobileBanner5.png"
         ]);
 
         // 7. Mobile Mid Content Banner (640x360)
+        factory(Banner::class, 1)->create([
+            "location_id" => 7,
+            "link" => "/about-introduction",
+            "title" => "Mobile Mid Conten",
+            "status" => "active",
+            "starts_at" => "2020-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
+            "banner" => "https://www.maz.mn/storage/banners/mobileBanner.png"
+        ]);
+        /*
         factory(Banner::class, 1)->create([
             "location_id" => 7,
             "link" => "/about-introduction",
@@ -245,9 +255,19 @@ class CarBannersTableSeeder extends Seeder
             "starts_at" => "2020-02-05 23:19:09",
             "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/5.png"
-        ]);
+        ]);*/
 
         // 8. Mobile Finance Main Slider (640x360)
+        factory(Banner::class, 1)->create([
+            "location_id" => 8,
+            "link" => "/about-introduction",
+            "title" => "Mobile Banner",
+            "status" => "active",
+            "starts_at" => "2020-02-05 23:19:09",
+            "ends_at" => "2030-02-05 23:19:09",
+            "banner" => "https://www.maz.mn/storage/banners/mobileBanner.png"
+        ]);
+        /*
         factory(Banner::class, 1)->create([
             "location_id" => 8,
             "link" => "/about-introduction",
@@ -297,5 +317,6 @@ class CarBannersTableSeeder extends Seeder
             "ends_at" => "2030-02-05 23:19:09",
             "banner" => "https://www.maz.mn/storage/banners/5.png"
         ]);
+        */
     }
 }
