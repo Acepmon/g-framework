@@ -175,22 +175,16 @@ class ContentManager extends Manager
         }
     }
 
-    /**
-     * Filter & Serialize mixed request of Content and ContentMetas to Content Object with ContentMeta subarray
-     * @return Paginated Content
-     */
-    public static function serializeRequest(Request $request, $author_id = null)
+    public static function filterByRequest(Request $request, $author_id = null)
     {
-        $type = self::requestOperator('type', $request, Content::TYPE_POST);
-        $status = self::requestOperator('status', $request, Content::STATUS_PUBLISHED);
-        $visibility = self::requestOperator('visibility', $request, Content::VISIBILITY_PUBLIC);
-        $limit = self::requestOperator('limit', $request, 10);
-        $sort = $request->input('sort', '-id');
+        $type = $request->input('type', Content::TYPE_CAR);
+        $status = $request->input('status', Content::STATUS_PUBLISHED);
+        $visibility = $request->input('visibility', Content::VISIBILITY_PUBLIC);
 
         $metaInputs = self::discernMetasFromRequest($request->input());
-        $contents = Content::where($type['field'], $type['operator'], $type['value'])
-        ->where($status['field'], $status['operator'], $status['value'])
-        ->where($visibility['field'], $visibility['operator'], $visibility['value']);
+        $contents = Content::where('type', $type)
+        ->where('status', $status)
+        ->where('visibility', $visibility);
 
         if (isset($author_id)) {
             $contents = $contents->where('author_id', $author_id);
@@ -238,6 +232,18 @@ class ContentManager extends Manager
                 }
             }
         }
+        return $contents;
+    }
+
+    /**
+     * Filter & Serialize mixed request of Content and ContentMetas to Content Object with ContentMeta subarray
+     * @return Paginated Content
+     */
+    public static function serializeRequest(Request $request, $author_id = null)
+    {
+        $limit = self::requestOperator('limit', $request, 10);
+        $sort = $request->input('sort', '-id');
+        $contents = self::filterByRequest($request, $author_id);
 
         // Sort parameter
         if (\Str::startsWith($sort, '-')) {

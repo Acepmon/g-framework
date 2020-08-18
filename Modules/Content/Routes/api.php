@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 Route::prefix('v1')->group(function () {
     Route::namespace('API\v1')->group(function () {
         Route::post('/car/{contentId}/publish', 'ContentController@publish');
+        Route::get('contents/count', 'ContentController@count');
         Route::apiResources([
             'banner_locations' => 'BannerLocationController',
             'banners' => 'BannerController',

@@ -26,6 +26,12 @@ use App\UserMeta;
 // Private API
 Route::prefix('v1')->group(function () {
     Route::namespace('API\v1')->group(function () {
+        Route::get('user/{id}', 'UserController@show');
+        
+        Route::get('/user', function (Request $request) {
+            return new UserResource($request->input);
+        });
+
         Route::middleware('auth:api')->group(function () {
 
             Route::get('/user', function () {

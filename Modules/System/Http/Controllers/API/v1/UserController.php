@@ -2,6 +2,8 @@
 
 namespace Modules\System\Http\Controllers\API\v1;
 
+
+use Modules\Content\Transformers\Author;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -95,5 +97,13 @@ class UserController extends Controller
         $user->save();
 
         return response()->json($user);
+    }
+
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        $user->meta = $user->metasTransform();
+
+        return new Author($user);
     }
 }

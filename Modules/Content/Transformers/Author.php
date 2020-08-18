@@ -2,6 +2,7 @@
 
 namespace Modules\Content\Transformers;
 
+use Modules\Car\Entities\Car;
 use Illuminate\Http\Resources\Json\Resource;
 
 class Author extends Resource
@@ -14,6 +15,13 @@ class Author extends Resource
      */
     public function toArray($request)
     {
+        $dealer = $this->get_dealer_group();
+        if ($dealer) {
+            $dealer = new Dealer($dealer);
+        } else {
+            $dealer = null;
+        }
+        $contents_count = Car::all()->where('author_id', $this->id)->count();
         return [
             "id" => $this->id,
             "username" => $this->username,
@@ -28,7 +36,9 @@ class Author extends Resource
             "social_id" => $this->social_id,
             "social_provider" => $this->social_provider,
             "social_token" => $this->social_token,
-            "meta" => $this->metasTransform()
+            "meta" => $this->metasTransform(),
+            "contents_count" => $contents_count,
+            "dealer" => $dealer
         ];
     }
 }

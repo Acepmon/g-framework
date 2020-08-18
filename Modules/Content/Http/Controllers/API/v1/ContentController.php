@@ -83,6 +83,13 @@ class ContentController extends Controller
         //
     }
 
+    public function count(Request $request)
+    {
+        $contents = ContentManager::filterByRequest($request)->count();
+
+        return response()->json($contents);
+    }
+
     public function publish(Request $request, $contentId) {
         $publishAmount = $request->input('publishAmount');
         $publishUnit = $request->input('publishUnit');
