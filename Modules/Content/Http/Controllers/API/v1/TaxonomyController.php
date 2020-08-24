@@ -35,9 +35,11 @@ class TaxonomyController extends Controller
             $type = request('type', 'normal');
             if (request('sort', False)) {
                 $terms_id = Term::where($type, True)->pluck('id');
-                return new TaxonomyCollection(TermTaxonomy::join('terms', 'terms.id', '=', 'term_taxonomy.term_id')->where('taxonomy', 'car-manufacturer')->whereIn('term_id', $terms_id)->orderBy('name')->get());
+                $taxonomies = TermTaxonomy::join('terms', 'terms.id', '=', 'term_taxonomy.term_id')->where('taxonomy', 'car-manufacturer')->whereIn('term_id', $terms_id)->orderBy('name')->get();
+                return new TaxonomyCollection($taxonomies);
             }
-            return new TaxonomyCollection(TaxonomyManager::getManufacturers($type, request()->input('count', False), 4));
+            $taxonomies = TaxonomyController::addContentsCount($taxonomy, TaxonomyManager::getManufacturers($type, request()->input('count', False), 4));
+            return new TaxonomyCollection($taxonomies);
         }
 
         if (request()->input('count')) {
@@ -46,22 +48,8 @@ class TaxonomyController extends Controller
             $taxonomies = TaxonomyManager::collection($taxonomy, false);
         }
 
-        // 1. Check if mobile app is sending home parameter on Hailt
-        // 14, 12
         if (request()->input('home')) {
-            //$filteredIds = Car::all()->pluck('id');
-            $filter = request()->all();
-            $filter = array_diff_key($filter, Car::EXCEPT_FILTER);
-            // dd($filter);
-            $cars = Car::filterCarsByNonTermFields(Car::all(), $filter);
-            foreach($filter as $key=>$value) {
-                if (is_numeric($value) && $value != "1" && $value != "0") { // If value could possibly be term id
-                    $cars = $cars->whereHas('terms', function ($query) use ($value) {
-                        $query->where('term_taxonomy_id', $value);
-                    });
-                }
-            }
-            $filteredIds = $cars->pluck('id');
+            $filteredIds = Car::all()->pluck('id');
             $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->withCount(['contents' => function($query) use ($filteredIds) {
                 $query->whereIn('id', $filteredIds);
             }])->get()->where('contents_count', '!=', '0');
@@ -76,6 +64,26 @@ class TaxonomyController extends Controller
             return $taxonomies;
         }
 
+        $taxonomies = TaxonomyController::addContentsCount($taxonomy, $taxonomies);
         return new TaxonomyCollection($taxonomies);
+    }
+
+    public static function addContentsCount($taxonomy, $taxonomies) {
+        $filter = request()->all();
+        $filter = array_diff_key($filter, Car::EXCEPT_FILTER);
+        // dd($filter);
+        $cars = Car::filterCarsByNonTermFields(Car::all(), $filter);
+        foreach($filter as $key=>$value) {
+            if (is_numeric($value) && $value != "1" && $value != "0") { // If value could possibly be term id
+                $cars = $cars->whereHas('terms', function ($query) use ($value) {
+                    $query->where('term_taxonomy_id', $value);
+                });
+            }
+        }
+        $filteredIds = $cars->pluck('id');
+        $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->withCount(['contents' => function($query) use ($filteredIds) {
+            $query->whereIn('id', $filteredIds);
+        }])->get();//->where('contents_count', '!=', '0');
+        return $taxonomies;
     }
 }

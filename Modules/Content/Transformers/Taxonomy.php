@@ -14,7 +14,7 @@ class Taxonomy extends Resource
      */
     public function toArray($request)
     {
-        return [
+        $data = [
             'id' => $this->id,
             'taxonomy' => $this->taxonomy,
             'description' => $this->description,
@@ -22,5 +22,9 @@ class Taxonomy extends Resource
             'term' => new Term($this->term),
             'parent' => $this->parent
         ];
+        if (isset($this->contents_count)) {
+            $data['contents_count'] = $this->contents_count;
+        }
+        return $data;
     }
 }
