@@ -70,9 +70,9 @@ class TaxonomyController extends Controller
 
     public static function addContentsCount($taxonomy, $taxonomies) {
         $filter = request()->all();
-        $filter = array_diff_key($filter, Car::EXCEPT_FILTER);
         // dd($filter);
         $cars = Car::filterCarsByNonTermFields(Car::all(), $filter);
+        $filter = array_diff_key($filter, Car::EXCEPT_FILTER);
         foreach($filter as $key=>$value) {
             if (is_numeric($value) && $value != "1" && $value != "0") { // If value could possibly be term id
                 $cars = $cars->whereHas('terms', function ($query) use ($value) {
