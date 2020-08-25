@@ -94,6 +94,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{{ route('admin.modules.payment.transactions.create', ['user' => $user]) }}"><i class="icon-add"></i> Add Bonus</a>
                         <a class="dropdown-item" href="{{ route('admin.users.show', ['id' => $user->id]) }}"><i class="icon-eye"></i> View</a>
                         <a class="dropdown-item" href="{{ route('admin.users.edit', ['id' => $user->id]) }}"><i class="icon-pencil"></i> Edit</a>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal_theme_danger" onclick="choose_user({{ $user->id }})"><i class="icon-trash"></i> Delete</a>

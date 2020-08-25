@@ -60,7 +60,7 @@ class CarMenusTableSeeder extends Seeder
             ['Миний оруулсан зар', '/interested-car-registration-alert', '', 'Car'],
             ['Зарах хүсэлтүүд', '/sell-page-on-sell', '', 'Car'],
             ['Төлбөрийн хүсэлтүүд', '/purchase-page-published', '', 'Car'],
-            ['Гүйлт', '/my-mileage', '', 'Car'],
+            ['Данс', '/my-mileage', '', 'Car'],
             ['Мэдээлэл', '/my-notifications', '', 'Car'],
             ['Миний хуудас', '/home', '', 'Car'],
         ]];

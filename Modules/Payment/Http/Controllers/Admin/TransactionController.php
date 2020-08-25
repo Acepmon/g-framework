@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 
+use App\User;
 use App\Entities\ContentManager;
 use Modules\Payment\Entities\PaymentMethod;
 use Modules\Payment\Entities\Transaction;
@@ -39,9 +40,8 @@ class TransactionController extends Controller
      */
     public function create(Request $request)
     {
-        Transaction::create($request->input());
-
-        return response()->json(['message'=> 'success'])->setStatusCode(200);
+        $user = User::findOrFail($request->input('user'));
+        return view('payment::admin.payment.transactions.create', ['user' => $user]);
     }
 
     /**
@@ -53,8 +53,17 @@ class TransactionController extends Controller
     {
         //
         $transaction = Transaction::create($request->input());
-        
-        return response()->json(['message'=> 'success'])->setStatusCode(200);
+
+        $pending = Transaction::where('status', Transaction::STATUS_PENDING)->get();
+        $accepted = Transaction::where('status', Transaction::STATUS_ACCEPTED)->get();
+        $rejected = Transaction::where('status', Transaction::STATUS_REJECTED)->get();
+        $transactions = [
+            Transaction::STATUS_PENDING => $pending,
+            Transaction::STATUS_ACCEPTED => $accepted,
+            Transaction::STATUS_REJECTED => $rejected
+        ];
+
+        return view('payment::admin.payment.transactions.index', ['transactions' => $transactions]);
     }
 
     /**

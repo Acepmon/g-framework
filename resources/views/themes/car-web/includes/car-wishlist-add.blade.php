@@ -16,8 +16,17 @@
                             <div class="form-group col-md-6">
                                 <label for="Manufacturer">Үйлдвэрлэгч:</label>
                                 <select id="addWishMark" name="markName" class="form-control" required>
-                                    @foreach(App\TermTaxonomy::where('taxonomy', 'car-manufacturer')->get()->sortBy('term.name') as $taxonomy)
+                                    @php
+                                    $taxonomies = App\TermTaxonomy::where('taxonomy', 'car-manufacturer')->get()->sortBy('term.name');
+                                    $top_manu = ['Toyota', 'Lexus', 'Nissan', 'Hyundai'];
+                                    @endphp
+                                    @foreach($top_manu as $manu) 
+                                        <option value="{{$manu}}" placeholder="{{App\Term::where('name', $manu)->first()->id}}">{{$manu}}</option>
+                                    @endforeach
+                                    @foreach($taxonomies as $taxonomy) 
+                                        @if(!in_array($taxonomy->term->name, $top_manu))
                                         <option value="{{$taxonomy->term->name}}" placeholder="{{$taxonomy->term->id}}">{{$taxonomy->term->name}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>

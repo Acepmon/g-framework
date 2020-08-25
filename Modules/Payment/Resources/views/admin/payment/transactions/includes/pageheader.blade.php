@@ -2,6 +2,10 @@
     <div class="page-title d-flex">
         <h4><i class="icon-arrow-left52 ml-2"></i> <span class="font-weight-semibold">Transactions</span> - @yield('title')</h4>
     </div>
+
+    <!-- <div class="header-elements d-none">
+        <a href="{{ route('admin.modules.payment.transactions.create') }}" class="btn btn-labeled bg-blue heading-btn">Register New <i class="icon-add ml-2"></i></a>
+    </div> -->
 </div>
 
 <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">

@@ -5,12 +5,12 @@
             <div class="section-title">
                 <h2>Бусад машинууд</h2>
                 <span>
-            <a href="/buy">Бүгдийг харах ( @contentsTotal({"filter":[{"field":"type", "key":"car"}, {"field":"status", "key":"published"}, {"field":"visibility", "key":"public"}]}) ) <i class="fab fa fa-angle-right"></i></a>
+                    @contentInline(type=car, status=published, limit=10, sort=publishedAt as $othCarsTotal | paginate)
+            <a href="/buy">Бүгдийг харах ( {{ $othCarsTotal->total() }} ) <i class="fab fa fa-angle-right"></i></a>
           </span>
             </div>
             <div class="car-list">
                 <div class="row">
-                    @content(type=car, status=published, limit=10, sort=publishedAt as $othCars | paginate)
                     @if(count($interestedCars) > 0)
                         @foreach($interestedCars as $intCars)
                             @if($intCars==$othCars->id)
@@ -29,6 +29,7 @@
                             $itsIntCar=false;
                         @endphp
                     @endif
+                    @foreach($othCarsTotal as $othCars)
                         <div class="col-lg-6 col-md-6">
                             <!-- card start -->
                             <a href="{{$othCars->slug}}" target="_blank" class="card">
@@ -63,7 +64,7 @@
                             </a>
                         </div>
                         <!-- card end -->
-                    @endcontent
+                    @endforeach 
 
                 </div>
                 <div class="row">

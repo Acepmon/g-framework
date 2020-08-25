@@ -45,7 +45,7 @@ $itemsPerPage = request('itemsPerPage', "10");
                     <td>{{ number_format($cash->transaction_amount) }}</td>
                     <td>{{$cash->bonus}}</td>
                     <td>-</td>
-                    @elseif($cash->transaction_type=="income")
+                    @elseif($cash->transaction_type!="income")
                     <td>-</td>
                     <td>-</td>
                     <td>{{$cash->transaction_amount}}</td>
