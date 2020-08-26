@@ -76,7 +76,6 @@ class GframeworkServiceProvider extends ServiceProvider
             $returnArg = "";
 
             $contents = $this->parseContent($parsed, $returnArg);
-//            dd($contents);
             return "<?php \$tmp = $contents; {$variable} = \$tmp ?>";
         });
 
@@ -259,10 +258,17 @@ class GframeworkServiceProvider extends ServiceProvider
                         'value' => ['=' => $filter['value']]
                     ]);
                 } else {
-                    $contents = $contents . $pointer . $this->whereHas('metas', [
-                        'key' => $filter['field'],
-                        'value' => [$filter['operator'] => $filter['value']]
-                    ]);
+                    if ($filter['value'] == '0') {
+                        $contents = $contents . $pointer . $this->whereDoesntHave('metas', [
+                            'key' => $filter['field'],
+                            'value' => '1'
+                        ]);
+                    } else {
+                        $contents = $contents . $pointer . $this->whereHas('metas', [
+                            'key' => $filter['field'],
+                            'value' => [$filter['operator'] => $filter['value']]
+                        ]);
+                    }
                 }
             }
         }

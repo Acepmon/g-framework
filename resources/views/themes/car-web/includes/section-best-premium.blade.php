@@ -11,7 +11,8 @@
 
             <div class="card-list mx-n2">
                 <div class="row">
-                    @content(type=car, publishType=best_premium, publishVerified=1, isSold=0, isAuction=0, limit=12 as $bpCars | paginate)
+                    @contentInline(type=car, publishType=best_premium, publishVerified=1, isSold=0, isAuction=0, limit=12 as $bpCarsTotal | paginate)
+                    @foreach($bpCarsTotal as $bpCars)
                     @if(count($interestedCars) > 0)
                         @foreach($interestedCars as $intCars)
                             @if($intCars==$bpCars->id)
@@ -79,7 +80,7 @@
                             <!-- card end -->
                         </div>
                         <!-- col-end -->
-                    @endcontent
+                    @endforeach
                 </div>
             </div>
         </div>
