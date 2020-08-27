@@ -143,6 +143,10 @@ try {
       
       $('#steps > .active').removeClass('active').removeClass('show');
       $("#step-"+step).addClass('active').addClass('show');
+      // $("html, body").animate({scrollTop: 0}, 500);
+      $([document.documentElement, document.body]).animate({
+          scrollTop: $("#steps").offset().top
+      }, 500);
     }
   }
 

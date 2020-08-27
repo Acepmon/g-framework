@@ -77,18 +77,19 @@
 
     $(document).ready(function () {
         var onChange = function (markName, modelNameElement) {
-            $.getJSON('/api/v1/taxonomies/car-' + toKebabCase(markName), function (data) {
-                var modelList=data;
-                if (modelList.data.length == 0) {
+            $.getJSON('/api/v1/taxonomies/car-' + toKebabCase(markName) + '?sort=true', function (data) {
+                console.log(data);
+                var modelList=data.data;
+                if (modelList.length == 0) {
                     $("#addWishModel").removeAttr("required");
                 } else {
                     $("#addWishModel").attr("required", true);
                 }
-                console.log(modelList.data.length);
+                console.log(modelList.length);
                 modelNameElement.find('option').remove().end().append('<option value=""></option>').val('');
-                for (var i = 0; i < modelList.data.length; i++) {
-                    var termName = modelList.data[i].term.name;
-                    var termId = modelList.data[i].term.id;
+                for (const [key, value] of Object.entries(modelList)) {
+                    var termName = value.term.name;
+                    var termId = value.term.id;
                     modelNameElement.append('<option value="'+termName+'" placehodler="'+termId+'">'+termName+'</option>');
                 }
             });

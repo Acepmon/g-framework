@@ -33,7 +33,7 @@
                         @endif
                         <input id="{{$index}}" name="{{$index}}" type="file" class="uploadFile img" style="width: 0px;height: 0px;overflow: hidden;" accept="image/x-png,image/gif,image/jpeg">
                     </label>
-                    @if($car->metaValue($index)!=null)
+                    @if($car->metaValue($index)!=null) 
                     <i class="fa fa-times del mt-4" onclick="removeImg('{{$index}}', {{$car->metas->where('key', $index)->first()->id}})"></i>
                     @else
                     <i class="fa fa-times del mt-4" onclick="removeImg('{{$index}}', 0)"></i>
@@ -304,3 +304,10 @@
     }
 
 </script>
+<style>
+.imagePreview {
+    border: 1px solid #aaaeb9;
+    border-style: dotted;
+    border-radius: 5px;
+}
+</style>

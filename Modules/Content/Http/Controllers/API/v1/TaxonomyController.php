@@ -65,6 +65,10 @@ class TaxonomyController extends Controller
         }
 
         $taxonomies = TaxonomyController::addContentsCount($taxonomy, $taxonomies);
+        if (request()->input('sort')) {
+            // dd($taxonomies);
+            return new TaxonomyCollection($taxonomies->sortBy('term.name'));
+        }
         return new TaxonomyCollection($taxonomies);
     }
 
