@@ -1,6 +1,6 @@
 @extends('themes.limitless.layouts.default')
 
-@section('title', 'Best Premium Cars')
+@section('title', 'Best Cars')
 
 @section('load')
 @endsection

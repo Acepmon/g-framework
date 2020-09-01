@@ -60,7 +60,7 @@ function numerizePrice($value) {
     } else if ($value < 1000000) {
         return number_format(round(($value / 1000), 0)) . ' мянга';
     } else {
-        $remainder = rtrim($value % 1000000, "0");
+        $remainder = rtrim(round(($value % 1000000) / 10000), "0");
         $remainder = ($remainder)?'.'.$remainder:'';
         return number_format(floor($value / 1000000)) . $remainder . ' сая';
     }

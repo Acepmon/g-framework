@@ -167,7 +167,7 @@ class GframeworkServiceProvider extends ServiceProvider
 
         Blade::directive('myMileage', function ($expression) {
             $parsed = $this->parseExpression($expression);
-            $cash = "\Modules\Payment\Entities\Transaction::where('user_id', " . $parsed->filters[1]['value'] . ")->paginate(10)";
+            $cash = "\Modules\Payment\Entities\Transaction::where('user_id', " . $parsed->filters[1]['value'] . ")->orderByDesc('created_at')->paginate(10)";
 
             return "<?php \$ma = $cash ?>";
         });
@@ -273,6 +273,7 @@ class GframeworkServiceProvider extends ServiceProvider
             }
         }
         
+        $contents = $contents . '->distinct()'; 
         if (isset($sort)) {
             $contents = $contents . $sort;
         }

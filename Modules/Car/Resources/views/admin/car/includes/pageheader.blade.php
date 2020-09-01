@@ -38,8 +38,8 @@
 
                 <div class="dropdown-menu dropdown-menu-right">
                     <a href="{{ route('admin.modules.car.free.index') }}" class="dropdown-item">Free Cars</a>
-                    <a href="{{ route('admin.modules.car.premium.index') }}" class="dropdown-item">Premium Cars</a>
-                    <a href="{{ route('admin.modules.car.best_premium.index') }}" class="dropdown-item">Best Premium Cars</a>
+                    <a href="{{ route('admin.modules.car.premium.index') }}" class="dropdown-item">Special Cars</a>
+                    <a href="{{ route('admin.modules.car.best_premium.index') }}" class="dropdown-item">Best Cars</a>
                 </div>
             </div>
         </div>

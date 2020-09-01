@@ -210,6 +210,12 @@ $interestedCars=[];
                                         class="meta">{{ number_format($carDataMonthly->metaValue("mileageAmount"))}} {{$carDataMonthly->metaValue("mileageUnit")}}
                                         | {{$carDataMonthly->metaValue("fuelType")}}
                                         | {{ number_format($carDataMonthly->metaValue("capacityAmount"))}} {{$carDataMonthly->metaValue("capacityUnit")}}</div>
+                                </div>
+                            </div>
+                            <div class="card-body py-2">
+                                <div class="card-description">
+                                    <div class="card-desc-top">
+                                        <div class="card-title">{{$carDataMonthly->title}}</div>
                                     @if(Auth::user()!=null && $carDataMonthly->author_id==Auth::user()->id)
                                     <div class="favorite">
                                         <span class=""><i class="fas fa-car"></i></span>
@@ -219,16 +225,10 @@ $interestedCars=[];
                                         @if($itsIntCar==true)
                                         <span class="text-danger"><i class="fas fa-heart"></i></span>
                                         @else
-                                        <i class="icon-heart"></i>
+                                        <span class="text-danger"><i class="icon-heart"></i></span>
                                         @endif
                                     </div>
                                     @endif
-                                </div>
-                            </div>
-                            <div class="card-body py-2">
-                                <div class="card-description">
-                                    <div class="card-desc-top">
-                                        <div class="card-title">{{$carDataMonthly->title}}</div>
                                         <div
                                             class="price">{{numerizePrice($carDataMonthly->metaValue("priceAmount"))}} {{$carDataMonthly->metaValue("priceUnit")}}</div>
                                     </div>
@@ -322,7 +322,7 @@ $interestedCars=[];
                     if (data.status == 'added') {
                         elm.html('<span class="text-danger"><i class="fas fa-heart"></i></span>');
                     } else if (data.status == 'removed') {
-                        elm.html('<span class=""><i class="far fa-heart"></i></span>');
+                        elm.html('<span class="text-danger"><i class="far fa-heart"></i></span>');
                     }
                 },
                 error: function (error) {

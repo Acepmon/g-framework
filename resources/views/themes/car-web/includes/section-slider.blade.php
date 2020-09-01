@@ -18,7 +18,7 @@
                         <img src="{{ (substr($car->metaValue('thumbnail'), 0, 4) !== 'http')?(App\Config::getStorage() . $car->metaValue('thumbnail')):$car->metaValue('thumbnail') }}" class="img-fluid" alt="alt">
 
                         <div class="card-caption">
-                            <div class="meta">{{ $car->metaValue('mileageAmount') }} {{ $car->metaValue('mileageUnit') }} | {{ ucfirst($car->metaValue('fuelType')) }} | {{ $car->metaValue('capacityAmount') }} {{ $car->metaValue('capacityUnit') }}</div>
+                            <div class="meta">{{ number_format($car->metaValue('mileageAmount')) }} {{ $car->metaValue('mileageUnit') }} | {{ ucfirst($car->metaValue('fuelType')) }} | {{ $car->metaValue('capacityAmount') }} {{ $car->metaValue('capacityUnit') }}</div>
                         </div>
                     </div>
 

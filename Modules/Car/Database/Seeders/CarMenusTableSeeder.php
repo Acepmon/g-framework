@@ -43,9 +43,9 @@ class CarMenusTableSeeder extends Seeder
         ]];
         $carProfileDropdownMenus = ['Car Profile Dropdown', '', '', 'Car', [
             ['Сонирхож буй машинууд', '/interested-car', '', 'Car'],
-            ['Миний оруулсан зар', '/interested-car-registration-alert', '', 'Car'],
-            ['Зарах хүсэлтүүд', '/sell-page-on-sell', '', 'Car'],
-            ['Төлбөрийн хүсэлтүүд', '/purchase-page-published', '', 'Car'],
+            ['Авах машины зар', '/interested-car-registration-alert', '', 'Car'],
+            ['Зарах машины зар', '/sell-page-on-sell', '', 'Car'],
+            ['Төлбөртэй зарууд', '/purchase-page-published', '', 'Car'],
             ['Данс', '/my-mileage', '', 'Car'],
             ['Мэдээлэл', '/my-notifications', '', 'Car'],
             ['Миний хуудас', '/home', '', 'Car'],

@@ -31,8 +31,8 @@ class MenusTableSeeder extends Seeder
             // Car Management
             ['Add Car', '/admin/modules/car/create', 'icon-plus3', 'Car'],
             ['Cars', '/admin/modules/car', 'icon-car', 'Car', [
-                ['Best Premium', '/admin/modules/car/best_premium', '', 'Car'],
-                ['Premium', '/admin/modules/car/premium', '', 'Car'],
+                ['Best', '/admin/modules/car/best_premium', '', 'Car'],
+                ['Special', '/admin/modules/car/premium', '', 'Car'],
                 ['Free', '/admin/modules/car/free', '', 'Car']
             ]],
             ['Auction Cars', '/admin/modules/car/auction', 'icon-hammer2', 'Car'],

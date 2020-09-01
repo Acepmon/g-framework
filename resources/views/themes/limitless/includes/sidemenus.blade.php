@@ -39,7 +39,7 @@
 
     @if(Auth::user()->menus->where('parent_id', $menu->id)->count() > 0)
     <ul class="nav nav-group-sub" data-menu-title="{{ $menu->title }}">
-        @each('themes.limitless.includes.sidemenus', Auth::user()->menus->where('parent_id', $menu->id)->sortBy('order'), 'menu')
+        @each('themes.limitless.includes.sidemenus', Auth::user()->menus->where('parent_id', $menu->id)->unique()->sortBy('order'), 'menu')
     </ul>
     @endif
 

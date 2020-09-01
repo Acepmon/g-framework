@@ -11,6 +11,7 @@
             </div>
             <div class="car-list">
                 <div class="row">
+                    @foreach($othCarsTotal as $othCars)
                     @if(count($interestedCars) > 0)
                         @foreach($interestedCars as $intCars)
                             @if($intCars==$othCars->id)
@@ -29,7 +30,6 @@
                             $itsIntCar=false;
                         @endphp
                     @endif
-                    @foreach($othCarsTotal as $othCars)
                         <div class="col-lg-6 col-md-6">
                             <!-- card start -->
                             <a href="{{$othCars->slug}}" target="_blank" class="card">
@@ -54,7 +54,7 @@
                                                     @if($itsIntCar==true)
                                                         <span class="text-danger"><i class="fas fa-heart"></i></span>
                                                     @else
-                                                        <i class="icon-heart"></i>
+                                                        <span class="text-danger"><i class="icon-heart"></i></span>
                                                     @endif
                                                 </div>
                                             @endif
