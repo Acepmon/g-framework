@@ -6,6 +6,35 @@
         <i class="{{ $menu->icon}}"></i>
         @endif
         <span>{{ $menu->title }}</span>
+
+        @php
+            $count = 0;
+            $best_premium = Modules\Car\Http\Controllers\Admin\CarBestPremiumController::getCount();
+            $premium = Modules\Car\Http\Controllers\Admin\CarPremiumController::getCount();
+            switch ($menu->title)  {
+                case 'Cars':
+                    $count = $best_premium + $premium;
+                    break;
+                case 'Best Premium':
+                    $count = $best_premium;
+                    break;
+                case 'Premium':
+                    $count = $premium;
+                    break;
+                case 'Transactions':
+                    $count = Modules\Payment\Http\Controllers\Admin\TransactionController::getCount();
+                    break;
+                case 'Verification Requests':
+                    $count = Modules\Car\Http\Controllers\Admin\CarVerificationController::getCount();
+                    break;
+                case 'Loan Check':
+                    $count = Modules\Car\Http\Controllers\Admin\CarLoanCheckController::getCount();
+                    break;
+            }
+            if ($count > 0) {
+                echo('<span class="badge bg-blue-700 align-self-center ml-auto">' . $count . '</span>');
+            }
+        @endphp
     </a>
 
     @if(Auth::user()->menus->where('parent_id', $menu->id)->count() > 0)

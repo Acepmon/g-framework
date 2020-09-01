@@ -137,4 +137,8 @@ class TransactionController extends Controller
     {
         //
     }
+
+    public static function getCount() {
+        return Transaction::where('status', Transaction::STATUS_PENDING)->count();
+    }
 }

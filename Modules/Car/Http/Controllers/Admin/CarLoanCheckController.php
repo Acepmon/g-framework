@@ -108,4 +108,12 @@ class CarLoanCheckController extends Controller
     {
         //
     }
+
+    public static function getCount() {
+        $pending = Content::where('type', 'loan-check')->whereDoesntHave('metas', function ($query) {
+            $query->where('key', 'checked');
+            $query->where('value', true);
+        })->orderBy('visibility', 'desc');
+        return $pending->count();
+    }
 }

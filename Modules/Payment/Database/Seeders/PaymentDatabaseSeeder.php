@@ -18,7 +18,7 @@ class PaymentDatabaseSeeder extends Seeder
 
         $this->call(PaymentMethodsTableSeeder::class);
         $this->call(PaymentTransactionTableSeeder::class);
-        $this->call(MenusTableSeeder::class);
+        // $this->call(MenusTableSeeder::class);
         $this->call(PermissionsTableSeeder::class);
 
         $this->call(GroupMenuTableSeeder::class);

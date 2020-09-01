@@ -22,20 +22,6 @@ class CarMenusTableSeeder extends Seeder
         // Structure
         // [Title, Link, Icon, Module, Children[]?]
 
-        $adminMenus = [
-            // Car Management
-            ['Add Car', '/admin/modules/car/create', 'icon-plus3', 'Car'],
-            ['Cars', '/admin/modules/car', 'icon-car', 'Car', [
-                ['Best Premium', '/admin/modules/car/best_premium', '', 'Car'],
-                ['Premium', '/admin/modules/car/premium', '', 'Car'],
-                ['Free', '/admin/modules/car/free', '', 'Car']
-            ]],
-            ['Auction Cars', '/admin/modules/car/auction', 'icon-hammer2', 'Car'],
-            ['Verification Requests', '/admin/modules/car/verifications', 'icon-clipboard2', 'Car'],
-            ['Loan Check', '/admin/modules/car/loan-check', 'icon-clipboard2', 'Car'],
-            ['Car Options', '/admin/modules/car/options', 'icon-cog', 'Car'],
-            ['Wishlist', '/admin/modules/car/wishlist', 'icon-star-empty3', 'Car'],
-        ];
         $carMainMenus = ['Car Main', '', '', 'Car', [
             ['Нүүр', '/', '', 'Car'],
             ['Авна', '/buy', '', 'Car'],
@@ -65,7 +51,6 @@ class CarMenusTableSeeder extends Seeder
             ['Миний хуудас', '/home', '', 'Car'],
         ]];
 
-        $this->iterate($adminMenus, 2, 1);
         $this->iterate([
             $carMainMenus,
             $carTopbarMenus,

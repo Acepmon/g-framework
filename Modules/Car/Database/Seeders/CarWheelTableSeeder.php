@@ -16,7 +16,7 @@ class CarWheelTableSeeder extends Seeder
      */
     public function run()
     {
-        $wheels = ['Урд', 'Хойд'];
+        $wheels = ['Урд', 'Хойд', '4WD  '];
 
         $parent = TaxonomyManager::register('Wheel', 'car', null, ['metaKey' => 'wheelDrive']);
 

@@ -26,7 +26,7 @@ class Car extends Content
             $contents = $contents->leftJoin('content_metas', function($join) use($orderBy) {
                 $join->on('contents.id', '=', 'content_metas.content_id');
                 $join->where('content_metas.key', '=', $orderBy);
-            });
+            })->distinct();
             $contents = $contents->select('contents.*', DB::raw('IFNULL(content_metas.value, "0") as value'));//->addSelect('content_metas.value');
             if ($orderBy == 'priceAmount') {
                 $order = 'asc';

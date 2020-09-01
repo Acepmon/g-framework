@@ -124,4 +124,15 @@ class CarBestPremiumController extends Controller
     {
         //
     }
+
+    public static function getCount() {
+        $common = Content::where('type', 'car')->whereHas('metas', function($query) {
+            $query->where('key', 'publishType');
+            $query->where('value', 'best_premium');});
+        $request = $common->where('status', Content::STATUS_PUBLISHED)->where('visibility', Content::VISIBILITY_PUBLIC)->whereDoesntHave('metas', function($query) {
+            $query->where('key', 'publishVerified');
+            $query->where('value', '1');
+        });
+        return $request->count();
+    }
 }

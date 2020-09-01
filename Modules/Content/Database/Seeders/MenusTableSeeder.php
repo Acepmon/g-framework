@@ -28,6 +28,43 @@ class MenusTableSeeder extends Seeder
             //     ['Administrators', '/admin/users/administrators', '', 'System'],
             //     ['Operators', '/admin/users/operators', '', 'System']
             // ]],
+            // Car Management
+            ['Add Car', '/admin/modules/car/create', 'icon-plus3', 'Car'],
+            ['Cars', '/admin/modules/car', 'icon-car', 'Car', [
+                ['Best Premium', '/admin/modules/car/best_premium', '', 'Car'],
+                ['Premium', '/admin/modules/car/premium', '', 'Car'],
+                ['Free', '/admin/modules/car/free', '', 'Car']
+            ]],
+            ['Auction Cars', '/admin/modules/car/auction', 'icon-hammer2', 'Car'],
+            ['Verification Requests', '/admin/modules/car/verifications', 'icon-clipboard2', 'Car'],
+            ['Loan Check', '/admin/modules/car/loan-check', 'icon-clipboard2', 'Car'],
+            ['Car Options', '/admin/modules/car/options', 'icon-cog', 'Car'],
+            ['Wishlist', '/admin/modules/car/wishlist', 'icon-star-empty3', 'Car'],
+            // User Management
+            ['Users', '/admin/users', 'icon-user', 'User Management', [
+                ['Administrators', '/admin/users/administrators', '', 'User Management'],
+                ['Operators', '/admin/users/operators', '', 'User Management'],
+                ['Members', '/admin/users/', '', 'User Management'],
+                ['Guests', '/admin/users/guests', '', 'User Management'],
+            ]],
+            ['Permissions', '/admin/permissions', 'icon-key', 'User Management'],
+            ['Groups', '/admin/groups', 'icon-users2', 'User Management'],
+            // Payment
+            ['Payment Methods', '/admin/modules/payment/payment_methods', 'icon-credit-card', 'Payment'],
+            ['Transactions', '/admin/modules/payment/transactions', 'icon-transmission', 'Payment'],
+            // Banner
+            ['Banners', '/admin/banners', 'icon-printer4', 'Banner'],
+            ['Create Banner', '/admin/banners/create', 'icon-plus3', 'Banner'],
+            // Content
+            ['Menus', '/admin/menus', 'icon-menu2', 'Content'],
+            ['Pages', '/admin/contents?type=page', 'icon-files-empty2', 'Content'],
+            ['Blog Posts', '/admin/contents?type=post', 'icon-blog', 'Content'],
+            // ['Comments', '/admin/comments', 'icon-comment', 'Content'],
+            ['Media & Assets', '/admin/media', 'icon-media', 'Content'],
+            ['Localization', '/admin/localizations', 'icon-sphere', 'Content'],
+            ['Categories', '/admin/taxonomy?taxonomy=category', 'icon-grid6', 'Content'],
+            ['Tags', '/admin/taxonomy?taxonomy=tag', 'icon-price-tag2', 'Content'],
+            ['Notifications', '/admin/notifications', 'icon-bubble-notification', 'Content'],
             ['Configurations', '', 'icon-gear', 'System', [
                 ['Maintenance Mode', '/admin/configs/maintenance', '', 'System'],
                 ['Base Configurations', '/admin/configs/base', '', 'System'],
@@ -46,29 +83,7 @@ class MenusTableSeeder extends Seeder
                 ['Add New', '/admin/themes/create', '', 'System']
             ]],
             ['Backups', '/admin/backups', 'icon-database', 'System'],
-            ['Logs', '/admin/logs', 'icon-archive', 'System'],
-            // User Management
-            ['Users', '/admin/users', 'icon-user', 'User Management', [
-                ['Administrators', '/admin/users/administrators', '', 'User Management'],
-                ['Operators', '/admin/users/operators', '', 'User Management'],
-                ['Members', '/admin/users/', '', 'User Management'],
-                ['Guests', '/admin/users/guests', '', 'User Management'],
-            ]],
-            ['Permissions', '/admin/permissions', 'icon-key', 'User Management'],
-            ['Groups', '/admin/groups', 'icon-users2', 'User Management'],
-            // Content
-            ['Menus', '/admin/menus', 'icon-menu2', 'Content'],
-            ['Pages', '/admin/contents?type=page', 'icon-files-empty2', 'Content'],
-            ['Blog Posts', '/admin/contents?type=post', 'icon-blog', 'Content'],
-            // ['Comments', '/admin/comments', 'icon-comment', 'Content'],
-            ['Media & Assets', '/admin/media', 'icon-media', 'Content'],
-            ['Localization', '/admin/localizations', 'icon-sphere', 'Content'],
-            ['Categories', '/admin/taxonomy?taxonomy=category', 'icon-grid6', 'Content'],
-            ['Tags', '/admin/taxonomy?taxonomy=tag', 'icon-price-tag2', 'Content'],
-            ['Notifications', '/admin/notifications', 'icon-bubble-notification', 'Content'],
-            // Banner
-            ['Banners', '/admin/banners', 'icon-printer4', 'Banner'],
-            ['Create Banner', '/admin/banners/create', 'icon-plus3', 'Banner']
+            ['Logs', '/admin/logs', 'icon-archive', 'System']
         ]];
 
         $adminProfileMenus = ['Admin Profile', '/admin/profile', 'icon-user', 'Profile', [
