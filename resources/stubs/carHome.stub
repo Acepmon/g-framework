@@ -466,11 +466,11 @@ $itsIntCar=false;
             //     url: '/ajax/user/interested_cars/200',
             //     dataType: 'json',
             //     success: function (data) {
-            //         $("#saveToInterested").html('<span class="text-danger"><i class="fas fa-heart"></i> Жаглаастанд нэмэгдсэн</span>');
+            //         $("#saveToInterested").html('<span class="text-danger"><i class="fas fa-heart"></i> Жагсаалтанд нэмэгдсэн</span>');
             //         $("#saveToInterested").prop('disabled', false);
             //     },
             //     error: function (data) {
-            //         $("#saveToInterested").html('<span class=""><i class="far fa-heart"></i> Жаглаастанд нэмэх</span>')
+            //         $("#saveToInterested").html('<span class=""><i class="far fa-heart"></i> Жагсаалтанд нэмэх</span>')
             //         $("#saveToInterested").prop('disabled', false);
             //     }
             // });
@@ -517,9 +517,9 @@ $itsIntCar=false;
                     },
                     success: function (data) {
                         if (data.status == 'added') {
-                            elm.html('<span class="text-danger"><i class="fas fa-heart"></i> Жаглаастанд нэмэгдсэн</span>');
+                            elm.html('<span class="text-danger"><i class="fas fa-heart"></i> Жагсаалтанд нэмэгдсэн</span>');
                         } else if (data.status == 'removed') {
-                            elm.html('<span class="text-danger"><i class="far fa-heart"></i> Жаглаастанд нэмэх</span>');
+                            elm.html('<span class="text-danger"><i class="far fa-heart"></i> Жагсаалтанд нэмэх</span>');
                         }
                     },
                     error: function (error) {

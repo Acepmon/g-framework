@@ -36,7 +36,7 @@
                         <a data-toggle="collapse" class="text-default text-capitalize" href="#accordion-control-{{ $group }}">{{ $group }} ({{$groupContents->count()}})</a>
                     </th>
                 </tr>
-                <tbody id="accordion-control-{{ $group }}" class="collapse {{ $group == \App\Content::STATUS_PUBLISHED ? 'show' : '' }}" data-parent="#accordion-control">
+                <tbody id="accordion-control-{{ $group }}" class="collapse {{ $group == 'Requests' ? 'show' : '' }}" data-parent="#accordion-control">
                     @foreach($groupContents as $content)
                         <tr>
                             <td>{{$content->id}}</td>

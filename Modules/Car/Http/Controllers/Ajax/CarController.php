@@ -88,8 +88,9 @@ class CarController extends Controller
 
         // Ordering by premium
         $orderBy = request('orderBy', 'publishedAt');
+        $orderDir = request('orderDir', 'desc');
         $cars = $cars->orderBy('order', 'desc');
-        $cars = Car::order($orderBy, 'desc', $cars);
+        $cars = Car::order($orderBy, $orderDir, $cars);
 
         $page = request('page', 1);
         $perPage = 15;
@@ -98,7 +99,8 @@ class CarController extends Controller
             'items' => $cars, 
             'type' => $type,
             'search' => $search,
-            'orderBy' => $orderBy,// TODO: refactor
+            'orderBy' => $orderBy,
+            'orderDir' => $orderDir,
             'page' => $page,
             'itemsPerPage' => $perPage,
             'maxPage' => $cars->lastPage(),

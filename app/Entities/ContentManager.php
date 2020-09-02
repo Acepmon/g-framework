@@ -404,7 +404,7 @@ class ContentManager extends Manager
             $content = Content::findOrFail($contentId);
             $content->status = $request->input('status', Content::STATUS_PUBLISHED);
             $content->visibility = $request->input('visibility', Content::VISIBILITY_PUBLIC);
-            $content->updateMeta('publishedAt', Carbon::now());
+            $content->setMetaValue('publishedAt', Carbon::now());
             
             // Attach default Term id
             $notVerified = Term::where('slug', 'batalgaazhaagy')->first();
@@ -423,11 +423,12 @@ class ContentManager extends Manager
             }
 
             if ($publishType == 'best_premium' || $publishType == 'premium') {
+                $content->setMetaValue('publishType', $publishType);
                 $content->setMetaValue('publishAmount', $publishAmount);
                 $content->setMetaValue('publishUnit', $publishUnit);
                 $content->setMetaValue('publishDuration', $publishDuration);
 
-                $result = self::publishPremium($content);
+                $result = self::publishPremium($content, $publishAmount);
                 if ($result) {
                     // continue;
                 } else {
@@ -450,13 +451,15 @@ class ContentManager extends Manager
         }
     }
 
-    public static function publishPremium($content) {
+    public static function publishPremium($content, $amount) {
         $content->order = 1;
         $publishType = $content->metaValue('publishType');
         if ($publishType == 'best_premium' || $publishType == 'premium') {
             $author = $content->author;
             $cash = $author->metaValue('cash');
-            $amount = $content->metaValue('publishAmount');
+            if (!$amount) {
+                $amount = $content->metaValue('publishAmount');
+            }
             if ($cash - $amount <= 0) {
                 return false;
             }
@@ -479,7 +482,7 @@ class ContentManager extends Manager
             } else if ($publishType == 'premium') {
                 $content->order = 2;
             }
-            $content->updateMeta('publishedAt', Carbon::now());
+            $content->setMetaValue('publishedAt', Carbon::now());
 
             $content->save();
             return true;

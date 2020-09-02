@@ -161,8 +161,25 @@ $interestedCars=[];
                     <div class="sort-cars col-md-9">
                         <ul>
                             <li><a href="#" onclick="formSubmit('searchByTotPrice', 1000000000)">Бүгдийг  харах</a></li>
-                            <li class="{{ request('sort')=='updated_at' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'updated_at', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
-                            <li class="{{ request('sort')=='priceAmount' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'asc')">Хямд үнэ</a></li>
+                            @if (request('sort','updated_at')=='updated_at')
+                                @if (request('sortDir', 'desc')=='desc')
+                                <li class="active"><a href="#" onclick="formSubmit('sortBy', 'updated_at', 'sortDir', 'asc')">Сүүлд нийтлэгдсэн ▼</a></li>
+                                @else
+                                <li class="active"><a href="#" onclick="formSubmit('sortBy', 'updated_at', 'sortDir', 'desc')">Өмнө нь нийтлэгдсэн ▲</a></li>
+                                @endif
+                            @else
+                                <li><a href="#" onclick="formSubmit('sortBy', 'updated_at', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
+                            @endif
+                            
+                            @if (request('sort')=='priceAmount')
+                                @if (request('sortDir')=='desc')
+                                <li class="active"><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'asc')">Хамгийн үнэтэй ▲</a></li>
+                                @else
+                                <li class="active"><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'desc')">Хямд үнэ ▼</a></li>
+                                @endif
+                            @else
+                                <li><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'asc')">Хямд үнэ</a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -218,7 +235,7 @@ $interestedCars=[];
                                         <div class="card-title">{{$carDataMonthly->title}}</div>
                                     @if(Auth::user()!=null && $carDataMonthly->author_id==Auth::user()->id)
                                     <div class="favorite">
-                                        <span class=""><i class="fas fa-car"></i></span>
+                                        <span class="text-dark"><i class="fas fa-car"></i></span>
                                     </div>
                                     @else
                                     <div class="favorite saveToInterested" data-target="{{ $carDataMonthly->id }}">

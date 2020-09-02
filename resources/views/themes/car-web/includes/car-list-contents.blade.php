@@ -20,13 +20,49 @@
   <div class="d-flex justify-content-start">
     <span class="total-cars">Нийт {{ $items->total() }}</span>
     <input type="hidden" name="orderBy" id="orderBy" value="{{ $orderBy }}" />
+    <input type="hidden" name="orderDir" id="orderDir" value="{{ $orderDir }}" />
 
     <div class="sort-cars">
     <ul>
-        <li class="{{ ($orderBy=='publishedAt')?'active':'' }}"><a href="#" onclick="formSubmit('orderBy', 'publishedAt')">Сүүлд нийтлэгдсэн</a></li>
-        <li class="{{ ($orderBy=='buildYear')?'active':'' }}"><a href="#" onclick="formSubmit('orderBy', 'buildYear')">Үйлдвэрлэгдсэн он</a></li>
-        <li class="{{ ($orderBy=='importDate')?'active':'' }}"><a href="#" onclick="formSubmit('orderBy', 'importDate')">Орж ирсэн он</a></li>
-        <li class="{{ ($orderBy=='priceAmount')?'active':'' }}"><a href="#" onclick="formSubmit('orderBy', 'priceAmount')">Хямд үнэ</a></li>
+      @if ($orderBy=='publishedAt')
+          @if ($orderDir=='desc')
+          <li class="active"><a href="#" onclick="formSubmit('orderBy', 'publishedAt', 'orderDir', 'asc')">Сүүлд нийтлэгдсэн ▼</a></li>
+          @else
+          <li class="active"><a href="#" onclick="formSubmit('orderBy', 'publishedAt', 'orderDir', 'desc')">Өмнө нь нийтлэгдсэн ▲</a></li>
+          @endif
+      @else
+          <li><a href="#" onclick="formSubmit('orderBy', 'publishedAt', 'orderDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
+      @endif
+      
+      @if ($orderBy=='buildYear')
+          @if ($orderDir=='desc')
+          <li class="active"><a href="#" onclick="formSubmit('orderBy', 'buildYear', 'orderDir', 'asc')">Үйлдвэрлэгдсэн он ▼</a></li>
+          @else
+          <li class="active"><a href="#" onclick="formSubmit('orderBy', 'buildYear', 'orderDir', 'desc')">Үйлдвэрлэгдсэн он ▲</a></li>
+          @endif
+      @else
+          <li><a href="#" onclick="formSubmit('orderBy', 'buildYear', 'orderDir', 'desc')">Үйлдвэрлэгдсэн он</a></li>
+      @endif
+      
+      @if ($orderBy=='importDate')
+          @if ($orderDir=='desc')
+          <li class="active"><a href="#" onclick="formSubmit('orderBy', 'importDate', 'orderDir', 'asc')">Орж ирсэн он ▼</a></li>
+          @else
+          <li class="active"><a href="#" onclick="formSubmit('orderBy', 'importDate', 'orderDir', 'desc')">Орж ирсэн он ▲</a></li>
+          @endif
+      @else
+          <li><a href="#" onclick="formSubmit('orderBy', 'importDate', 'orderDir', 'desc')">Орж ирсэн он</a></li>
+      @endif
+      
+      @if ($orderBy=='priceAmount')
+          @if ($orderDir=='desc')
+          <li class="active"><a href="#" onclick="formSubmit('orderBy', 'priceAmount', 'orderDir', 'desc')">Хямд үнэ ▼</a></li>
+          @else
+          <li class="active"><a href="#" onclick="formSubmit('orderBy', 'priceAmount', 'orderDir', 'asc')">Хамгийн үнэтэй ▲</a></li>
+          @endif
+      @else
+          <li><a href="#" onclick="formSubmit('orderBy', 'priceAmount', 'orderDir', 'asc')">Хямд үнэ</a></li>
+      @endif
     </ul>
     </div>
   </div>

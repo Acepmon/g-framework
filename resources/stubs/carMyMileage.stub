@@ -120,9 +120,9 @@ $itemsPerPage = request('itemsPerPage', "10");
                     },
                     success: function (data) {
                         if (data.status == 'added') {
-                            elm.html('<span class="text-danger"><i class="fas fa-heart"></i> Жаглаастанд нэмэгдсэн</span>');
+                            elm.html('<span class="text-danger"><i class="fas fa-heart"></i> Жагсаалтанд нэмэгдсэн</span>');
                         } else if (data.status == 'removed') {
-                            elm.html('<span class=""><i class="far fa-heart"></i> Жаглаастанд нэмэх</span>');
+                            elm.html('<span class=""><i class="far fa-heart"></i> Жагсаалтанд нэмэх</span>');
                         }
                     },
                     error: function (error) {

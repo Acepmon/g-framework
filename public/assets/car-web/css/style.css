@@ -5432,11 +5432,11 @@ footer.footer .text-muted .list-inline-item a {
   color: #858994;
   transition: all .3s ease;
 }
-.owl-carousel .owl-stage {
+.wish-slide.owl-carousel .owl-stage {
   display: flex;
 }
 
-.owl-carousel .owl-item img {
+.wish-slide.owl-carousel .owl-item img {
   width: auto;
   height: 100%;
 }

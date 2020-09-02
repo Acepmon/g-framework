@@ -22,8 +22,25 @@
             <span class="total-cars ml-0" >НИЙТ {{count($cars)}}</span>
             <div class="sort-cars col-md-9">
                 <ul>
-                    <li class="{{ (request('sort', 'publishedAt')=='publishedAt')?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'publishedAt', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
-                    <li class="{{ request('sort')=='priceAmount' ?'active':'' }}"><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'asc')">Хямд үнэ</a></li>
+                    @if (request('sort','publishedAt')=='publishedAt')
+                        @if (request('sortDir', 'desc')=='desc')
+                        <li class="active"><a href="#" onclick="formSubmit('sortBy', 'publishedAt', 'sortDir', 'asc')">Сүүлд нийтлэгдсэн ▼</a></li>
+                        @else
+                        <li class="active"><a href="#" onclick="formSubmit('sortBy', 'publishedAt', 'sortDir', 'desc')">Өмнө нь нийтлэгдсэн ▲</a></li>
+                        @endif
+                    @else
+                        <li><a href="#" onclick="formSubmit('sortBy', 'publishedAt', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
+                    @endif
+                    
+                    @if (request('sort')=='priceAmount')
+                        @if (request('sortDir')=='desc')
+                        <li class="active"><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'asc')">Хамгийн үнэтэй ▲</a></li>
+                        @else
+                        <li class="active"><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'desc')">Хямд үнэ ▼</a></li>
+                        @endif
+                    @else
+                        <li><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'asc')">Хямд үнэ</a></li>
+                    @endif
                 </ul>
             </div>
         </div>

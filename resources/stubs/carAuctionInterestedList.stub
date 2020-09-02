@@ -51,9 +51,9 @@
                     </a>
                     <div class="favorite addToInterest" data-target="{{ $car->id }}">
                         @if(Auth::user() && count(metaHas(Auth::user(), 'interestedCars', $car->id)->get()) > 0)
-                            <span class="text-danger"><i class="fas fa-heart"></i> Жаглаастанд нэмэгдсэн</span>
+                            <span class="text-danger"><i class="fas fa-heart"></i> Жагсаалтанд нэмэгдсэн</span>
                         @else
-                            <span class=""><i class="far fa-heart"></i> Жаглаастанд нэмэх</span>
+                            <span class=""><i class="far fa-heart"></i> Жагсаалтанд нэмэх</span>
                         @endif
                     </div>
                 </div>
@@ -167,9 +167,9 @@
                     },
                     success: function (data) {
                         if (data.status == 'added') {
-                            elm.html('<span class="text-danger"><i class="fas fa-heart"></i> Жаглаастанд нэмэгдсэн</span>');
+                            elm.html('<span class="text-danger"><i class="fas fa-heart"></i> Жагсаалтанд нэмэгдсэн</span>');
                         } else if (data.status == 'removed') {
-                            elm.html('<span class=""><i class="far fa-heart"></i> Жаглаастанд нэмэх</span>');
+                            elm.html('<span class=""><i class="far fa-heart"></i> Жагсаалтанд нэмэх</span>');
                         }
                     },
                     error: function (error) {

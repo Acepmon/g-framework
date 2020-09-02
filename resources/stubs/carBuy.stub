@@ -33,7 +33,7 @@ $banner = \App\Banner::where('location_id', 5)->where('status', 'active')->inRan
 
 // Get All items
 $orderBy = request('orderBy', "publishedAt");
-$order = request('order', "desc");
+$orderDir = request('orderDir', "desc");
 $page = request('page', "1");
 $itemsPerPage = request('itemsPerPage', "15");
 
@@ -290,6 +290,16 @@ $itemsPerPage = request('itemsPerPage', "15");
     if (value != 'no-value') {
       document.getElementById(id).value = value;
     }
+    refilter();
+  }
+
+  function formSubmit(id, value, sortDir, sortDirValue) {
+      if (value != 'no-value') {
+          document.getElementById(id).value = value;
+      }
+      if (sortDir != 'no-value'){
+          document.getElementById(sortDir).value = sortDirValue;
+      }
     refilter();
   }
 

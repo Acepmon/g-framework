@@ -273,7 +273,7 @@ class GframeworkServiceProvider extends ServiceProvider
             }
         }
         
-        $contents = $contents . '->distinct()'; 
+        $contents = $contents . '->distinct()';
         if (isset($sort)) {
             $contents = $contents . $sort;
         }
