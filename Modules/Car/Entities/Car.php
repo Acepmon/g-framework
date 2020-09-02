@@ -177,7 +177,7 @@ class Car extends Content
         return $request;
     }
 
-    public const EXCEPT_FILTER = ['orderBy'=>'', 'page'=>'', 'except'=>'', 'countables'=>'',
+    public const EXCEPT_FILTER = ['orderBy'=>'', 'orderDir'=>'', 'page'=>'', 'except'=>'', 'countables'=>'',
         'minBuildYear'=>'', 'maxBuildYear'=>'', 'minImportDate'=>'', 'maxImportDate'=>'',
         'minPriceAmount'=>'', 'maxPriceAmount'=>'', 'minMileageAmount'=>'', 'maxMileageAmount'=>'',
         'publishType'=>'', 'advantage'=>''

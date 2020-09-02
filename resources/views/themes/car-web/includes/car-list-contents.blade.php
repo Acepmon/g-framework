@@ -68,9 +68,9 @@
   </div>
 </div>
 
-@if ($items->all() && sizeof($items->all()) != 0)
+@if ($items->total() != 0)
   @php
-    if (sizeof($items->all()) < ($page-0) * $itemsPerPage) {
+    if ($items->total() < ($page-0) * $itemsPerPage) {
       $page = 1;
     }
   @endphp
@@ -91,7 +91,7 @@
   </div>
 @endif
 
-@if ($items->all() && sizeof($items->all()) != 0)
+@if ($items->total() != 0)
 <!-- Pagination -->
 <nav aria-label="Page navigation">
     <input type="hidden" value="{{ max($page, 1) }}" name="page" id="page" />
@@ -102,8 +102,8 @@
         </button>
     </li>
     @for($i = 1; $i <= $maxPage; $i++)
-        <li class="page-item {{ ($i == $page)?'active':'' }}"><button class="page-link" onclick="formSubmit('page', {{$i}})">{{ $i }}</button></li>
-        @endfor
+      <li class="page-item {{ ($i == $page)?'active':'' }}"><button class="page-link" onclick="formSubmit('page', {{$i}})">{{ $i }}</button></li>
+    @endfor
         <li class="page-item {{ ($page >= $maxPage)?'disabled':'' }}">
         <button class="page-link" onclick="formSubmit('page', {{$page+1}})" aria-label="Next">
             <span aria-hidden="true"><i class="fab fa fa-angle-right"></i></span>

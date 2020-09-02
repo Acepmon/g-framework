@@ -2,7 +2,9 @@
 <div class="card {{ (isset($type) && $type == 'auction')?'auction-car':'' }} {{ isset($noborder)?'border-0':'' }}">
     <div class="card-body">
         <a class="card-img" href="{{ $car->slug }}" target="_blank">
-            @if(isPremium($car))
+            @if(isPremium($car)=='best_premium')
+            <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/corona.svg') }}" alt=""></div>
+            @elseif(isPremium($car)=='premium')
             <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/corona.svg') }}" alt=""></div>
             @endif
             @if(getMetasValue($car->metas, 'doctorVerified')==1)

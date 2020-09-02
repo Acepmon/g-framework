@@ -283,23 +283,16 @@ $itemsPerPage = request('itemsPerPage', "15");
     refilter();
   });
 
-  function formSubmit(id, value) {
+  function formSubmit(id, value, sortDir='', sortDirValue='no-value') {
     if (id == 'searchInput' && value != '') { // Double search code
       return false;
     }
     if (value != 'no-value') {
       document.getElementById(id).value = value;
     }
-    refilter();
-  }
-
-  function formSubmit(id, value, sortDir, sortDirValue) {
-      if (value != 'no-value') {
-          document.getElementById(id).value = value;
-      }
-      if (sortDir != 'no-value'){
-          document.getElementById(sortDir).value = sortDirValue;
-      }
+    if (sortDir != 'no-value'){
+        document.getElementById(sortDir).value = sortDirValue;
+    }
     refilter();
   }
 
