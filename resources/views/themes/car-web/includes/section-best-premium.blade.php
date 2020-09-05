@@ -41,7 +41,7 @@
                                 <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
                                 @endif
                                 <div class="card-img">
-                                    <img src="{{(getMetasValue($bpCars->metas, 'thumbnail'))}}" class="img-fluid" alt="alt">
+                                    <img src="{{$bpCars->thumbnail()}}" class="img-fluid" alt="alt">
 
                                     <div class="card-caption">
                                         <div class="meta">{{$itsIntCar}}
