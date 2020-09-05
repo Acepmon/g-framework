@@ -456,11 +456,11 @@ class ContentManager extends Manager
         $publishType = $content->metaValue('publishType');
         if ($publishType == 'best_premium' || $publishType == 'premium') {
             $author = $content->author;
-            $cash = $author->metaValue('cash');
+            $cash = $author->metaValue('cash') || 0;
             if (!$amount) {
                 $amount = $content->metaValue('publishAmount');
             }
-            if ($cash - $amount <= 0) {
+            if ($cash - $amount < 0) {
                 return false;
             }
             $cash = $cash - $amount;

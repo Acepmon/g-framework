@@ -111,7 +111,7 @@ class TransactionController extends Controller
             // If content is supplied, make that premium
             if ($transaction->content) {
                 $content = $transaction->content;
-                $result = ContentManager::publishPremium($content);
+                $result = ContentManager::publishPremium($content, $content->metaValue('publishAmount'));
                 // $result = $content->publishPremium();
                 if ($result) {
                     $content->setMetaValue('publishVerified', True);

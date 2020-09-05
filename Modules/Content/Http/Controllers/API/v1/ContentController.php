@@ -95,7 +95,7 @@ class ContentController extends Controller
         $publishUnit = $request->input('publishUnit');
         $publishDuration = $request->input('publishDuration');
         $published = ContentManager::publish($request, $contentId, $publishAmount, $publishUnit, $publishDuration);
-        if ($published) {
+        if ($published != 0) {
             return response()->json(['success' => True, 'message' => "Successfully registered"]);
         } else {
             return response()->json(['success' => False, 'message' => 'Insufficient cash']);

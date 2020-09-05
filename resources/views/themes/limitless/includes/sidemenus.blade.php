@@ -15,10 +15,10 @@
                 case 'Cars':
                     $count = $best_premium + $premium;
                     break;
-                case 'Best Premium':
+                case 'Best':
                     $count = $best_premium;
                     break;
-                case 'Premium':
+                case 'Special':
                     $count = $premium;
                     break;
                 case 'Transactions':

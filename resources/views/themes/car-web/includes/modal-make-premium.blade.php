@@ -172,7 +172,9 @@ function makePremium() {
             url: '/ajax/contents/' + makeCarId + '/publish',
             data: {"status":'{{ \App\Content::STATUS_PUBLISHED}}', "visibility":'{{ \App\Content::VISIBILITY_PUBLIC }}', "publishPricing": publishPricing, "publishType": paramObjs.publishType}
         }).done(function(data) {
-            nextPrev(1);
+            if (typeof nextPrev === "function") {
+                nextPrev(1);
+            }
             console.log("DONE!");
             console.log(data);
             if (paramObjs.publishType === "free") {
