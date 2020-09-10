@@ -33,7 +33,11 @@
                         <div class="col-lg-3 col-md-4">
                             <!-- card start -->
                             <div class="card cd-box auction-car">
-                                <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt=""></div>
+                                @if(isPremium($auctionPrmCars)=='best_premium')
+                                <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/best.svg') }}" alt=""></div>
+                                @elseif(isPremium($auctionPrmCars)=='premium')
+                                <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/special.svg') }}" alt=""></div>
+                                @endif
                                 @if(getMetasValue($auctionPrmCars->metas, 'doctorVerified')==1)
                                 <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
                                 @endif

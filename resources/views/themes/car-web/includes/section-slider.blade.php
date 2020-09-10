@@ -11,8 +11,10 @@
             <div class="card-slide owl-carousel owl-theme">
                 @foreach($contents->take(12) as $car)
                 <a href="/{{ $car->slug }}" class="card cd-box">
-                    @if($car->metaValue('publishType') == 'best_premium' || $car->metaValue('publishType') == 'premium')
-                    <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/corona.svg') }}" alt=""></div>
+                    @if(isPremium($car)=='best_premium')
+                    <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/best.svg') }}" alt=""></div>
+                    @elseif(isPremium($car)=='premium')
+                    <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/special.svg') }}" alt=""></div>
                     @endif
                     <div class="card-img">
                         <img src="{{ (substr($car->metaValue('thumbnail'), 0, 4) !== 'http')?(App\Config::getStorage() . $car->metaValue('thumbnail')):$car->metaValue('thumbnail') }}" class="img-fluid" alt="alt">

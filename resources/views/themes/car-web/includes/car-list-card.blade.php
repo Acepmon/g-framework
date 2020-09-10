@@ -3,9 +3,9 @@
     <div class="card-body">
         <a class="card-img" href="{{ $car->slug }}" target="_blank">
             @if(isPremium($car)=='best_premium')
-            <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/corona.svg') }}" alt=""></div>
+            <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/best.svg') }}" alt=""></div>
             @elseif(isPremium($car)=='premium')
-            <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/corona.svg') }}" alt=""></div>
+            <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/special.svg') }}" alt=""></div>
             @endif
             @if(getMetasValue($car->metas, 'doctorVerified')==1)
             <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>

@@ -36,7 +36,11 @@
                         <div class="col-lg-3 col-md-4">
                             <!-- card start -->
                             <a href="{{$bpCars->slug}}" target="_blank" class="card cd-box">
-                                <div class="premium-tag shadow-soft-blue"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt=""></div>
+                                @if(isPremium($bpCars)=='best_premium')
+                                <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/best.svg') }}" alt=""></div>
+                                @elseif(isPremium($bpCars)=='premium')
+                                <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/special.svg') }}" alt=""></div>
+                                @endif
                                 @if(getMetasValue($bpCars->metas, 'doctorVerified')==1)
                                 <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
                                 @endif
