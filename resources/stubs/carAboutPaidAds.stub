@@ -235,7 +235,7 @@
     var bestZar = {
     container: document.getElementById('best-zar'),
     renderer: 'svg',
-    loop: false,
+    loop: true,
     rendererSettings: {
         progressiveLoad: true
     },
@@ -247,7 +247,7 @@ anim1 = bodymovin.loadAnimation(bestZar);
     var specialZar = {
     container: document.getElementById('special-zar'),
     renderer: 'svg',
-    loop: false,
+    loop: true,
     rendererSettings: {
         progressiveLoad: true
     },
