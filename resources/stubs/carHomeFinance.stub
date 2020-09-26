@@ -137,8 +137,8 @@ $interestedCars=[];
             <div class="col-md-12 text-center">
                 <input hidden id="searchByTotPrice" value="{{ request('priceAmount')}}" name="priceAmount">
                 <input hidden id="page" name="page" value="{{ request('page', 1) }}">
-                <input hidden id="sortBy" name="sort" value="updated_at">
-                <input hidden id="sortDir" name="sortDir" value="desc">
+                <input hidden id="sortBy" name="sort" value="{{ request('sort', 'updated_at') }}">
+                <input hidden id="sortDir" name="sortDir" value="{{ request('sortDir', 'desc') }}">
                 <button type="submit" id="searchFitCars" class="btn btn-danger btn-round  mt-5 px-5 btn-lg">Хайлт хийх</button>
 
 
@@ -154,8 +154,8 @@ $interestedCars=[];
             <div class="card page-top-navbar border-0">
                 <div class="d-flex justify-content-start">
 
-                    @contentInline(type=car, author_id=4, priceAmount < intval(request()->input("priceAmount")), sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)
-                    <span class="total-cars ml-0" >НИЙТ {{count($cars)}}
+                    @contentInline(type=car, author_id=4, limit=16, priceAmount < intval(request()->input("priceAmount")), sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)
+                    <span class="total-cars ml-0" >НИЙТ {{$cars->total()}}
 <!--                        <a class="">Бүгдийг харах</a><i class="fab fa fa-angle-right"></i>-->
                     </span>
                     <div class="sort-cars col-md-9">

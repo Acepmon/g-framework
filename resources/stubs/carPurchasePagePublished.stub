@@ -61,7 +61,11 @@
 
             <div class="card-body">
                 <div class="card-img">
-
+                    @if($published->metaValue('publishType') == 'best_premium')
+                    <div class="premium-tag shadow-soft-blue"><img src="/assets/car-web/img/icons/best.svg" alt=""></div>
+                    @elseif($published->metaValue('publishType') == 'premium')
+                    <div class="premium-tag shadow-soft-blue"><img src="/assets/car-web/img/icons/special.svg" alt=""></div>
+                    @endif
                     <img src="{{$published->thumbnail()}}" class="img-fluid" alt="alt" />
                 </div>
 
@@ -70,14 +74,8 @@
                         <a href="{{$published->slug}}" target="_blank" >
                             <div href="#" class="card-title">{{$published->title}}</div>
                             <div class="meta">{{$published->metaValue("buildYear")}} / {{$published->metaValue("importDate")}} | {{number_format($published->metaValue("mileageAmount"))}} {{$published->metaValue("mileageUnit")}}</div>
+                            <div class="is-premium"> </div>
                             <div class="price">{{numerizePrice($published->metaValue("priceAmount"))}} {{$published->metaValue("priceUnit")}}</div>
-                            <div class="is-premium"><img src="{{asset('car-web/img/icons/corona.svg')}}" alt="">
-                            @if($published->metaValue('publishType') == 'best_premium')
-                            Best Premium
-                            @elseif($published->metaValue('publishType') == 'premium')
-                            Premium
-                            @endif
-                            </div>
                         </a>
                     </div>
                     <div class="info" style="display: inline-block; color:black">
