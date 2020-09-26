@@ -55,7 +55,7 @@
       @endif
       
       @if ($orderBy=='priceAmount')
-          @if ($orderDir=='desc')
+          @if ($orderDir=='asc')
           <li class="active"><a href="#" onclick="formSubmit('orderBy', 'priceAmount', 'orderDir', 'desc')">Хямд үнэ ▼</a></li>
           @else
           <li class="active"><a href="#" onclick="formSubmit('orderBy', 'priceAmount', 'orderDir', 'asc')">Хамгийн үнэтэй ▲</a></li>

@@ -95,9 +95,16 @@ function isPremium($car) {
     $car->visibility == App\Content::VISIBILITY_PUBLIC &&
     // $car->metaValue('publishVerifiedEnd') >= now() &&
     $car->metaValue('publishVerified') == True) {
-        $publishType = $car->metaValue('publishType');
+        /*$publishType = $car->metaValue('publishType');
         if ($publishType == 'best_premium' || $publishType == 'premium') {
             return $publishType;
+        }*/
+        if ($car->order == "1") {
+            return "free";
+        } else if ($car->order == "2") {
+            return "premium";
+        } else if ($car->order == "3") {
+            return "best_premium";
         }
     }
     return false;
