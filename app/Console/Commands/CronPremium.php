@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\ContentMeta;
-use App\Comment;
+use App\Content;
 
 class CronPremium extends Command
 {
@@ -59,7 +59,7 @@ class CronPremium extends Command
                 $update = ContentMeta::where('key','=','publishVerified')->where('content_id', '=', $data->content_id)->firstOrFail();
                 $update->value=0;
                 $update->save();
-                $content = $data->content;
+                $content = Content::find($data->content_id);
                 $content->order = 1;
                 $content->save();
                 $delete = ContentMeta::find($data->id);
