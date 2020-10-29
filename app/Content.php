@@ -44,7 +44,7 @@ class Content extends Model
     ];
 
     const NAMING_CONVENTION = '_';
-    const META_ARRAY = ['medias'];
+    const META_ARRAY = ['medias', 'advantages'];
 
     public static function getByMetas($key, $value, $operator = '=')
     {

@@ -42,7 +42,7 @@ class TaxonomyManager extends Manager
     public static function collection($taxonomy, $count = False)
     {
         if ($count) {
-            return TermTaxonomy::where('taxonomy', $taxonomy)->where('count', '!=', 0)->get();
+            return TermTaxonomy::where('taxonomy', $taxonomy)->get()->where('contents_count', '!=', '0');
         }
         $taxonomies = TermTaxonomy::where('taxonomy', $taxonomy)->get();//->orderBy('taxonomy', 'ASC');
         return $taxonomies;
