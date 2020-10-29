@@ -121,7 +121,7 @@
 @section('script')
 <script>
     $(document).ready(function() {
-        $("#priceAmount").inputmask('decimal', {groupSeparator: ',', 'autoGroup': true, 'removeMaskOnSubmit': true});
+        $("#priceAmount").inputmask('decimal', {groupSeparator: ',', 'autoGroup': true, 'removeMaskOnSubmit': true, autoUnmask: true});
     });
     function submitChargeCash() {
         $("#demo-spinner").css({
