@@ -35,7 +35,11 @@ class TaxonomyController extends Controller
             $type = request('type', 'normal');
             if (request('sort', False)) {
                 $terms_id = Term::where($type, True)->pluck('id');
-                $taxonomies = TermTaxonomy::join('terms', 'terms.id', '=', 'term_taxonomy.term_id')->where('taxonomy', 'car-manufacturer')->whereIn('term_id', $terms_id)->orderBy('name')->get();
+                $taxonomies = TermTaxonomy::join('terms', 'terms.id', '=', 'term_taxonomy.term_id')->where('taxonomy', 'car-manufacturer')->whereIn('term_id', $terms_id);
+                $top5 = clone $taxonomies;
+                // Mercedes-Benz, 
+                $top5 = $top5->whereIn('name', ['Toyota', 'Lexus', 'Nissan', 'Hyundai'])->get();
+                $taxonomies = $top5->merge($taxonomies->orderBy('name')->get());
                 return new TaxonomyCollection($taxonomies);
             }
             $taxonomies = TaxonomyController::addContentsCount($taxonomy, TaxonomyManager::getManufacturers($type, request()->input('count', False), 4));
@@ -84,7 +88,7 @@ class TaxonomyController extends Controller
             }
         }
         $filteredIds = $cars->pluck('id');
-        $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->withCount(['contents' => function($query) use ($filteredIds) {
+        $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->whereIn('id', $taxonomies->pluck('id'))->withCount(['contents' => function($query) use ($filteredIds) {
             $query->whereIn('id', $filteredIds);
         }])->get();//->where('contents_count', '!=', '0');
         return $taxonomies;
