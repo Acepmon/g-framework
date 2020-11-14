@@ -344,6 +344,12 @@ class Content extends Model
                 return Config::getStorage() . $this->metaValue('thumbnail');
             }
             return $this->metaValue('thumbnail');
+        } else {
+            for ($i = 2; $i <= 16; $i++) {
+                if ($this->metaValue('image' . $i)) {
+                    return $this->metaValue('image' . $i);
+                }
+            }
         }
         return "/assets/car-web/img/default.png";
     }

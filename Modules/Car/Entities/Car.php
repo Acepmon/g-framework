@@ -29,7 +29,7 @@ class Car extends Content
             });
             $contents = $contents->select('contents.*', DB::raw('IFNULL(content_metas.value, "0") as value'));//->addSelect('content_metas.value');
             if ($orderBy == 'priceAmount') {
-                $contents = $contents->orderByRaw('LENGTH(value)', 'asc');
+                $contents = $contents->orderByRaw('LENGTH(value) ' . $order);
             } else {
                 $contents = $contents->distinct();
             }

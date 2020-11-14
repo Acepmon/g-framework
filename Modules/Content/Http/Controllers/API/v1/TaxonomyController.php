@@ -2,6 +2,8 @@
 
 namespace Modules\Content\Http\Controllers\API\v1;
 
+use DB;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -54,16 +56,18 @@ class TaxonomyController extends Controller
 
         if (request()->input('home')) {
             $filteredIds = Car::all()->pluck('id');
-            $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->withCount(['contents' => function($query) use ($filteredIds) {
-                $query->whereIn('id', $filteredIds);
+            $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->withCount(['term_relationships as contents_count' => function($query) use ($filteredIds) {
+                $query->whereIn('content_id', $filteredIds);
+                $query->select(DB::raw('count(distinct(`content_id`))'));
             }])->get()->where('contents_count', '!=', '0');
             return $taxonomies;
         }
         if (request()->input('wishlist')) {
             $filtered = Content::with('terms')->where('type', 'wanna-buy')->where('status', Content::STATUS_PUBLISHED)->where('visibility', Content::VISIBILITY_PUBLIC)->get();
             $filteredIds = $filtered->pluck('id');
-            $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->withCount(['contents' => function($query) use ($filteredIds) {
-                $query->whereIn('id', $filteredIds);
+            $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->withCount(['term_relationships as contents_count' => function($query) use ($filteredIds) {
+                $query->whereIn('content_id', $filteredIds);
+                $query->select(DB::raw('count(distinct(`content_id`))'));
             }])->get()->where('contents_count', '!=', '0');
             return $taxonomies;
         }
@@ -91,8 +95,9 @@ class TaxonomyController extends Controller
             }
         }
         $filteredIds = $cars->pluck('id');
-        $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->whereIn('id', $taxonomies->pluck('id'))->withCount(['contents' => function($query) use ($filteredIds) {
-            $query->whereIn('id', $filteredIds);
+        $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->whereIn('id', $taxonomies->pluck('id'))->withCount(['term_relationships as contents_count' => function($query) use ($filteredIds) {
+            $query->whereIn('content_id', $filteredIds);
+            $query->select(DB::raw('count(distinct(`content_id`))'));
         }])->get();//->where('contents_count', '!=', '0');
         return $taxonomies;
     }

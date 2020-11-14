@@ -69,11 +69,6 @@
 </div>
 
 @if ($items->total() != 0)
-  @php
-    if ($items->total() < ($page-0) * $itemsPerPage) {
-      $page = 1;
-    }
-  @endphp
   <div class="car-list {{ ($type == 'auction')?'auction-list':'' }}">
     @if ($type == 'auction')
         @foreach($items->forPage($page, $itemsPerPage) as $car)

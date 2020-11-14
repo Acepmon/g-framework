@@ -197,6 +197,9 @@ $itemsPerPage = request('itemsPerPage', "15");
       success: function (data) {
         $data = $(data);
         $("#carListContentsContainer").hide().html($data).fadeIn();
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $("#carListContentsContainer").offset().top - 40
+        }, 500);
         
          // Double search code
         if ($("#searchPage").length) {
@@ -290,7 +293,7 @@ $itemsPerPage = request('itemsPerPage', "15");
     if (value != 'no-value') {
       document.getElementById(id).value = value;
     }
-    if (sortDir != 'no-value'){
+    if (sortDirValue != 'no-value'){
         document.getElementById(sortDir).value = sortDirValue;
     }
     refilter();

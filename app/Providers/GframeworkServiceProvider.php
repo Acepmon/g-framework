@@ -234,8 +234,8 @@ class GframeworkServiceProvider extends ServiceProvider
         $sort = null;
         $sortDir = 'desc';
         foreach ($parsed->filters as $index => $filter) {
-            $inputExcept = ['id', 'contents.id', 'title', 'slug', 'content', 'type', 'status', 'visibility', 'limit', 'page', 'sort', 'sortDir', 'author_id', '_token'];
-            $inputExcept2 = ['id', 'contents.id', 'title', 'slug', 'content', 'type', 'author_id', '_token'];
+            $inputExcept = ['id', 'contents.id', 'title', 'slug', 'content', 'type', 'status', 'visibility', 'order', 'limit', 'page', 'sort', 'sortDir', 'author_id', '_token'];
+            $inputExcept2 = ['id', 'contents.id', 'title', 'slug', 'content', 'type', 'order', 'author_id', '_token'];
             $pointer = $index == 0 ? '::' : '->';
 
             if (in_array($filter['field'], $inputExcept)) {

@@ -157,7 +157,7 @@ $itsIntCar=false;
                                         <select id="vehicleManufacturer1" class="form-control" name="car-type">
                                             <option value="" >Төрөл</option>
                                             @foreach(\App\TermTaxonomy::where('taxonomy', 'car-type')->get() as $key => $data)
-                                            @if($data->term->id==462 || $data->term->id==463 || $data->term->id==464)
+                                            @if($data->term->slug=='car-type/khnd-mm' || $data->term->slug=='car-type/avtobus' || $data->term->slug=='car-type/tusgay-mm')
                                             <option id="{{$data->term->name}}" value="{{$data->term->id}}">{{$data->term->name}}</option>
                                             @else
                                             @endif

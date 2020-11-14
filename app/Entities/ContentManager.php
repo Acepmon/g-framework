@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Auth;
 use App\Content;
 use App\ContentMeta;
 use App\Term;
@@ -456,7 +457,7 @@ class ContentManager extends Manager
         $publishType = $content->metaValue('publishType');
         if ($publishType == 'best_premium' || $publishType == 'premium') {
             $author = $content->author;
-            $cash = $author->metaValue('cash') || 0;
+            $cash = $author->metaValue('cash', 0);
             if (!$amount) {
                 $amount = $content->metaValue('publishAmount');
             }
@@ -482,6 +483,9 @@ class ContentManager extends Manager
             } else if ($publishType == 'premium') {
                 $content->order = 2;
             }
+            $content->setMetaValue('publishVerified', True);
+            $content->setMetaValue('publishVerifiedBy', Auth::user()->id);
+            $content->setMetaValue('publishVerifiedAt', now());
             $content->setMetaValue('publishedAt', Carbon::now());
 
             $content->save();

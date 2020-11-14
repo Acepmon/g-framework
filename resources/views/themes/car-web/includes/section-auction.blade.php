@@ -34,9 +34,9 @@
                             <!-- card start -->
                             <div class="card cd-box auction-car">
                                 @if(isPremium($auctionPrmCars)=='best_premium')
-                                <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/best.svg') }}" alt=""></div>
+                                <div class="premium-tag"><img src="{{ asset('car-web/img/icons/best-mark.svg') }}" alt=""></div>
                                 @elseif(isPremium($auctionPrmCars)=='premium')
-                                <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/special.svg') }}" alt=""></div>
+                                <div class="premium-tag"><img src="{{ asset('car-web/img/icons/special-mark.svg') }}" alt=""></div>
                                 @endif
                                 @if(getMetasValue($auctionPrmCars->metas, 'doctorVerified')==1)
                                 <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>

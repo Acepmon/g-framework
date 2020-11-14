@@ -4,14 +4,14 @@
             <div class="section-title">
                 <h2>Шилдэг зарууд</h2>
                 <span>
-            <a href="/buy?best_premium=true">Бүгдийг харах<i class="fab fa fa-angle-right"></i></a>
+            @contentInline(type=car, order=3, limit=12 as $bpCarsTotal | paginate)
+            <a href="/buy?publishType=best_premium">Бүгдийг харах ({{ $bpCarsTotal->total() }}) <i class="fab fa fa-angle-right"></i></a>
           </span>
             </div>
         </div>
 
             <div class="card-list mx-n2">
                 <div class="row">
-                    @contentInline(type=car, publishType=best_premium, publishVerified=1, isSold=0, isAuction=0, limit=12 as $bpCarsTotal | paginate)
                     @foreach($bpCarsTotal as $bpCars)
                     @if(count($interestedCars) > 0)
                         @foreach($interestedCars as $intCars)
@@ -37,9 +37,9 @@
                             <!-- card start -->
                             <a href="{{$bpCars->slug}}" target="_blank" class="card cd-box">
                                 @if(isPremium($bpCars)=='best_premium')
-                                <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/best.svg') }}" alt=""></div>
+                                <div class="premium-tag"><img src="{{ asset('car-web/img/icons/best-mark.svg') }}" alt=""></div>
                                 @elseif(isPremium($bpCars)=='premium')
-                                <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/special.svg') }}" alt=""></div>
+                                <div class="premium-tag"><img src="{{ asset('car-web/img/icons/special-mark.svg') }}" alt=""></div>
                                 @endif
                                 @if(getMetasValue($bpCars->metas, 'doctorVerified')==1)
                                 <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>

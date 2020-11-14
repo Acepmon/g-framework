@@ -3,9 +3,9 @@
     <div class="card-body">
         <a class="card-img" href="{{ $car->slug }}" target="_blank">
             @if(isPremium($car)=='best_premium')
-            <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/best.svg') }}" alt=""></div>
+            <div class="premium-tag"><img src="{{ asset('car-web/img/icons/best-mark.svg') }}" alt=""></div>
             @elseif(isPremium($car)=='premium')
-            <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/special.svg') }}" alt=""></div>
+            <div class="premium-tag"><img src="{{ asset('car-web/img/icons/special-mark.svg') }}" alt=""></div>
             @endif
             @if(getMetasValue($car->metas, 'doctorVerified')==1)
             <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
@@ -27,8 +27,14 @@
                 </a>
 
                 @if(isset($type) && $type=='my-page')
-                    @if(\App\PaymentTransaction::where('content_id', $car->id)->count() > 0)
+                    @if(\App\PaymentTransaction::where('content_id', $car->id)->where('status', \Modules\Payment\Entities\Transaction::STATUS_PENDING)->count() > 0)
                     <div class="is-premium font-weight-normal text-danger">Шалгагдаж байна</div>
+                    @elseif (\App\PaymentTransaction::where('content_id', $car->id)->where('status', \Modules\Payment\Entities\Transaction::STATUS_ACCEPTED)->count() > 0)
+                        @if ($car->metaValue('publishType') == 'best_premium')
+                        <div class="is-premium font-weight-normal text-danger">BEST зар</div>
+                        @elseif ($car->metaValue('publishType') == 'premium')
+                        <div class="is-premium font-weight-normal text-danger">Special зар</div>
+                        @endif
                     @else
                     <button class="btn btn-warning btn-round shadow-soft-blue btn-icon-left px-3 btn-sm mr-5 mt-2" data-toggle="modal" onclick="transferId({{$onSale->id}})" data-target="#premiumAd" href="#"> Make premium ad</button>
                     @endif

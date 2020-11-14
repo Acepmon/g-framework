@@ -139,7 +139,7 @@
         $("#delete_form").attr('action', '/admin/cars/'+id+'?type={{ Request::get('type') }}');
     }
     window.verify_content = function(id) {
-        $("#verify_form").attr('action', '/admin/modules/car/best_premium/'+id);
+        $("#verify_form").attr('action', '/admin/modules/car/premium/'+id);
     }
 
     setTimeout(function(){ document.getElementById("timer").remove() }, 10000);

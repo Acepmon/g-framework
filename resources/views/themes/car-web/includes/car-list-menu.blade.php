@@ -204,6 +204,7 @@ function submitMenu(event) {
     var target = $(event.target)[0];
     var $prevChecked = $('input[name=' + target.name + ']:not(:checked).checked');
     $prevChecked.removeClass('checked');
+    $("#page").val(1);
     if ($(this).hasClass('checked')) {
         event.target.checked = false;
         $(this).removeClass('checked');

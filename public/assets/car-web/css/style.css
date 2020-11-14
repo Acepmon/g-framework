@@ -2532,7 +2532,7 @@ select {
 .detail-page .vi-slider-item img {
   max-width: 100%;
   width: auto;
-  height: auto;
+  height: 100%;
   min-height: 100%;
 }
 

@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use DB;
 use App\Content;
 use App\ContentMeta;
 use App\TermTaxonomy;
@@ -180,8 +181,9 @@ class TaxonomyManager extends Manager
         $terms_id = Term::where($type, True)->pluck('id');
         if ($count) {
             $filteredIds = Car::all()->pluck('id');
-            $manufacturers = TermTaxonomy::where([['taxonomy', 'car-manufacturer']])->whereIn('term_id', $terms_id)->withCount(['contents' => function($query) use ($filteredIds) {
-                $query->whereIn('id', $filteredIds);
+            $manufacturers = TermTaxonomy::where([['taxonomy', 'car-manufacturer']])->whereIn('term_id', $terms_id)->withCount(['term_relationships as contents_count' => function($query) use ($filteredIds) {
+                $query->whereIn('content_id', $filteredIds);
+                $query->select(DB::raw('count(distinct(`content_id`))'));
             }]);
             $most = clone $manufacturers;
             $most = $most->orderBy('contents_count', 'desc')->limit($limit);
@@ -204,8 +206,9 @@ class TaxonomyManager extends Manager
         $filtered = Content::with('terms')->where('type', 'wanna-buy')->where('status', Content::STATUS_PUBLISHED)->where('visibility', Content::VISIBILITY_PUBLIC)->get();
         $filteredIds = $filtered->pluck('id');
 
-        $taxonomies = $taxonomies->withCount(['contents' => function($query) use ($filteredIds) {
-            $query->whereIn('id', $filteredIds);
+        $taxonomies = $taxonomies->withCount(['term_relationships as contents_count' => function($query) use ($filteredIds) {
+            $query->whereIn('content_id', $filteredIds);
+            $query->select(DB::raw('count(distinct(`content_id`))'));
         }])->get()->where('contents_count', '!=', '0');
 
         $most = clone $taxonomies;

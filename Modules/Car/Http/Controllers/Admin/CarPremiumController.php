@@ -2,9 +2,11 @@
 
 namespace Modules\Car\Http\Controllers\Admin;
 
+use App\Entities\ContentManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 use App\Content;
 

@@ -193,9 +193,9 @@
                             <!-- card start -->
                             <a href="{{$carDataMonthly->slug}}" target="_blank" class="card cd-box">
                                 @if(isPremium($carDataMonthly)=='best_premium')
-                                <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/best.svg') }}" alt=""></div>
+                                <div class="premium-tag"><img src="{{ asset('car-web/img/icons/best-mark.svg') }}" alt=""></div>
                                 @elseif(isPremium($carDataMonthly)=='premium')
-                                <div class="premium-tag shadow-soft-blue"><img src="{{ asset('car-web/img/icons/special.svg') }}" alt=""></div>
+                                <div class="premium-tag"><img src="{{ asset('car-web/img/icons/special-mark.svg') }}" alt=""></div>
                                 @endif
                                 <div class="card-img">
                                     <img src="{{$carDataMonthly->thumbnail()}}" class="img-fluid"

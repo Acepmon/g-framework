@@ -20,7 +20,7 @@
                                     <input type="radio" id="bestPremium" name="publishType" value="best_premium" class="custom-control-input">
                                     <label class="custom-control-label" for="bestPremium"></label>
                                 </div>
-                                <h6 class="font-weight-bold mb-0">Best Premium</h6>
+                                <h6 class="font-weight-bold mb-0">BEST</h6>
                             </div>
 
                             <select class="custom-select my-1 mr-sm-2" name="publishPriceAmountBest">
@@ -33,9 +33,9 @@
                             </select>
                     </label>
                             <p>
-                                Та зараа олон хүнд хүргэж, түргэн хугацаанд зарахыг хүсвэл Best Premium зарыг сонгоно уу.
+                                Та зараа олон хүнд хүргэж, түргэн хугацаанд зарахыг хүсвэл BEST зарыг сонгоно уу.
                                 </br>
-                                Best Premium зар нь нүүр хуудас болон бусад хуудасны хамгийн дээд хэсэгт байрлах болно.
+                                BEST зар нь нүүр хуудас болон бусад хуудасны хамгийн дээд хэсэгт байрлах болно.
                                 </br>
                                 Зөвхөн 12 ширхэг зар байрлах учраас олонд хүрэх хүртээмж нь их.
                             </p>
@@ -52,7 +52,7 @@
                                     <input type="radio" id="premium" name="publishType" value="premium" class="custom-control-input">
                                     <label class="custom-control-label" for="premium"></label>
                                 </div>
-                                <h6 class="font-weight-bold mb-0">Premium</h6>
+                                <h6 class="font-weight-bold mb-0">Special</h6>
                             </div>
 
                             <select class="custom-select my-1 mr-sm-2" name="publishPriceAmountPremium">

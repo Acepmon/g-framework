@@ -56,8 +56,9 @@ class CarController extends Controller
             }
             $filteredIds = $filtered->pluck('id');
             $taxonomiesFiltered = TermTaxonomy::where('taxonomy', $filterKey);
-            $taxonomiesFiltered = $taxonomiesFiltered->withCount(['contents' => function($query) use ($filteredIds) {
-                $query->whereIn('id', $filteredIds);
+            $taxonomiesFiltered = $taxonomiesFiltered->withCount(['term_relationships as contents_count' => function($query) use ($filteredIds) {
+                $query->whereIn('content_id', $filteredIds);
+                $query->select(DB::raw('count(distinct(`content_id`))'));
             }])->get();
             $taxonomies = $taxonomies->merge($taxonomiesFiltered);
         }
@@ -135,8 +136,9 @@ class CarController extends Controller
         }
         $filteredIds = $filtered->pluck('id');
 
-        $taxonomies = $taxonomies->withCount(['contents' => function($query) use ($filteredIds) {
-            $query->whereIn('id', $filteredIds);
+        $taxonomies = $taxonomies->withCount(['term_relationships as contents_count' => function($query) use ($filteredIds) {
+            $query->whereIn('content_id', $filteredIds);
+            $query->select(DB::raw('count(distinct(`content_id`))'));
         }]);
         $taxonomies = $taxonomies->get();
         

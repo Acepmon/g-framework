@@ -63,7 +63,7 @@
         </div>
     </div>
 @endpush
-@push('scripts')
+@push('scripts2')
 <script>
     $.ajaxSetup({
         headers: {
