@@ -40,18 +40,7 @@ class CronPremium extends Command
      */
     public function handle()
     {
-//        $comment= new Comment;
-//        $comment-> content='1';
-//        $comment-> type='1';
-//        $comment-> author_id=1;
-//        $comment-> author_ip='1';
-//        $comment-> author_name='1';
-//        $comment-> author_email='1';
-//        $comment-> author_avatar='1';
-//        $comment-> author_user_agent='1';
-//        $comment-> commentable_type='1';
-//        $comment-> commentable_id=1;
-//        $comment->save();
+        /*
         $premiums=ContentMeta::where('key','=','publishVerifiedEnd')->where('value', '<', Carbon::now())
             ->get();
         if(count($premiums)>0){
@@ -64,6 +53,23 @@ class CronPremium extends Command
                 $content->save();
                 $delete = ContentMeta::find($data->id);
                 $delete->delete();
+            }
+        }
+        */
+        $premiums = Content::where('order','>','1')->get();
+        $now = Carbon::now();
+        if (count($premiums)>0) {
+            foreach ($premiums as $content){
+                $verifiedEnd = ContentMeta::where('key','=','publishVerifiedEnd')->where('content_id', '=', $content->id)->first();
+                if ($verifiedEnd == Null || $verifiedEnd->value < $now) {
+                    if ($verifiedEnd != Null) {
+                        $verifiedEnd->delete();
+                    }
+                    $content->setMetaValue('publishType', 'free');
+                    $content->setMetaValue('publishVerified', '0');
+                    $content->order = 1;
+                    $content->save();
+                }
             }
         }
     }
