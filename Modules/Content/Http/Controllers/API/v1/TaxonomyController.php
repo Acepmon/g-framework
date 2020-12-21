@@ -36,15 +36,13 @@ class TaxonomyController extends Controller
         if ($taxonomy == 'car-manufacturer') {
             $type = request('type', 'normal');
             if (request('sort', False)) {
-                $terms_id = Term::where($type, True)->pluck('id');
-                $taxonomies = TermTaxonomy::join('terms', 'terms.id', '=', 'term_taxonomy.term_id')->where('taxonomy', 'car-manufacturer')->whereIn('term_id', $terms_id);
+                $taxonomies = TaxonomyController::addContentsCount($taxonomy, Term::where($type, True))->get();
                 $top5 = clone $taxonomies;
-                // Mercedes-Benz, 
-                $top5 = $top5->whereIn('name', ['Toyota', 'Lexus', 'Nissan', 'Hyundai'])->get();
-                $taxonomies = $top5->merge($taxonomies->orderBy('name')->get());
+                $top5 = $top5->whereIn('term.name', ['Toyota', 'Lexus', 'Nissan', 'Hyundai']);// Mercedes-Benz, 
+                $taxonomies = $top5->merge($taxonomies);
                 return new TaxonomyCollection($taxonomies);
             }
-            $taxonomies = TaxonomyController::addContentsCount($taxonomy, TaxonomyManager::getManufacturers($type, request()->input('count', False), 4));
+            $taxonomies = TaxonomyController::addContentsCount($taxonomy, TaxonomyManager::getManufacturers($type, request()->input('count', False), 4))->get();
             return new TaxonomyCollection($taxonomies);
         }
 
@@ -72,7 +70,7 @@ class TaxonomyController extends Controller
             return $taxonomies;
         }
 
-        $taxonomies = TaxonomyController::addContentsCount($taxonomy, $taxonomies);
+        $taxonomies = TaxonomyController::addContentsCount($taxonomy, $taxonomies)->get();
         if (request()->input('count')) {
             $taxonomies = $taxonomies->where('contents_count', '!=', 0)->values();
         }
@@ -98,7 +96,11 @@ class TaxonomyController extends Controller
         $taxonomies = TermTaxonomy::with('term')->where('taxonomy', $taxonomy)->whereIn('id', $taxonomies->pluck('id'))->withCount(['term_relationships as contents_count' => function($query) use ($filteredIds) {
             $query->whereIn('content_id', $filteredIds);
             $query->select(DB::raw('count(distinct(`content_id`))'));
-        }])->get();//->where('contents_count', '!=', '0');
+        }]);//->where('contents_count', '!=', '0');
+        if (request()->input('order') == 'contents_count') {
+            $taxonomies = $taxonomies->orderByDesc("contents_count");
+        }
+        // $taxonomies = $taxonomies->get();
         return $taxonomies;
     }
 }
