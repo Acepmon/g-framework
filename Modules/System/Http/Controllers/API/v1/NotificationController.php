@@ -28,7 +28,7 @@ class NotificationController extends Controller
     {
         $type = $request->input('type', '');
         $user_id = Auth::user()->id;
-        $contents = NotificationManager::unread($user_id, $type)->get();
+        $contents = NotificationManager::unread($user_id, $type)->paginate(10);
 
         return new UserNotificationCollection($contents);
     }
