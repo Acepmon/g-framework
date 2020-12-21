@@ -14,7 +14,7 @@ class Term extends Resource
      */
     public function toArray($request)
     {
-        if ($this->group->slug == "car-manufacturer") {
+        if ($this->group && $this->group->slug == "car-manufacturer") {
             return [
                 'id' => $this->id,
                 'name' => $this->name,
