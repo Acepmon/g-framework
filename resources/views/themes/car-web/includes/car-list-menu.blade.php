@@ -56,7 +56,7 @@ $categoryName = [
         </div>
         @elseif($category == 'car-manufacturer')
         <div id="{{ $category }}" class="collapse {{ request($category, False)?'show':'' }}" aria-labelledby="{{ $category }}">
-        <div id="manufacturerBody" class="card-body bg-light">
+        <div id="manufacturerBody" class="card-body bg-light count-container">
             <div class="manufacturer">
                 <input type="hidden" name="car-manufacturer" value="{{request('car-manufacturer', Null)}}"/>
                 <input type="hidden" name="car-model" value="{{request('car-model', Null)}}"/>
@@ -111,7 +111,7 @@ $categoryName = [
         </div>
         @elseif($category == 'car-distance-driven')
         <div id="{{ $category }}" class="collapse {{ request('minMileageAmount', False)?'show':'' }}" aria-labelledby="{{ $category }}">
-        <div class="card-body bg-light grid-radio">
+        <div class="card-body bg-light count-container grid-radio">
             <div class="form-row">
                 <div class="col-md-6">
                     <select id="minMileageAmount" class="form-control" name="minMileageAmount" onchange="minChoose('MileageAmount','no-value')">
@@ -161,7 +161,7 @@ $categoryName = [
             @foreach(App\TermTaxonomy::where('taxonomy', $category)->get() as $taxonomy_parent)
             <h6>{{$taxonomy_parent->term->name}}</h6>
             @foreach($taxonomy_parent->children as $taxonomy)
-                <div class="custom-control custom-radio">
+                <div class="custom-control custom-radio count-container">
                 <input type="checkbox" id="{{ $taxonomy->term->name }}" name="{{ $taxonomy->taxonomy }}[]" class="custom-control-input" value="{{ $taxonomy->term->id }}" {{ in_array($taxonomy->term->metaValue('metaKey'), request($category, []))?'checked':'' }}>
                 <label class="custom-control-label  d-flex justify-content-between" for="{{ $taxonomy->term->name }}">{{ $taxonomy->term->name }}
                     <div class="text-muted" id="{{$taxonomy->id}}-count" ></div>
@@ -177,7 +177,7 @@ $categoryName = [
         </div>
         @else
         <div id="{{ $category }}" class="collapse {{ request($category, False)?'show':'' }}" aria-labelledby="{{ $category }}">
-        <div class="card-body bg-light">
+        <div class="card-body bg-light count-container">
             @include('themes.car-web.includes.car-list-menu-items', [
                 'taxonomies' => App\TermTaxonomy::where('taxonomy', $category)->get(),
                 'name' => $category,
@@ -272,7 +272,7 @@ function callManufacturers(type, __callback) {
         prevCheckedId = prevChecked[0].id;
     }
 
-    var getParams = '&count=True&order=name';
+    var getParams = '&count=True&order=count';
     @if(request('car-manufacturer', False))
     getParams += '&car-manufacturer=' + {{ request('car-manufacturer', 0) }};
     @endif
