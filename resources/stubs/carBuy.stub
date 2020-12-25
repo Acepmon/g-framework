@@ -258,8 +258,19 @@ $itemsPerPage = request('itemsPerPage', "15");
         for (var i=0; i<countCategories.length; i++) {
           $("#"+countCategories[i]+"-count").html(count[countCategories[i]]);
         }
+        sortByCounts();
         hideLoader();
       }
+    });
+  }
+
+  function sortByCounts() {
+    console.log("sorting by counts");
+    $('.count-container').each(function(i, ele) {
+      $(ele).find('.custom-radio').sort(function (a, b) {
+        return $(b).find('.text-muted').html() - $(a).find('.text-muted').html();
+      })
+      .appendTo($(ele));
     });
   }
 

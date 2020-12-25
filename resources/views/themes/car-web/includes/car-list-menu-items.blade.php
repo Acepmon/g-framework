@@ -8,7 +8,7 @@
 @endif
 
 @if(isset($container))
-<div class="{{ $container }}" name="{{ $name }}-container">
+<div class="{{ $container }}" name="{{ $name }}-container count-container">
     @if($container == 'models')
     <div class="models-back" style="cursor:pointer" onclick="hideSubList('.car-filter .models[name=\'{{ $name }}\']', '.car-filter .manufacturer')">
         <i class="fab fa fa-angle-left"></i> буцах
