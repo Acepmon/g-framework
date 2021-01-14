@@ -163,6 +163,7 @@ class RegisterController extends Controller
                 $meta->save();
             }
         }
+        $user->setMetaValue('termsOfCondition', 'on');
 
         return $user;
     }
