@@ -81,6 +81,7 @@ class UserController extends Controller
         }
         $user->groups()->attach(config('system.register.defaultGroup'));
 
+        $user->setMetaValue('cash', '0');
         // New Registration Bonus
         if (Carbon::now()->lte(Carbon::parse('2020-03-10'))) {
             if ($userType == 'person') {

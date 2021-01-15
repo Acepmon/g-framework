@@ -122,9 +122,8 @@ class CarController extends Controller
 
     public function attachMedias(Request $request) {
         $content_id = $request->route('car');
-
+    
         $media_list = MediaManager::uploadFiles($request->medias);//$request->getContent());
-        dd($media_list);
         $metas = array();
         if (count($media_list) > 0) {
             foreach ($media_list as $key => $media) {
