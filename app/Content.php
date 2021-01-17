@@ -201,6 +201,10 @@ class Content extends Model
                     if (is_numeric($meta->value)) {
                         return $meta->value;                    
                     } else {
+                        $value = str_replace(",", "", $meta->value);
+                        if (is_numeric($value)) {
+                            return $value;
+                        }
                         return '0';
                     }
                 }
