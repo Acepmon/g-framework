@@ -123,6 +123,7 @@ class CarController extends Controller
         // Custom validation
         $priceAmount = $request->input('priceAmount', 0);
         if ($priceAmount) {
+            $priceAmount = str_replace(",", "", $priceAmount);
             ContentManager::updateMeta($content_id, 'priceAmount', $priceAmount, $priceAmount * 1000000);
         }
         if ($request->input('markName')) {
