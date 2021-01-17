@@ -104,6 +104,9 @@ class CarController extends Controller
             if ($key == 'modelName') {
                 $term = Term::where('name', $value)->first();
                 $content->terms()->save($term);
+            } else if (\Str::endsWith($key, 'Amount')) {
+                $value = str_replace(",", "", $value);
+                $data[$key] = $value;
             } else {
                 $term_meta = TermMeta::where([['key', 'metaKey'], ['value', $key]])->first();
                 if ($term_meta) {
@@ -123,8 +126,8 @@ class CarController extends Controller
         // Custom validation
         $priceAmount = $request->input('priceAmount', 0);
         if ($priceAmount) {
-            $priceAmount = str_replace(",", "", $priceAmount);
-            ContentManager::updateMeta($content_id, 'priceAmount', $priceAmount, $priceAmount * 1000000);
+            //$priceAmount = str_replace(",", "", $priceAmount);
+            //ContentManager::updateMeta($content_id, 'priceAmount', $priceAmount, $priceAmount * 1000000);
         }
         if ($request->input('markName')) {
             $content = Content::findOrFail($content_id);
