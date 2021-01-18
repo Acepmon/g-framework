@@ -170,4 +170,41 @@ class CarController extends Controller
             'container' => ($taxonomy=='car-manufacturer')?$taxonomy:'models'
         ]);
     }
+
+    public function leasing()
+    {
+        $cars = Car::all()->where('author_id', '4');
+        $cars = $cars->leftJoin('content_metas', function($join) {
+            $join->on('contents.id', '=', 'content_metas.content_id');
+            $join->where('content_metas.key', '=', 'priceAmount');
+        });
+        $cars = $cars->select('contents.*', DB::raw('IFNULL(content_metas.value, "0") as value'));
+
+        if (request('priceAmount', False)) {
+            $cars = $cars->whereRAW('cast(value as unsigned) <= ' . request('priceAmount', '0'));
+        }
+        if (request('sort', 'update_at')) {
+            $sort = request('sort', 'update_at');
+            $sortDir = request('sortDir', 'update_at');
+            if ($sort == 'priceAmount') {
+                $cars = $cars->orderByRaw('LENGTH(value) ' . $sortDir);
+                $cars = $cars->orderByRaw('value ' . $sortDir);
+            } else {
+                $cars = $cars->orderBy($sort, $sortDir);
+            }
+        }
+
+        $page = request('page', 1);
+        $perPage = 16;
+        $cars = $cars->paginate($perPage);
+
+        return view('themes.car-web.includes.car-list-leasing', [
+            'cars' => $cars, 
+            'sort' => $sort,
+            'sortDir' => $sortDir,
+            'page' => $page,
+            'itemsPerPage' => $perPage,
+            'maxPage' => $cars->lastPage()
+            ]);
+    }
 }

@@ -46,7 +46,7 @@ class TaxonomyController extends Controller
                 $taxonomies = $top5->merge($taxonomies);
                 return new TaxonomyCollection($taxonomies);
             }
-            $taxonomies = TaxonomyController::addContentsCount($taxonomy, TaxonomyManager::getManufacturers($type, request()->input('count', False), 4))->get();
+            $taxonomies = TaxonomyController::addContentsCount($taxonomy, TaxonomyManager::getManufacturers($type, request()->input('count', False), 4))->get()->where('contents_count', '!=', '0');
             return new TaxonomyCollection($taxonomies);
         }
 

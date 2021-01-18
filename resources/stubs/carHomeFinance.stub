@@ -3,73 +3,70 @@
 @section('title', 'Лизинг')
 
 @section('load')
-@if(Auth::user()!=null)
-@php
-$interestedCars=Auth::user()->metaArray('interestedCars');
-@endphp
-@else
-@php
-$interestedCars=[];
-@endphp
-@endif
+<style>
+    a:hover {
+        cursor: pointer;
+    }
+</style>
 <script type="text/javascript">
     $(document).ready(function () {
         calc();
+        callContents();
 
         $(".insMonth").on('click', calc);
         $("#firstPay").on('change', calc);
+        $("#monthlyPrice").on('change', calc);
 
-        function calc(event) {
-            if (event) {
-                event.stopPropagation();
-                event.stopImmediatePropagation();
-            }
-            //var mPay = parseInt(str.replace(,/g, ""));
-            var mPay = parseInt(parseFloat($('#monthlyPrice').val().replace(/[^0-9 | ^.]/g, '')));
-            console.log(mPay)
-            var fPay = $('#firstPay').val();
-            var months = $("input[name=financeMonth]:checked").val();
-            var invest = $(".loanTerm:checked").data('interest');
-            invest = invest / 100;
-            var loValue = mPay / (invest / (1 - Math.pow(1 + invest, -months)))
-            var totalPrice = Math.round(loValue + (loValue * fPay / (100 - fPay)));
-            var firstPayValue = Math.round(totalPrice * (fPay / 100));
-            document.getElementById("firstPayValue").innerHTML = sepNum(firstPayValue) + '₮ (' + fPay + '%)';
-            document.getElementById("totalPrice").innerHTML = sepNum(totalPrice) + ' ₮';
-            //document.getElementById("searchByTotPrice"). =;
-            $('#searchByTotPrice').attr("value", totalPrice);
-        }
+        @if(request()->input("priceAmount")>1)
+            $('.discover').trigger('click');
+        @endif
+    });
 
-
-        $("#searchFitCars").on('click', function (event) {
+    function calc(event) {
+        if (event) {
             event.stopPropagation();
             event.stopImmediatePropagation();
-
-        });
-        function number_format(number, decimals, dec_point, thousands_sep) {
-            // Strip all characters but numerical ones.
-            number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
-            var n = !isFinite(+number) ? 0 : +number,
-                prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-                sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-                dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-                s = '',
-                toFixedFix = function (n, prec) {
-                    var k = Math.pow(10, prec);
-                    return '' + Math.round(n * k) / k;
-                };
-            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-            s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-            if (s[0].length > 3) {
-                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-            }
-            if ((s[1] || '').length < prec) {
-                s[1] = s[1] || '';
-                s[1] += new Array(prec - s[1].length + 1).join('0');
-            }
-            return s.join(dec);
+            event.preventDefault();
         }
-    })
+        //var mPay = parseInt(str.replace(,/g, ""));
+        var mPay = parseInt(parseFloat($('#monthlyPrice').val().replace(/[^0-9 | ^.]/g, '')));
+        console.log(mPay)
+        var fPay = $('#firstPay').val();
+        var months = $("input[name=financeMonth]:checked").val();
+        var invest = $(".loanTerm:checked").data('interest');
+        invest = invest / 100;
+        var loValue = mPay / (invest / (1 - Math.pow(1 + invest, -months)))
+        var totalPrice = Math.round(loValue + (loValue * fPay / (100 - fPay)));
+        var firstPayValue = Math.round(totalPrice * (fPay / 100));
+        document.getElementById("firstPayValue").innerHTML = sepNum(firstPayValue) + '₮ (' + fPay + '%)';
+        document.getElementById("totalPrice").innerHTML = sepNum(totalPrice) + ' ₮';
+        //document.getElementById("searchByTotPrice"). =;
+        $('#searchByTotPrice').val(totalPrice);
+    }
+
+    function number_format(number, decimals, dec_point, thousands_sep) {
+        // Strip all characters but numerical ones.
+        number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+        var n = !isFinite(+number) ? 0 : +number,
+            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+            s = '',
+            toFixedFix = function (n, prec) {
+                var k = Math.pow(10, prec);
+                return '' + Math.round(n * k) / k;
+            };
+        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+        s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+        if (s[0].length > 3) {
+            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+        }
+        if ((s[1] || '').length < prec) {
+            s[1] = s[1] || '';
+            s[1] += new Array(prec - s[1].length + 1).join('0');
+        }
+        return s.join(dec);
+    }
 </script>
 
 @endsection
@@ -79,7 +76,7 @@ $interestedCars=[];
 
 <section id="loan" class="bg-dark text-center finance-section py-5 position-relative">
     <div class="container mt-5">
-        <form method="GET" id="mainForm" action="/finance">
+        <form id="mainForm">
 
             <div class="row">
                 <div class="col-md-12 text-left">
@@ -92,7 +89,7 @@ $interestedCars=[];
                             <div class="row">
                                 <div class="form-group col-md-6 float-left">
                                     <label for="monthlyPrice">Сар бүр төлөх дүн</label>
-                                    <input type="text" name="monthlyPrice" class="form-control text-left" id="monthlyPrice" value="@php echo (request('monthlyPrice') ?? 500000) @endphp" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'prefix': '₮ ', 'placeholder': '0'">
+                                    <input type="text" class="form-control text-left" id="monthlyPrice" value="@php echo (request('monthlyPrice') ?? 500000) @endphp" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 0, 'digitsOptional': false, 'prefix': '₮ ', 'placeholder': '0'">
                                 </div>
                                 <div class="form-group col-md-6 float-left">
                                     <label for="firstPay">Боломжит урьдчилгаа</label>
@@ -154,163 +151,65 @@ $interestedCars=[];
 </section>
 
 <section id="hot-deal" class="mainPage-items bg-white pt-3">
-    <div class="container">
-        <div class="row">
-            <div class="card page-top-navbar border-0">
-                <div class="d-flex justify-content-start">
-
-                    @contentInline(type=car, author_id=4, limit=16, priceAmount < intval(request()->input("priceAmount")), sortDir=request()->input("sortDir", "desc"), sort=request()->input("sort", "publishedAt") as $cars | paginate)
-                    <span class="total-cars ml-0" >НИЙТ {{$cars->total()}}
-<!--                        <a class="">Бүгдийг харах</a><i class="fab fa fa-angle-right"></i>-->
-                    </span>
-                    <div class="sort-cars col-md-9">
-                        <ul>
-                            <li><a href="#" onclick="formSubmit('searchByTotPrice', 1000000000)">Бүгдийг  харах</a></li>
-                            @if (request('sort','updated_at')=='updated_at')
-                                @if (request('sortDir', 'desc')=='desc')
-                                <li class="active"><a href="#" onclick="formSubmit('sortBy', 'updated_at', 'sortDir', 'asc')">Сүүлд нийтлэгдсэн ▼</a></li>
-                                @else
-                                <li class="active"><a href="#" onclick="formSubmit('sortBy', 'updated_at', 'sortDir', 'desc')">Өмнө нь нийтлэгдсэн ▲</a></li>
-                                @endif
-                            @else
-                                <li><a href="#" onclick="formSubmit('sortBy', 'updated_at', 'sortDir', 'desc')">Сүүлд нийтлэгдсэн</a></li>
-                            @endif
-                            
-                            @if (request('sort')=='priceAmount')
-                                @if (request('sortDir')=='desc')
-                                <li class="active"><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'asc')">Хамгийн үнэтэй ▲</a></li>
-                                @else
-                                <li class="active"><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'desc')">Хямд үнэ ▼</a></li>
-                                @endif
-                            @else
-                                <li><a href="#" onclick="formSubmit('sortBy', 'priceAmount', 'sortDir', 'asc')">Хямд үнэ</a></li>
-                            @endif
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-list pt-3" style="width: 100%">
-                <div class="row">
-
-                    @foreach($cars as $carDataMonthly)
-                    @if(count($interestedCars) > 0)
-                    @foreach($interestedCars as $intCars)
-                    @if($intCars==$carDataMonthly->id)
-                    @php
-                    $itsIntCar=true;
-                    @endphp
-                    @break;
-                    @else
-                    @php
-                    $itsIntCar=false;
-                    @endphp
-                    @endif
-                    @endforeach
-                    @else
-                    @php
-                    $itsIntCar=false;
-                    @endphp
-                    @endif
-                    <!-- col-start -->
-
-                    <div class="col-lg-3 col-md-4">
-                        <!-- card start -->
-                        <a href="{{$carDataMonthly->slug}}" target="_blank" class="card cd-box">
-                            @if(isPremium($carDataMonthly)=='best_premium')
-                            <div class="premium-tag"><img src="{{ asset('car-web/img/icons/best-mark.svg') }}" alt=""></div>
-                            @elseif(isPremium($carDataMonthly)=='premium')
-                            <div class="premium-tag"><img src="{{ asset('car-web/img/icons/special-mark.svg') }}" alt=""></div>
-                            @endif
-                            @if(getMetasValue($carDataMonthly->metas, 'doctorVerified')==1)
-                            <div class="doctor-verified-tag shadow-soft-blue"><img src="{{ asset('car-web/img/cardoctor-logo.svg') }}" alt=""></div>
-                            @endif
-                            <div class="card-img">
-                                <img src="{{$carDataMonthly->thumbnail()}}" class="img-fluid"
-                                alt="alt">
-
-                                <div class="card-caption">
-                                    <div
-                                        class="meta">{{ number_format($carDataMonthly->metaValue("mileageAmount"))}} {{$carDataMonthly->metaValue("mileageUnit")}}
-                                        | {{$carDataMonthly->metaValue("fuelType")}}
-                                        | {{ number_format($carDataMonthly->metaValue("capacityAmount"))}} {{$carDataMonthly->metaValue("capacityUnit")}}</div>
-                                </div>
-                            </div>
-                            <div class="card-body py-2">
-                                <div class="card-description">
-                                    <div class="card-desc-top">
-                                        <div class="card-title">{{$carDataMonthly->title}}</div>
-                                    @if(Auth::user()!=null && $carDataMonthly->author_id==Auth::user()->id)
-                                    <div class="favorite">
-                                        <span class="text-dark"><i class="fas fa-car"></i></span>
-                                    </div>
-                                    @else
-                                    <div class="favorite saveToInterested" data-target="{{ $carDataMonthly->id }}">
-                                        @if($itsIntCar==true)
-                                        <span class="text-danger"><i class="fas fa-heart"></i></span>
-                                        @else
-                                        <span class="text-danger"><i class="icon-heart"></i></span>
-                                        @endif
-                                    </div>
-                                    @endif
-                                        <div
-                                            class="price">{{numerizePrice($carDataMonthly->metaValue("priceAmount"))}} {{$carDataMonthly->metaValue("priceUnit")}}</div>
-                                    </div>
-
-                                    <div class="card-meta">
-                                        <div class="year">{{$carDataMonthly->metaValue("buildYear")}}
-                                            / {{$carDataMonthly->metaValue("importDate")}}</div>
-                                    </div>
-                                    <div class="status">{{$carDataMonthly->metaValue("priceType")}}</div>
-                                </div>
-                            </div>
-                        </a>
-                        <!-- card end -->
-                    </div>
-                    <!-- col-end -->
-                    @endforeach
-
-                    
-                </div>
-        <!-- Pagination -->
-        @php
-        $page = request("page", 1);
-        @endphp
-        <nav aria-label="Page navigation">
-            <input type="hidden" value="{{ $page }}" name="page" id="page" />
-            <ul class="pagination d-flex justify-content-end mt-2">
-                <li class="page-item {{ ($page <= 1)?'disabled':'' }}">
-                    <button class="page-link" onclick="formSubmit('page', {{$page-1}})" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </button>
-                </li>
-                @for($i = 1; $i <= $cars->lastPage(); $i++)
-                <li class="page-item {{ ($i == $page)?'active':'' }}"><button class="page-link" onclick="formSubmit('page', {{$i}})">{{ $i }}</button></li>
-                @endfor
-                <li class="page-item {{ ($page >= $cars->lastPage())?'disabled':'' }}">
-                    <button class="page-link" onclick="formSubmit('page', {{$page+1}})" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </button>
-                </li>
-            </ul>
-        </nav>
-        <!-- Pagination end -->
-            </div>
-        </div>
-    </div>
 </section>
 @endsection
 @section('script')
 <script type="text/javascript">
+    var jump = false;
+
+    function callContents(e) {
+        if (e) {
+            jump = true;
+            e.stopImmediatePropagation();
+            e.stopPropagation();
+            e.preventDefault();
+        }
+        var paramObj = {};
+        // $.each($('#mainForm').serializeArray(), function(_, kv) {
+        //     paramObj[kv.name] = kv.value;
+        // });
+        paramObj = $("#mainForm").serialize();
+        console.log(paramObj);
+
+        $.ajax({
+            url: '/ajax/cars/leasing',
+            method: 'GET',
+            data: paramObj,
+            success: function (data) {
+                $data = $(data);
+                $("#hot-deal").html($data);
+                if (jump) {
+                    $('.discover').trigger('click');
+                    jump = false;
+                }
+            },
+            error: function (data) {
+                if (data.status == 200){
+                    $data = $(data);
+                    $("#hot-deal").html($data);
+                    if (jump) {
+                        $('.discover').trigger('click');
+                        jump = false;
+                    }
+                }
+                if (data.status == 401  ){//|| error.status == 404) {
+                    window.location.href = "/login";
+                }
+            }
+        });
+    }
+
+    $("#mainForm").on("submit", callContents);
 
     function sepNum(r,e){return e=e||",",r=String(r).replace(/[\u0660-\u0669\u06f0-\u06f9]/g,function(r){return 15&r.charCodeAt(0)}).replace(/(?:[^\.]|^)\b(\d+)/g,function(r){return r=r.replace(/\B(?=(\d{3})+\b)/g,e)})}
 
     $(":input").inputmask();
 
     function formSubmit(id, value, sortDir, sortDirValue) {
-        console.log(id, value, sortDir, sortDirValue)
-        if(value===1000000000){
+        if(value===0 && id == 'searchByTotPrice'){
             document.getElementById(id).value = value;
+            $("#monthlyPrice").val("0");
+            calc();
         }
         else{
             if (value != 'no-value') {
@@ -320,45 +219,43 @@ $interestedCars=[];
                 document.getElementById(sortDir).value = sortDirValue;
             }
         }
-        $('#mainForm').submit();
+        // $('#mainForm').submit();
+        callContents();
     }
 
-    $(document).ready(function () {
-        @if(request()->input("priceAmount")>1)
-            $('.discover').trigger('click');
-        @endif
+    function saveToInterested(e, ele) {
+        console.log(e);
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        var id = $(ele).attr('data-target');
+        var elm = $(ele);
+        $.ajax({
+            url: '/ajax/user/interested_cars',
+            dataType: 'json',
+            method: 'PUT',
+            data: {
+                'content_id': id
+            },
+            success: function (data) {
+                console.log("success")
 
-
-        $(".saveToInterested").click(function (event) {
-            event.preventDefault();
-            var id = $(this).attr('data-target');
-            var elm = $(this);
-            $.ajax({
-                url: '/ajax/user/interested_cars',
-                dataType: 'json',
-                method: 'PUT',
-                data: {
-                    'content_id': id
-                },
-                success: function (data) {
-                    console.log("success")
-
-                    if (data.status == 'added') {
-                        elm.html('<span class="text-danger"><i class="fas fa-heart"></i></span>');
-                    } else if (data.status == 'removed') {
-                        elm.html('<span class="text-danger"><i class="far fa-heart"></i></span>');
-                    }
-                },
-                error: function (error) {
-                    console.log("failed")
-                    console.log(error.status)
-                    if (error.status == 401  ){//|| error.status == 404) {
-                        window.location.href = "/login";
-                    }
+                if (data.status == 'added') {
+                    elm.html('<span class="text-danger"><i class="fas fa-heart"></i></span>');
+                } else if (data.status == 'removed') {
+                    elm.html('<span class="text-danger"><i class="far fa-heart"></i></span>');
                 }
-            });
+            },
+            error: function (error) {
+                console.log("failed")
+                console.log(error.status)
+                if (error.status == 401  ){//|| error.status == 404) {
+                    window.location.href = "/login";
+                }
+            }
         });
-    });
+    }
 
 </script>
 @endsection
