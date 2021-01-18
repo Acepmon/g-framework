@@ -38,7 +38,11 @@ class TaxonomyController extends Controller
             if (request('sort', False)) {
                 $taxonomies = TaxonomyController::addContentsCount($taxonomy, Term::where($type, True))->get();
                 $top5 = clone $taxonomies;
-                $top5 = $top5->whereIn('term.name', ['Toyota', 'Lexus', 'Nissan', 'Hyundai']);// Mercedes-Benz, 
+                $top5Names = ['Toyota', 'Lexus', 'Nissan', 'Hyundai'];// Mercedes-Benz, 
+                $top5 = $top5->whereIn('term.name', $top5Names);
+                $top5 = $top5->sortBy(function($model) use ($top5Names) {
+                    return array_search($model->term->name, $top5Names);
+                });
                 $taxonomies = $top5->merge($taxonomies);
                 return new TaxonomyCollection($taxonomies);
             }
