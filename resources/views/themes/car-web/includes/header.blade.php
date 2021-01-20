@@ -38,7 +38,9 @@
                                         @php
                                         if ($menu->link == '/my-notifications') {
                                             $count = \App\Entities\NotificationManager::unread(\Auth::user()->id)->count();
-                                            echo('<span class="badge badge-secondary badge-pill">' . $count . '</span>');
+                                            if ($count > 0) {
+                                                echo('<span class="badge badge-secondary badge-pill">' . $count . '</span>');
+                                            }
                                         }
                                         @endphp
                                         </a>
