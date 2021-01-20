@@ -34,7 +34,14 @@
                                         <a href="{{ route('admin.dashboard') }}" class="dropdown-item">Удирдлагын самбар</a>
                                     @endif
                                     @foreach ($dropdownMenus as $menu)
-                                        <a class="dropdown-item" href="{{ url($menu->link) }}">{{ $menu->title }}</a>
+                                        <a class="dropdown-item" href="{{ url($menu->link) }}">{{ $menu->title }}
+                                        @php
+                                        if ($menu->link == '/my-notifications') {
+                                            $count = \App\Entities\NotificationManager::unread(\Auth::user()->id)->count();
+                                            echo('<span class="badge badge-secondary badge-pill">' . $count . '</span>');
+                                        }
+                                        @endphp
+                                        </a>
                                     @endforeach
                                 </div>
                             </div>

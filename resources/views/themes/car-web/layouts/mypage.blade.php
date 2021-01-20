@@ -67,7 +67,14 @@
                                     <li class="list-group-item {{ (Request::is(\Str::startsWith($menu->link, '/') ? substr($menu->link, 1) : $menu->link) ||
                                         (Request::is('sell-page-*') && \Str::startsWith($menu->link, '/sell-page-')) ||
                                         (Request::is('purchase-page-*') && \Str::startsWith($menu->link, '/purchase-page-'))
-                                        ) ? 'active' : '' }}"><a href="{{ url($menu->link) }}">{{ $menu->title }}</a></li>
+                                        ) ? 'active' : '' }}"><a href="{{ url($menu->link) }}">{{ $menu->title }}</a>
+                                        @php
+                                            if ($menu->link == '/my-notifications') {
+                                                $count = \App\Entities\NotificationManager::unread(\Auth::user()->id)->count();
+                                                echo('<span class="badge badge-primary badge-pill">' . $count . '</span>');
+                                            }
+                                        @endphp
+                                        </li>
                                 @endforeach
                             </ul>
                         </div>
