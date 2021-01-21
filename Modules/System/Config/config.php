@@ -6,7 +6,8 @@ return [
         'adminRedirectPath' => '/admin',
         'operatorRedirectPath' => '/admin',
         'memberRedirectPath' => '/home',
-        'guestRedirectPath' => '/home'
+        'guestRedirectPath' => '/home',
+        'damoaRedirectPath' => '/admin/profile/edit'
     ],
     'avatar' => [
         'default' => 'user.png',

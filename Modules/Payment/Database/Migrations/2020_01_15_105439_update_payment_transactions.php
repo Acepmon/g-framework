@@ -22,8 +22,8 @@ class UpdatePaymentTransactions extends Migration
             $table->integer('phone')->nullable();
             $table->unsignedBigInteger('content_id')->nullable();
 
-            $table->foreign('accepted_by')->references('id')->on('users');
-            $table->foreign('content_id')->references('id')->on('contents');
+            $table->foreign('accepted_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('content_id')->references('id')->on('contents')->onDelete('set null');
         });
     }
 

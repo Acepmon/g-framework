@@ -33,6 +33,10 @@ class UserGroupTableSeeder extends Seeder
             // Custom User
             User::where('username', 'damoa')->first()->groups()->attach(Group::where('title', 'Damoa')->get());
             User::where('username', 'damoa')->first()->groups()->attach(Group::where('title', 'Member')->get());
+
+            // Attach Admin Group to Admin User
+            User::where('username', 'damoaAdmin')->first()->groups()->attach(Group::where('title', 'Operator')->get());
+            User::where('username', 'damoaAdmin')->first()->groups()->attach(Group::where('title', 'Damoa Operator')->get());
         }
     }
 }

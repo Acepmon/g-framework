@@ -26,6 +26,7 @@ class AdminUserPermissionsTableSeeder extends Seeder
         PermissionManager::newReadPermission('admin_users_guests');
 
         PermissionManager::newPermissionCrud('admin_permissions');
+        PermissionManager::newPermissionCrud('admin_company');
         PermissionManager::newPermissionCrud('admin_groups');
         PermissionManager::newCreatePermission('admin_groups_createMenu');
         PermissionManager::newReadPermission('admin_groups_readMenuGroup');

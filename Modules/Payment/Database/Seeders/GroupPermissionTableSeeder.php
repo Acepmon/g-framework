@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Entities\PermissionManager;
 use App\Permission;
+use App\Group;
 
 class GroupPermissionTableSeeder extends Seeder
 {
@@ -23,5 +24,9 @@ class GroupPermissionTableSeeder extends Seeder
         PermissionManager::attachGroupPermissions(1, Permission::where('title', 'LIKE', 'admin_modules_payment%')->get());
         PermissionManager::attachGroupPermissions(1, Permission::where('title', 'LIKE', 'ajax_modules_payment_transactions%')->get());
         PermissionManager::attachGroupPermissions(3, Permission::where('title', 'LIKE', 'ajax_modules_payment_transactions%')->get());
+        
+        $nonSystem = Group::where('title', 'Damoa Operator')->first()->id;
+        PermissionManager::attachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_modules_payment%')->get());
+        PermissionManager::attachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'ajax_modules_payment_transactions%')->get());
     }
 }

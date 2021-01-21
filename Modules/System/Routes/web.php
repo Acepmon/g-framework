@@ -276,6 +276,17 @@ Route::middleware(['auth', 'admin'])->group(function () {
                 Route::put('{menu}', 'NotificationController@update')->name('admin.notifications.update');
                 Route::delete('{menu}', 'NotificationController@destroy')->name('admin.notifications.destroy');
             });
+
+            Route::prefix('company')->group(function () {
+                Route::get('', 'CompanyController@index')->name('admin.company.index');
+                Route::get('create', 'CompanyController@create')->name('admin.company.create');
+                Route::post('', 'CompanyController@store')->name('admin.company.store');
+                Route::get('{company}', 'CompanyController@show')->name('admin.company.show');
+                Route::get('{company}/edit', 'CompanyController@edit')->name('admin.company.edit');
+                Route::put('{company}', 'CompanyController@update')->name('admin.company.update');
+                Route::delete('{company}', 'CompanyController@destroy')->name('admin.company.destroy');
+            });
+
         });
     });
 });

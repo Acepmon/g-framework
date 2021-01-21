@@ -14,16 +14,16 @@
             <div class="col-md-10">
                 <div class="card sell-car shadow-soft-blue">
                     <div class="card-header">
-                        <div class="step-process sp-3">
+                        <div class="step-process sp-2">
                             <div class='progress_inner_step active'>
                                 <a class="nav-link" for='step-1' data-toggle="tab" href="#step-1" id="tab-step-1" role="tab" style="pointer-events: none;">Үйлчилгээний нөхцөл</a>
                             </div>
                             <div class='progress_inner_step'>
                                 <a class="nav-link" for='step-2' data-toggle="tab" href="#step-2" id="tab-step-2" role="tab" style="pointer-events: none;">Нэвтрэх нэр & Нууц үг</a>
                             </div>
-                            <div class='progress_inner_step' id="step-3id">
+                            <!-- <div class='progress_inner_step' id="step-3id">
                                 <a class="nav-link" for='step-3' data-toggle="tab" href="#step-3" id="tab-step-3" role="tab" style="pointer-events: none;">Нэмэлт мэдээлэл</a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <form class="maz-form" id="register-form" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
@@ -739,18 +739,7 @@
                                                     <input class="btn btn-primary file-upload" type="file" name="avatar" id="avatar" accept="image/*"/>
                                                 </div>
                                             </div>
-                                        </div>
-<!--                                        <div class="form-group">-->
-<!--                                            <div class="custom-control custom-checkbox-cd col-5 display-inline-block mr-0 float-left">-->
-<!--                                                <input type="radio" name="groupId" value="{{ \App\Group::where('title', 'Member')->first()->id }}" class="custom-control-input" id="userType1" checked onclick="userType(1)" >-->
-<!--                                                <label class="custom-control-label" for="userType1">Хувь хүн</label>-->
-<!--                                            </div>-->
-<!--                                            <div class="custom-control custom-checkbox-cd col-5 display-inline-block mr-0 float-left">-->
-<!--                                                <input type="radio" name="groupId" value="{{ \App\Group::where('title', 'Auto Dealer')->first()->id }}" class="custom-control-input" onclick="userType(2)" id="userType2" >-->
-<!--                                                <label class="custom-control-label" for="userType2">Дилер</label>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-                                        <div class="card-body bg-white grid-radio dealer">
+                                        <!-- <div class="card-body bg-white grid-radio dealer">
                                     <div class="cd-radio">
                                         <input type="radio" id="userType1" name="groupId" value="{{ \App\Group::where('title', 'Member')->first()->id }}" checked onclick="userType(1)"  class="custom-control-input">
                                         <label class="custom-control-label " for="userType1"> <img src="{{ asset('car-web/img/icons/sedan.svg') }}"
@@ -761,7 +750,7 @@
                                         <input type="radio" id="userType2" name="groupId" value="{{ \App\Group::where('title', 'Auto Dealer')->first()->id }}" onclick="userType(2)" class="custom-control-input">
                                         <label class="custom-control-label" for="userType2"> <img src="{{ asset('car-web/img/icons/suv.svg') }}" alt=""><span>Диллер</span>
                                         </label>
-                                    </div>
+                                    </div> -->
 
                                     </div>
                                         <div class="form-group">

@@ -53,7 +53,7 @@
                                 <div class="phone">{{$wannaBuyData->author->metaValue('phone')}}</div>
                             </div>
                         </div>
-                    <div class="bg-img"> <img src="https://loremflickr.com/415/350/{{$wannaBuyData->title}}" alt=""></div>
+                    <div class="bg-img"> <!--<img src="https://loremflickr.com/415/350/{{$wannaBuyData->title}}" alt="">--></div>
                          </div>
                     <!-- card end -->
                     

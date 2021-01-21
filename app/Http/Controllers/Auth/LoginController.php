@@ -52,6 +52,8 @@ class LoginController extends Controller
 
         if (Auth::user()->is_admin()) {
             $path = config('system.auth.adminRedirectPath');
+        } else if (Auth::user()->is(8)) {
+            $path = '/admin/profile/edit';
         } else if (Auth::user()->is_operator()) {
             $path = config('system.auth.operatorRedirectPath');
         } else if (Auth::user()->is_member()) {

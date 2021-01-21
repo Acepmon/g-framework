@@ -11,6 +11,9 @@ class Menu extends Model
      *
      * @var bool
      */
+
+    const STATUS_ARRAY = [];
+    const VISIBILITY_ARRAY = [];
     public $timestamps = false;
 
     public function parent()

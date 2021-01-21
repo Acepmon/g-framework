@@ -54,10 +54,6 @@ Route::prefix('v1')->group(function () {
                     $user->save();
                 }
 
-                if ($request->has('password')) {
-                    $user->password = Hash::make($request->input('password'));
-                    $user->save();
-                }
 
                 if ($request->has('language')) {
                     $user->language = $request->input('language');
@@ -93,6 +89,34 @@ Route::prefix('v1')->group(function () {
                 }
 
                 return new UserResource($user);
+            });
+
+
+            Route::post('/user/password', function (Request $request) {
+                $request->validate([
+                    'current_password' => ['string', 'min:8'],
+                    'password' => ['string', 'min:8'],
+                    'password_confirmation' => ['string', 'min:8']
+                ]);
+                $user = Auth::user();
+                $oldPassword = $request->input('current_password');
+                $password = $request->input('password', 'a');
+                $password_confirmation = $request->input('password_confirmation', 'b');
+                if ($password == $password_confirmation) {
+                    if (Hash::check($oldPassword, $user->password)) {
+                        $user->password = Hash::make($password);
+                        $user->save();
+                        return response(['success' => 'Changed password'], 200);
+                    } else {
+                        return response([
+                            'error' => 'Current password is wrong'
+                        ], 400);
+                    }
+                } else {
+                    return response([
+                        'error' => 'Passwords do not match'
+                    ], 400);
+                }
             });
 
             Route::get('/user/notifications', 'NotificationController@userAll');

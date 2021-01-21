@@ -215,6 +215,9 @@ class ContentManager extends Manager
                                 $query->whereRaw('cast(value as unsigned) ' . $meta['operator'] . ' ' . $meta['value']);
                             }
                         } else {
+                            if (array_key_exists("0", $meta)) {
+                                $meta = $meta[0];
+                            }
                             $query->where('value', $meta['operator'], $meta['value']);
                         }
                     });
@@ -255,6 +258,15 @@ class ContentManager extends Manager
             $sortDir = 'asc';
         } else {
             $sortDir = 'asc';
+        }
+        if ($sort == 'priceAmount') {
+            $contents = $contents->leftJoin('content_metas', function($join) use($sort) {
+                $join->on('contents.id', '=', 'content_metas.content_id');
+                $join->where('content_metas.key', '=', $sort);
+            });
+            $contents = $contents->select('contents.*', DB::raw('IFNULL(content_metas.value, "0") as value'));//->addSelect('content_metas.value');
+            $contents = $contents->orderByRaw('LENGTH(value) ' . $sortDir);
+            $sort = 'value';
         }
         $contents = $contents->orderBy($sort, $sortDir);
 

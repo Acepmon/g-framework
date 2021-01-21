@@ -37,5 +37,14 @@ class GroupMenuTableSeeder extends Seeder
 
         // Attach Banner Menus to Content Operator Group
         Group::findOrFail(6)->menus()->attach(Menu::where('module', 'Banner')->get());
+
+        // Attach Banner Menus to Content Operator Group
+        Group::findOrFail(8)->menus()->attach(Menu::where('module', 'Car')->get());
+        Group::findOrFail(8)->menus()->attach(Menu::where('module', 'User Management')->get());
+        Group::findOrFail(8)->menus()->attach(Menu::where('module', 'Payment')->get());
+        Group::findOrFail(8)->menus()->attach(Menu::where('module', 'Banner')->get());
+        Group::findOrFail(8)->menus()->attach(Menu::where('title', 'Media & Assets')->get());
+        Group::findOrFail(8)->menus()->attach(Menu::where('title', 'Notifications')->get());
+        Group::findOrFail(8)->menus()->attach(Menu::where('title', 'Profile')->get());
     }
 }

@@ -49,6 +49,7 @@ class MenusTableSeeder extends Seeder
             ]],
             ['Permissions', '/admin/permissions', 'icon-key', 'User Management'],
             ['Groups', '/admin/groups', 'icon-users2', 'User Management'],
+            ['Company', '/admin/company', 'icon-office', 'User Management'],
             // Payment
             ['Payment Methods', '/admin/modules/payment/payment_methods', 'icon-credit-card', 'Payment'],
             ['Transactions', '/admin/modules/payment/transactions', 'icon-transmission', 'Payment'],

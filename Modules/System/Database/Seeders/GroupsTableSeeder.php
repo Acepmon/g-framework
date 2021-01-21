@@ -44,7 +44,7 @@ class GroupsTableSeeder extends Seeder
                 [
                     "title" => "Damoa",
                     "description" => '"Ди Эй Эм Өү Эй" ББСБ нь 2012 онд үүсгэн байгуулагдсан цагаасаа өнөөг хүртэл Монголын санхүүгийн зах зээлд үйлчлүүлэгчдийн талархлыг хүлээн ажилласаар байна..',
-                    "type" => Group::TYPE_DEALER,
+                    "type" => Group::TYPE_COMPANY,
                 ]
             ]);
 
@@ -59,6 +59,12 @@ class GroupsTableSeeder extends Seeder
                 [
                     "title" => "Content Operator",
                     "description" => "Pages, Post Manager and Menus, Localizations, Media Management",
+                    "type" => Group::TYPE_DYNAMIC,
+                    "parent_id" => 2
+                ],
+                [
+                    "title" => "Damoa Operator",
+                    "description" => "Admin without system privileges",
                     "type" => Group::TYPE_DYNAMIC,
                     "parent_id" => 2
                 ],

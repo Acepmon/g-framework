@@ -75,5 +75,18 @@ class GroupPermissionTableSeeder extends Seeder
         PermissionManager::attachGroupPermissions(7, Permission::where('title', 'LIKE', 'admin_media%')->get());
         PermissionManager::attachGroupPermissions(7, Permission::where('title', 'LIKE', 'admin_banners%')->get());
         PermissionManager::attachGroupPermissions(7, Permission::where('title', 'LIKE', 'ajax_contents%')->get());
+
+        $nonSystem = Group::where('title', 'Damoa Operator')->first()->id;
+        PermissionManager::attachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin%')->get());
+        PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'admin_changelog')->get());
+        PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_content%')->get());
+        // PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_permission%')->get());
+        // PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_groups%')->get());
+        PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_configs%')->get());
+        PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_themes%')->get());
+        PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_backups%')->get());
+        PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_logs%')->get());
+        PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_localizations%')->get());
+        PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_taxonomy%')->get());
     }
 }

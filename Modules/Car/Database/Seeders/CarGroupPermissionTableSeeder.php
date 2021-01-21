@@ -25,5 +25,7 @@ class CarGroupPermissionTableSeeder extends Seeder
 
         // Car Content Operator Group Permissions
         PermissionManager::attachGroupPermissions(Group::where('title', 'Car Content Operator')->first()->id, Permission::where('title', 'LIKE', 'admin_modules_car%')->get());
+        $nonSystem = Group::where('title', 'Damoa Operator')->first()->id;
+        PermissionManager::attachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_modules_car%')->get());
     }
 }
