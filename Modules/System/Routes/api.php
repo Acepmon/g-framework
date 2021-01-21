@@ -94,9 +94,9 @@ Route::prefix('v1')->group(function () {
 
             Route::post('/user/password', function (Request $request) {
                 $request->validate([
-                    'current_password' => ['string', 'min:8'],
-                    'password' => ['string', 'min:8'],
-                    'password_confirmation' => ['string', 'min:8']
+                    'current_password' => ['string', 'min:6'],
+                    'password' => ['string', 'min:6'],
+                    'password_confirmation' => ['string', 'min:6']
                 ]);
                 $user = Auth::user();
                 $oldPassword = $request->input('current_password');
