@@ -4389,6 +4389,10 @@ section .owl-carousel .owl-nav button.owl-next, section .owl-carousel .owl-nav b
   border-radius: 8px;
   box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.1);
 }
+.people-wish-list .wish-card:hover {
+  box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.3);
+}
+
 
 .people-wish-list .wish-card .card-body {
   display: flex;
