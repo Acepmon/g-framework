@@ -21,7 +21,7 @@ class CarUsersTableSeeder extends Seeder
         Model::unguard();
 
         factory(User::class)->create()->each(function ($user) {
-            $carGroups = Group::where('type', Group::TYPE_DEALER)->get();
+            $carGroups = Group::where('type', Group::TYPE_COMPANY)->get();
             $randomGroup = $carGroups->random();
             $randomGroupId = $randomGroup->id;
 
