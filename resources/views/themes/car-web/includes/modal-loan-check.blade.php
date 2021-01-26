@@ -12,7 +12,7 @@
             @csrf
             <div class="modal-body px-5">
                 <div class="maz-modal-title">Зээлийн нөхцөл шалгах</div>
-                <div class="maz-modal-desc">Энэ формыг бөглөнө үү. Бид тантай дараа холбоо барих болно.</div>
+                <div class="maz-modal-desc">Энэ формыг бөглөнө үү. Бид тантай дараа холбоо барих болно. Утас: 7011-3322, 7011-8282</div>
                     <div class="form-group">
                         <label for="name" class="col-form-label">Таны нэр:</label>
                         <input type="text" class="form-control" id="name" name="name" required>
