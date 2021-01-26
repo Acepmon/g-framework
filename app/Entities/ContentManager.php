@@ -417,7 +417,7 @@ class ContentManager extends Manager
             $content = Content::findOrFail($contentId);
             $content->status = $request->input('status', Content::STATUS_PUBLISHED);
             $content->visibility = $request->input('visibility', Content::VISIBILITY_PUBLIC);
-            $content->setMetaValue('publishedAt', Carbon::now());
+            $content->updateMeta('publishedAt', Carbon::now());
             
             // Attach default Term id
             $notVerified = Term::where('slug', 'batalgaazhaagy')->first();
@@ -436,10 +436,10 @@ class ContentManager extends Manager
             }
 
             if ($publishType == 'best_premium' || $publishType == 'premium') {
-                $content->setMetaValue('publishType', $publishType);
-                $content->setMetaValue('publishAmount', $publishAmount);
-                $content->setMetaValue('publishUnit', $publishUnit);
-                $content->setMetaValue('publishDuration', $publishDuration);
+                $content->updateMeta('publishType', $publishType);
+                $content->updateMeta('publishAmount', $publishAmount);
+                $content->updateMeta('publishUnit', $publishUnit);
+                $content->updateMeta('publishDuration', $publishDuration);
 
                 $result = self::publishPremium($content, $publishAmount);
                 if ($result) {
@@ -495,10 +495,10 @@ class ContentManager extends Manager
             } else if ($publishType == 'premium') {
                 $content->order = 2;
             }
-            $content->setMetaValue('publishVerified', True);
-            $content->setMetaValue('publishVerifiedBy', Auth::user()->id);
-            $content->setMetaValue('publishVerifiedAt', now());
-            $content->setMetaValue('publishedAt', Carbon::now());
+            $content->updateMeta('publishVerified', True);
+            $content->updateMeta('publishVerifiedBy', Auth::user()->id);
+            $content->updateMeta('publishVerifiedAt', now());
+            $content->updateMeta('publishedAt', Carbon::now());
 
             $content->save();
             return true;

@@ -65,8 +65,8 @@ class CronPremium extends Command
                     if ($verifiedEnd != Null) {
                         $verifiedEnd->delete();
                     }
-                    $content->setMetaValue('publishType', 'free');
-                    $content->setMetaValue('publishVerified', '0');
+                    $content->updateMeta('publishType', 'free');
+                    $content->updateMeta('publishVerified', '0');
                     $content->order = 1;
                     $content->save();
                 }

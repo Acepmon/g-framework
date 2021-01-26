@@ -114,9 +114,9 @@ class TransactionController extends Controller
                 $result = ContentManager::publishPremium($content, $content->metaValue('publishAmount'));
                 if ($result) {
                     $content->publishPremium();
-                    $content->setMetaValue('publishVerified', True);
-                    $content->setMetaValue('publishVerifiedBy', Auth::user()->id);
-                    $content->setMetaValue('publishVerifiedAt', now());
+                    $content->updateMeta('publishVerified', True);
+                    $content->updateMeta('publishVerifiedBy', Auth::user()->id);
+                    $content->updateMeta('publishVerifiedAt', now());
                 } else {
                     DB::rollBack();
                     return redirect()->route('admin.modules.payment.transactions.index')->with('error', "Insufficient cash");
