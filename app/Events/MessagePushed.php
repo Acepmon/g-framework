@@ -22,5 +22,10 @@ class MessagePushed implements ShouldBroadcast
     {
         return ['notification'];
     }
+  
+    public function broadcastAs()
+    {
+        return 'message';
+    }
 
 }

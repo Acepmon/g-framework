@@ -74,14 +74,14 @@
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script>
 
-        // Pusher.logToConsole = true;
+        Pusher.logToConsole = true;
         var pusher = new Pusher('84a3880e79c96f669a62', {
         cluster: 'ap3'
         });
 
         var audio = new Audio('{{ asset('limitless/bootstrap4/juntos.mp3') }}');
         var channel = pusher.subscribe('notification');
-        channel.bind('App\\Events\\MessagePushed', function(data) {
+        channel.bind('message', function(data) {
             $(".no-notif").hide();
             $("#notif-list").append(`<li class="media">
                                         <div class="media-body">
