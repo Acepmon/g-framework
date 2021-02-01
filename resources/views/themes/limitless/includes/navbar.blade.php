@@ -25,21 +25,20 @@
                 <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown" id="notificationsDropdownToggle">
                     <i class="icon-bell2"></i>
                     <span class="d-md-none ml-2">Notifications</span>
-                    @if (Auth::user()->unreadNotifications->count() > 0)
-                    <span id="notificationsCount" class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ Auth::user()->unreadNotifications->count() }}</span>
-                    @endif
+                    <span id="notificationsCount" class="badge badge-pill bg-warning-400 ml-auto ml-md-0"></span>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
                     <div class="dropdown-content-header">
                         <span class="font-weight-semibold">Notifications</span>
                         {{-- <a href="#" class="text-default"><i class="icon-compose"></i></a> --}}
-                        <button onclick="markAsRead()" id="notificationsMarkReadBtn" class="text-white btn btn-primary btn-sm" {{ Auth::user()->unreadNotifications->count() > 0 ? '' : 'disabled' }}>Mark as Read</button>
+                        <button onclick="markAsRead()" id="notificationsMarkReadBtn" class="text-white btn btn-primary btn-sm">Mark as Read</button>
                     </div>
 
                     <div class="dropdown-content-body dropdown-scrollable">
-                        <ul class="media-list">
-                            @foreach(Auth::user()->unreadNotifications as $notification)
+                        <ul class="media-list" id="notif-list">
+                            <div class="no-notif text-center">You do not have any notifications</div>
+                            <!-- @foreach(Auth::user()->unreadNotifications as $notification)
                                 <li class="media">
                                     @if (!empty($notification->data['thumbnail']))
                                     <div class="mr-2">
@@ -60,13 +59,13 @@
 
                             @if(count(Auth::user()->unreadNotifications) == 0)
                                 <div class="text-center">You do not have any notifications</div>
-                            @endif
+                            @endif -->
                         </ul>
                     </div>
-
+<!-- 
                     <div class="dropdown-content-footer justify-content-center p-2">
                         <a href="{{ route('admin.profile.notifications.index') }}" data-popup="tooltip" title="All Notifications"><i class="icon-menu display-block"></i></a>
-                    </div>
+                    </div> -->
                 </div>
             </li>
 
@@ -95,12 +94,19 @@
 <script>
 
 function markAsRead() {
-    $.ajax({
+    $("#notif-list").html(`<div class="text-center">You do not have any notifications</div>`);
+
+    $("#notificationsCount").html("");
+    var titles = document.title.split(")");
+    if (titles[0].startsWith("(")) {
+        document.title = titles[1];
+    }
+    /*$.ajax({
         url: '/admin/profile/notifications/read'
     }).done(function() {
         $("#notificationsCount").remove();
         $("#notificationsMarkReadBtn").attr('disabled', true);
         $("#notificationsList").html('<div class="text-center">You do not have any notifications</div>');
-    });
+    });*/
 }
 </script>

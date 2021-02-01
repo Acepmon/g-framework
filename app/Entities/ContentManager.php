@@ -5,6 +5,7 @@ namespace App\Entities;
 use Auth;
 use App\Content;
 use App\ContentMeta;
+use App\Events\MessagePushed;
 use App\Term;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -473,6 +474,7 @@ class ContentManager extends Manager
             if (!$amount) {
                 $amount = $content->metaValue('publishAmount');
             }
+            event(new MessagePushed('Cars'));
             if ($cash - $amount < 0) {
                 return false;
             }

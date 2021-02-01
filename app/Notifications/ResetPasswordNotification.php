@@ -45,10 +45,11 @@ class ResetPasswordNotification extends Notification
     {
         $url = url('/password/reset/' . $this->token . '?email=' . $notifiable->email);
         return (new MailMessage)
-                    ->line('You are receiving this email because we received a password reset request for your account.')
-                    ->action('Reset Password', $url)
-                    ->line('This password reset link will expire in 60 minutes.')
-                    ->line('If you did not request a password reset, no further action is required.');
+                    ->subject('MAZ Нууц үг сэргээх')
+                    ->line('Та өөрийн maz хэрэглэгчийн нууц үгээ сэргээх хүсэлт явуулсан байна.')
+                    ->action('Нууц үг сэргээх', $url)
+                    ->line('Энэхүү линк нь 60 минутын дотор идэвхитэй.')
+                    ->line('Хэрвээ та нууц үг сэргээх хүсэлт илгээгээгүй бол дээрх товчин дээр дарах хэрэггүй.');
     }
 
     /**

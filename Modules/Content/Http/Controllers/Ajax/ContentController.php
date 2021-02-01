@@ -18,6 +18,7 @@ use App\User;
 use App\Term;
 use App\Entities\ContentManager;
 use App\Entities\MediaManager;
+use App\Events\MessagePushed;
 
 class ContentController extends Controller
 {
@@ -111,6 +112,10 @@ class ContentController extends Controller
             $content_meta->key = 'initial';
             $content_meta->value = json_encode($value);
             $content_meta->save();
+
+            if ($request->type == Content::TYPE_LOAN_CHECK) {
+                event(new MessagePushed('Loan Check'));
+            }
 
             DB::commit();
             return response()->json($content);
@@ -224,6 +229,7 @@ class ContentController extends Controller
             'doctorVerifiedBy' => '0',
             'doctorVerificationRequest' => True];
         ContentManager::syncMetas($content_id, $doc_list);
+        event(new MessagePushed('Verification Requests'));
 
         return response()->json($doc_list);
     }
@@ -261,6 +267,7 @@ class ContentController extends Controller
         $publishUnit = $pricingTerm?$pricingTerm->metaValue('unit'):'';
         $publishDuration = $pricingTerm?$pricingTerm->metaValue('duration'):'';
         $published = ContentManager::publish($request, $contentId, $publishAmount, $publishUnit, $publishDuration);
+        event(new MessagePushed('Cars'));
         if ($published) {
             return response()->json(['message' => "Successfully registered"]);
         } else {

@@ -32,7 +32,7 @@
                     break;
             }
             if ($count > 0) {
-                echo('<span class="badge bg-blue-700 align-self-center ml-auto">' . $count . '</span>');
+                echo('<span id="' . $menu->title . '-count" class="badge bg-blue-700 align-self-center ml-auto">' . $count . '</span>');
             }
         @endphp
     </a>

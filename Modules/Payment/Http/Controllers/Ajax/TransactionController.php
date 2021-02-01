@@ -4,6 +4,7 @@ namespace Modules\Payment\Http\Controllers\Ajax;
 
 use Auth;
 use App\Entities\NotificationManager;
+use App\Events\MessagePushed;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -48,6 +49,7 @@ class TransactionController extends Controller
         //
         $transaction = Transaction::create($request->input());
         NotificationManager::store('Данс цэнэглэх хүсэлт', 'Таны данс цэнэглэх хүсэлт амжилттай илгээгдлээ. Таны захиалсан үйлчилгээ админ шалгасны дараа идэвхжинэ.', 'Notification Mileage', Auth::user()->id);
+        event(new MessagePushed('Transactions'));
 
         return response()->json(['message'=> 'success'])->setStatusCode(200);
     }

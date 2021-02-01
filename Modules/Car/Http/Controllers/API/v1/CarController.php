@@ -9,7 +9,7 @@ use App\Term;
 use App\TermMeta;
 use App\Entities\ContentManager;
 use App\Entities\MediaManager;
-
+use App\Events\MessagePushed;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
@@ -173,6 +173,8 @@ class CarController extends Controller
             'doctorVerified' => False,
             'doctorVerifiedBy' => '0',
             'doctorVerificationRequest' => True];
+
+        event(new MessagePushed('Verification Requests'));
         ContentManager::attachMetas($content_id, $doc_list);
 
         return response()->json($doc_list);
