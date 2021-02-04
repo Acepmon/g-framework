@@ -353,7 +353,7 @@ $itsIntCar=false;
                     console.log(speModel);
                     $.ajax({
                         type: 'Get',
-                        url: '/api/v1/taxonomies/'+toKebabCase(speModel),
+                        url: '/api/v1/taxonomies/'+speModel,
                         // /data: paramObjs
                     }).done(function(data) {
                         console.log("DONE!");
