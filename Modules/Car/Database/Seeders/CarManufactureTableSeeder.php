@@ -167,13 +167,17 @@ class CarManufactureTableSeeder extends Seeder
 
         $carManufacturer = TaxonomyManager::register('Car Manufacturer', 'car', null, ['metaKey' => 'markName']);
         foreach ($marksModels as $mark => $models) {
+            $markName = $mark;
+            if ($markName == 'Бусад') {
+                $markName = 'Busad';
+            }
             $markTaxonomy = TaxonomyManager::register($mark, 'car-manufacturer', $carManufacturer->term->id, [
-                'logo' => url(asset('images/manufacturers/' . \Str::slug($mark) . '.png')),
+                'logo' => url(asset('images/manufacturers/' . \Str::slug($markName) . '.png')),
                 'metaKey' => 'modelName'
             ], $models);
             if (array_key_exists('children', $models)) {
                 foreach ($models['children'] as $model) {
-                    TaxonomyManager::register($model, 'car-' . \Str::kebab($mark), $markTaxonomy->term->id);
+                    TaxonomyManager::register($model, 'car-' . \Str::kebab($markName), $markTaxonomy->term->id);
                 }
             }
             TaxonomyManager::updateTaxonomyChildrenSlugs($markTaxonomy->id);
