@@ -474,10 +474,10 @@ class ContentManager extends Manager
             if (!$amount) {
                 $amount = $content->metaValue('publishAmount');
             }
-            event(new MessagePushed('Cars'));
             if ($cash - $amount < 0) {
                 return false;
             }
+            event(new MessagePushed('Cars'));
             $cash = $cash - $amount;
             $author->setMetaValue('cash', $cash);
             Transaction::create([
@@ -498,7 +498,11 @@ class ContentManager extends Manager
                 $content->order = 2;
             }
             $content->updateMeta('publishVerified', True);
-            $content->updateMeta('publishVerifiedBy', Auth::user()->id);
+            if (Auth::user()) {
+                $content->updateMeta('publishVerifiedBy', Auth::user()->id);
+            } else {
+                $content->updateMeta('publishVerifiedBy', 1);
+            }
             $content->updateMeta('publishVerifiedAt', now());
             $content->updateMeta('publishedAt', Carbon::now());
 
