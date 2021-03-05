@@ -64,9 +64,9 @@ class CarBannerLocationsTableSeeder extends Seeder
                 'type' => BannerLocation::TYPE_SLIDER
             ],
             [
-                'title' => 'Mobile Mid Content Banner (640x360)',
-                'width' => $sizes[3][0],
-                'height' => $sizes[3][1],
+                'title' => 'Mobile Mid Content Banner (720x263)',
+                'width' => '720',
+                'height' => '230',
                 'type' => BannerLocation::TYPE_SLIDER
             ],
             [

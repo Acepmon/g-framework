@@ -125,6 +125,8 @@ Route::prefix('v1')->group(function () {
 
             Route::post('/user/notifications/read', 'NotificationController@userRead');
 
+            Route::post('/user/notifications/{notification}/read', 'NotificationController@userReadSingle');
+
             Route::get('/user/groups', function () {
                 return new UserGroupCollection(Auth::user()->groups);
             });

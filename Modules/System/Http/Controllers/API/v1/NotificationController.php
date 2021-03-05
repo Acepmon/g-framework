@@ -41,5 +41,10 @@ class NotificationController extends Controller
 
         return null;
     }
+
+    public function userReadSingle($notification, Request $request)
+    {
+        return NotificationManager::readSingle($notification);
+    }
     
 }

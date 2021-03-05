@@ -13,7 +13,9 @@
         calc();
         callContents();
 
-        $(".insMonth").on('click', calc);
+        $(".insMonth").on('click', function(event) {
+            calc(null);
+        });
         $("#firstPay").on('change', calc);
         $("#monthlyPrice").on('change', calc);
 
@@ -30,7 +32,6 @@
         }
         //var mPay = parseInt(str.replace(,/g, ""));
         var mPay = parseInt(parseFloat($('#monthlyPrice').val().replace(/[^0-9 | ^.]/g, '')));
-        console.log(mPay)
         var fPay = $('#firstPay').val();
         var months = $("input[name=financeMonth]:checked").val();
         var invest = $(".loanTerm:checked").data('interest');
@@ -108,7 +109,7 @@
                                 @foreach (\App\Entities\TaxonomyManager::collection('car-loan-terms') as $index => $loanTerm)
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="{{ $loanTerm->term->name }}month" name="financeMonth" value="{{ $loanTerm->term->name }}" data-interest="{{ $loanTerm->term->metaValue('interest') }}" class="loanTerm custom-control-input insMonth" {{ ($loanTerm->term->name == request('financeMonth') || $index == 0) ? 'checked' : ''}}>
-                                    <label class="custom-control-label insMonth" for="{{ $loanTerm->term->name }}month">{{ $loanTerm->term->name }} сар</label>
+                                    <label class="custom-control-label" for="{{ $loanTerm->term->name }}month">{{ $loanTerm->term->name }} сар</label>
                                 </div>
                                 @endforeach
                             </div>

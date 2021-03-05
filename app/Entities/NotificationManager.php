@@ -114,4 +114,11 @@ class NotificationManager extends Manager
         $notifications->delete();
         return null;
     }
+
+    public static function readSingle($id) {
+        $unread = Term::where('slug', 'unread')->first()->taxonomy->id;
+        $notifications = TermRelationship::where([['content_id', $id], ])->where('term_taxonomy_id', $unread);
+        $notifications->delete();
+        return 'success';
+    }
 }
