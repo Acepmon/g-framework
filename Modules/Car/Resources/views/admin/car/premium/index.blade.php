@@ -136,7 +136,7 @@
 @section('script')
 <script>
     window.delete_content = function(id) {
-        $("#delete_form").attr('action', '/admin/cars/'+id+'?type={{ Request::get('type') }}');
+        $("#delete_form").attr('action', '/admin/contents/'+id+'?type={{ Request::get('type') }}');
     }
     window.verify_content = function(id) {
         $("#verify_form").attr('action', '/admin/modules/car/premium/'+id);

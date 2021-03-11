@@ -121,7 +121,11 @@ class CarVerificationController extends Controller
 
     public static function getCount() {
         $notVerified = Term::where('slug', 'batalgaazhaagy')->first();        
-        $published = Content::where('type', 'car')->whereHas('terms', function ($query) use($notVerified) {
+        $published = Content::where([['type', Content::TYPE_CAR], ['status', Content::STATUS_PUBLISHED], ['status', Content::STATUS_PUBLISHED]])
+        ->whereHas('metas', function ($query) {
+            $query->where('key', 'doctorVerificationFile');
+        })
+        ->whereHas('terms', function ($query) use($notVerified) {
             $query->where('term_id', $notVerified->id);
         })->orderBy('visibility', 'desc');
         return $published->count();

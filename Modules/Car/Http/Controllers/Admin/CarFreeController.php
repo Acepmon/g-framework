@@ -16,28 +16,28 @@ class CarFreeController extends Controller
      */
     public function index()
     {
-        $published = Content::where('type', 'car')->where('status', Content::STATUS_PUBLISHED)->whereHas('metas', function ($query) {
+        $published = Content::where('type', 'car')->where('status', Content::STATUS_PUBLISHED)->whereDoesntHave('metas', function ($query) {
             $query->where('key', 'publishType');
-            $query->where('value', 'free');
-        })->whereHas('metas', function ($query) {
-            $query->where('key', 'isAuction');
-            $query->where('value', '0');
+            $query->where('value', 'premium');
+        })->whereDoesntHave('metas', function ($query) {
+            $query->where('key', 'publishType');
+            $query->where('value', 'best_premium');
         })->orderBy('visibility', 'desc')->get();
 
-        $pending = Content::where('type', 'car')->where('status', Content::STATUS_DRAFT)->whereHas('metas', function ($query) {
+        $pending = Content::where('type', 'car')->where('status', Content::STATUS_PENDING)->whereHas('metas', function ($query) {
             $query->where('key', 'publishType');
-            $query->where('value', 'free');
-        })->whereHas('metas', function ($query) {
-            $query->where('key', 'isAuction');
-            $query->where('value', '0');
+            $query->where('value', 'premium');
+        })->whereDoesntHave('metas', function ($query) {
+            $query->where('key', 'publishType');
+            $query->where('value', 'best_premium');
         })->orderBy('visibility', 'desc')->get();
 
-        $draft = Content::where('type', 'car')->where('status', Content::STATUS_PUBLISHED)->whereHas('metas', function ($query) {
+        $draft = Content::where('type', 'car')->where('status', Content::STATUS_DRAFT)->whereHas('metas', function ($query) {
             $query->where('key', 'publishType');
-            $query->where('value', 'free');
-        })->whereHas('metas', function ($query) {
-            $query->where('key', 'isAuction');
-            $query->where('value', '0');
+            $query->where('value', 'premium');
+        })->whereDoesntHave('metas', function ($query) {
+            $query->where('key', 'publishType');
+            $query->where('value', 'best_premium');
         })->orderBy('visibility', 'desc')->get();
 
         $contents = [

@@ -22,7 +22,7 @@ class CarWannaBuyTableSeeder extends Seeder
     {
         Model::unguard();
 
-        factory(Content::class, 100)->create([
+        factory(Content::class, 0)->create([
             'type' => 'wanna-buy',
             'status' => Content::STATUS_PUBLISHED,
             'visibility' => Content::VISIBILITY_PUBLIC,

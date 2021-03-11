@@ -223,7 +223,8 @@ class ContentController extends Controller
     {
         $type = Content::findORFail($id)->type;
         Content::destroy($id);
-        return redirect()->route('admin.contents.index', ['type' => $type]);
+        // return redirect()->route('admin.contents.index', ['type' => $type]);
+        return redirect()->back();
     }
 
     public function revert($id)
