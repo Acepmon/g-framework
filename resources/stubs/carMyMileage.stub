@@ -18,15 +18,15 @@ $itemsPerPage = request('itemsPerPage', "10");
 @section('content')
 <div class="row">
     <div class="bg-white shadow-soft-blue page-top-navbar pt-5">
-        <div class="col-md-6 float-left"><h3 class="pl-3">Cash</h3></div>
+        <div class="col-md-6 float-left"><h3 class="pl-3">Данс</h3></div>
         <div class="col-md-6 float-left text-right font-weight-bold">
             <a href="/charge-cash" class="btn btn-danger btn-round px-5 py-2 shadow-red" style="color: white!important; width: auto">Данс цэнэглэх</a>
         </div>
         <div class="col-md-6 pt-4 float-left">
-            <p><h5 class="pl-3">Cash history</h5></p>
+            <p><h5 class="pl-3">Цэнэглэсэн түүх</h5></p>
         </div>
         <div class="col-md-6 pt-4 float-left text-right font-weight-bold">
-            <p class="d-inline pr-3">Миний cash: &nbsp; &nbsp;<span class="pt-2 pr-4 pb-2 pl-4 btn-round bg-primary text-white">{{ number_format(Auth::user()->metaValue('cash', 0)) }}</span></p>
+            <p class="d-inline pr-3">Үлдэгдэл: &nbsp; &nbsp;<span class="pt-2 pr-4 pb-2 pl-4 btn-round bg-primary text-white">{{ number_format(Auth::user()->metaValue('cash', 0)) }}</span></p>
         </div>
         <div class="pl-4 pr-4">
 

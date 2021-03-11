@@ -79,7 +79,7 @@ class GroupPermissionTableSeeder extends Seeder
         $nonSystem = Group::where('title', 'Damoa Operator')->first()->id;
         PermissionManager::attachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin%')->get());
         PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'admin_changelog')->get());
-        PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_content%')->get());
+        // PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_content%')->get());
         // PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_permission%')->get());
         // PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_groups%')->get());
         PermissionManager::detachGroupPermissions($nonSystem, Permission::where('title', 'LIKE', 'admin_configs%')->get());

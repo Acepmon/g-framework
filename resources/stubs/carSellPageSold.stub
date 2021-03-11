@@ -11,8 +11,8 @@
     <div class="card shadow-soft-blue page-top-navbar">
         <div class="mypage-nav">
             <ul>
-            <li class="list-item "><a href="/sell-page-on-sell">Идэвхтэй</a></li>
-            <li class="list-item active"> <a href="#">Зарагдсан</a></li>
+            <li class="list-item "><a href="/sell-page-on-sell">Зарж байгаа машин</a></li>
+            <li class="list-item active"> <a href="#">Зарагдсан машин</a></li>
             </ul>
         </div>
     </div>

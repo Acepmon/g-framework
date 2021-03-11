@@ -15,7 +15,7 @@
 
         <div class="sell-selection">
             <a href="#" class="sell-type" onclick="postCar('normal')">
-                <h1>Энгийнээр</h1>
+                <h1>Энгийн борлуулалт</h1>
                 <div class="sell-type-img sell-car">
                     <img src="{{ asset('car-web/img/sell-car.png') }}" alt="">
                 </div>
