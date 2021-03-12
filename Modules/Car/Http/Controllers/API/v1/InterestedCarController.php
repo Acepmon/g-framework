@@ -35,12 +35,19 @@ class InterestedCarController extends Controller
         }
 
         if (count($metaInputs) > 0) {
-            $contents = $contents->whereHas('metas', function ($query) use ($metaInputs) {
-                foreach ($metaInputs as $key => $value) {
-                    $query->where('key', $key);
-                    $query->where('value', $value);
+            foreach ($metaInputs as $key => $value) {
+                if ($value == 0) {
+                    $contents = $contents->whereDoesntHave('metas', function ($query) use ($key, $value) {
+                        $query->where('key', $key);
+                        $query->where('value', '1');
+                    });
+                } else {
+                    $contents = $contents->whereHas('metas', function ($query) use ($key, $value) {
+                        $query->where('key', $key);
+                        $query->where('value', $value);
+                    });
                 }
-            });
+            }
         }
 
         return new ContentCollection($contents->paginate($limit));
