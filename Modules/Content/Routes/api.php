@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function () {
         ]);
 
         Route::get('taxonomies', 'TaxonomyController@index');
+        Route::get('taxonomies/car-taxonomies', 'TaxonomyController@car');
         Route::get('taxonomies/{taxonomy}', 'TaxonomyController@show');
     });
 });

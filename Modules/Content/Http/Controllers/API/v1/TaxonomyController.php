@@ -26,6 +26,12 @@ class TaxonomyController extends Controller
         return new TaxonomyCollection(TermTaxonomy::all());
     }
 
+    public function car()
+    {
+        $carTaxonomies = TaxonomyManager::collection('car-guts');
+        return new TaxonomyCollection($carTaxonomies);
+    }
+
     /**
      * Show the specified resource.
      * @param int $id
