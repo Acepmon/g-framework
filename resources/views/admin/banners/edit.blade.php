@@ -249,7 +249,9 @@
     var webElement = $("#modal_banner_crop_image");
     var options = {
         responsive: true,
-        center: true
+        center: true,
+        minContainerWidth: 558,
+        minContainerHeight: 400
     };
 
     webElement.cropper(options);
