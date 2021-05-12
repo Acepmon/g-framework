@@ -175,7 +175,7 @@ class CarController extends Controller
             'doctorVerificationRequest' => True];
 
         event(new MessagePushed('Verification Requests'));
-        ContentManager::attachMetas($content_id, $doc_list);
+        ContentManager::syncMetas($content_id, $doc_list);
 
         return response()->json($doc_list);
     }
