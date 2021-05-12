@@ -26,30 +26,6 @@ class TaxonomyController extends Controller
         return new TaxonomyCollection(TermTaxonomy::all());
     }
 
-    public function car()
-    {
-        return [
-            'car-advance-payments' => new TaxonomyCollection(TaxonomyManager::collection('car-advance-payments')),
-            'car-type' => new TaxonomyCollection(TaxonomyManager::collection('car-type')),
-            'car-conditions' => new TaxonomyCollection(TaxonomyManager::collection('car-conditions')),
-            'car-colors' => new TaxonomyCollection(TaxonomyManager::collection('car-colors')),
-            'car-transmission' => new TaxonomyCollection(TaxonomyManager::collection('car-transmission')),
-            'car-mancount' => new TaxonomyCollection(TaxonomyManager::collection('car-mancount')),
-            'provinces' => new TaxonomyCollection(TaxonomyManager::collection('provinces')),
-            'car-advantages' => new TaxonomyCollection(TaxonomyManager::collection('car-advantages')),
-            'best_premium' => new TaxonomyCollection(TaxonomyManager::collection('best_premium')),
-            'premium' => new TaxonomyCollection(TaxonomyManager::collection('premium')),
-            'car-options' => new TaxonomyCollection(TaxonomyManager::collection('car-options')),
-            'car-fuel' => new TaxonomyCollection(TaxonomyManager::collection('car-fuel')),
-            'car-wheel' => new TaxonomyCollection(TaxonomyManager::collection('car-wheel')),
-            'car-wheel-pos' => new TaxonomyCollection(TaxonomyManager::collection('car-wheel-pos')),
-            'car-exterior' => new TaxonomyCollection(TaxonomyManager::collection('car-exterior')),
-            'car-guts' => new TaxonomyCollection(TaxonomyManager::collection('car-guts')),
-            'car-safety' => new TaxonomyCollection(TaxonomyManager::collection('car-safety')),
-            'car-convenience' => new TaxonomyCollection(TaxonomyManager::collection('car-convenience'))
-        ];
-    }
-
     /**
      * Show the specified resource.
      * @param int $id
@@ -130,5 +106,29 @@ class TaxonomyController extends Controller
         }
         // $taxonomies = $taxonomies->get();
         return $taxonomies;
+    }
+
+    public function car()
+    {
+        return [
+            'car-advance-payments' => new TaxonomyCollection(TaxonomyManager::collection('car-advance-payments')),
+            'car-type' => new TaxonomyCollection(TaxonomyManager::collection('car-type')),
+            'car-conditions' => new TaxonomyCollection(TaxonomyManager::collection('car-conditions')),
+            'car-colors' => new TaxonomyCollection(TaxonomyManager::collection('car-colors')),
+            'car-transmission' => new TaxonomyCollection(TaxonomyManager::collection('car-transmission')),
+            'car-mancount' => new TaxonomyCollection(TaxonomyManager::collection('car-mancount')),
+            'provinces' => new TaxonomyCollection(TaxonomyManager::collection('provinces')),
+            'car-advantages' => new TaxonomyCollection(TaxonomyManager::collection('car-advantages')),
+            'best_premium' => new TaxonomyCollection(TaxonomyManager::collection('best_premium')),
+            'premium' => new TaxonomyCollection(TaxonomyManager::collection('premium')),
+            'car-options' => new TaxonomyCollection(TaxonomyManager::collection('car-options')),
+            'car-fuel' => new TaxonomyCollection(TaxonomyManager::collection('car-fuel')),
+            'car-wheel' => new TaxonomyCollection(TaxonomyManager::collection('car-wheel')),
+            'car-wheel-pos' => new TaxonomyCollection(TaxonomyManager::collection('car-wheel-pos')),
+            'car-exterior' => new TaxonomyCollection(TaxonomyManager::collection('car-exterior')),
+            'car-guts' => new TaxonomyCollection(TaxonomyManager::collection('car-guts')),
+            'car-safety' => new TaxonomyCollection(TaxonomyManager::collection('car-safety')),
+            'car-convenience' => new TaxonomyCollection(TaxonomyManager::collection('car-convenience'))
+        ];
     }
 }
